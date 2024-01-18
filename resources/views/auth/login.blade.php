@@ -39,11 +39,11 @@
         <div class="card card-md">
           <div class="card-body">
             <h2 class="h2 text-center mb-4">Login to your account</h2>
-            <form method="POST" action="{{ route('login') }}">            {{-- é... depois o login tem que ser por masp/matricula--}}
+            <form method="POST" action="{{ route('login.post') }}">            {{-- é... depois o login tem que ser por masp/matricula--}}
                 @csrf
 
                 <div class="mb-3">
-                    <label class="form-label">Email address</label> 
+                    <label class="form-label">Email address</label>
                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
                     @error('email')
@@ -65,7 +65,7 @@
                     @endif
                     </label>
                     <div class="input-group input-group-flat">
-                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">    
+                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
                         @error('password')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -105,7 +105,7 @@
     <script src="./back/dist/js/demo.min.js?1684106062" defer></script>
   </body>
 </html>
-{{-- 
+{{--
 <!doctype html>
 <!--
 * Tabler - Premium and Open Source dashboard template with responsive and high quality UI.

@@ -20,9 +20,9 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
         $user = Admin::create( [
-            'nomeAdm' => 'admin',
-            'emailAdm' => 'josuejuniorww@gmail.com',
-            'senhaAdm' => 'admin123',
+            'name' => 'admin',
+            'email' => 'josuejuniorww@gmail.com',
+            'password' => 'admin123',
         ]);
 
         $this->call(
@@ -30,6 +30,6 @@ class DatabaseSeeder extends Seeder
         );
 
         $user->assignRole('admin');
-        
+
     }
 }

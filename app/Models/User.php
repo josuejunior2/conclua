@@ -6,12 +6,10 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use App\Notifications\RedefinirSenhaNotification;
-use App\Notifications\VerificarEmailNotification;
+use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
@@ -47,12 +45,12 @@ class User extends Authenticatable implements MustVerifyEmail
         'password' => 'hashed',
     ];
 
-    public function sendPasswordResetNotification($token){
-      $this->notify(new RedefinirSenhaNotification($token, $this->email, $this->name));
-    }
+    // public function sendPasswordResetNotification($token){
+    //   $this->notify(new RedefinirSenhaNotification($token, $this->email, $this->name));
+    // }
 
-    public function sendEmailVerificationNotification() {
-        $this->notify(new VerificarEmailNotification($this->name));
-    }
+    // public function sendEmailVerificationNotification() {
+    //     $this->notify(new VerificarEmailNotification($this->name));
+    // }
 }
 

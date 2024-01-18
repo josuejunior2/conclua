@@ -1,6 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+
+use App\Http\Controllers\Admin\HomeController as AdminHomeController;
+
+use App\Http\Controllers\AuthAdmin\LoginController as AdminLoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,26 +23,43 @@ Route::get('/', function () {
     return view('welcome');
 });
 // ->middleware('verified'); // é pra pedir verificação do email
-Auth::routes(['verify' => true]);
+// Auth::routes();
+//Auth::routes(['verify' => true]); // verifica se tá logado
 
-Route::group(['middleware' => ['auth', 'complete']], function(){
-    Route::group([
-        'prefix' => 'admin',
-        'as' => 'admin.',
-    ], function() {
-        Route::get('/admin', function () {
-            return view('admin.index');
-        })->name('index');
-    });
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login'])->name('login.post');
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register'])->name('register.post');
 
-// vai colocando todas as rotas
-    Route::group([
-        'as' => 'user.',
-    ], function() {
-        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    });
-
+Route::middleware('auth:web')->group(function () {
+    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('home', [AdminHomeController::class, 'index'])->name('home');
+    Route::get('login', [AdminLoginController::class, 'showLoginForm'])->name('login.index');
+    Route::post('login', [AdminLoginController::class, 'login'])->name('login');
+    Route::post('logout', [AdminLoginController::class, 'logout'])->name('logout');
+});
+
+// Route::group(['middleware' => ['auth', 'complete']], function(){
+//     Route::group([
+//         'prefix' => 'admin',
+//         'as' => 'admin.',
+//     ], function() {
+//         Route::get('/admin', function () {
+//             return view('admin.index');
+//         })->name('index');
+//     });
+
+// // vai colocando todas as rotas
+//     Route::group([
+//         'as' => 'user.',
+//     ], function() {
+//         Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//     });
+
+// });
 
 Route::resource('orientadorgeral', App\Http\Controllers\OrientadorGeralController::class);
 Route::resource('academico', App\Http\Controllers\AcademicoController::class);
@@ -54,3 +77,6 @@ Route::get('/complete', function(){
 // })->middleware(['auth', 'is_admin', 'role:admin'])->name('index');
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('verified');
+
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
