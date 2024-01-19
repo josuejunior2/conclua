@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
             PerfisEPermissoesSeeder::class,
         );
 
-        $user->assignRole('admin');
+        // $user->assignRole('admin');
 
     }
 }

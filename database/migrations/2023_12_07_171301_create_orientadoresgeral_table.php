@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('orientadoresgeral', function (Blueprint $table) {
             $table->id();
-            $table->string('maspOrientador', 7)->unique();  //->primary();
-            $table->string('nomeOrientador', 60);
-            $table->string('emailOrientador', 40);
-            $table->string('senhaOrientador', 64);
+            $table->string('masp', 7)->unique();  //->primary();
+            $table->string('name', 60);
+            $table->string('email', 40);
+            $table->string('password', 64);
             $table->timestamps();
         });
     }

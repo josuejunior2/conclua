@@ -10,5 +10,5 @@ class OrientadorGeral extends Model
     use HasFactory;
 
     protected $table = 'orientadoresgeral';
-    protected $fillable = ['maspOrientador', 'nomeOrientador', 'emailOrientador', 'senhaOrientador', 'formacao_id', 'area_id'];
+    protected $fillable = ['masp', 'name', 'email', 'password', 'formacao_id', 'area_id'];
 }

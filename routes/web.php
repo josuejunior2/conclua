@@ -35,13 +35,17 @@ Route::middleware('auth:web')->group(function () {
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });
 
-Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('home', [AdminHomeController::class, 'index'])->name('home');
+Route::prefix('admin')->name('admin.')->namespace('AuthAdmin')->group(function () { // nao testei ainda
+
     Route::get('login', [AdminLoginController::class, 'showLoginForm'])->name('login.index');
     Route::post('login', [AdminLoginController::class, 'login'])->name('login');
     Route::post('logout', [AdminLoginController::class, 'logout'])->name('logout');
-});
 
+    Route::middleware(['auth:admin'])->group(function () {
+        Route::get('home', [AdminHomeController::class, 'index'])->name('home');
+    });
+    Route::post('logout', [AdminLoginController::class, 'logout'])->name('logout');
+});
 // Route::group(['middleware' => ['auth', 'complete']], function(){
 //     Route::group([
 //         'prefix' => 'admin',

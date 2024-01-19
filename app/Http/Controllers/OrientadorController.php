@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Spatie\Permission\Traits\HasRoles;
+use App\Http\Requests\UserStoreRequest;
 
 class OrientadorController extends Controller
 {
@@ -32,26 +33,13 @@ class OrientadorController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UserStoreRequest $request)
     {
         // dd($request->all());
-        $regras = [
-            'enderecoLattes' => 'required|min:38|max:38',
-            'enderecoOrcid' => 'required|min:37|max:37',
-            'disponibilidade' => 'required'
-        ];
-        $feedback = [
-            'required' => 'O campo :attribute deve ser preenchido.',
-            'enderecoLattes.min' => 'O link deve ter 38 caracteres.',
-            'enderecoLattes.max' => 'O link deve ter 38 caracteres.',
-            'enderecoOrcid.min' => 'O link deve ter 37 caracteres.',
-            'enderecoOrcid.max' => 'O link deve ter 37 caracteres.',
-        ];
-        $request->validate($regras, $feedback);
-        $orientador = Orientador::create($request->all());
+
+        $orientador = Orientador::create($request->validated());
         $user = User::find(auth()->user()->id);
-        $user->assignRole('orientador');
-        dd($user);
+        $user->assignRole('Orientador');
         return view('complete.finalorientador');
     }
 

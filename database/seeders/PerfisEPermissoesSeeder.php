@@ -10,24 +10,23 @@ use App\Models\Permission;
 class PerfisEPermissoesSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Run the database seeds
      */
     public function run(): void
     {
          // Reset cached roles and permissions
-         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
          //Criar Papel deo administrador
-         $admin = Role::create(['name' => 'Administrador', 'guard_name' => 'admin', 'description' => 'Acesso completo ao sistema']);
-         $orientador = Role::create(['name' => 'Orientador', 'guard_name' => 'admin', 'description' => 'Acesso completo ao sistema']); 
-         $usuario = Role::create(['name' => 'Usuario', 'guard_name' => 'web', 'description' => 'Acesso completo ao sistema']);
+        $admin = Role::create(['name' => 'Admin', 'guard_name' => 'admin', 'description' => 'Acesso completo ao sistema']);
+        $orientador = Role::create(['name' => 'Orientador', 'guard_name' => 'admin', 'description' => 'Acesso completo ao sistema com excessões']);
+        $usuario = Role::create(['name' => 'Usuario', 'guard_name' => 'web', 'description' => 'Acesso parcial ao sistema']);
 
-        $permissionsAdmin = collect([ // olhar casos de uso
-            ['guard_name' => 'admin', 'name' => 'listar usuarios',  'description' => 'Permite visualizar a listagem de usuários'],
+        $permissionsAdmin = collect([
+            ['guard_name' => 'admin', 'name' => 'listar usuarios',  'description' => 'Permite visualizar a listagem de usuários.'],
+            ['guard_name' => 'admin', 'name' => 'criar semestre',  'description' => 'Permite criar um semestre.'],
         ]);
-        // $permissionsUsuario = collect([
-        //     ['guard_name' => 'web', 'name' => 'listar usuarios',  'description' => 'Permite visualizar a listagem de usuários'],
-        // ]);
+
 
         //Orientador
         $permissionsOrientador = collect([
@@ -35,23 +34,33 @@ class PerfisEPermissoesSeeder extends Seeder
             ['guard_name' => 'admin', 'name' => 'visualizar atividades',  'description' => 'Permite a visualização de atividades.'],
             ['guard_name' => 'admin', 'name' => 'visualizar solicitacoes de orientacao',  'description' => 'Permite a visualização de solicitações de orientação.'],
             ['guard_name' => 'admin', 'name' => 'responder solicitacoes de orientacao',  'description' => 'Permite responder positiva ou negativamente as solicitações de orientação.'],
-        ]);// aqui as do adm + orientador
+        ]);// aqui as do orientador (incluindo algumas que o admin tbm terá)
 
+        $permissionsUser = collect([
+            ['guard_name' => 'web', 'name' => 'criar solicitacao de orientacao',  'description' => 'Permite criar uma solicitação de orientação.'],
+        ]);
+
+        $permissionsAdmin->each(function ($item) use ($admin) {
+            $permission = Permission::create($item);
+            $permission->syncRoles([$admin]);
+        });
 
         $permissionsOrientador->each(function ($item) use ($orientador, $admin) { // sincroniza permissoes do orientador
             $permission = Permission::create($item);
             $permission->syncRoles([$orientador]);
-        });
-
-        $permissionsAdminandOrientador = $permissionsOrientador->slice(1, 2); // aqui seleciona cada permission que orientador = admin
-        $permissionsAdminandOrientador->each(function ($item) use ($admin) {
-            $permission = Permission::create($item);
             $permission->syncRoles([$admin]);
         });
 
-        $permissions->each(function ($item) use ($admin) {
+        // $permissionsAdminwithdOrientador = $permissionsOrientador->slice(1, 2); // aqui seleciona cada permission que orientador = admin
+        // $permissionsAdminwithdOrientador->each(function ($item) use ($admin) {
+        //     $permission = Permission::create($item);
+        //     $permission->syncRoles([$admin]);
+        // });
+
+        $permissionsUser->each(function ($item) use ($usuario) {
             $permission = Permission::create($item);
-            $permission->syncRoles([$admin]);
+            $permission->syncRoles([$usuario]);
         });
+
     }
 }

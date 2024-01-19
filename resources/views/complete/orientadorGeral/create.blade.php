@@ -70,32 +70,32 @@ lógica de Semestre em tudo (middleware ?)
                             <li class="step-item">Especificações</li>
                             <li class="step-item">Confirmação</li>
                         </ul>
-                        
+
                         <form method="POST" action="{{ route('orientadorgeral.store') }}" autocomplete="off" novalidate>
                             @csrf
                             <div class="row g-3 mb-4">
                             <div class="col-md">
                                 <div class="form-label required">MASP</div>
-                                <input id="maspOrientador" name="maspOrientador"  type="text" class="form-control" value="{{ old('maspOrientador', '') }}">
-                                <span class="{{ $errors->has('maspOrientador') ? 'text-danger' : '' }}">
-                                    {{ $errors->has('maspOrientador') ? $errors->first('maspOrientador') : '' }}
+                                <input id="masp" name="masp"  type="text" class="form-control" value="{{ old('masp', '') }}">
+                                <span class="{{ $errors->has('masp') ? 'text-danger' : '' }}">
+                                    {{ $errors->has('masp') ? $errors->first('masp') : '' }}
                                 </span>
                             </div>
 
-                            <input id="senhaOrientador" name="senhaOrientador" type="hidden" class="form-control" value="{{ $user->password }}">
-                                
+                            <input id="password" name="password" type="hidden" class="form-control" value="{{ $user->password }}">
+
                             <div class="col-md">
                                 <div class="form-label required">Nome</div>
-                                <input id="nomeOrientador" name="nomeOrientador" type="text" class="form-control" value="{{ old('nomeOrientador', $user->name) }}">
-                                <span class="{{ $errors->has('nomeOrientador') ? 'text-danger' : '' }}">
-                                    {{ $errors->has('nomeOrientador') ? $errors->first('nomeOrientador') : '' }}
+                                <input id="name" name="name" type="text" class="form-control" value="{{ old('name', $user->name) }}">
+                                <span class="{{ $errors->has('name') ? 'text-danger' : '' }}">
+                                    {{ $errors->has('name') ? $errors->first('name') : '' }}
                                 </span>
                             </div>
                             <div class="col-md">
                                 <div class="form-label required">Email</div>
-                                <input id="emailOrientador" name="emailOrientador" type="text" class="form-control" value="{{ old('emailOrientador', $user->email) }}">
-                                <span class="{{ $errors->has('emailOrientador') ? 'text-danger' : '' }}">
-                                    {{ $errors->has('emailOrientador') ? $errors->first('emailOrientador') : '' }}
+                                <input id="email" name="email" type="text" class="form-control" value="{{ old('email', $user->email) }}">
+                                <span class="{{ $errors->has('email') ? 'text-danger' : '' }}">
+                                    {{ $errors->has('email') ? $errors->first('email') : '' }}
                                 </span>
                             </div>
                             </div>

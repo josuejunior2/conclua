@@ -18,7 +18,7 @@ return new class extends Migration
         });
 
         Schema::table('orientadoresgeral', function(BLueprint $table) {
-            $table->unsignedBigInteger('area_id')->nullable()->after('emailOrientador');
+            $table->unsignedBigInteger('area_id')->nullable()->after('email');
             $table->foreign('area_id')->references('id')->on('areas');
         });
     }
@@ -31,8 +31,8 @@ return new class extends Migration
         Schema::table('orientadoresgeral', function(BLueprint $table) {
             $table->dropForeign('orientadoresgeral_area_id_foreign');
             $table->dropColumn('area_id');
-        }); 
-        
+        });
+
         Schema::dropIfExists('areas');
     }
 };

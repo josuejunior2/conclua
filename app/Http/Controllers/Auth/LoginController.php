@@ -43,6 +43,8 @@ class LoginController extends Controller
     {
         return view('auth.login');
     }
+
+
     protected function loggedOut(Request $request)
     {
         return redirect()->route('login');

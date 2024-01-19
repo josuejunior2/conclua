@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('academicos', function (Blueprint $table) {
             // $table->id();
             $table->timestamps();
-            $table->string('matriculaAcademico', 9)->primary();
-            $table->string('nomeAcademico', 60);
-            $table->string('emailAcademico', 40);
-            $table->string('senhaAcademico', 64);
+            $table->string('matricula', 9)->primary();
+            $table->string('name', 60);
+            $table->string('email', 40);
+            $table->string('password', 64);
 
         });
     }
