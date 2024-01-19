@@ -18,7 +18,7 @@ class OrientadorGeralController extends Controller
      */
     public function index()
     {
-        dd("aaa");
+        dd("index");
     }
 
     /**
@@ -29,7 +29,7 @@ class OrientadorGeralController extends Controller
         $formacoes = Formacao::all();
         $areas = Area::all();
         $user = auth()->user();
-        return view('complete.orientadorGeral.create', ['user' => $user, 'areas' => $areas, 'formacoes' => $formacoes ]);
+        return view('orientador.orientadorGeral.create', ['user' => $user, 'areas' => $areas, 'formacoes' => $formacoes ]);
     }
 
     /**

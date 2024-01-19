@@ -21,15 +21,25 @@ class AcademicoController extends Controller
      */
     public function create()
     {
-        echo "cu";
+
+        $user = auth()->user();
+        return view('academico.create', ['user' => $user]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UserStoreRequest $request)
     {
-        //
+        $academico = Academico::firstOrCreate($request->validated());
+
+        if($request->input('modalidade') == 0){
+            return redirect()->route('academicoEstagio.create', ['academico' => $academico]);
+        }
+        elseif($request->input('modalidade') == 1){
+            return redirect()->route('academicoMonografia.create', ['academico' => $academico]);
+        }
+        return back();
     }
 
     /**

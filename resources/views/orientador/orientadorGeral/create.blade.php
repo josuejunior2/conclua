@@ -71,7 +71,7 @@ lógica de Semestre em tudo (middleware ?)
                             <li class="step-item">Confirmação</li>
                         </ul>
 
-                        <form method="POST" action="{{ route('orientadorgeral.store') }}" autocomplete="off" novalidate>
+                        <form method="POST" action="{{ route('orientadorgeral.index') }}" autocomplete="off" novalidate>
                             @csrf
                             <div class="row g-3 mb-4">
                             <div class="col-md">
@@ -133,7 +133,7 @@ lógica de Semestre em tudo (middleware ?)
                             </div>
                             <div class="card-footer bg-transparent mt-auto">
                                 <div class="btn-list justify-content-end">
-                                    <a href="{{ route('complete') }}" class="btn">
+                                    <a href="{{ route('login') }}" class="btn">
                                         Cancel
                                     </a>
                                     <button type="submit" class="btn btn-primary">

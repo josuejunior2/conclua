@@ -27,7 +27,7 @@ class OrientadorController extends Controller
      */
     public function create($orientadorGeral_id)
     {
-        return view('complete.orientador.create', ['orientadorGeral_id' => $orientadorGeral_id]);
+        return view('orientador.orientador.create', ['orientadorGeral_id' => $orientadorGeral_id]);
     }
 
     /**
@@ -40,7 +40,7 @@ class OrientadorController extends Controller
         $orientador = Orientador::create($request->validated());
         $user = User::find(auth()->user()->id);
         $user->assignRole('Orientador');
-        return view('complete.finalorientador');
+        return view('orientador.finalorientador');
     }
 
     /**

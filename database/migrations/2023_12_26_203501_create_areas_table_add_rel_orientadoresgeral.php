@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('areas', function (Blueprint $table) {
             $table->id();
-            $table->string('area', 14);
+            $table->string('area', 40);
             $table->timestamps();
         });
 

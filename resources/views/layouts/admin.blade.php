@@ -6,11 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <title>Dashboard - Tabler - Premium and Open Source dashboard template with responsive and high quality UI.</title>
     <!-- CSS files -->
-    <link href="./back/dist/css/tabler.min.css?1692870487" rel="stylesheet"/>
-    <link href="./back/dist/css/tabler-flags.min.css?1692870487" rel="stylesheet"/>
-    <link href="./back/dist/css/tabler-payments.min.css?1692870487" rel="stylesheet"/>
-    <link href="./back/dist/css/tabler-vendors.min.css?1692870487" rel="stylesheet"/>
-    <link href="./back/dist/css/demo.min.css?1692870487" rel="stylesheet"/>
+    <link href="/back/dist/css/tabler.min.css?1692870487" rel="stylesheet"/>
+    <link href="/back/dist/css/tabler-flags.min.css?1692870487" rel="stylesheet"/>
+    <link href="/back/dist/css/tabler-payments.min.css?1692870487" rel="stylesheet"/>
+    <link href="/back/dist/css/tabler-vendors.min.css?1692870487" rel="stylesheet"/>
+    <link href="/back/dist/css/demo.min.css?1692870487" rel="stylesheet"/>
     <style>
       @import url('https://rsms.me/inter/inter.css');
       :root {
@@ -21,7 +21,7 @@
       }
     </style>
   </head>
-  
+
 {{-- <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
@@ -81,7 +81,7 @@
             </div>
         </nav> --}}
 <body >
-    <script src="./back/dist/js/demo-theme.min.js?1692870487"></script>
+    <script src="/back/dist/js/demo-theme.min.js?1692870487"></script>
       <!-- Navbar -->
       <header class="navbar navbar-expand-md d-print-none" >
         <div class="container-xl">
@@ -90,7 +90,7 @@
           </button>
           <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
             <a href=".">
-              <img src="./back/static/logo.svg" width="110" height="32" alt="Tabler" class="navbar-brand-image">
+              <img src="/back/static/logo.svg" width="110" height="32" alt="Tabler" class="navbar-brand-image">
             </a>
           </h1>
           <div class="navbar-nav flex-row order-md-last">
@@ -130,7 +130,7 @@
                         </form>
                     </div>
             @endguest
-            
+
             </div>
           </div>
         </div>
@@ -139,13 +139,13 @@
         @yield('content')
     </main>
     </div>
-    <script src="./back/dist/libs/apexcharts/dist/apexcharts.min.js?1692870487" defer></script>
-    <script src="./back/dist/libs/jsvectormap/dist/js/jsvectormap.min.js?1692870487" defer></script>
-    <script src="./back/dist/libs/jsvectormap/dist/maps/world.js?1692870487" defer></script>
-    <script src="./back/dist/libs/jsvectormap/dist/maps/world-merc.js?1692870487" defer></script>
+    <script src="/back/dist/libs/apexcharts/dist/apexcharts.min.js?1692870487" defer></script>
+    <script src="/back/dist/libs/jsvectormap/dist/js/jsvectormap.min.js?1692870487" defer></script>
+    <script src="/back/dist/libs/jsvectormap/dist/maps/world.js?1692870487" defer></script>
+    <script src="/back/dist/libs/jsvectormap/dist/maps/world-merc.js?1692870487" defer></script>
     <!-- Tabler Core -->
-    <script src="./back/dist/js/tabler.min.js?1692870487" defer></script>
-    <script src="./back/dist/js/demo.min.js?1692870487" defer></script>
+    <script src="/back/dist/js/tabler.min.js?1692870487" defer></script>
+    <script src="/back/dist/js/demo.min.js?1692870487" defer></script>
     <script>
       // @formatter:off
       document.addEventListener("DOMContentLoaded", function () {
@@ -785,7 +785,7 @@
             </a>
           </h1>
           <div class="navbar-nav flex-row order-md-last">
-        
+
             <div class="nav-item dropdown">
               <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
                 <span class="avatar avatar-sm" style="background-image: url(./static/avatars/000m.jpg)"></span>

@@ -30,6 +30,7 @@ class UserStoreRequest extends FormRequest
             'enderecoLattes' => 'required|min:38|max:38',
             'enderecoOrcid' => 'required|min:37|max:37',
             'disponibilidade' => 'required',
+            'matricula' => 'required|digits:9'
         ];
     }
 
@@ -46,7 +47,8 @@ class UserStoreRequest extends FormRequest
             'email.min' => 'O campo email deve ter no mínimo 16 caracteres.',
             'email.max' => 'O campo email deve ter no máximo 40 caracteres.',
             'email.email' => 'O campo email deve ser preenchido com um endereço de email.',
-            'maspOrientador.digits' => 'O campo MASP deve ter 7 caracteres numéricos.',
+            'masp.digits' => 'O campo MASP deve ter 7 caracteres numéricos.',
+            'matricula.digits' => 'O número de matrícula deve ter 7 caracteres numéricos.',
             'enderecoLattes.min' => 'O link deve ter 38 caracteres.',
             'enderecoLattes.max' => 'O link deve ter 38 caracteres.',
             'enderecoOrcid.min' => 'O link deve ter 37 caracteres.',

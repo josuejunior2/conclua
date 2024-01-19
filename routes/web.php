@@ -20,8 +20,13 @@ use App\Http\Controllers\AuthAdmin\LoginController as AdminLoginController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('home');
+})->middleware('auth');
+
+
+
+
+
 // ->middleware('verified'); // é pra pedir verificação do email
 // Auth::routes();
 //Auth::routes(['verify' => true]); // verifica se tá logado
@@ -35,7 +40,7 @@ Route::middleware('auth:web')->group(function () {
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });
 
-Route::prefix('admin')->name('admin.')->namespace('AuthAdmin')->group(function () { // nao testei ainda
+Route::prefix('admin')->name('admin.')->namespace('AuthAdmin')->group(function () {
 
     Route::get('login', [AdminLoginController::class, 'showLoginForm'])->name('login.index');
     Route::post('login', [AdminLoginController::class, 'login'])->name('login');
@@ -46,35 +51,19 @@ Route::prefix('admin')->name('admin.')->namespace('AuthAdmin')->group(function (
     });
     Route::post('logout', [AdminLoginController::class, 'logout'])->name('logout');
 });
-// Route::group(['middleware' => ['auth', 'complete']], function(){
-//     Route::group([
-//         'prefix' => 'admin',
-//         'as' => 'admin.',
-//     ], function() {
-//         Route::get('/admin', function () {
-//             return view('admin.index');
-//         })->name('index');
-//     });
 
-// // vai colocando todas as rotas
-//     Route::group([
-//         'as' => 'user.',
-//     ], function() {
-//         Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-//     });
 
-// });
+
 
 Route::resource('orientadorgeral', App\Http\Controllers\OrientadorGeralController::class);
 Route::resource('academico', App\Http\Controllers\AcademicoController::class);
+// Route::resource('academicoEstagio', App\Http\Controllers\AcademicoEstagioController::class);
+// Route::resource('academicoTCC', App\Http\Controllers\AcademicoTCCController::class);
 Route::resource('orientador', App\Http\Controllers\OrientadorController::class)->names([
     'create' => 'c'
 ]);
 Route::get('orientador/create/{orientadorgeral_id}', 'App\Http\Controllers\OrientadorController@create')->name('orientador.create');
 
-Route::get('/complete', function(){
-    return view('complete.index');
-})->name('complete');
 
 // Route::get('/admin', function () {
 //     return view('admin.index');

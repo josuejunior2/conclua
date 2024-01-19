@@ -127,7 +127,7 @@ lógica de Semestre em tudo (middleware ?)
                         </div>
                         <div class="card-footer bg-transparent mt-auto">
                             <div class="btn-list justify-content-end">
-                                <a href="{{ route('complete') }}" class="btn">
+                                <a href="{{ route('login') }}" class="btn">
                                     Cancel
                                 </a>
                                 <button type="submit" class="btn btn-primary">
