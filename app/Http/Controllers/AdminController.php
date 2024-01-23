@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\UsersImport;
+use App\Imports\OrientadoresGeralImport;
 
 class AdminController extends Controller
 {
@@ -62,5 +65,15 @@ class AdminController extends Controller
     public function destroy(Admin $admin)
     {
         //
+    }
+    /**
+     * Cadastra os dados basicos de orientadores por tabela excel.
+     */
+    public function import_orientadores()
+    {
+        Excel::import(new UsersImport, 'orientadores.xlsx');
+        Excel::import(new OrientadoresGeralImport, 'orientadores.xlsx');
+
+        return dd('deu certo');
     }
 }

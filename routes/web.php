@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\AdminController;
 
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
 
@@ -40,7 +41,7 @@ Route::middleware('auth:web')->group(function () {
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });
 
-Route::prefix('admin')->name('admin.')->namespace('AuthAdmin')->group(function () {
+Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::get('login', [AdminLoginController::class, 'showLoginForm'])->name('login.index');
     Route::post('login', [AdminLoginController::class, 'login'])->name('login');
@@ -48,6 +49,7 @@ Route::prefix('admin')->name('admin.')->namespace('AuthAdmin')->group(function (
 
     Route::middleware(['auth:admin'])->group(function () {
         Route::get('home', [AdminHomeController::class, 'index'])->name('home');
+        Route::get('cadastro-orientador', [AdminController::class, 'import_orientadores'])->name('cadastro-orientador');
     });
     Route::post('logout', [AdminLoginController::class, 'logout'])->name('logout');
 });
