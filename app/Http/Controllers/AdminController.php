@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\UsersImport;
 use App\Imports\OrientadoresGeralImport;
+use App\Imports\AcademicosImport;
 
 class AdminController extends Controller
 {
@@ -76,4 +77,15 @@ class AdminController extends Controller
 
         return dd('deu certo');
     }
+    /**
+     * Cadastra os dados basicos de academicos por tabela excel.
+     */
+    public function import_academicos()
+    {
+        Excel::import(new UsersImport, 'academicos.xlsx');
+        Excel::import(new AcademicosImport, 'academicos.xlsx');
+
+        return dd('deu certo');
+    }
+
 }

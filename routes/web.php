@@ -50,6 +50,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::middleware(['auth:admin'])->group(function () {
         Route::get('home', [AdminHomeController::class, 'index'])->name('home');
         Route::get('cadastro-orientador', [AdminController::class, 'import_orientadores'])->name('cadastro-orientador');
+        Route::get('cadastro-academicos', [AdminController::class, 'import_academicos'])->name('cadastro-academicos');
     });
     Route::post('logout', [AdminLoginController::class, 'logout'])->name('logout');
 });
