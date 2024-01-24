@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Academico;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use Illuminate\Http\Request\Request;
+use App\Http\Requests\AcademicoRequest;
+use Illuminate\Support\Facades\Hash;
 
 class AcademicoController extends Controller
 {
@@ -29,17 +31,25 @@ class AcademicoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(UserStoreRequest $request)
+    public function store(AcademicoRequest $request)
     {
-        $academico = Academico::firstOrCreate($request->validated());
+        $academico = Academico::where('email', auth()->user()->email)->first();
 
-        if($request->input('modalidade') == 0){
-            return redirect()->route('academicoEstagio.create', ['academico' => $academico]);
+        if ($academico) {
+            $academico->update([
+                'password' => Hash::make($request->input('password')),
+            ]);
+
+            if($request->input('modalidade') == 0){
+                return redirect()->route('empresa.create');
+            }
+            elseif($request->input('modalidade') == 1){
+                return redirect()->route('academicoTCC.create');
+            }
         }
-        elseif($request->input('modalidade') == 1){
-            return redirect()->route('academicoMonografia.create', ['academico' => $academico]);
-        }
-        return back();
+
+        return abort(404);
+
     }
 
     /**

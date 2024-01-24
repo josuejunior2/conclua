@@ -17,7 +17,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::table('orientadoresgeral', function(BLueprint $table) {
+        Schema::table('orientadores_geral', function(BLueprint $table) {
             $table->unsignedBigInteger('formacao_id')->nullable()->after('area_id');
             $table->foreign('formacao_id')->references('id')->on('formacoes');
         });
@@ -28,11 +28,11 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('orientadoresgeral', function(BLueprint $table) {
-            $table->dropForeign('orientadoresgeral_formacao_id_foreign');
+        Schema::table('orientadores_geral', function(BLueprint $table) {
+            $table->dropForeign('orientadores_geral_formacao_id_foreign');
             $table->dropColumn('formacao_id');
         });
-        
+
         Schema::dropIfExists('formacoes');
     }
 };

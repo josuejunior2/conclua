@@ -8,8 +8,9 @@ use App\Models\Area;
 use App\Models\Formacao;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests\UserStoreRequest;
-// use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\OrientadorGeralRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class OrientadorGeralController extends Controller
 {
@@ -26,6 +27,7 @@ class OrientadorGeralController extends Controller
      */
     public function create()
     {
+
         $formacoes = Formacao::all();
         $areas = Area::all();
         $user = auth()->user();
@@ -35,13 +37,21 @@ class OrientadorGeralController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(UserStoreRequest $request)
+    public function store(OrientadorGeralRequest $request)
     {
-        //dd($request->all());
+        $orientadorGeral = OrientadorGeral::where('email', auth()->user()->email)->first();
 
-        $orientadorGeral = OrientadorGeral::create($request->validated());
-        $id = $orientadorGeral->id;
-        return redirect()->route('orientador.create', ['orientadorgeral_id' => $id]);
+        if ($orientadorGeral) {
+            $orientadorGeral->update($request->validated());
+
+            $orientadorGeral->update([
+                'password' => Hash::make($request->input('password')),
+            ]);
+
+            return redirect()->route('orientador.create', ['orientadorgeral_id' => $orientadorGeral->id]);
+        }
+
+        return abort(404);
     }
 
     /**

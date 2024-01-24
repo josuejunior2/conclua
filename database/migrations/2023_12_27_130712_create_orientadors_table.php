@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('orientadores', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('orientadorGeral_id');
-            $table->foreign('orientadorGeral_id')->references('id')->on('orientadoresgeral');
+            $table->foreign('orientadorGeral_id')->references('id')->on('orientadores_geral');
             $table->unsignedTinyInteger('disponibilidade')->default(0);
             $table->string('enderecoLattes', 38);
             $table->string('enderecoOrcid', 37);

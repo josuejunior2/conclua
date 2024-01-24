@@ -60,60 +60,60 @@ lógica de Semestre em tudo (middleware ?)
                         <input id="orientadorGeral_id" name="orientadorGeral_id" type="hidden" class="form-control" value="{{ $orientadorGeral_id }}">
                         <div class="row g-3 mb-4">
                         <div class="col-md">
-                            <div class="form-label">Link do Currículo Lattes</div>
-                            <input id="enderecoLattes" name="enderecoLattes"  type="text" class="form-control" value="{{ old('enderecoLattes', '') }}">
+                            <div class="form-label required">Link do Currículo Lattes</div>
+                            <input id="enderecoLattes" name="enderecoLattes"  type="text" class="form-control mb-3" value="{{ old('enderecoLattes', '') }}">
                             <span class="{{ $errors->has('enderecoLattes') ? 'text-danger' : '' }}">
                                 {{ $errors->has('enderecoLattes') ? $errors->first('enderecoLattes') : '' }}
                             </span>
                             <div class="form-label">Área de Pesquisa 1</div>
-                            <input id="areaPesquisa1" name="areaPesquisa1"  type="text" class="form-control" value="{{ old('areaPesquisa1', '') }}">
+                            <input id="areaPesquisa1" name="areaPesquisa1"  type="text" class="form-control mb-3" value="{{ old('areaPesquisa1', '') }}">
                             <span class="{{ $errors->has('areaPesquisa1') ? 'text-danger' : '' }}">
                                 {{ $errors->has('areaPesquisa1') ? $errors->first('areaPesquisa1') : '' }}
                             </span>
                             <div class="form-label">Área de Pesquisa 2</div>
-                            <input id="areaPesquisa2" name="areaPesquisa2"  type="text" class="form-control" value="{{ old('areaPesquisa2', '') }}">
+                            <input id="areaPesquisa2" name="areaPesquisa2"  type="text" class="form-control mb-3" value="{{ old('areaPesquisa2', '') }}">
                             <span class="{{ $errors->has('areaPesquisa2') ? 'text-danger' : '' }}">
                                 {{ $errors->has('areaPesquisa2') ? $errors->first('areaPesquisa2') : '' }}
                             </span>
                             <div class="form-label">Área de Pesquisa 3</div>
-                            <input id="areaPesquisa3" name="areaPesquisa3"  type="text" class="form-control" value="{{ old('areaPesquisa3', '') }}">
+                            <input id="areaPesquisa3" name="areaPesquisa3"  type="text" class="form-control mb-3" value="{{ old('areaPesquisa3', '') }}">
                             <span class="{{ $errors->has('areaPesquisa3') ? 'text-danger' : '' }}">
                                 {{ $errors->has('areaPesquisa3') ? $errors->first('areaPesquisa3') : '' }}
                             </span>
                             <div class="form-label">Área de Pesquisa 4</div>
-                            <input id="areaPesquisa4" name="areaPesquisa4"  type="text" class="form-control" value="{{ old('areaPesquisa4', '') }}">
+                            <input id="areaPesquisa4" name="areaPesquisa4"  type="text" class="form-control mb-3" value="{{ old('areaPesquisa4', '') }}">
                             <span class="{{ $errors->has('areaPesquisa4') ? 'text-danger' : '' }}">
                                 {{ $errors->has('areaPesquisa4') ? $errors->first('areaPesquisa4') : '' }}
                             </span>
                             <div class="form-label">Área de Pesquisa 5</div>
-                            <input id="areaPesquisa5" name="areaPesquisa5"  type="text" class="form-control" value="{{ old('areaPesquisa5', '') }}">
+                            <input id="areaPesquisa5" name="areaPesquisa5"  type="text" class="form-control mb-3" value="{{ old('areaPesquisa5', '') }}">
                             <span class="{{ $errors->has('areaPesquisa5') ? 'text-danger' : '' }}">
                                 {{ $errors->has('areaPesquisa5') ? $errors->first('areaPesquisa5') : '' }}
                             </span>
                         </div>
                         <div class="col-md">
-                            <div class="form-label">Link do Currículo Orcid</div>
-                            <input id="enderecoOrcid" name="enderecoOrcid" type="text" class="form-control" value="{{ old('enderecoOrcid', '') }}">
+                            <div class="form-label required">Link do Currículo Orcid</div>
+                            <input id="enderecoOrcid" name="enderecoOrcid" type="text" class="form-control mb-3" value="{{ old('enderecoOrcid', '') }}">
                             <span class="{{ $errors->has('enderecoOrcid') ? 'text-danger' : '' }}">
                                 {{ $errors->has('enderecoOrcid') ? $errors->first('enderecoOrcid') : '' }}
                             </span>
                              <div class="form-label">Sub-área 1</div>
-                            <input id="subArea1" name="subArea1"  type="text" class="form-control" value="{{ old('subArea1', '') }}">
+                            <input id="subArea1" name="subArea1"  type="text" class="form-control mb-3" value="{{ old('subArea1', '') }}">
                             <span class="{{ $errors->has('subArea1') ? 'text-danger' : '' }}">
                                 {{ $errors->has('subArea1') ? $errors->first('subArea1') : '' }}
                             </span>
                             <div class="form-label">Sub-área 2</div>
-                            <input id="subArea2" name="subArea2"  type="text" class="form-control" value="{{ old('subArea2', '') }}">
+                            <input id="subArea2" name="subArea2"  type="text" class="form-control mb-3" value="{{ old('subArea2', '') }}">
                             <span class="{{ $errors->has('subArea2') ? 'text-danger' : '' }}">
                                 {{ $errors->has('subArea2') ? $errors->first('subArea2') : '' }}
                             </span>
                             <div class="form-label">Sub-área 3</div>
-                            <input id="subArea3" name="subArea3"  type="text" class="form-control" value="{{ old('subArea3', '') }}">
+                            <input id="subArea3" name="subArea3"  type="text" class="form-control mb-3" value="{{ old('subArea3', '') }}">
                             <span class="{{ $errors->has('subArea3') ? 'text-danger' : '' }}">
                                 {{ $errors->has('subArea3') ? $errors->first('subArea3') : '' }}
                             </span>
                             <div class="col-3">
-                                <div class="form-label">Disponibilidade</div>
+                                <div class="form-label required">Disponibilidade</div>
                                 <select id="disponibilidade" name="disponibilidade" class="form-select" value="{{ old('disponibilidade', '') }}">
                                   <option value="0" selected>0</option>
                                   <option value="1" >1</option>

@@ -70,13 +70,13 @@ lógica de Semestre em tudo (middleware ?)
                             <li class="step-item">Especificações</li>
                             <li class="step-item active">Confirmação</li>
                         </ul>
-                        <h2 class="mb-4">Parabéns! Você acaba de se cadastrar ao CONCLUA!</h2>
+                        <h2 class="mb-4">Parabéns! Você acaba de completar seu cadastro no CONCLUA!</h2>
                         <div class="col-6 col-sm-4 col-md-2 col-xl-auto py-3">
                             <a href="{{ route('orientadorgeral.index') }}" class="btn btn-teal w-100" >
                                 Ir para a página inicial
                             </a>
                         </div>
-                        
+
                     </div>
                     </div>
                 </div>

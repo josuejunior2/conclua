@@ -20,9 +20,6 @@ use App\Http\Controllers\AuthAdmin\LoginController as AdminLoginController;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-})->middleware('auth');
 
 
 
@@ -55,18 +52,38 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('logout', [AdminLoginController::class, 'logout'])->name('logout');
 });
 
+Route::get('/', function () { return view('welcome'); });
 
 
+Route::middleware('primeiro_acesso')->group(function () {
+    // coloquei estas rotas sem middleware para nao dar loop                                                     VVVVVV
+    Route::get('academico/create', 'App\Http\Controllers\AcademicoController@create')->name('academico.create')->withoutMiddleware(['primeiro_acesso']);
+    Route::post('academico', 'App\Http\Controllers\AcademicoController@store')->name('academico.store')->withoutMiddleware(['primeiro_acesso']);
+    Route::get('academicoEstagio/create/{empresa}', 'App\Http\Controllers\AcademicoEstagioController@create')->name('academicoEstagio.create')->withoutMiddleware(['primeiro_acesso']);
+    Route::post('academicoEstagio', 'App\Http\Controllers\AcademicoEstagioController@store')->name('academicoEstagio.store')->withoutMiddleware(['primeiro_acesso']);
+    Route::get('empresa/create', 'App\Http\Controllers\EmpresaController@create')->name('empresa.create')->withoutMiddleware(['primeiro_acesso']);
+    Route::post('empresa', 'App\Http\Controllers\EmpresaController@store')->name('empresa.store')->withoutMiddleware(['primeiro_acesso']);
+    Route::get('academicoTCC/create', 'App\Http\Controllers\AcademicoTCCController@create')->name('academicoTCC.create')->withoutMiddleware(['primeiro_acesso']);
+    Route::post('academicoTCC', 'App\Http\Controllers\AcademicoTCCController@store')->name('academicoTCC.store')->withoutMiddleware(['primeiro_acesso']);
+    Route::get('orientadorgeral/create', 'App\Http\Controllers\OrientadorGeralController@create')->name('orientadorgeral.create')->withoutMiddleware(['primeiro_acesso']);
+    Route::post('orientadorgeral', 'App\Http\Controllers\OrientadorGeralController@store')->name('orientadorgeral.store')->withoutMiddleware(['primeiro_acesso']);
+    Route::get('orientador/create/{orientadorgeral_id}', 'App\Http\Controllers\OrientadorController@create')->name('orientador.create')->withoutMiddleware(['primeiro_acesso']);
+    Route::post('orientador', 'App\Http\Controllers\OrientadorController@store')->name('orientador.store')->withoutMiddleware(['primeiro_acesso']);
+    // se eu colocar ^ os create abaixo dos resource, vai dar ERR_TOO_MANY_REDIRECTS
 
-Route::resource('orientadorgeral', App\Http\Controllers\OrientadorGeralController::class);
-Route::resource('academico', App\Http\Controllers\AcademicoController::class);
-// Route::resource('academicoEstagio', App\Http\Controllers\AcademicoEstagioController::class);
-// Route::resource('academicoTCC', App\Http\Controllers\AcademicoTCCController::class);
-Route::resource('orientador', App\Http\Controllers\OrientadorController::class)->names([
-    'create' => 'c'
-]);
-Route::get('orientador/create/{orientadorgeral_id}', 'App\Http\Controllers\OrientadorController@create')->name('orientador.create');
 
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::resource('orientadorgeral', App\Http\Controllers\OrientadorGeralController::class)->except(['create', 'store']);
+    Route::resource('academico', App\Http\Controllers\AcademicoController::class)->except(['create', 'store']);
+    Route::resource('academicoEstagio', App\Http\Controllers\AcademicoEstagioController::class)->except(['create', 'store']);
+    Route::resource('empresa', App\Http\Controllers\EmpresaController::class)->except(['create', 'store']);
+    Route::resource('academicoTCC', App\Http\Controllers\AcademicoTCCController::class)->except(['create', 'store']);
+    Route::resource('orientador', App\Http\Controllers\OrientadorController::class)->except(['create', 'store']);
+
+});
+
+// Route::middleware('auth')->group(function () {
+// });
 
 // Route::get('/admin', function () {
 //     return view('admin.index');
@@ -75,4 +92,3 @@ Route::get('orientador/create/{orientadorgeral_id}', 'App\Http\Controllers\Orien
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('verified');
 
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

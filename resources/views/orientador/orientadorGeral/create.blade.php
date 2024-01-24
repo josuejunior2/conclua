@@ -71,33 +71,21 @@ lógica de Semestre em tudo (middleware ?)
                             <li class="step-item">Confirmação</li>
                         </ul>
 
-                        <form method="POST" action="{{ route('orientadorgeral.index') }}" autocomplete="off" novalidate>
+                        <form method="POST" action="{{ route('orientadorgeral.store') }}" autocomplete="off" novalidate>
                             @csrf
                             <div class="row g-3 mb-4">
-                            <div class="col-md">
-                                <div class="form-label required">MASP</div>
-                                <input id="masp" name="masp"  type="text" class="form-control" value="{{ old('masp', '') }}">
-                                <span class="{{ $errors->has('masp') ? 'text-danger' : '' }}">
-                                    {{ $errors->has('masp') ? $errors->first('masp') : '' }}
-                                </span>
-                            </div>
-
-                            <input id="password" name="password" type="hidden" class="form-control" value="{{ $user->password }}">
-
-                            <div class="col-md">
-                                <div class="form-label required">Nome</div>
-                                <input id="name" name="name" type="text" class="form-control" value="{{ old('name', $user->name) }}">
-                                <span class="{{ $errors->has('name') ? 'text-danger' : '' }}">
-                                    {{ $errors->has('name') ? $errors->first('name') : '' }}
-                                </span>
-                            </div>
-                            <div class="col-md">
-                                <div class="form-label required">Email</div>
-                                <input id="email" name="email" type="text" class="form-control" value="{{ old('email', $user->email) }}">
-                                <span class="{{ $errors->has('email') ? 'text-danger' : '' }}">
-                                    {{ $errors->has('email') ? $errors->first('email') : '' }}
-                                </span>
-                            </div>
+                                <div class="mb-3">
+                                    <label class="form-label required">Atualize sua senha</label>
+                                    <div>
+                                      <input name="password" type="password" class="form-control" placeholder="Password">
+                                      <small class="form-hint">
+                                        A senha deve ter no mínimo 8 caracteres, deve conter pelo menos uma letra maiúscula e minúscula, número e símbolo. (colocar regra no Request depois)
+                                      </small>
+                                      <span class="{{ $errors->has('passoword') ? 'text-danger' : '' }}">
+                                        {{ $errors->has('passoword') ? $errors->first('passoword') : '' }}
+                                    </span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row g-3 mb-4">
                             <div class="col-md">
@@ -113,7 +101,6 @@ lógica de Semestre em tudo (middleware ?)
                                 <span class="{{ $errors->has('formacao_id') ? 'text-danger' : '' }}">
                                     {{ $errors->has('formacao_id') ? $errors->first('formacao_id') : '' }}
                                 </span>
-                                {{-- {{ $errors->has('formacao_id') ? $errors->first('formacao_id') : '' }} --}}
                             </div>
                             <div class="col-md">
                                 <div class="form-label required">Selecione sua área de atuação</div>
@@ -133,9 +120,6 @@ lógica de Semestre em tudo (middleware ?)
                             </div>
                             <div class="card-footer bg-transparent mt-auto">
                                 <div class="btn-list justify-content-end">
-                                    <a href="{{ route('login') }}" class="btn">
-                                        Cancel
-                                    </a>
                                     <button type="submit" class="btn btn-primary">
                                         Submit
                                     </button>

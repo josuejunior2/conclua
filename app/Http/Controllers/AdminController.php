@@ -75,6 +75,7 @@ class AdminController extends Controller
         Excel::import(new UsersImport, 'orientadores.xlsx');
         Excel::import(new OrientadoresGeralImport, 'orientadores.xlsx');
 
+        // aí aqui tem que dar assignrole
         return dd('deu certo');
     }
     /**
@@ -84,6 +85,7 @@ class AdminController extends Controller
     {
         Excel::import(new UsersImport, 'academicos.xlsx');
         Excel::import(new AcademicosImport, 'academicos.xlsx');
+        // aí aqui tem que dar assignrole
 
         return dd('deu certo');
     }

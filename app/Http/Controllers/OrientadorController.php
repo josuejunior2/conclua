@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Spatie\Permission\Traits\HasRoles;
-use App\Http\Requests\UserStoreRequest;
+use App\Http\Requests\OrientadorRequest;
 
 class OrientadorController extends Controller
 {
@@ -33,13 +33,11 @@ class OrientadorController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(UserStoreRequest $request)
+    public function store(OrientadorRequest $request)
     {
-        // dd($request->all());
 
         $orientador = Orientador::create($request->validated());
-        $user = User::find(auth()->user()->id);
-        $user->assignRole('Orientador');
+        
         return view('orientador.finalorientador');
     }
 

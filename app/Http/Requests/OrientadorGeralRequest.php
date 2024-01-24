@@ -3,24 +3,20 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\OrientadorGeral;
 use Illuminate\Support\Facades\Auth;
 
-class UserStoreRequest extends FormRequest
+class OrientadorGeralRequest extends FormRequest
 {
-    /**
-     * The URI that users should be redirected to if validation fails.
-     *
-     * @var string
-     */
-    protected $redirect = '/home';
-
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        // alguma verificação?
-        return true;
+        if(OrientadorGeral::where('email', auth()->user()->email)->exists()){
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -31,12 +27,14 @@ class UserStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|min:10|max:60',
-            'email' => 'required|min:16|max:40|email',
+            // 'name' => 'required|min:10|max:60',
+            // 'email' => 'required|min:16|max:40|email',
+            // 'masp' => 'required|digits:7',
             'password' => 'required',//['required', Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised()],
+            'formacao_id' => 'required',
+            'area_id' => 'required',
         ];
     }
-
     /**
      * Get the messages array.
      *
@@ -46,15 +44,16 @@ class UserStoreRequest extends FormRequest
         return [
             'required' => 'O campo :attribute deve ser preenchido.',
             'password.required' => 'O campo senha deve ser preenchido',
-            'name.required' => 'O campo nome deve ser preenchido',
-            'name.min' => 'O campo nome deve ter no mínimo 10 caracteres.',
-            'name.max' => 'O campo nome deve ter no máximo 60 caracteres.',
-            'email.min' => 'O campo email deve ter no mínimo 16 caracteres.',
-            'email.max' => 'O campo email deve ter no máximo 40 caracteres.',
-            'email.email' => 'O campo email deve ser preenchido com um endereço de email.',
+
+            // 'name.min' => 'O campo nome deve ter no mínimo 10 caracteres.',
+            // 'name.max' => 'O campo nome deve ter no máximo 60 caracteres.',
+            // 'email.min' => 'O campo email deve ter no mínimo 16 caracteres.',
+            // 'email.max' => 'O campo email deve ter no máximo 40 caracteres.',
+            // 'email.email' => 'O campo email deve ser preenchido com um endereço de email.',
+            // 'masp.digits' => 'O campo MASP deve ter 7 caracteres numéricos.',
+
         ];
     }
-
     // public function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
     // {
     //     dd($validator->errors());

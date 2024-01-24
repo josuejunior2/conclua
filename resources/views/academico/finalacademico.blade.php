@@ -66,51 +66,18 @@ lógica de Semestre em tudo (middleware ?)
                      <div class="col d-flex flex-column">
                      <div class="card-body">
                          <ul class="steps steps-green steps-counter my-4">
-                             <li class="step-item active">Informações gerais</li>
-                             <li class="step-item">Especificações</li>
-                             <li class="step-item">Confirmação</li>
+                            <li class="step-item">Informações gerais</li>
+                            <li class="step-item">Dados da empresa</li>
+                            <li class="step-item">Dados do estágio</li>
+                            <li class="step-item active">Confirmação</li>
                          </ul>
+                         <h2 class="mb-4">Parabéns! Você acaba de completar seu cadastro no CONCLUA!</h2>
+                         <div class="col-6 col-sm-4 col-md-2 col-xl-auto py-3">
+                             <a href="{{ route('academico.index') }}" class="btn btn-teal w-100" >
+                                 Ir para a página inicial
+                             </a>
+                         </div>
 
-                         <form method="POST" action="{{ route('academico.store') }}" autocomplete="off" novalidate>
-                             @csrf
-                             <div class="row g-3 mb-4">
-                                <div class="mb-3">
-                                    <label class="form-label required">Atualize sua senha</label>
-                                    <div>
-                                      <input name="password" type="password" class="form-control" placeholder="Password">
-                                      <small class="form-hint">
-                                        A senha deve ter no mínimo 8 caracteres, deve conter pelo menos uma letra maiúscula e minúscula, número e símbolo. (colocar regra no Request depois)
-                                      </small>
-                                    </div>
-                                    <span class="{{ $errors->has('password') ? 'text-danger' : '' }}">
-                                      {{ $errors->has('password') ? $errors->first('password') : '' }}
-                                    </span>
-                                </div>
-
-                             <div class="mb-3">
-                                <div class="form-label required">Qual será sua modalidade de orientação?</div>
-                                <div>
-                                  <label class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="modalidade" value="0">
-                                    <span class="form-check-label">Estágio</span>
-                                  </label>
-                                  <label class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="modalidade" value="1">
-                                    <span class="form-check-label">Trabalho de Conclusão de Curso</span>
-                                  </label>
-                                </div>
-                                <span class="{{ $errors->has('modalidade') ? 'text-danger' : '' }}">
-                                    {{ $errors->has('modalidade') ? $errors->first('modalidade') : '' }}
-                                  </span>
-                              </div>
-                             <div class="card-footer bg-transparent mt-auto">
-                                 <div class="btn-list justify-content-end">
-                                     <button type="submit" class="btn btn-primary">
-                                         Submit
-                                     </button>
-                                 </div>
-                             </div>
-                         </form>
                      </div>
                      </div>
                  </div>
