@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -72,10 +73,15 @@ class AdminController extends Controller
      */
     public function import_orientadores()
     {
-        Excel::import(new UsersImport, 'orientadores.xlsx');
         Excel::import(new OrientadoresGeralImport, 'orientadores.xlsx');
+        Excel::import(new UsersImport, 'orientadores.xlsx');
 
-        // aí aqui tem que dar assignrole
+        $usuarios = User::where('created_at', '>=', now()->subSeconds(3))->get();
+
+        foreach ($usuarios as $usuario) {
+            $usuario->assignRole('Orientador', 'admin');
+        }
+
         return dd('deu certo');
     }
     /**
@@ -83,9 +89,14 @@ class AdminController extends Controller
      */
     public function import_academicos()
     {
-        Excel::import(new UsersImport, 'academicos.xlsx');
         Excel::import(new AcademicosImport, 'academicos.xlsx');
-        // aí aqui tem que dar assignrole
+        Excel::import(new UsersImport, 'academicos.xlsx');
+
+        $usuarios = User::where('created_at', '>=', now()->subSeconds(3))->get();
+
+        foreach ($usuarios as $usuario) {
+            $usuario->assignRole('academico');
+        }
 
         return dd('deu certo');
     }

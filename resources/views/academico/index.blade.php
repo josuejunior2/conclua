@@ -2,6 +2,6 @@
 
 @section('content')
 
-ademir
+academicu
 
 @endsection

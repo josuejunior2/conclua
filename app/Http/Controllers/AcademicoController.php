@@ -15,7 +15,7 @@ class AcademicoController extends Controller
      */
     public function index()
     {
-        //
+        return view('academico.index');
     }
 
     /**
