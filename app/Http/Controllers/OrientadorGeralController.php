@@ -39,7 +39,7 @@ class OrientadorGeralController extends Controller
      */
     public function store(OrientadorGeralRequest $request)
     {
-        $orientadorGeral = OrientadorGeral::where('email', auth()->user()->email)->first();
+        $orientadorGeral = OrientadorGeral::where('email', auth()->guard('admin')->user()->email)->first();
 
         if ($orientadorGeral) {
             $orientadorGeral->update($request->validated());

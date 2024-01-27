@@ -25,11 +25,12 @@ class DatabaseSeeder extends Seeder
             'password' => 'admin123',
         ]);
 
+
         $this->call(
             PerfisEPermissoesSeeder::class,
         );
 
-        // $user->assignRole('admin');
+        $user->assignRole('Admin', 'admin');
 
     }
 }

@@ -10,6 +10,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\UsersImport;
 use App\Imports\OrientadoresGeralImport;
 use App\Imports\AcademicosImport;
+use App\Imports\AdminsImport;
 
 class AdminController extends Controller
 {
@@ -74,12 +75,12 @@ class AdminController extends Controller
     public function import_orientadores()
     {
         Excel::import(new OrientadoresGeralImport, 'orientadores.xlsx');
-        Excel::import(new UsersImport, 'orientadores.xlsx');
+        Excel::import(new AdminsImport, 'orientadores.xlsx');
 
-        $usuarios = User::where('created_at', '>=', now()->subSeconds(3))->get();
+        $orientadores = Admin::where('created_at', '>=', now()->subSeconds(3))->get();
 
-        foreach ($usuarios as $usuario) {
-            $usuario->assignRole('Orientador', 'admin');
+        foreach ($orientadores as $orientador) {
+            $orientador->assignRole('Orientador');//, 'admin'
         }
 
         return dd('deu certo');
@@ -95,7 +96,7 @@ class AdminController extends Controller
         $usuarios = User::where('created_at', '>=', now()->subSeconds(3))->get();
 
         foreach ($usuarios as $usuario) {
-            $usuario->assignRole('academico');
+            $usuario->assignRole('Academico');
         }
 
         return dd('deu certo');

@@ -20,7 +20,7 @@ class PerfisEPermissoesSeeder extends Seeder
          //Criar Papel deo administrador
         $admin = Role::create(['name' => 'Admin', 'guard_name' => 'admin', 'description' => 'Acesso completo ao sistema']);
         $orientador = Role::create(['name' => 'Orientador', 'guard_name' => 'admin', 'description' => 'Acesso completo ao sistema com excessões']);
-        $usuario = Role::create(['name' => 'Usuario', 'guard_name' => 'web', 'description' => 'Acesso parcial ao sistema']);
+        $usuario = Role::create(['name' => 'Academico', 'guard_name' => 'web', 'description' => 'Acesso parcial ao sistema']);
 
         $permissionsAdmin = collect([
             ['guard_name' => 'admin', 'name' => 'listar usuarios',  'description' => 'Permite visualizar a listagem de usuários.'],

@@ -20,28 +20,37 @@ class PrimeiroAcessoMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $orientador = OrientadorGeral::where('email', auth()->user()->email)->first();
-        $academico = Academico::where('email', auth()->user()->email)->first();
 
-        if ($orientador && !$orientador->formacao_id && !$orientador->area_id) {
-            return redirect()->route('orientadorgeral.create');
+        if(auth()->guard('admin')->check()){
+            $orientador = OrientadorGeral::where('email', auth()->guard('admin')->user()->email)->first();
+
+            if (is_null($orientador)) {
+                return $next($request); // se não tiver orientador é que é admin, então pode passar
+            } elseif(is_null($orientador->formacao_id) && is_null($orientador->area_id)){
+                return redirect()->route('orientadorgeral.create'); // se não completou o cadastro, vai completar
+            } else {
+                return $next($request); // se já completou o cadastro, blz, pode passar
+            }
+        } elseif(auth()->guard('web')->check()){
+            $academico = Academico::where('email', auth()->user()->email)->first();
+
+            if ($academico) {
+                $tcc = AcademicoTCC::where('academico_id', $academico->id)->exists();
+                $estagio = AcademicoEstagio::where('academico_id', $academico->id)->exists();
+
+                if ($tcc || $estagio) {
+                    return $next($request);
+                }
+                else{
+                    return redirect()->route('academico.create');
+                }
+            }
+            else {
+                abort(403, 'Acesso não autorizado, você não foi cadastrado ao sistema. Entre em contato com o responsável.');
+            }
         }
-        elseif ($academico) {
-            $tcc = AcademicoTCC::where('academico_id', $academico->id)->exists();
-            $estagio = AcademicoEstagio::where('academico_id', $academico->id)->exists();
 
-            if ($tcc) {
-                return $next($request);
-            }
-            elseif ($estagio) {
-                return $next($request);
-            }
-            else{
-                return redirect()->route('academico.create');
-            }
-        }
-
-        return $next($request);
+        return abort(404);
     }
 
 }

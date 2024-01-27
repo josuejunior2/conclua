@@ -12,7 +12,7 @@ class OrientadorRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        if(auth()->check()){ // + alguma verificação?
+        if(auth()->guard('admin')->check()){ // + alguma verificação?
             return true;
         }
         return false;
@@ -26,8 +26,8 @@ class OrientadorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'enderecoLattes' => 'required|min:31|max:38',
-            'enderecoOrcid' => 'required|min:29|max:37',
+            'enderecoLattes' => 'required|min:38|max:38',
+            'enderecoOrcid' => 'required|min:37|max:37',
             'disponibilidade' => 'required',
             'orientadorGeral_id' => 'required',
         ];
@@ -40,10 +40,14 @@ class OrientadorRequest extends FormRequest
     {
         return [
             'required' => 'O campo :attribute deve ser preenchido.',
-            'enderecoLattes.min' => 'O link deve ter no mínimo 31 caracteres.',
-            'enderecoLattes.max' => 'O link deve ter no máximo 38 caracteres.',
-            'enderecoOrcid.min' => 'O link deve ter no mínimo 29 caracteres.',
-            'enderecoOrcid.max' => 'O link deve ter no máximo 37 caracteres.',
+            'enderecoLattes.min' => 'O link deve ter 38 caracteres.',
+            'enderecoLattes.max' => 'O link deve ter 38 caracteres.',
+            'enderecoOrcid.min' => 'O link deve ter 37 caracteres.',
+            'enderecoOrcid.max' => 'O link deve ter 37 caracteres.',
         ];
+    }
+    public function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+    {
+        dd($validator->errors());
     }
 }
