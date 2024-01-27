@@ -186,7 +186,11 @@
                 </a>
               </li>
               <li class="nav-item">
-                <form method="POST" action="{{ route('logout') }}">
+                @if(auth()->guard('admin')->check())
+                    <form method="POST" action="{{ route('admin.logout') }}">
+                @else
+                    <form method="POST" action="{{ route('logout') }}">
+                @endif
                     @csrf
                     <button class="nav-link" type="submit" >
                     <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->

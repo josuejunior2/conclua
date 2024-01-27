@@ -16,8 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('orientadorGeral_id');
             $table->foreign('orientadorGeral_id')->references('id')->on('orientadores_geral');
             $table->unsignedTinyInteger('disponibilidade')->default(0);
-            $table->string('enderecoLattes', 38);
-            $table->string('enderecoOrcid', 37);
+            $table->string('enderecoLattes', 38)->unique();
+            $table->string('enderecoOrcid', 37)->unique();
             $table->string('subArea1', 60)->nullable();
             $table->string('subArea2', 60)->nullable();
             $table->string('subArea3', 60)->nullable();

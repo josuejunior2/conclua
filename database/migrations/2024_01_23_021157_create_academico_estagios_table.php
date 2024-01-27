@@ -17,8 +17,8 @@ return new class extends Migration
             $table->foreign('academico_id')->references('id')->on('academicos');
             $table->unsignedBigInteger('orientadorGeral_id')->nullable();
             $table->foreign('orientadorGeral_id')->references('id')->on('orientadores_geral');
-            $table->string('tema', 60);
-            $table->string('resumo', 750);
+            $table->string('tema', 60)->unique();
+            $table->string('resumo', 750)->unique();
             $table->timestamps();
         });
 

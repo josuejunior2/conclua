@@ -44,7 +44,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('login', [AdminLoginController::class, 'login'])->name('login');
     Route::post('logout', [AdminLoginController::class, 'logout'])->name('logout');
 
-    Route::middleware(['auth:admin'])->group(function () {
+    Route::middleware(['auth:admin', 'primeiro_acesso'])->group(function () {
         Route::get('home', [AdminHomeController::class, 'index'])->name('home');
         Route::get('cadastro-orientador', [AdminController::class, 'import_orientadores'])->name('cadastro-orientador');
         Route::get('cadastro-academicos', [AdminController::class, 'import_academicos'])->name('cadastro-academicos');
@@ -79,6 +79,7 @@ Route::middleware('primeiro_acesso')->group(function () {
     Route::resource('empresa', App\Http\Controllers\EmpresaController::class)->except(['create', 'store']);
     Route::resource('academicoTCC', App\Http\Controllers\AcademicoTCCController::class)->except(['create', 'store']);
     Route::resource('orientador', App\Http\Controllers\OrientadorController::class)->except(['create', 'store']);
+    
 
 });
 
