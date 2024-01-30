@@ -20,11 +20,6 @@ use App\Http\Controllers\AuthAdmin\LoginController as AdminLoginController;
 |
 */
 
-
-
-
-
-
 // ->middleware('verified'); // é pra pedir verificação do email
 // Auth::routes();
 //Auth::routes(['verify' => true]); // verifica se tá logado
@@ -46,8 +41,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::middleware(['auth:admin', 'primeiro_acesso'])->group(function () {
         Route::get('home', [AdminHomeController::class, 'index'])->name('home');
-        Route::get('cadastro-orientador', [AdminController::class, 'import_orientadores'])->name('cadastro-orientador');
-        Route::get('cadastro-academicos', [AdminController::class, 'import_academicos'])->name('cadastro-academicos');
+        Route::post('cadastro-orientador', [AdminController::class, 'import_orientadores'])->name('cadastro-orientador');
+        Route::post('cadastro-academicos', [AdminController::class, 'import_academicos'])->name('cadastro-academicos');
+        Route::get('listar-orientadores', [AdminController::class, 'listar_orientadores'])->name('listar-orientadores');
     });
     Route::post('logout', [AdminLoginController::class, 'logout'])->name('logout');
 });
@@ -79,7 +75,7 @@ Route::middleware('primeiro_acesso')->group(function () {
     Route::resource('empresa', App\Http\Controllers\EmpresaController::class)->except(['create', 'store']);
     Route::resource('academicoTCC', App\Http\Controllers\AcademicoTCCController::class)->except(['create', 'store']);
     Route::resource('orientador', App\Http\Controllers\OrientadorController::class)->except(['create', 'store']);
-    
+
 
 });
 

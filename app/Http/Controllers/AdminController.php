@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use App\Models\User;
+use App\Models\OrientadorGeral;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -72,18 +73,33 @@ class AdminController extends Controller
     /**
      * Cadastra os dados basicos de orientadores por tabela excel.
      */
-    public function import_orientadores()
+    public function import_orientadores(Request $request)
     {
-        Excel::import(new OrientadoresGeralImport, 'orientadores.xlsx');
-        Excel::import(new AdminsImport, 'orientadores.xlsx');
+        $request->validate([
+            'tabela_orientadores' => 'required|mimes:xlsx', // |max:2048', // coloco um máximo??
+        ], [
+            'tabela_orientadores.required' => 'Por favor, selecione um arquivo.',
+            'tabela_orientadores.mimes' => 'O arquivo deve ter a extensão .xlsx.',
+            //'tabela_orientadores.max' => 'O tamanho máximo do arquivo é 2048 KB.',
+        ]);
 
+        $arquivo = $request->file('tabela_orientadores');
+
+        Excel::import(new OrientadoresGeralImport, $arquivo);
+        Excel::import(new AdminsImport, $arquivo);
+
+        // pega cada orientador que acabou de ser cadastrado da tabela admins
         $orientadores = Admin::where('created_at', '>=', now()->subSeconds(3))->get();
 
         foreach ($orientadores as $orientador) {
-            $orientador->assignRole('Orientador');//, 'admin'
+            $orientador->assignRole('Orientador');//, 'admin' // assign role em cada orientador que acabou de ser cadastrado na tabela admins
         }
 
-        return dd('deu certo');
+        $nomeOriginal = $arquivo->getClientOriginalName();
+
+        $arquivo->move('/uploads', $nomeOriginal);
+
+        return redirect()->route('admin.listar-orientadores');
     }
     /**
      * Cadastra os dados basicos de academicos por tabela excel.
@@ -102,4 +118,12 @@ class AdminController extends Controller
         return dd('deu certo');
     }
 
+     /**
+     *   Lista todos os orientadores.
+     */
+    public function listar_orientadores()
+    {
+        $orientadores = OrientadorGeral::with('Formacao', 'Area')->get();
+        return view('admin.listar-orientadores', ['orientadores' => $orientadores]);
+    }
 }

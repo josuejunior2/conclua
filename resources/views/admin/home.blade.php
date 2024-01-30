@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 
+
 @section('content')
 <div class="page-body">
     <div class="container-xl">
