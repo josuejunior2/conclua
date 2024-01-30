@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.guest')
 {{-- NÃO SEI PRAQ SERVE ESSA PAGINA AQUI E NEM SEI SE USO, ENTÃO POR ENQUANTO NAO VOU MEXER --}}
 @section('content')
 <div class="container">
