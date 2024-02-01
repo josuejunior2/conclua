@@ -4,7 +4,7 @@
 
 
 <div class="col-12">
-    <div class="card">
+    <div class="card m-3">
         <div class="card-header justify-content-between">
             <h3 class="card-title">Lista de orientadores</h3>
             <div>
@@ -31,7 +31,7 @@
         </div>
       </div> --}}
       <div class="table-responsive m-4">
-        <table class="display" id="tabela-orientadores"> {{-- table card-table table-vcenter text-nowrap datatable --}}
+        <table class="display w-100" id="tabela-orientadores"> {{-- table card-table table-vcenter text-nowrap datatable --}}
           <thead>
             <tr>
               <th class="w-1"></th> {{-- <input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select all invoices"> --}}

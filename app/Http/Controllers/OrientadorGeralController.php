@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\OrientadorGeral;
+use App\Models\Orientador;
 use App\Models\User;
 use App\Models\Area;
 use App\Models\Formacao;
@@ -57,9 +58,11 @@ class OrientadorGeralController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(OrientadorGeral $orientadorGeral)
+    public function show(OrientadorGeral $orientadorgeral)
     {
-        //
+        $orientador = Orientador::where('orientadorGeral_id', $orientadorgeral->id)->first();
+        
+        return view('orientador.orientadorGeral.show', ['orientadorGeral' => $orientadorgeral, 'orientador' => $orientador]);
     }
 
     /**
