@@ -18,8 +18,8 @@ class OrientadoresGeralImport implements ToModel
         return new OrientadorGeral([
             'name'     => $row[0],
             'email'    => $row[1],
-            'password' => Hash::make($row[2]),
-            'masp'     => $row[3],
+            'password' => Hash::make('admin123'),
+            'masp'     => $row[2],
         ]);
     }
 }

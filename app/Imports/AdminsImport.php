@@ -18,7 +18,7 @@ class AdminsImport implements ToModel
         return new Admin([
             'name'     => $row[0],
             'email'    => $row[1],
-            'password' => Hash::make($row[2]),
+            'password' => Hash::make('admin123'),
         ]);
     }
 }

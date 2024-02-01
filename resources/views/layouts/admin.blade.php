@@ -20,6 +20,8 @@
     <link href="https://cdn.jsdelivr.net/npm/@tabler/core/dist/css/tabler-payments.min.css?1684106062" rel="stylesheet"/>
     <link href="https://cdn.jsdelivr.net/npm/@tabler/core/dist/css/tabler-vendors.min.css?1684106062" rel="stylesheet"/>
     <link href="https://cdn.jsdelivr.net/npm/@tabler/core/dist/css/demo.min.css?1684106062" rel="stylesheet"/>
+    <!-- DataTable -->
+    <link href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 
     <style>
     @import url('https://rsms.me/inter/inter.css');
@@ -416,11 +418,30 @@
       <div class="page-wrapper">
         @yield('content')
       </div>
-    <!-- Libs JS -->
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.27.1/dist/apexcharts.min.js?1684106062" defer></script>
+    <!-- Data Table core -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap5.min.js"></script>
+
+    <script>
+        $(document).ready( function () {
+            $('#tabela-orientadores').DataTable({
+                "paging": true,
+                "ordering": true,
+                "searching": true,
+                "pageLength": 10,
+                "language": {
+                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/pt-BR.json',
+                },
+            });
+        });
+    </script>
+
+    <!-- Libs JS EU COMENTEI PQ EU PRECISEI colocar o CDN do jquery ali em cima -->
+    {{-- <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.27.1/dist/apexcharts.min.js?1684106062" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/jsvectormap@2.0.5/dist/js/jsvectormap.min.js?1684106062" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/jsvectormap@2.0.5/dist/maps/world.js?1684106062" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/jsvectormap@2.0.5/dist/maps/world-merc.js?1684106062" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsvectormap@2.0.5/dist/maps/world-merc.js?1684106062" defer></script> --}}
 
     <!-- Tabler Core -->
     <script src="https://cdn.jsdelivr.net/npm/@tabler/core/dist/js/tabler.min.js?1684106062" defer></script>
@@ -700,7 +721,7 @@
       });
       // @formatter:on
     </script>
-    <script>
+    {{-- <script>
       // @formatter:on
       document.addEventListener("DOMContentLoaded", function() {
       	const map = new jsVectorMap({
@@ -727,7 +748,7 @@
       	});
       });
       // @formatter:off
-    </script>
+    </script> --}}
     <script>
       // @formatter:off
       document.addEventListener("DOMContentLoaded", function () {
