@@ -51,7 +51,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 Route::get('/', function () { return view('welcome'); });
 
 
-Route::middleware('primeiro_acesso')->group(function () {
+Route::middleware(['auth:admin', 'primeiro_acesso'])->group(function () {
     // coloquei estas rotas sem middleware para nao dar loop                                                     VVVVVV
     Route::get('academico/create', 'App\Http\Controllers\AcademicoController@create')->name('academico.create')->withoutMiddleware(['primeiro_acesso']);
     Route::post('academico', 'App\Http\Controllers\AcademicoController@store')->name('academico.store')->withoutMiddleware(['primeiro_acesso']);

@@ -61,14 +61,14 @@ class OrientadorGeralController extends Controller
     public function show(OrientadorGeral $orientadorgeral)
     {
         $orientador = Orientador::where('orientadorGeral_id', $orientadorgeral->id)->first();
-        
-        return view('orientador.orientadorGeral.show', ['orientadorGeral' => $orientadorgeral, 'orientador' => $orientador]);
+
+        return view('orientador.orientadorGeral.show', ['orientadorgeral' => $orientadorgeral, 'orientador' => $orientador]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(OrientadorGeral $orientadorGeral)
+    public function edit(OrientadorGeral $orientadorgeral)
     {
         //
     }
@@ -76,7 +76,7 @@ class OrientadorGeralController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, OrientadorGeral $orientadorGeral)
+    public function update(Request $request, OrientadorGeral $orientadorgeral)
     {
         //
     }
@@ -84,8 +84,9 @@ class OrientadorGeralController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(OrientadorGeral $orientadorGeral)
+    public function destroy(OrientadorGeral $orientadorgeral) // Não coloquei o softDeletes, talvez deva colocar depois
     {
-        //
+        $orientadorgeral->delete();
+        return redirect()->route('admin.listar-orientadores');
     }
 }

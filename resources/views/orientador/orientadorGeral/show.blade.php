@@ -3,22 +3,30 @@
 @section('content')
 
 <div class="card m-3">
-    <div class="card-header">
+    <div class="card-header justify-content-between">
         <h3 class="card-title">Cadastro do Professor</h3>
+        <div>
+            <form id="form_{{$orientadorgeral->id}}" method="post" action="{{ route('orientadorgeral.destroy', ['orientadorgeral' => $orientadorgeral->id]) }}">
+                @method('DELETE')
+                @csrf
+                <!-- <button type="submit">Excluir</button>  -->
+                <a href="#" onclick="document.getElementById('form_{{$orientadorgeral->id}}').submit()" class="btn btn-danger w-100">Excluir cadastro</a>
+            </form>
+        </div>
     </div>
     <div class="card-body">
         <div class="datagrid">
         <div class="datagrid-item">
             <div class="datagrid-title">Nome</div>
-            <div class="datagrid-content">{{ $orientadorGeral->name }}</div>
+            <div class="datagrid-content">{{ $orientadorgeral->name }}</div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">MASP</div>
-            <div class="datagrid-content">{{ $orientadorGeral->masp }}</div>
+            <div class="datagrid-content">{{ $orientadorgeral->masp }}</div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Email</div>
-            <div class="datagrid-content">{{ $orientadorGeral->email }}</div>
+            <div class="datagrid-content">{{ $orientadorgeral->email }}</div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Telefone</div>
@@ -26,11 +34,11 @@
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Formação</div>
-            <div class="datagrid-content">{{ $orientadorGeral->Formacao ? $orientadorGeral->Formacao->formacao : 'Cadastro incompleto' }}</div>
+            <div class="datagrid-content">{{ $orientadorgeral->Formacao ? $orientadorgeral->Formacao->formacao : 'Cadastro incompleto' }}</div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Área de atuação</div>
-            <div class="datagrid-content">{{ $orientadorGeral->Area ? $orientadorGeral->Area->area : 'Cadastro incompleto' }}</div>
+            <div class="datagrid-content">{{ $orientadorgeral->Area ? $orientadorgeral->Area->area : 'Cadastro incompleto' }}</div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Currículo Lattes</div>

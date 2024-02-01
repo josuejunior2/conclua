@@ -64,12 +64,17 @@
                   <span class="dropdown">
                     <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Ações</button>
                     <div class="dropdown-menu dropdown-menu-end">
-                      <a class="dropdown-item" href="{{ route('orientadorgeral.show', ['orientadorgeral' => $o]) }}">
-                        Visualizar
-                      </a>
-                      <a class="dropdown-item" href="#">
-                        Deletar
-                      </a>
+                        <a class="dropdown-item" href="{{ route('orientadorgeral.show', ['orientadorgeral' => $o]) }}">
+                            Visualizar
+                        </a>
+                        <form id="form_{{$o->id}}" method="post" action="{{ route('orientadorgeral.destroy', ['orientadorgeral' => $o->id]) }}">
+                            @method('DELETE')
+                            @csrf
+                            <!-- <button type="submit">Excluir</button>  -->
+                            <a href="#" onclick="document.getElementById('form_{{$o->id}}').submit()" class="dropdown-item">
+                                Excluir cadastro
+                            </a>
+                        </form>
                     </div>
                   </span>
                 </td>
