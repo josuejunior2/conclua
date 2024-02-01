@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Admin;
 use App\Models\User;
 use App\Models\OrientadorGeral;
+use App\Models\Orientador;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -123,7 +124,8 @@ class AdminController extends Controller
      */
     public function listar_orientadores()
     {
+        $especificos = Orientador::with('OrientadorGeral')->get();
         $orientadores = OrientadorGeral::with('Formacao', 'Area')->get();
-        return view('admin.listar-orientadores', ['orientadores' => $orientadores]);
+        return view('admin.listar-orientadores', ['orientadores' => $orientadores, 'especificos' => $especificos]);
     }
 }

@@ -25,10 +25,10 @@ class OrientadorGeral extends Authenticatable
     ];
 
     public function Formacao(){
-        return $this->belongsTo('App\Models\Formacao'); // orientador tem 1 Formacao, ele olha a FK pelo hasOne
+        return $this->belongsTo('App\Models\Formacao'); // orientador tem 1 Formacao, ele olha a FK
     }
 
     public function Area(){
-        return $this->belongsTo('App\Models\Area'); // orientador tem 1 Area, ele olha a FK pelo hasOne
+        return $this->belongsTo('App\Models\Area'); // orientador tem 1 Area, ele olha a FK
     }
 }
