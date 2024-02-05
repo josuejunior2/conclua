@@ -32,7 +32,7 @@ class UserStoreRequest extends FormRequest
     {
         return [
             'name' => 'required|min:10|max:60',
-            'email' => 'required|min:16|max:40|email',
+            'email' => 'required|email',
             'password' => 'required',//['required', Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised()],
         ];
     }
@@ -49,8 +49,6 @@ class UserStoreRequest extends FormRequest
             'name.required' => 'O campo nome deve ser preenchido',
             'name.min' => 'O campo nome deve ter no mínimo 10 caracteres.',
             'name.max' => 'O campo nome deve ter no máximo 60 caracteres.',
-            'email.min' => 'O campo email deve ter no mínimo 16 caracteres.',
-            'email.max' => 'O campo email deve ter no máximo 40 caracteres.',
             'email.email' => 'O campo email deve ser preenchido com um endereço de email.',
         ];
     }

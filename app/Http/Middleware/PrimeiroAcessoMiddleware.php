@@ -20,7 +20,6 @@ class PrimeiroAcessoMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-
         if(auth()->guard('admin')->check()){
             $orientador = OrientadorGeral::where('email', auth()->guard('admin')->user()->email)->first();
 

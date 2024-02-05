@@ -39,19 +39,20 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('login', [AdminLoginController::class, 'login'])->name('login');
     Route::post('logout', [AdminLoginController::class, 'logout'])->name('logout');
 
-    Route::middleware(['auth:admin', 'primeiro_acesso'])->group(function () {
-        Route::get('home', [AdminHomeController::class, 'index'])->name('home');
-        Route::post('cadastro-orientador', [AdminController::class, 'import_orientadores'])->name('cadastro-orientador');
-        Route::post('cadastro-academicos', [AdminController::class, 'import_academicos'])->name('cadastro-academicos');
-        Route::get('listar-orientadores', [AdminController::class, 'listar_orientadores'])->name('listar-orientadores');
+    Route::middleware(['auth:admin'])->group(function () {
+        Route::get('/home', [AdminHomeController::class, 'index'])->name('home');
+        Route::post('cadastro/orientador', [AdminController::class, 'import_orientadores'])->name('cadastro-orientador');
+        Route::post('cadastro/academico', [AdminController::class, 'import_academicos'])->name('cadastro-academico');
+        Route::get('listar/orientadores', [AdminController::class, 'listar_orientadores'])->name('listar.orientadores');
+        Route::get('listar/academicos', [AdminController::class, 'listar_academicos'])->name('listar.academicos');
     });
     Route::post('logout', [AdminLoginController::class, 'logout'])->name('logout');
 });
 
-Route::get('/', function () { return view('welcome'); });
+Route::middleware(['auth', 'primeiro_acesso'])->group(function () { // =============== USER ===============================================================
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/', function () { return view('welcome'); });
 
-
-Route::middleware(['auth:admin', 'primeiro_acesso'])->group(function () {
     // coloquei estas rotas sem middleware para nao dar loop                                                     VVVVVV
     Route::get('academico/create', 'App\Http\Controllers\AcademicoController@create')->name('academico.create')->withoutMiddleware(['primeiro_acesso']);
     Route::post('academico', 'App\Http\Controllers\AcademicoController@store')->name('academico.store')->withoutMiddleware(['primeiro_acesso']);
@@ -61,14 +62,18 @@ Route::middleware(['auth:admin', 'primeiro_acesso'])->group(function () {
     Route::post('empresa', 'App\Http\Controllers\EmpresaController@store')->name('empresa.store')->withoutMiddleware(['primeiro_acesso']);
     Route::get('academicoTCC/create', 'App\Http\Controllers\AcademicoTCCController@create')->name('academicoTCC.create')->withoutMiddleware(['primeiro_acesso']);
     Route::post('academicoTCC', 'App\Http\Controllers\AcademicoTCCController@store')->name('academicoTCC.store')->withoutMiddleware(['primeiro_acesso']);
+});
+
+
+Route::middleware(['auth:admin', 'auth', 'primeiro_acesso'])->group(function () { // =================== ADMIN =================================================
+    // coloquei estas rotas sem middleware para nao dar loop                                                     VVVVVV
     Route::get('orientadorgeral/create', 'App\Http\Controllers\OrientadorGeralController@create')->name('orientadorgeral.create')->withoutMiddleware(['primeiro_acesso']);
     Route::post('orientadorgeral', 'App\Http\Controllers\OrientadorGeralController@store')->name('orientadorgeral.store')->withoutMiddleware(['primeiro_acesso']);
     Route::get('orientador/create/{orientadorgeral_id}', 'App\Http\Controllers\OrientadorController@create')->name('orientador.create')->withoutMiddleware(['primeiro_acesso']);
     Route::post('orientador', 'App\Http\Controllers\OrientadorController@store')->name('orientador.store')->withoutMiddleware(['primeiro_acesso']);
-    // se eu colocar ^ os create abaixo dos resource, vai dar ERR_TOO_MANY_REDIRECTS
+    // se eu colocar ^ os create abaixo dos resource, vai dar ERR_TOO_MANY_REDIRECTS, APESAR de ter o except ali V .... ???
 
-
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    // essas abaixo eu nao pensei ainda
     Route::resource('orientadorgeral', App\Http\Controllers\OrientadorGeralController::class)->except(['create', 'store']);
     Route::resource('academico', App\Http\Controllers\AcademicoController::class)->except(['create', 'store']);
     Route::resource('academicoEstagio', App\Http\Controllers\AcademicoEstagioController::class)->except(['create', 'store']);

@@ -87,6 +87,6 @@ class OrientadorGeralController extends Controller
     public function destroy(OrientadorGeral $orientadorgeral) // Não coloquei o softDeletes, talvez deva colocar depois
     {
         $orientadorgeral->delete();
-        return redirect()->route('admin.listar-orientadores');
+        return redirect()->route('admin.listar.orientadores');
     }
 }

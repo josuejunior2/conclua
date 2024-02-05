@@ -54,8 +54,8 @@
 </script>
 
 
-<script>
+{{-- <script>
     @yield('js')
-</script>
+</script> --}}
 
 </html>

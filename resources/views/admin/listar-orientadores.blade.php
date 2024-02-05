@@ -8,28 +8,26 @@
         <div class="card-header justify-content-between">
             <h3 class="card-title">Lista de orientadores</h3>
             <div>
-                <a href="#" class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#modal-cadastro">
+                <a href="#" class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#modal-cadastro-orientador">
                     Adicionar novos orientadores
                 </a>
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
             </div>
+
         </div>
-      {{-- <div class="card-body border-bottom py-3">
-        <div class="d-flex">
-          <div class="text-muted">
-            Show
-            <div class="mx-2 d-inline-block">
-              <input type="text" class="form-control form-control-sm" value="8" size="3" aria-label="Invoices count">
-            </div>
-            entries
-          </div>
-          <div class="ms-auto text-muted">
-            Search:
-            <div class="ms-2 d-inline-block">
-              <input type="text" class="form-control form-control-sm" aria-label="Search invoice">
-            </div>
-          </div>
-        </div>
-      </div> --}}
       <div class="table-responsive m-4">
         <table class="display w-100" id="tabela-orientadores"> {{-- table card-table table-vcenter text-nowrap datatable --}}
           <thead>
