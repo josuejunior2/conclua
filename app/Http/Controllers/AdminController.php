@@ -6,6 +6,9 @@ use App\Models\Admin;
 use App\Models\User;
 use App\Models\OrientadorGeral;
 use App\Models\Orientador;
+use App\Models\Academico;
+use App\Models\AcademicoTCC;
+use App\Models\AcademicoEstagio;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -13,6 +16,8 @@ use App\Imports\UsersImport;
 use App\Imports\OrientadoresGeralImport;
 use App\Imports\AcademicosImport;
 use App\Imports\AdminsImport;
+use Illuminate\Support\Facades\Validator;
+
 
 class AdminController extends Controller
 {
@@ -76,7 +81,7 @@ class AdminController extends Controller
      */
     public function import_orientadores(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'tabela_orientadores' => 'required|mimes:xlsx', // |max:2048', // coloco um máximo??
         ], [
             'tabela_orientadores.required' => 'Por favor, selecione um arquivo.',
@@ -84,10 +89,20 @@ class AdminController extends Controller
             //'tabela_orientadores.max' => 'O tamanho máximo do arquivo é 2048 KB.',
         ]);
 
+        if ($validator->fails()) {
+            // Redireciona de volta com os erros
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
         $arquivo = $request->file('tabela_orientadores');
 
-        Excel::import(new OrientadoresGeralImport, $arquivo);
-        Excel::import(new AdminsImport, $arquivo);
+        try {
+            Excel::import(new OrientadoresGeralImport, $arquivo);
+            Excel::import(new AdminsImport, $arquivo);
+            // Seu código para importar e processar o arquivo aqui
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['erro' => 'Erro: Planilha vazia ou dados repetidos.']);
+        }
 
         // pega cada orientador que acabou de ser cadastrado da tabela admins
         $orientadores = Admin::where('created_at', '>=', now()->subSeconds(3))->get();
@@ -100,15 +115,35 @@ class AdminController extends Controller
 
         $arquivo->move('/uploads', $nomeOriginal);
 
-        return redirect()->route('admin.listar-orientadores');
+        return redirect()->route('admin.listar.orientadores')->with('success', 'Operação realizada com sucesso!');;
     }
     /**
      * Cadastra os dados basicos de academicos por tabela excel.
      */
-    public function import_academicos()
+    public function import_academicos(Request $request)
     {
-        Excel::import(new AcademicosImport, 'academicos.xlsx');
-        Excel::import(new UsersImport, 'academicos.xlsx');
+        $validator = Validator::make($request->all(), [
+            'tabela_academicos' => 'required|mimes:xlsx', // |max:2048', // coloco um máximo??
+        ], [
+            'tabela_academicos.required' => 'Por favor, selecione um arquivo.',
+            'tabela_academicos.mimes' => 'O arquivo deve ter a extensão .xlsx.',
+            //'tabela_orientadores.max' => 'O tamanho máximo do arquivo é 2048 KB.',
+        ]);
+
+        if ($validator->fails()) {
+            // Redireciona de volta com os erros
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $arquivo = $request->file('tabela_academicos');
+
+        try {
+            Excel::import(new AcademicosImport, $arquivo);
+            Excel::import(new UsersImport, $arquivo);
+            // Seu código para importar e processar o arquivo aqui
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['erro' => 'Erro: Planilha vazia ou dados repetidos.']);
+        }
 
         $usuarios = User::where('created_at', '>=', now()->subSeconds(3))->get();
 
@@ -116,7 +151,11 @@ class AdminController extends Controller
             $usuario->assignRole('Academico');
         }
 
-        return dd('deu certo');
+        $nomeOriginal = $arquivo->getClientOriginalName();
+
+        $arquivo->move('/uploads', $nomeOriginal);
+
+        return redirect()->route('admin.listar.academicos');
     }
 
      /**
@@ -127,5 +166,17 @@ class AdminController extends Controller
         $especificos = Orientador::with('OrientadorGeral')->get();
         $orientadores = OrientadorGeral::with('Formacao', 'Area')->get();
         return view('admin.listar-orientadores', ['orientadores' => $orientadores, 'especificos' => $especificos]);
+    }
+
+ /**
+     *   Lista todos os academicos.
+     */
+    public function listar_academicos()
+    {
+        $academicos = Academico::all();
+        $tcc = AcademicoTCC::all();
+        $estagio = AcademicoEstagio::all();
+
+        return view('admin.listar-academicos', ['academicos' => $academicos, 'tcc' => $tcc, 'estagio' => $estagio]);
     }
 }
