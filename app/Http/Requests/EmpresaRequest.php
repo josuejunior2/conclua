@@ -37,7 +37,7 @@ class EmpresaRequest extends FormRequest
             'cnpj' => ['required', 'regex:/^[0-9]+(\.[0-9]+){0,2}\/[0-9]+-[0-9]+$/'],
             'name' => 'required|min:10|max:60',
             'supervisor' => 'required|min:10|max:60',
-            'email' => 'required|min:16|max:40|email',
+            'email' => 'required|email',
         ];
     }
     /**
@@ -51,8 +51,8 @@ class EmpresaRequest extends FormRequest
             'name.required' => 'O campo nome deve ser preenchido',
             'name.min' => 'O campo nome deve ter no mínimo 10 caracteres.',
             'name.max' => 'O campo nome deve ter no máximo 60 caracteres.',
-            'email.min' => 'O campo email deve ter no mínimo 16 caracteres.',
-            'email.max' => 'O campo email deve ter no máximo 40 caracteres.',
+            'supervisor.min' => 'O campo nome deve ter no mínimo 10 caracteres.',
+            'supervisor.max' => 'O campo nome deve ter no máximo 60 caracteres.',
             'email.email' => 'O campo email deve ser preenchido com um endereço de email.',
             'cnpj.regex' => 'O campo CNPJ deve ter 14 caracteres numéricos, 2 pontos, 1 barra e 1 hífen.',
         ];

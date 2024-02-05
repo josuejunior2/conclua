@@ -21,4 +21,5 @@ class Academico extends Authenticatable
         'password',
         'remember_token',
     ];
+
 }

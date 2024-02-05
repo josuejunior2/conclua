@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AcademicoEstagio;
+use App\Models\AcademicoTCC;
 use App\Models\Academico;
+use App\Models\Empresa;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request\Request;
 use App\Http\Requests\AcademicoRequest;
@@ -49,7 +52,6 @@ class AcademicoController extends Controller
         }
 
         return abort(404);
-
     }
 
     /**
@@ -57,7 +59,22 @@ class AcademicoController extends Controller
      */
     public function show(Academico $academico)
     {
-        //
+        $tcc = AcademicoTCC::where('academico_id', $academico->id)->exists();
+        $estagio = AcademicoEstagio::where('academico_id', $academico->id)->exists();
+
+        if($tcc){
+            $especifico = AcademicoTCC::where('academico_id', $academico->id)->first();
+            $modalidade = 'TCC';
+        } else if($estagio){
+            $modalidade = 'Estagio';
+            $especifico = AcademicoEstagio::with('Empresa')->where('academico_id', $academico->id)->first();
+        } else {
+            $modalidade = 'N/A';
+            $especifico = 'Cadastro incompleto';
+            return view('academico.show', ['academico' => $academico, 'modalidade' => $modalidade]);
+        }
+
+        return view('academico.show', ['academico' => $academico, 'especifico' => $especifico, 'modalidade' => $modalidade]);
     }
 
     /**
@@ -81,6 +98,18 @@ class AcademicoController extends Controller
      */
     public function destroy(Academico $academico)
     {
-        //
+        if(AcademicoTCC::where('academico_id', $academico->id)->exists()){
+
+            AcademicoTCC::where('academico_id', $academico->id)->delete();
+            $academico->delete();
+
+        } else if(AcademicoEstagio::where('academico_id', $academico->id)->exists()){
+
+            AcademicoEstagio::where('academico_id', $academico->id)->delete();
+            $academico->delete();
+        } else {
+            $academico->delete();
+        }
+        return redirect()->route('admin.listar.academicos');
     }
 }
