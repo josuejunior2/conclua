@@ -1,4 +1,4 @@
-@extends('layouts.app');
+@extends('layouts.guest')
 
 @section('content')
     <div class="page">
@@ -61,7 +61,7 @@
                             <div class="card-footer bg-transparent mt-auto">
                                 <div class="btn-list justify-content-end">
                                     <button type="submit" class="btn btn-primary">
-                                        Submit
+                                        Enviar
                                     </button>
                                 </div>
                             </div>
