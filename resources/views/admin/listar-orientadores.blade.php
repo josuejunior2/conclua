@@ -94,4 +94,20 @@
 </div>
 @endsection
 
+@section('js')
+<script>
+    $(document).ready( function () {
+        $('#tabela-orientadores').DataTable({
+            "paging": true,
+            "ordering": true,
+            "searching": true,
+            "pageLength": 10,
+            "language": {
+                url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/pt-BR.json',
+            },
+        });
+    });
+</script>
+@endsection
+
 @include('admin.modal.cadastro-orientador')

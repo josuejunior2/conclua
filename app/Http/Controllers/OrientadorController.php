@@ -35,9 +35,8 @@ class OrientadorController extends Controller
      */
     public function store(OrientadorRequest $request)
     {
-
         $orientador = Orientador::create($request->validated());
-        
+
         return view('orientador.finalorientador');
     }
 

@@ -33,6 +33,8 @@ Route::middleware('auth:web')->group(function () {
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });
 
+
+// =========================================================================== ADMIN & ORIENTADOR ==========================================
 Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::get('login', [AdminLoginController::class, 'showLoginForm'])->name('login.index');
@@ -40,7 +42,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('logout', [AdminLoginController::class, 'logout'])->name('logout');
 
     Route::middleware(['auth:admin'])->group(function () {
+        Route::get('/', function () { return redirect()->route('admin.home'); });
         Route::get('/home', [AdminHomeController::class, 'index'])->name('home');
+        Route::resource('semestre', App\Http\Controllers\SemestreController::class);
         Route::post('cadastro/orientador', [AdminController::class, 'import_orientadores'])->name('cadastro-orientador');
         Route::post('cadastro/academico', [AdminController::class, 'import_academicos'])->name('cadastro-academico');
         Route::get('listar/orientadores', [AdminController::class, 'listar_orientadores'])->name('listar.orientadores');
@@ -48,24 +52,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     });
     Route::post('logout', [AdminLoginController::class, 'logout'])->name('logout');
 });
-
-Route::middleware(['auth', 'primeiro_acesso'])->group(function () { // =============== USER ===============================================================
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    Route::get('/', function () { return view('welcome'); });
-
-    // coloquei estas rotas sem middleware para nao dar loop                                                     VVVVVV
-    Route::get('academico/create', 'App\Http\Controllers\AcademicoController@create')->name('academico.create')->withoutMiddleware(['primeiro_acesso']);
-    Route::post('academico', 'App\Http\Controllers\AcademicoController@store')->name('academico.store')->withoutMiddleware(['primeiro_acesso']);
-    Route::get('academicoEstagio/create/{empresa}', 'App\Http\Controllers\AcademicoEstagioController@create')->name('academicoEstagio.create')->withoutMiddleware(['primeiro_acesso']);
-    Route::post('academicoEstagio', 'App\Http\Controllers\AcademicoEstagioController@store')->name('academicoEstagio.store')->withoutMiddleware(['primeiro_acesso']);
-    Route::get('empresa/create', 'App\Http\Controllers\EmpresaController@create')->name('empresa.create')->withoutMiddleware(['primeiro_acesso']);
-    Route::post('empresa', 'App\Http\Controllers\EmpresaController@store')->name('empresa.store')->withoutMiddleware(['primeiro_acesso']);
-    Route::get('academicoTCC/create', 'App\Http\Controllers\AcademicoTCCController@create')->name('academicoTCC.create')->withoutMiddleware(['primeiro_acesso']);
-    Route::post('academicoTCC', 'App\Http\Controllers\AcademicoTCCController@store')->name('academicoTCC.store')->withoutMiddleware(['primeiro_acesso']);
-});
-
-
-Route::middleware(['auth:admin', 'auth', 'primeiro_acesso'])->group(function () { // =================== ADMIN =================================================
+Route::middleware(['auth:admin', 'auth', 'primeiro_acesso'])->group(function () {
     // coloquei estas rotas sem middleware para nao dar loop                                                     VVVVVV
     Route::get('orientadorgeral/create', 'App\Http\Controllers\OrientadorGeralController@create')->name('orientadorgeral.create')->withoutMiddleware(['primeiro_acesso']);
     Route::post('orientadorgeral', 'App\Http\Controllers\OrientadorGeralController@store')->name('orientadorgeral.store')->withoutMiddleware(['primeiro_acesso']);
@@ -83,6 +70,28 @@ Route::middleware(['auth:admin', 'auth', 'primeiro_acesso'])->group(function () 
 
 
 });
+
+
+
+
+
+// ====================================================== USER ==========================================================================
+Route::middleware(['auth', 'primeiro_acesso'])->group(function () { //
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/', function () { return view('welcome'); });
+
+    // coloquei estas rotas sem middleware para nao dar loop                                                     VVVVVV
+    Route::get('academico/create', 'App\Http\Controllers\AcademicoController@create')->name('academico.create')->withoutMiddleware(['primeiro_acesso']);
+    Route::post('academico', 'App\Http\Controllers\AcademicoController@store')->name('academico.store')->withoutMiddleware(['primeiro_acesso']);
+    Route::get('academicoEstagio/create/{empresa}', 'App\Http\Controllers\AcademicoEstagioController@create')->name('academicoEstagio.create')->withoutMiddleware(['primeiro_acesso']);
+    Route::post('academicoEstagio', 'App\Http\Controllers\AcademicoEstagioController@store')->name('academicoEstagio.store')->withoutMiddleware(['primeiro_acesso']);
+    Route::get('empresa/create', 'App\Http\Controllers\EmpresaController@create')->name('empresa.create')->withoutMiddleware(['primeiro_acesso']);
+    Route::post('empresa', 'App\Http\Controllers\EmpresaController@store')->name('empresa.store')->withoutMiddleware(['primeiro_acesso']);
+    Route::get('academicoTCC/create', 'App\Http\Controllers\AcademicoTCCController@create')->name('academicoTCC.create')->withoutMiddleware(['primeiro_acesso']);
+    Route::post('academicoTCC', 'App\Http\Controllers\AcademicoTCCController@store')->name('academicoTCC.store')->withoutMiddleware(['primeiro_acesso']);
+});
+
+
 
 // Route::middleware('auth')->group(function () {
 // });
