@@ -69,8 +69,8 @@ class SemestreRequest extends FormRequest
         return [
             'required' => 'O campo :attribute deve ser preenchido.',
             'ano.integer' => 'O campo ano deve ser um número inteiro.',
-            'ano.min' => 'O campo ano deve ser maior ou igual a :min.',
-            'ano.max' => 'O campo ano deve ser menor ou igual a :max.',
+            'ano.min' => 'O campo ano deve ser maior em 1 ano ou igual a :min.',
+            'ano.max' => 'O campo ano deve ser menor em 1 ano ou igual a :max.',
             'numero.integer' => 'O campo número deve ser um número inteiro.',
             'data_inicio.date' => 'O campo data de início deve ser uma data válida.',
             'data_inicio.before' => 'A data de início deve ser uma data anterior a data de finalização do semestre.',

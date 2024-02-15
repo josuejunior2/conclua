@@ -39,9 +39,11 @@ class SemestreController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Semestre $semestre)
+    public function show(string $id)
     {
-        //
+        $dados = Semestre::find($id);
+
+        return view('semestre.show', ['semestre' => $dados]);
     }
 
     /**
@@ -49,15 +51,17 @@ class SemestreController extends Controller
      */
     public function edit(Semestre $semestre)
     {
-        //
+        return view('semestre.edit', ['semestre' => $semestre]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Semestre $semestre)
+    public function update(SemestreRequest $request, Semestre $semestre)
     {
-        //
+        $semestre->update($request->validated());
+
+        return redirect()->route('admin.semestre.index');
     }
 
     /**
@@ -65,6 +69,7 @@ class SemestreController extends Controller
      */
     public function destroy(Semestre $semestre)
     {
-        //
+        $semestre->delete();
+        return redirect()->route('admin.semestre.index');
     }
 }

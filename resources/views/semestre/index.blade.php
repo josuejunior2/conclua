@@ -37,6 +37,8 @@
               <th>Ano</th>
               <th>Nº</th>
               <th>Data de início</th>
+              <th>Data-limite doc. estágio</th>
+              <th>Data-limite doc. orientação</th>
               <th>Data de fim</th>
               <th>Status</th>
               <th></th>
@@ -49,15 +51,24 @@
                 <td><span class="text-muted">{{ $s->id }}</span></td>
                 <td>{{ $s->ano }}</td>
                 <td>{{ $s->numero }}</td>
-                <td>{{ $s->data_inicio }}</td>
-                <td>{{ $s->data_fim }}</td>
-                <td>{{ $s->status }}</td>
+                <td>{{ \Carbon\Carbon::parse($s->data_inicio)->format('d/m/Y') }}</td>
+                <td>{{ \Carbon\Carbon::parse($s->data_fim)->format('d/m/Y') }}</td>
+                <td>{{ \Carbon\Carbon::parse($s->limite_doc_estagio)->format('d/m/Y') }}</td>
+                <td>{{ \Carbon\Carbon::parse($s->limite_orientacao)->format('d/m/Y') }}</td>
+                <td>@if ($s->status == 0)
+                    Inativo
+                    @elseif ($s->status == 1)
+                    Ativo
+                @endif</td>
                 <td class="text-end">
                   <span class="dropdown">
                     <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Ações</button>
                     <div class="dropdown-menu dropdown-menu-end">
                         <a class="dropdown-item" href="{{ route('admin.semestre.show', ['semestre' => $s]) }}">
                             Visualizar
+                        </a>
+                        <a class="dropdown-item" href="{{ route('admin.semestre.edit', ['semestre' => $s]) }}">
+                            Editar
                         </a>
                         <form id="form_{{$s->id}}" method="post" action="{{ route('admin.semestre.destroy', ['semestre' => $s->id]) }}">
                             @method('DELETE')
