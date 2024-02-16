@@ -70,6 +70,23 @@
                         <a class="dropdown-item" href="{{ route('admin.semestre.edit', ['semestre' => $s]) }}">
                             Editar
                         </a>
+                        @if ($s->status == 0)
+                        <form id="form_{{$s->id}}" method="post" action="{{ route('admin.semestre.ativar', ['semestre' => $s->id]) }}">
+                            @csrf
+                            <!-- <button type="submit">Excluir</button>  -->
+                            <a href="#" onclick="document.getElementById('form_{{$s->id}}').submit()" class="dropdown-item">
+                                Ativar
+                            </a>
+                        </form>
+                        @else
+                        <form id="form_{{$s->id}}" method="post" action="{{ route('admin.semestre.desativar', ['semestre' => $s->id]) }}">
+                            @csrf
+                            <!-- <button type="submit">Excluir</button>  -->
+                            <a href="#" onclick="document.getElementById('form_{{$s->id}}').submit()" class="dropdown-item">
+                                Desativar
+                            </a>
+                        </form>
+                        @endif
                         <form id="form_{{$s->id}}" method="post" action="{{ route('admin.semestre.destroy', ['semestre' => $s->id]) }}">
                             @method('DELETE')
                             @csrf

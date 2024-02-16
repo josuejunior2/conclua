@@ -45,9 +45,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/', function () { return redirect()->route('admin.home'); });
         Route::get('/home', [AdminHomeController::class, 'index'])->name('home');
         Route::resource('semestre', App\Http\Controllers\SemestreController::class);
+        Route::post('ativar/{semestre}', [App\Http\Controllers\SemestreController::class, 'ativar'])->name('semestre.ativar');
+        Route::post('desativar/{semestre}', [App\Http\Controllers\SemestreController::class, 'desativar'])->name('semestre.desativar');
         Route::post('cadastro/orientador', [AdminController::class, 'import_orientadores'])->name('cadastro-orientador');
         Route::post('cadastro/academico', [AdminController::class, 'import_academicos'])->name('cadastro-academico');
-        Route::get('listar/orientadores', [AdminController::class, 'listar_orientadores'])->name('listar.orientadores');
+        Route::get('listar/orientadores', [AdminController::class, 'listar_orientadores'])->name('listar.orientadores')->middleware('semestre_ativo');
         Route::get('listar/academicos', [AdminController::class, 'listar_academicos'])->name('listar.academicos');
     });
     Route::post('logout', [AdminLoginController::class, 'logout'])->name('logout');

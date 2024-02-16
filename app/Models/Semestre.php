@@ -10,4 +10,15 @@ class Semestre extends Model
     use HasFactory;
 
     protected $fillable = ['ano', 'numero', 'data_inicio', 'data_fim', 'limite_doc_estagio', 'limite_orientacao', 'status'];
+
+    public function AcademicoEstagio(){
+        return $this->hasMany('App\Models\AcademicoEstagio');
+    }
+
+    public function AcademicoTCC(){
+        return $this->hasMany('App\Models\AcademicoTCC');
+    }
+
 }
+
+

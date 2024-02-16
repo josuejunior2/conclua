@@ -72,4 +72,33 @@ class SemestreController extends Controller
         $semestre->delete();
         return redirect()->route('admin.semestre.index');
     }
+
+    /**
+     * Ativa o semestre
+     */
+    public function ativar(string $id)
+    {
+        $semestre = Semestre::find($id);
+
+        if(Semestre::where('status', 1)->exists()){
+            return abort(403, 'Desative o semestre em ativo');
+        } else{
+            $semestre->update(['status' => 1]);
+        }
+
+        return redirect()->route('admin.semestre.index');
+    }
+
+    /**
+     * Desativa o semestre
+     */
+    public function desativar(string $id)
+    {
+        $semestre = Semestre::find($id);
+
+        $semestre->update(['status' => 0]);
+
+        return redirect()->route('admin.semestre.index');
+    }
 }
+

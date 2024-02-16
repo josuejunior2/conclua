@@ -55,7 +55,7 @@ class SemestreRequest extends FormRequest
             'data_inicio' => 'required|before:data_fim', //. $data_fim,
             'data_fim' => [
                 'required',
-                $this->gapMinimo(request()->input('data_inicio'), 5)],
+                $this->gapMinimo(request()->input('data_inicio'), 4)],
             'limite_doc_estagio' => 'required|before:data_fim', //. $data_fim,
             'limite_orientacao' => 'required|before:data_fim', //. $data_fim,
         ];
