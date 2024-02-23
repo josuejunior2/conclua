@@ -8,7 +8,7 @@
         <div class="card-header justify-content-between">
             <h3 class="card-title">Lista de acadêmicos</h3>
             <div>
-                <a href="#" class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#modal-cadastro-academico">
+                <a href="#" class="btn btn-success w-100 mb-1" data-bs-toggle="modal" data-bs-target="#modal-cadastro-academico">
                     Adicionar novos acadêmicos
                 </a>
                 @if ($errors->any())
