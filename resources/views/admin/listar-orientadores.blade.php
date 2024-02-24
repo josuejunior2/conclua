@@ -26,7 +26,6 @@
                     </div>
                 @endif
             </div>
-
         </div>
       <div class="table-responsive m-4">
         <table class="display w-100" id="tabela-orientadores"> {{-- table card-table table-vcenter text-nowrap datatable --}}
@@ -70,7 +69,7 @@
                   <span class="dropdown">
                     <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Ações</button>
                     <div class="dropdown-menu dropdown-menu-end">
-                        <a class="dropdown-item" href="{{ route('orientadorgeral.show', ['orientadorgeral' => $o]) }}">
+                        <a class="dropdown-item" href="{{ route('orientadorgeral.show.admin', ['orientadorgeral' => $o]) }}">
                             Visualizar
                         </a>
                         <form id="form_{{$o->id}}" method="post" action="{{ route('orientadorgeral.destroy', ['orientadorgeral' => $o->id]) }}">

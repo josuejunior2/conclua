@@ -19,7 +19,12 @@ class SemestreAtivoMiddleware
         if(Semestre::where('status', 1)->exists()){
             return $next($request);
         } else {
-            return abort(403, 'Semestre ainda não configurado. Entre em contato com o responsável pelo sistema.');
+            $academico = Role::where('name', 'Academico')->first();
+
+            $role->permissions()->updateExistingPivot('8', ['status' => false]); // - solicitar orientacao
+
+            return $next($request);
+            // return abort(403, 'Semestre ainda não configurado. Entre em contato com o responsável pelo sistema.');
         }
     }
 }

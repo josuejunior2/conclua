@@ -20,6 +20,7 @@ class PrimeiroAcessoMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+        // dd(auth()->guard('web')->check());
         if(auth()->guard('admin')->check()){
             $orientador = OrientadorGeral::where('email', auth()->guard('admin')->user()->email)->first();
 
@@ -28,7 +29,7 @@ class PrimeiroAcessoMiddleware
             } elseif(is_null($orientador->formacao_id) && is_null($orientador->area_id)){
                 return redirect()->route('orientadorgeral.create'); // se não completou o cadastro, vai completar
             } else {
-                return $next($request); // se já completou o cadastro, blz, pode passar
+                return $next($request); // se já completou o cadastro OU é admin, blz, pode passar
             }
         } elseif(auth()->guard('web')->check()){
             $academico = Academico::where('email', auth()->user()->email)->first();
@@ -45,7 +46,7 @@ class PrimeiroAcessoMiddleware
                 }
             }
             else {
-                abort(403, 'Acesso não autorizado, você não foi cadastrado ao sistema. Entre em contato com o responsável.');
+                return redirect()->route('welcome');
             }
         }
 

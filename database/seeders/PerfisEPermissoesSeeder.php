@@ -23,7 +23,7 @@ class PerfisEPermissoesSeeder extends Seeder
         $usuario = Role::create(['name' => 'Academico', 'guard_name' => 'web', 'description' => 'Acesso parcial ao sistema']);
 
         $permissionsAdmin = collect([
-            ['guard_name' => 'admin', 'name' => 'listar usuarios',  'description' => 'Permite visualizar a listagem de usuários.'],
+            ['guard_name' => 'admin', 'name' => 'CRUD usuarios',  'description' => 'Permite fazer CRUD de todos usuários.'],
             ['guard_name' => 'admin', 'name' => 'criar semestre',  'description' => 'Permite criar um semestre.'],
         ]);
 
@@ -37,7 +37,8 @@ class PerfisEPermissoesSeeder extends Seeder
         ]);// aqui as do orientador (incluindo algumas que o admin tbm terá)
 
         $permissionsUser = collect([
-            ['guard_name' => 'web', 'name' => 'criar solicitacao de orientacao',  'description' => 'Permite criar uma solicitação de orientação.'],
+            ['guard_name' => 'web', 'name' => 'pesquisar orientador',  'description' => 'Permite pesquisar e visualizar orientadores.'],
+            ['guard_name' => 'web', 'name' => 'solicitar orientacao',  'description' => 'Permite criar uma solicitação de orientação.'],
         ]);
 
         $permissionsAdmin->each(function ($item) use ($admin) {

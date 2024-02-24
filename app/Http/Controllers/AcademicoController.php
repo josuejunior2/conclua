@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\AcademicoEstagio;
+use App\Models\OrientadorGeral;
+use App\Models\Orientador;
 use App\Models\AcademicoTCC;
 use App\Models\Academico;
 use App\Models\Empresa;
@@ -18,7 +20,9 @@ class AcademicoController extends Controller
      */
     public function index()
     {
-        return view('academico.index');
+        $especificos = Orientador::with('OrientadorGeral')->get();
+        $orientadores = OrientadorGeral::with('Formacao', 'Area')->get();
+        return view('academico.index', ['orientadores' => $orientadores, 'especificos' => $especificos]);
     }
 
     /**
@@ -26,7 +30,6 @@ class AcademicoController extends Controller
      */
     public function create()
     {
-
         $user = auth()->user();
         return view('academico.create', ['user' => $user]);
     }

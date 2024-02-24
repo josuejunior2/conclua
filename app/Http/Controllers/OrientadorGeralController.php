@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Hash;
 
 class OrientadorGeralController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
@@ -56,9 +57,19 @@ class OrientadorGeralController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified resource. FOR GUARD ADMIN
      */
     public function show(OrientadorGeral $orientadorgeral)
+    {
+        $orientador = Orientador::where('orientadorGeral_id', $orientadorgeral->id)->first();
+
+        return view('orientador.orientadorGeral.show', ['orientadorgeral' => $orientadorgeral, 'orientador' => $orientador]);
+    }
+
+    /**
+     * Display the specified resource. FOR GUARD WEB
+     */
+    public function show_web(OrientadorGeral $orientadorgeral)
     {
         $orientador = Orientador::where('orientadorGeral_id', $orientadorgeral->id)->first();
 
