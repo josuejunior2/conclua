@@ -15,4 +15,8 @@ class AcademicoTCC extends Model
     public function Orientador(){
         return $this->belongsTo('App\Models\OrientadorGeral', 'orientadorGeral_id');
     }
+
+    public function Academico(){
+        return $this->belongsTo('App\Models\Academico', 'academico_id');
+    }
 }

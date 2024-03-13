@@ -62,25 +62,95 @@
                 <div class="datagrid-content">{{ $orientador->areaPesquisa5 }}</div>
             </div>
         </div>
-        <form method="POST" action="{{ route('solicitacao.store') }}" autocomplete="off" novalidate>
-            @csrf
-            <input id="academico_id" name="academico_id" type="hidden" class="form-control" value="{{ $academico->id }}">
-            <input id="orientadorGeral_id" name="orientadorGeral_id" type="hidden" class="form-control" value="{{ $orientador->id }}">
-            <div class="mb-3">
-                <label class="form-label">Mensagem ao orientador</label>
-                <textarea id="mensagem" class="form-control" name="mensagem" rows="6" placeholder="(Opcional)" value="{{ old('mensagem', '') }}"></textarea>
-                <span class="{{ $errors->has('mensagem') ? 'text-danger' : '' }}">
-                    {{ $errors->has('mensagem') ? $errors->first('mensagem') : '' }}
-                </span>
-            </div>
-            <div class="card-footer bg-transparent mt-auto">
-                <div class="btn-list justify-content-end">
-                    <button type="submit" class="btn btn-primary">
-                        Enviar solicitação
-                    </button>
-                </div>
-            </div>
-        </form>
     </div>
+</div>
+<div class="card m-3">
+    <div class="card-header justify-content-between">
+        <h3 class="card-title">Revise seus dados</h3>
+        <div class="d-flex justify-content-between col-auto">
+        @if ($academico->AcademicoTCC)
+        <a href=" {{ route('academicoTCC.edit', ['academicoTCC' => $academico->AcademicoTCC ]) }}" class="btn me-2 btn-secondary w-100">
+        @elseif ($academico->AcademicoEstagio)
+        <a href=" {{ route('empresa.edit', ['empresa' => $academico->AcademicoEstagio->Empresa ]) }}" class="btn me-2 btn-secondary w-100">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" /><path d="M13.5 6.5l4 4" /></svg>
+            Editar Empresa
+        </a>
+        <a href=" {{ route('academicoEstagio.edit', ['academicoEstagio' => $academico->AcademicoEstagio ]) }}" class="btn me-2 btn-secondary w-100">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" /><path d="M13.5 6.5l4 4" /></svg>
+            Editar Estagio
+        </a>
+        @endif
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="datagrid mb-4">
+            @if ($academico->AcademicoTCC)
+            <div class="datagrid-item">
+                <div class="datagrid-title">Modalidade</div>
+                <div class="datagrid-content">TCC</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">Tema</div>
+                <div class="datagrid-content">{{ $academico->AcademicoTCC->tema }}</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">Resumo</div>
+                <div class="datagrid-content">{{ $academico->AcademicoTCC->resumo }}</div>
+            </div>
+            @elseif ($academico->AcademicoEstagio)
+            <div class="datagrid-item">
+                <div class="datagrid-title">Modalidade</div>
+                <div class="datagrid-content">Estágio</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">Tema</div>
+                <div class="datagrid-content">{{ $academico->AcademicoEstagio->tema }}</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">Função</div>
+                <div class="datagrid-content">{{ $academico->AcademicoEstagio->funcao }}</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">Nome da Empresa</div>
+                <div class="datagrid-content">{{ $academico->AcademicoEstagio->Empresa->nome }}</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">CNPJ da Empresa</div>
+                <div class="datagrid-content">{{ $academico->AcademicoEstagio->Empresa->cnpj }}</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">Supervisor</div>
+                <div class="datagrid-content">{{ $academico->AcademicoEstagio->Empresa->supervisor }}</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">Email da Empresa/Supervisor</div>
+                <div class="datagrid-content">{{ $academico->AcademicoEstagio->Empresa->email }}</div>
+            </div>
+            @endif
+        </div>
+    </div>
+</div>
+<div class="card m-3">
+    <div class="card-body">
+    <form method="POST" action="{{ route('solicitacao.store') }}" autocomplete="off" novalidate>
+        @csrf
+        <input id="academico_id" name="academico_id" type="hidden" class="form-control" value="{{ $academico->id }}">
+        <input id="orientadorGeral_id" name="orientadorGeral_id" type="hidden" class="form-control" value="{{ $orientador->id }}">
+        <div class="mb-3">
+            <label class="form-label">Mensagem ao orientador</label>
+            <textarea id="mensagem" class="form-control" name="mensagem" rows="6" placeholder="(Opcional)" value="{{ old('mensagem', '') }}"></textarea>
+            <span class="{{ $errors->has('mensagem') ? 'text-danger' : '' }}">
+                {{ $errors->has('mensagem') ? $errors->first('mensagem') : '' }}
+            </span>
+        </div>
+        <div class="card-footer bg-transparent mt-auto">
+            <div class="btn-list justify-content-end">
+                <button type="submit" class="btn btn-primary">
+                    Enviar solicitação
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
 </div>
 @endsection

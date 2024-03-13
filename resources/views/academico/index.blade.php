@@ -90,7 +90,7 @@
                             <div class="row">
                                 <div class="col">
                                 <div class="text-truncate">
-                                    {{ $academico->Solicitacao->Orientador->nome }}
+                                    {{ $academico->Solicitacao->OrientadorGeral->nome }}
                                 </div>
                                 <div class="text-muted">{{ $academico->Solicitacao->created_at->format('d/m/Y') }}</div>
                                 </div>

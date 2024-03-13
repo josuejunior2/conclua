@@ -52,15 +52,17 @@ class AcademicoTCCController extends Controller
      */
     public function edit(AcademicoTCC $academicoTCC)
     {
-        //
+        return view('academico.academicoTcc.edit', ['academicoTCC' => $academicoTCC]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, AcademicoTCC $academicoTCC)
+    public function update(AcademicoTCCRequest $request, AcademicoTCC $academicoTCC)
     {
-        //
+        $academicoTCC->update($request->validated());
+
+        return redirect()->route('academico.index');
     }
 
     /**

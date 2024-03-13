@@ -69,9 +69,11 @@ class SolicitacaoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Solicitacao $solicitacao)
+    public function update(SolicitacaoRequest $request, Solicitacao $solicitacao)
     {
-        //
+        $solicitacao->update($request->validated());
+
+        return redirect()->route('solicitacao.show.web', ['solicitacao' => $solicitacao]);
     }
 
     /**
@@ -79,7 +81,8 @@ class SolicitacaoController extends Controller
      */
     public function destroy(Solicitacao $solicitacao)
     {
-        dd($solicitacao);
+        $solicitacao->delete();
+        return redirect()->route('academico.index');
     }
 
     /**

@@ -53,9 +53,9 @@ Route::middleware(['auth:web', 'primeiro_acesso'])->group(function () { //
     Route::resource('academico', App\Http\Controllers\AcademicoController::class)->except(['create', 'store']);
     Route::resource('academicoEstagio', App\Http\Controllers\AcademicoEstagioController::class)->except(['create', 'store']);
     Route::resource('empresa', App\Http\Controllers\EmpresaController::class)->except(['create', 'store']);
+    Route::resource('solicitacao', App\Http\Controllers\SolicitacaoController::class)->names(['show' => 'solicitacao.show.web'])->except(['create', 'index']);
     Route::resource('academicoTCC', App\Http\Controllers\AcademicoTCCController::class)->except(['create', 'store']);
     Route::get('solicitacao/{orientador}/{academico}', 'App\Http\Controllers\SolicitacaoController@create')->name('solicitacao.create');
-    Route::resource('solicitacao', App\Http\Controllers\SolicitacaoController::class)->names(['show' => 'solicitacao.show.web'])->except(['create']);
 
     Route::get('pesquisa/orientador/{orientadorgeral}/{academico}', [App\Http\Controllers\OrientadorGeralController::class, 'show_web'])->name('orientadorgeral.show.web');
 });

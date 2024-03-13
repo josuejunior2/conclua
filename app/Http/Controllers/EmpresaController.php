@@ -48,15 +48,17 @@ class EmpresaController extends Controller
      */
     public function edit(Empresa $empresa)
     {
-        //
+        // dd($empresa);
+        return view('empresa.edit', ['empresa' => $empresa]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Empresa $empresa)
+    public function update(EmpresaRequest $request, Empresa $empresa)
     {
-        //
+        $empresa->update($request->validated());
+        return redirect()->route('academico.index');
     }
 
     /**

@@ -60,15 +60,17 @@ class AcademicoEstagioController extends Controller
      */
     public function edit(AcademicoEstagio $academicoEstagio)
     {
-        //
+        return view('academico.academicoEstagio.edit', ['academicoEstagio' => $academicoEstagio]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, AcademicoEstagio $academicoEstagio)
+    public function update(AcademicoEstagioRequest $request, AcademicoEstagio $academicoEstagio)
     {
-        //
+        $academicoEstagio->update($request->validated());
+
+        return redirect()->route('academico.index');
     }
 
     /**

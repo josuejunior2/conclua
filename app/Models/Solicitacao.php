@@ -17,7 +17,7 @@ class Solicitacao extends Model
         return $this->belongsTo('App\Models\Academico', 'academico_id'); //
     }
 
-    public function Orientador(){
+    public function OrientadorGeral(){
         return $this->belongsTo('App\Models\OrientadorGeral', 'orientadorGeral_id'); //
     }
 }
