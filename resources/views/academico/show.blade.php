@@ -25,7 +25,7 @@
         <div class="datagrid">
         <div class="datagrid-item">
             <div class="datagrid-title">Nome</div>
-            <div class="datagrid-content">{{ $academico->name }}</div>
+            <div class="datagrid-content">{{ $academico->nome }}</div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">MASP</div>
@@ -76,7 +76,7 @@
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Nome da Empresa</div>
-            <div class="datagrid-content">{{ $especifico->Empresa->name }}</div>
+            <div class="datagrid-content">{{ $especifico->Empresa->nome }}</div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">CNPJ da Empresa</div>

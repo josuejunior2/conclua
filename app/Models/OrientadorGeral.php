@@ -13,7 +13,7 @@ class OrientadorGeral extends Authenticatable
 
     protected $table = 'orientadores_geral';
 
-    protected $fillable = ['masp', 'name', 'email', 'password', 'formacao_id', 'area_id'];
+    protected $fillable = ['masp', 'nome', 'email', 'password', 'formacao_id', 'area_id'];
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -30,5 +30,13 @@ class OrientadorGeral extends Authenticatable
 
     public function Area(){
         return $this->belongsTo('App\Models\Area'); // orientador tem 1 Area, ele olha a FK
+    }
+
+    public function Especifico(){
+        return $this->hasOne('App\Models\Orientador', 'orientadorGeral_id');
+    }
+
+    public function solicitacoes(){
+        return $this->hasMany('App\Models\Solicitacao');
     }
 }

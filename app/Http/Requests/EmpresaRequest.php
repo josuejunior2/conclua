@@ -35,7 +35,7 @@ class EmpresaRequest extends FormRequest
     {
         return [
             'cnpj' => ['required', 'regex:/^[0-9]+(\.[0-9]+){0,2}\/[0-9]+-[0-9]+$/'],
-            'name' => 'required|min:10|max:60',
+            'nome' => 'required|min:10|max:60',
             'supervisor' => 'required|min:10|max:60',
             'email' => 'required|email',
         ];
@@ -48,9 +48,9 @@ class EmpresaRequest extends FormRequest
     {
         return [
             'required' => 'O campo :attribute deve ser preenchido.',
-            'name.required' => 'O campo nome deve ser preenchido',
-            'name.min' => 'O campo nome deve ter no mínimo 10 caracteres.',
-            'name.max' => 'O campo nome deve ter no máximo 60 caracteres.',
+            'nome.required' => 'O campo nome deve ser preenchido',
+            'nome.min' => 'O campo nome deve ter no mínimo 10 caracteres.',
+            'nome.max' => 'O campo nome deve ter no máximo 60 caracteres.',
             'supervisor.min' => 'O campo nome deve ter no mínimo 10 caracteres.',
             'supervisor.max' => 'O campo nome deve ter no máximo 60 caracteres.',
             'email.email' => 'O campo email deve ser preenchido com um endereço de email.',

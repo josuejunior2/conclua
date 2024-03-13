@@ -22,8 +22,12 @@
                 <div class="card-body">
                     <ul class="steps steps-green steps-counter my-4">
                     <li class="step-item">Informações gerais</li>
+                    @if ($academico->AcademicoEstagio)
                     <li class="step-item">Dados da empresa</li>
                     <li class="step-item">Dados do estágio</li>
+                    @elseif ($academico->AcademicoTCC)
+                    <li class="step-item">Especificações</li>
+                    @endif
                     <li class="step-item active">Confirmação</li>
                     </ul>
                     <h2 class="mb-4">Parabéns! Você acaba de completar seu cadastro no CONCLUA!</h2>

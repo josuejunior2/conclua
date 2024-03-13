@@ -14,7 +14,7 @@
                 </ul>
                 <form method="POST" action="{{ route('academicoTCC.store') }}" autocomplete="off" novalidate>
                     @csrf
-
+                    <input id="academico_id" name="academico_id" type="hidden" class="form-control" value="{{ $academico->id }}">
                     <div class="row g-3 mb-4">
                         <div class="col-md">
                             <div class="mb-3">

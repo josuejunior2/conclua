@@ -44,7 +44,7 @@ class AcademicoEstagioController extends Controller
             'tema' => $request->input('tema'),
             'funcao' => $request->input('funcao')]);
 
-        return view('academico.finalacademico');
+        return view('academico.finalacademico', ['academico' => $academico]);
     }
 
     /**

@@ -30,6 +30,14 @@ class OrientadorRequest extends FormRequest
             'enderecoOrcid' => 'required|min:37|max:37',
             'disponibilidade' => 'required',
             'orientadorGeral_id' => 'required',
+            'areaPesquisa1' => 'required',
+            'areaPesquisa2' => 'nullable',
+            'areaPesquisa3' => 'nullable',
+            'areaPesquisa4' => 'nullable',
+            'areaPesquisa5' => 'nullable',
+            'subArea1' => 'nullable',
+            'subArea2' => 'nullable',
+            'subArea3' => 'nullable',
         ];
     }
      /**
@@ -46,8 +54,8 @@ class OrientadorRequest extends FormRequest
             'enderecoOrcid.max' => 'O link deve ter 37 caracteres.',
         ];
     }
-    public function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
-    {
-        dd($validator->errors());
-    }
+    // public function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+    // {
+    //     dd($validator->errors());
+    // }
 }

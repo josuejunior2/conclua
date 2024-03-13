@@ -49,10 +49,10 @@
             <tr>
                 <!--<td></td>  <input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"> -->
                 <td><span class="text-muted">{{ $o->id }}</span></td>
-                <td>{{ $o->name }}</td>
+                <td>{{ $o->nome }}</td>
                 <td>{{ $o->email }}</td>
-                <td>{{ $o->Formacao ? $o->Formacao->formacao : 'N/A' }}</td>
-                <td>{{ $o->Area ? $o->Area->area : 'N/A' }}</td>
+                <td>{{ $o->Formacao ? $o->Formacao->nome : 'N/A' }}</td>
+                <td>{{ $o->Area ? $o->Area->nome : 'N/A' }}</td>
                 <td>
                     @php
                         $especifico = $especificos->where('orientadorGeral_id', $o->id)->first();

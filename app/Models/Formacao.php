@@ -11,5 +11,5 @@ class Formacao extends Model
 
     protected $table = 'formacoes';
 
-    protected $fillable = ['id', 'formacao'];
+    protected $fillable = ['id', 'nome'];
 }

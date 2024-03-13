@@ -6,15 +6,15 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    // /**
-    //  * Create a new controller instance.
-    //  *
-    //  * @return void
-    //  */
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     /**
      * Show the application dashboard.
@@ -28,7 +28,9 @@ class HomeController extends Controller
             return redirect()->route('academico.index');
         }elseif($user->hasRole('Orientador')){
             return redirect()->route('orientadorgeral.index');
+        }elseif($user->hasRole('Administrador')){
+            return redirect()->route('admin.home');
         }
-        return view('home');
+        return abort(404);
     }
 }

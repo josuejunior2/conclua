@@ -19,9 +19,9 @@
                     <div class="col-md">
                     <div class="mb-3">
                         <div class="form-label required">Nome da Empresa</div>
-                        <div><input id="name" name="name"  type="text" class="form-control" value="{{ old('name', '') }}" /></div>
-                        <span class="{{ $errors->has('name') ? 'text-danger' : '' }}">
-                            {{ $errors->has('name') ? $errors->first('name') : '' }}
+                        <div><input id="nome" name="nome"  type="text" class="form-control" value="{{ old('nome', '') }}" /></div>
+                        <span class="{{ $errors->has('nome') ? 'text-danger' : '' }}">
+                            {{ $errors->has('nome') ? $errors->first('nome') : '' }}
                         </span>
                     </div>
                     <div class="mb-3">

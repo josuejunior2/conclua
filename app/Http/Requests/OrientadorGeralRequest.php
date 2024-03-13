@@ -27,7 +27,7 @@ class OrientadorGeralRequest extends FormRequest
     public function rules(): array
     {
         return [
-            // 'name' => 'required|min:10|max:60',
+            // 'nome' => 'required|min:10|max:60',
             // 'email' => 'required|min:16|max:40|email',
             // 'masp' => 'required|digits:7',
             'password' => 'required',//['required', Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised()],

@@ -20,9 +20,12 @@ class AcademicoController extends Controller
      */
     public function index()
     {
-        $especificos = Orientador::with('OrientadorGeral')->get();
-        $orientadores = OrientadorGeral::with('Formacao', 'Area')->get();
-        return view('academico.index', ['orientadores' => $orientadores, 'especificos' => $especificos]);
+        // ----------------------PRIMEIRO CASO: O ACADEMICO AINDA NAO TEM ORIENTADOR (pergunta futura: o academico pode fazer orientacao e estagio ao mesmo tempo? nao)
+        $academico = Academico::where('email', auth()->user()->email)->first();
+        // dd($academico); // aqui eu peguei Orientador ao invés de OrientadorGeral pq eu preciso ver quem tem disponibilidade
+        $orientadores = Orientador::where('disponibilidade', '>', 0)->get();
+        // dd($orientadores[1]->OrientadorGeral);
+        return view('academico.index', ['orientadores' => $orientadores, 'academico' => $academico]);
     }
 
     /**
@@ -50,7 +53,7 @@ class AcademicoController extends Controller
                 return redirect()->route('empresa.create');
             }
             elseif($request->input('modalidade') == 1){
-                return redirect()->route('academicoTCC.create');
+                return redirect()->route('academicoTCC.create', ['academico' => $academico]);
             }
         }
 

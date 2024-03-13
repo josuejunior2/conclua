@@ -101,7 +101,7 @@ class AdminController extends Controller
             Excel::import(new AdminsImport, $arquivo);
             // Seu código para importar e processar o arquivo aqui
         } catch (\Exception $e) {
-            return redirect()->back()->withErrors(['erro' => 'Erro: Planilha vazia ou dados repetidos.']);
+            return redirect()->back()->withErrors(['erro' => 'Erro: Planilha vazia ou dados repetidos.'.$e]);
         }
 
         // pega cada orientador que acabou de ser cadastrado da tabela admins
@@ -142,7 +142,7 @@ class AdminController extends Controller
             Excel::import(new UsersImport, $arquivo);
             // Seu código para importar e processar o arquivo aqui
         } catch (\Exception $e) {
-            return redirect()->back()->withErrors(['erro' => 'Erro: Planilha vazia ou dados repetidos.']);
+            return redirect()->back()->withErrors(['erro' => 'Erro: Planilha vazia ou dados repetidos.'.$e]);
         }
 
         $usuarios = User::where('created_at', '>=', now()->subSeconds(3))->get();

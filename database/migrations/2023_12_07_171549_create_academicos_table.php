@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('academicos', function (Blueprint $table) {
             $table->id();
             $table->string('matricula', 9)->unique();
-            $table->string('name', 60);
+            $table->string('nome', 60);
             $table->string('email', 40);
             $table->string('password', 64);
             $table->timestamps();

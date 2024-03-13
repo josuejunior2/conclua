@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\OrientadorGeral;
 use App\Models\Orientador;
+use App\Models\Academico;
+use App\Models\Solicitacao;
 use App\Models\User;
 use App\Models\Area;
 use App\Models\Formacao;
@@ -21,7 +23,11 @@ class OrientadorGeralController extends Controller
      */
     public function index()
     {
-        dd("index");
+        $orientador = OrientadorGeral::where('email', auth()->user()->email)->first();
+        $solicitacoes = Solicitacao::where('orientadorGeral_id', $orientador->id)->get();
+        // dd($solicitacoes);
+
+        return view('orientador.orientadorGeral.index', ['solicitacoes' => $solicitacoes]);
     }
 
     /**
@@ -29,11 +35,18 @@ class OrientadorGeralController extends Controller
      */
     public function create()
     {
-
-        $formacoes = Formacao::all();
-        $areas = Area::all();
-        $user = auth()->user();
-        return view('orientador.orientadorGeral.create', ['user' => $user, 'areas' => $areas, 'formacoes' => $formacoes ]);
+        $orientador = OrientadorGeral::where('email', auth()->guard('admin')->user()->email)->first();
+        // dd($orientador);
+        if (is_null($orientador)) {
+            return redirect()->route('admin.home'); // se não tiver orientador é que é admin, então pode ir pra home
+        } elseif(is_null($orientador->formacao_id) && is_null($orientador->area_id)){
+            $formacoes = Formacao::all();
+            $areas = Area::all();
+            $user = auth()->user();
+            return view('orientador.orientadorGeral.create', ['user' => $user, 'areas' => $areas, 'formacoes' => $formacoes ]);
+        } else {
+            return redirect()->route('admin.home'); // se já completou o cadastro OU é admin, vai pra home
+        }
     }
 
     /**
@@ -61,19 +74,20 @@ class OrientadorGeralController extends Controller
      */
     public function show(OrientadorGeral $orientadorgeral)
     {
+        $layouts = 'layouts.admin';
         $orientador = Orientador::where('orientadorGeral_id', $orientadorgeral->id)->first();
 
-        return view('orientador.orientadorGeral.show', ['orientadorgeral' => $orientadorgeral, 'orientador' => $orientador]);
+        return view('orientador.orientadorGeral.show', ['orientadorgeral' => $orientadorgeral, 'orientador' => $orientador, 'layouts' => $layouts]);
     }
 
     /**
      * Display the specified resource. FOR GUARD WEB
      */
-    public function show_web(OrientadorGeral $orientadorgeral)
+    public function show_web(OrientadorGeral $orientadorgeral, Academico $academico)
     {
-        $orientador = Orientador::where('orientadorGeral_id', $orientadorgeral->id)->first();
+        $layouts = 'layouts.app';
 
-        return view('orientador.orientadorGeral.show', ['orientadorgeral' => $orientadorgeral, 'orientador' => $orientador]);
+        return view('orientador.orientadorGeral.show', ['orientadorgeral' => $orientadorgeral, 'academico' => $academico, 'layouts' => $layouts]);
     }
 
     /**
@@ -97,6 +111,7 @@ class OrientadorGeralController extends Controller
      */
     public function destroy(OrientadorGeral $orientadorgeral) // Não coloquei o softDeletes, talvez deva colocar depois
     {
+        if($orientadorgeral->Especifico){ $orientadorgeral->Especifico->delete(); }
         $orientadorgeral->delete();
         return redirect()->route('admin.listar.orientadores');
     }

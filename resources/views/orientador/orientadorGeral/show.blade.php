@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends($layouts)
 
 @section('content')
 
@@ -21,13 +21,26 @@
                 </a>
             </form>
             @endcan
+            {{-- limitar-se a uma orientacao só depois--}}
+            @if($academico->solicitacao)
+            @can('solicitar orientacao')
+            <form method="POST" action="{{ route('solicitacao.create', ['orientador' => $orientadorgeral, 'academico' => $academico]) }}">
+                @csrf
+                <input id="academico_id" name="academico_id" type="hidden" class="form-control" value="{{ $academico->id }}">
+                <input id="orientadorGeral_id" name="orientadorGeral_id" type="hidden" class="form-control" value="{{ $orientadorgeral->id }}">
+                <button type="submit" class="btn btn-primary w-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circles-relation" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9.183 6.117a6 6 0 1 0 4.511 3.986" /><path d="M14.813 17.883a6 6 0 1 0 -4.496 -3.954" /></svg>
+                    Solicitar vinculação
+                </button>
+            </form>
+            @endcan
         </div>
     </div>
     <div class="card-body">
         <div class="datagrid">
         <div class="datagrid-item">
             <div class="datagrid-title">Nome</div>
-            <div class="datagrid-content">{{ $orientadorgeral->name }}</div>
+            <div class="datagrid-content">{{ $orientadorgeral->nome }}</div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">MASP</div>
@@ -41,57 +54,74 @@
             <div class="datagrid-title">Telefone</div>
             <div class="datagrid-content">colocar depois</div>
         </div>
-        <div class="datagrid-item">
-            <div class="datagrid-title">Formação</div>
-            <div class="datagrid-content">{{ $orientadorgeral->Formacao ? $orientadorgeral->Formacao->formacao : 'Cadastro incompleto' }}</div>
-        </div>
-        <div class="datagrid-item">
-            <div class="datagrid-title">Área de atuação</div>
-            <div class="datagrid-content">{{ $orientadorgeral->Area ? $orientadorgeral->Area->area : 'Cadastro incompleto' }}</div>
-        </div>
+        @if ($orientadorgeral->Especifico)
         <div class="datagrid-item">
             <div class="datagrid-title">Currículo Lattes</div>
-            <div class="datagrid-content">{{ $orientador ? $orientador->enderecoLattes : 'Cadastro incompleto' }}</div>
+            <div class="datagrid-content">{{$orientadorgeral->Especifico->enderecoLattes}}</div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Currículo Orcid</div>
-            <div class="datagrid-content">{{ $orientador ? $orientador->enderecoOrcid : 'Cadastro incompleto' }}</div>
+            <div class="datagrid-content">{{$orientadorgeral->Especifico->enderecoOrcid}}</div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Sub-área 1</div>
-            <div class="datagrid-content">{{ $orientador ? $orientador->subArea1 : 'Cadastro incompleto' }}</div>
+            <div class="datagrid-content">{{$orientadorgeral->Especifico->subArea1}}</div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Sub-área 2</div>
-            <div class="datagrid-content">{{ $orientador ? $orientador->subArea2 : 'Cadastro incompleto' }}</div>
+            <div class="datagrid-content">{{$orientadorgeral->Especifico->subArea2}}</div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Sub-área 3</div>
-            <div class="datagrid-content">{{ $orientador ? $orientador->subArea3 : 'Cadastro incompleto' }}</div>
+            <div class="datagrid-content">{{$orientadorgeral->Especifico->subArea3}}</div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Área de Pesquisa 1</div>
-            <div class="datagrid-content">{{ $orientador ? $orientador->areaPesquisa1 : 'Cadastro incompleto' }}</div>
+            <div class="datagrid-content">{{$orientadorgeral->Especifico->areaPesquisa1}}</div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Área de Pesquisa 2</div>
-            <div class="datagrid-content">{{ $orientador ? $orientador->areaPesquisa2 : 'Cadastro incompleto' }}</div>
+            <div class="datagrid-content">{{$orientadorgeral->Especifico->areaPesquisa2}}</div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Área de Pesquisa 3</div>
-            <div class="datagrid-content">{{ $orientador ? $orientador->areaPesquisa3 : 'Cadastro incompleto' }}</div>
+            <div class="datagrid-content">{{$orientadorgeral->Especifico->areaPesquisa3}}</div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Área de Pesquisa 4</div>
-            <div class="datagrid-content">{{ $orientador ? $orientador->areaPesquisa4 : 'Cadastro incompleto' }}</div>
+            <div class="datagrid-content">{{$orientadorgeral->Especifico->areaPesquisa4}}</div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Área de Pesquisa 5</div>
-            <div class="datagrid-content">{{ $orientador ? $orientador->areaPesquisa5 : 'Cadastro incompleto' }}</div>
+            <div class="datagrid-content">{{$orientadorgeral->Especifico->areaPesquisa5}}</div>
         </div>
-
+        @else
+        <div class="datagrid-item">
+            <div class="datagrid-title"></div>
+            <div class="datagrid-content">Dados específicos indisponíveis.</div>
         </div>
+        @endif
     </div>
     </div>
 </div>
+@foreach ($orientadorgeral->solicitacoes as $ogs)
+@if ($ogs->academico_id == $academico->id)
+
+<div class="card m-3">
+<div class="card-body">
+    <div class="datagrid">
+        <div class="datagrid-item">
+            <div class="datagrid-title">Data de envio da solicitação</div>
+            <div class="datagrid-content">{{ $solicitacao->created_at->format('d/m/Y') }}</div>
+        </div>
+        <div class="datagrid-item">
+            <div class="datagrid-title">Mensagem enviada</div>
+            <div class="datagrid-content">{{ $solicitacao->mensagem }}</div>
+        </div>
+    </div>
+</div>
+
+@endif
+
+@endforeach
 @endsection

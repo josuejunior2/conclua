@@ -46,7 +46,7 @@
             <tr>
                 <!--<td></td>  <input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"> -->
                 <td><span class="text-muted">{{ $a->id }}</span></td>
-                <td>{{ $a->name }}</td>
+                <td>{{ $a->nome }}</td>
                 <td>{{ $a->email }}</td>
                 <td>
                     @if ($tcc->where('academico_id', $a->id)->isNotEmpty())

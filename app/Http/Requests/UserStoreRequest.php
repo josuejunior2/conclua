@@ -31,7 +31,7 @@ class UserStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|min:10|max:60',
+            'nome' => 'required|min:10|max:60',
             'email' => 'required|email',
             'password' => 'required',//['required', Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised()],
         ];

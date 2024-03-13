@@ -12,8 +12,8 @@
             <h2 class="card-title text-center mb-4">Create new account</h2>
         <div class="mb-3">
             <label class="form-label">Name</label>
-            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" autofocus>
-            @error('name')
+            <input id="name" type="text" class="form-control @error('nome') is-invalid @enderror" name="name" value="{{ old('nome') }}" autofocus>
+            @error('nome')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>

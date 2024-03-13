@@ -49,7 +49,7 @@
                                 <option value=""> -- Selecione a formação -- </option>
                                 @foreach($formacoes as $f)
                                     <option value="{{ $f->id }}" {{ (isset($orientadorgeral) && $orientadorgeral->formacao_id == $f->id) || old('formacao_id') == $f->id ? 'selected' : '' }}>
-                                        {{ $f->formacao }}
+                                        {{ $f->nome }}
                                     </option>
                                 @endforeach
                             </select>
@@ -63,7 +63,7 @@
                                 <option value=""> -- Selecione a área de atuação -- </option>
                                 @foreach($areas as $a)
                                     <option value="{{ $a->id }}" {{ (isset($orientadorgeral) && $orientadorgeral->area_id == $a->id) || old('area_id') == $a->id ? 'selected' : '' }}>
-                                        {{ $a->area }}
+                                        {{ $a->nome }}
                                     </option>
                                 @endforeach
                             </select>

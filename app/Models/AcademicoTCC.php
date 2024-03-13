@@ -12,4 +12,7 @@ class AcademicoTCC extends Model
 
     protected $fillable = ['academico_id', 'orientadorGeral_id', 'tema', 'resumo'];
 
+    public function Orientador(){
+        return $this->belongsTo('App\Models\OrientadorGeral', 'orientadorGeral_id');
+    }
 }

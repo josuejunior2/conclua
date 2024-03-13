@@ -21,9 +21,9 @@ class AcademicoTCCController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Academico $academico)
     {
-        return view('academico.academicoTcc.create');
+        return view('academico.academicoTcc.create', ['academico' => $academico]);
     }
 
     /**
@@ -34,12 +34,9 @@ class AcademicoTCCController extends Controller
         $academico = Academico::where('email', auth()->user()->email)->first();
         $academico_id = $academico->id;
 
-        $academicoEstagio = AcademicoTCC::create([
-            'academico_id' => $academico_id,
-            'tema' => $request->input('tema'),
-            'resumo' => $request->input('resumo')]);
+        $academicoEstagio = AcademicoTCC::create($request->validated());
 
-        return view('academico.finalacademico');
+        return view('academico.finalacademico', ['academico' => $academico]);
     }
 
     /**

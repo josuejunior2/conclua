@@ -13,6 +13,10 @@ class AcademicoEstagio extends Model
     protected $fillable = ['academico_id', 'orientadorGeral_id', 'tema', 'funcao', 'empresa_id'];
 
     public function Empresa(){
-        return $this->belongsTo('App\Models\Empresa'); // academicoEstagio tem 1 empresa, ele olha a FK
+        return $this->belongsTo('App\Models\Empresa', 'empresa_id'); // academicoEstagio tem 1 empresa, ele olha a FK
+    }
+
+    public function Orientador(){
+        return $this->belongsTo('App\Models\OrientadorGeral', 'orientadorGeral_id');
     }
 }

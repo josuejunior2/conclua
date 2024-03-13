@@ -11,7 +11,7 @@ class Academico extends Authenticatable
 {
     use HasFactory, HasRoles;
 
-    protected $fillable = ['name', 'email', 'password', 'matricula'];
+    protected $fillable = ['nome', 'email', 'password', 'matricula'];
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -22,4 +22,15 @@ class Academico extends Authenticatable
         'remember_token',
     ];
 
+    public function AcademicoTCC(){
+        return $this->hasOne('App\Models\AcademicoTCC', 'academico_id');
+    }
+
+    public function AcademicoEstagio(){
+        return $this->hasOne('App\Models\AcademicoEstagio', 'academico_id');
+    }
+
+    public function Solicitacao(){
+        return $this->hasOne('App\Models\Solicitacao', 'academico_id');
+    }
 }

@@ -27,7 +27,15 @@ class OrientadorController extends Controller
      */
     public function create($orientadorGeral_id)
     {
-        return view('orientador.orientador.create', ['orientadorGeral_id' => $orientadorGeral_id]);
+        $orientador = OrientadorGeral::where('email', auth()->guard('admin')->user()->email)->first();
+        // dd($orientador);
+        if (is_null($orientador)) {
+            return redirect()->route('admin.home'); // se não tiver orientador é que é admin, então pode passar
+        } elseif(Orientador::where('orientadorGeral_id', $orientador->id)->exists()){
+            return redirect()->route('admin.home'); // se já completou o cadastro OU é admin, vai pra home
+        } else {
+            return view('orientador.orientador.create', ['orientadorGeral_id' => $orientadorGeral_id]); // se não completou o cadastro, vai completar
+        }
     }
 
     /**
@@ -36,7 +44,7 @@ class OrientadorController extends Controller
     public function store(OrientadorRequest $request)
     {
         $orientador = Orientador::create($request->validated());
-
+        // dd($orientador);
         return view('orientador.finalorientador');
     }
 
