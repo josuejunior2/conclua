@@ -3,7 +3,7 @@
 @section('content')
 <div class="card m-3">
     <div class="card-header justify-content-between">
-        <h3 class="card-title">Cadastro do(a) Professor(a) {{ $solicitacao->OrientadorGeral->nome }}</h3>
+        <h3 class="card-title">Cadastro do(a) Professor(a) {{ $solicitacao->Orientador->nome }}</h3>
         {{-- <div class="d-flex justify-content-between col-auto">
         </div> --}}
     </div>
@@ -11,65 +11,65 @@
         <div class="datagrid mb-4">
             <div class="datagrid-item">
                 <div class="datagrid-title">Email</div>
-                <div class="datagrid-content">{{ $solicitacao->OrientadorGeral->email }}</div>
+                <div class="datagrid-content">{{ $solicitacao->Orientador->email }}</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Formação</div>
-                <div class="datagrid-content">{{ $solicitacao->OrientadorGeral->Formacao->nome }}</div>
+                <div class="datagrid-content">{{ $solicitacao->Orientador->Formacao->nome }}</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Área de atuação</div>
-                <div class="datagrid-content">{{ $solicitacao->OrientadorGeral->Area->nome }}</div>
+                <div class="datagrid-content">{{ $solicitacao->Orientador->Area->nome }}</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Currículo Lattes</div>
-                <div class="datagrid-content">{{ $solicitacao->OrientadorGeral->Especifico->enderecoLattes }}</div>
+                <div class="datagrid-content">{{ $solicitacao->Orientador->enderecoLattes }}</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Currículo Orcid</div>
-                <div class="datagrid-content">{{ $solicitacao->OrientadorGeral->Especifico->enderecoOrcid }}</div>
+                <div class="datagrid-content">{{ $solicitacao->Orientador->enderecoOrcid }}</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Sub-área 1</div>
-                <div class="datagrid-content">{{ $solicitacao->OrientadorGeral->Especifico->subArea1 }}</div>
+                <div class="datagrid-content">{{ $solicitacao->Orientador->subArea1 }}</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Sub-área 2</div>
-                <div class="datagrid-content">{{ $solicitacao->OrientadorGeral->Especifico->subArea2 }}</div>
+                <div class="datagrid-content">{{ $solicitacao->Orientador->subArea2 }}</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Sub-área 3</div>
-                <div class="datagrid-content">{{ $solicitacao->OrientadorGeral->Especifico->subArea3 }}</div>
+                <div class="datagrid-content">{{ $solicitacao->Orientador->subArea3 }}</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Área de Pesquisa 1</div>
-                <div class="datagrid-content">{{ $solicitacao->OrientadorGeral->Especifico->areaPesquisa1 }}</div>
+                <div class="datagrid-content">{{ $solicitacao->Orientador->areaPesquisa1 }}</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Área de Pesquisa 2</div>
-                <div class="datagrid-content">{{ $solicitacao->OrientadorGeral->Especifico->areaPesquisa2 }}</div>
+                <div class="datagrid-content">{{ $solicitacao->Orientador->areaPesquisa2 }}</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Área de Pesquisa 3</div>
-                <div class="datagrid-content">{{ $solicitacao->OrientadorGeral->Especifico->areaPesquisa3 }}</div>
+                <div class="datagrid-content">{{ $solicitacao->Orientador->areaPesquisa3 }}</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Área de Pesquisa 4</div>
-                <div class="datagrid-content">{{ $solicitacao->OrientadorGeral->Especifico->areaPesquisa4 }}</div>
+                <div class="datagrid-content">{{ $solicitacao->Orientador->areaPesquisa4 }}</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Área de Pesquisa 5</div>
-                <div class="datagrid-content">{{ $solicitacao->OrientadorGeral->Especifico->areaPesquisa5 }}</div>
+                <div class="datagrid-content">{{ $solicitacao->Orientador->areaPesquisa5 }}</div>
             </div>
         </div>
         <form method="POST" action="{{ route('solicitacao.update', ['solicitacao' => $solicitacao]) }}" autocomplete="off" novalidate>
             @csrf
             @method('PUT')
             <input id="academico_id" name="academico_id" type="hidden" class="form-control" value="{{ $solicitacao->Academico->id }}">
-            <input id="orientadorGeral_id" name="orientadorGeral_id" type="hidden" class="form-control" value="{{ $solicitacao->OrientadorGeral->id }}">
+            <input id="Orientador_id" name="Orientador_id" type="hidden" class="form-control" value="{{ $solicitacao->Orientador->id }}">
             <div class="mb-3">
                 <label class="form-label">Mensagem ao orientador</label>
-                <textarea id="mensagem" class="form-control" name="mensagem" rows="6" placeholder="(Opcional)" value="{{ $solicitacao->mensagem }}"></textarea>
+                <textarea id="mensagem" class="form-control" name="mensagem" rows="6" placeholder="(Opcional)">{{ $solicitacao->mensagem }}</textarea>
                 <span class="{{ $errors->has('mensagem') ? 'text-danger' : '' }}">
                     {{ $errors->has('mensagem') ? $errors->first('mensagem') : '' }}
                 </span>

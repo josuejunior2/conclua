@@ -18,18 +18,66 @@
                     <div class="row g-3 mb-4">
                         <div class="col-md">
                             <div class="mb-3">
-                                <div class="form-label required">Tema do Trabalho de Conclusão de Curso</div>
+                                <div class="form-label required">Tema</div>
                                 <div><input id="tema" name="tema"  type="text" class="form-control" value="{{ old('tema', '') }}" /></div>
                                 <span class="{{ $errors->has('tema') ? 'text-danger' : '' }}">
                                     {{ $errors->has('tema') ? $errors->first('tema') : '' }}
                                 </span>
                             </div>
-
+                        </div>
+                    </div>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md">
                             <div class="mb-3">
-                                <label class="form-label">Resumo do Trabalho de Conclusão de Curso</label>
-                                <textarea id="resumo" class="form-control" name="resumo" rows="6" placeholder="Este trabalho..." value="{{ old('resumo', '') }}"></textarea>
-                                <span class="{{ $errors->has('resumo') ? 'text-danger' : '' }}">
-                                    {{ $errors->has('resumo') ? $errors->first('resumo') : '' }}
+                                <div class="form-label required">Problema</div>
+                                <div><input id="problema" name="problema"  type="text" class="form-control" value="{{ old('problema', '') }}" /></div>
+                                <span class="{{ $errors->has('tema') ? 'text-danger' : '' }}">
+                                    {{ $errors->has('tema') ? $errors->first('problema') : '' }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-4">
+                        <div class="col-md">
+                            <div class="mb-3">
+                                <label class="form-label">Objetivo Geral</label>
+                                <textarea id="objetivo_geral" class="form-control" name="objetivo_geral" rows="6" value="{{ old('objetivo_geral', '') }}"></textarea>
+                                <span class="{{ $errors->has('objetivo_geral') ? 'text-danger' : '' }}">
+                                    {{ $errors->has('objetivo_geral') ? $errors->first('objetivo_geral') : '' }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md">
+                            <div class="mb-3">
+                                <label class="form-label">Objetivo Específico</label>
+                                <textarea id="objetivo_especifico" class="form-control" name="objetivo_especifico" rows="6" placeholder="Este trabalho..." value="{{ old('objetivo_especifico', '') }}"></textarea>
+                                <span class="{{ $errors->has('objetivo_especifico') ? 'text-danger' : '' }}">
+                                    {{ $errors->has('objetivo_especifico') ? $errors->first('objetivo_especifico') : '' }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md">
+                            <div class="mb-3">
+                                <label class="form-label">Justificativa</label>
+                                <textarea id="justificativa" class="form-control" name="justificativa" rows="6" placeholder="Este trabalho..." value="{{ old('justificativa', '') }}"></textarea>
+                                <span class="{{ $errors->has('justificativa') ? 'text-danger' : '' }}">
+                                    {{ $errors->has('justificativa') ? $errors->first('justificativa') : '' }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md">
+                            <div class="mb-3">
+                                <label class="form-label">Metodologia</label>
+                                <textarea id="metodologia" class="form-control" name="metodologia" rows="6" placeholder="Este trabalho..." value="{{ old('metodologia', '') }}"></textarea>
+                                <span class="{{ $errors->has('metodologia') ? 'text-danger' : '' }}">
+                                    {{ $errors->has('metodologia') ? $errors->first('metodologia') : '' }}
                                 </span>
                             </div>
                         </div>

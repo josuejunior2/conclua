@@ -6,10 +6,10 @@
 <div class="col-12">
     <div class="card m-3">
         <div class="card-header justify-content-between">
-            <h3 class="card-title">Lista de acadêmicos</h3>
+            <h3 class="card-title">Lista de orientadores</h3>
             <div>
-                <a href="#" class="btn btn-success w-100 mb-1" data-bs-toggle="modal" data-bs-target="#modal-cadastro-academico">
-                    Adicionar novos acadêmicos
+                <a href="#" class="btn btn-success w-100 mb-1" data-bs-toggle="modal" data-bs-target="#modal-cadastro-orientador">
+                    Adicionar novos orientadores
                 </a>
                 @if ($errors->any())
                     <div class="alert alert-danger">
@@ -28,7 +28,7 @@
             </div>
         </div>
       <div class="table-responsive m-4">
-        <table class="display w-100" id="tabela-academicos"> {{-- table card-table table-vcenter text-nowrap datatable --}}
+        <table class="display w-100" id="tabela-orientadores"> {{-- table card-table table-vcenter text-nowrap datatable --}}
           <thead>
             <tr>
               {{--<th class="w-1"></th>  <input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select all invoices"> --}}
@@ -37,38 +37,36 @@
               </th>
               <th>Nome</th>
               <th>Email</th>
-              <th>Modalidade</th>
+              <th>Formação</th>
+              <th>Área</th>
+              <th>Disponibilidade</th>
+              <th>Orientandos</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            @foreach ($academicos as $a)
+            @foreach ($orientadores as $o)
             <tr>
                 <!--<td></td>  <input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"> -->
-                <td><span class="text-muted">{{ $a->id }}</span></td>
-                <td>{{ $a->nome }}</td>
-                <td>{{ $a->email }}</td>
-                <td>
-                    @if ($tcc->where('academico_id', $a->id)->isNotEmpty())
-                        TCC
-                    @elseif ($estagio->where('academico_id', $a->id)->isNotEmpty())
-                        Estágio
-                    @else
-                        N/A
-                    @endif
-                </td>
+                <td><span class="text-muted">{{ $o->id }}</span></td>
+                <td>{{ $o->nome }}</td>
+                <td>{{ $o->email }}</td>
+                <td>{{ $o->Formacao ? $o->Formacao->nome : 'N/A' }}</td>
+                <td>{{ $o->Area ? $o->Area->nome : 'N/A' }}</td>
+                <td>{{ $o->disponibilidade }}</td>
+                <td>*</td>
                 <td class="text-end">
                   <span class="dropdown">
                     <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Ações</button>
                     <div class="dropdown-menu dropdown-menu-end">
-                        <a class="dropdown-item" href="{{ route('academico.show', ['academico' => $a]) }}">
+                        <a class="dropdown-item" href="{{ route('orientador.show.admin', ['orientador' => $o]) }}">
                             Visualizar
                         </a>
-                        <form id="form_{{$a->id}}" method="post" action="{{ route('academico.destroy', ['academico' => $a->id]) }}">
+                        <form id="form_{{$o->id}}" method="post" action="{{ route('orientador.destroy', ['orientador' => $o->id]) }}">
                             @method('DELETE')
                             @csrf
                             <!-- <button type="submit">Excluir</button>  -->
-                            <a href="#" onclick="document.getElementById('form_{{$a->id}}').submit()" class="dropdown-item">
+                            <a href="#" onclick="document.getElementById('form_{{$o->id}}').submit()" class="dropdown-item">
                                 Excluir cadastro
                             </a>
                         </form>
@@ -88,7 +86,7 @@
 @section('js')
 <script>
     $(document).ready( function () {
-        $('#tabela-academicos').DataTable({
+        $('#tabela-orientadores').DataTable({
             "paging": true,
             "ordering": true,
             "searching": true,
@@ -101,4 +99,4 @@
 </script>
 @endsection
 
-@include('admin.modal.cadastro-academico')
+@include('admin.modal.cadastro-orientador')

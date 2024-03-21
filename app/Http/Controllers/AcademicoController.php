@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\AcademicoEstagio;
-use App\Models\OrientadorGeral;
 use App\Models\Orientador;
 use App\Models\AcademicoTCC;
 use App\Models\Academico;
@@ -15,21 +14,28 @@ use Illuminate\Support\Facades\Hash;
 
 class AcademicoController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware(function ($request, $next) {
+            if (auth()->guard('web')->check() || auth()->guard('admin')->check()) {
+                return $next($request);
+            }
+
+            abort(403, 'Não autorizado.');
+        });
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        // ----------------------PRIMEIRO CASO: O ACADEMICO AINDA NAO TEM ORIENTADOR (pergunta futura: o academico pode fazer orientacao e estagio ao mesmo tempo? nao)
-        $academico = Academico::where('email', auth()->user()->email)->first();
-        // dd($academico); // aqui eu peguei Orientador ao invés de OrientadorGeral pq eu preciso ver quem tem disponibilidade
-        $orientadores = Orientador::where('disponibilidade', '>', 0)->get();
-        // dd($orientadores[1]->OrientadorGeral);
-        return view('academico.index', ['orientadores' => $orientadores, 'academico' => $academico]);
+        $academicos = Academico::all();
+
+        return view('academico.index', ['academicos' => $academicos]);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Utilizado para completar o cadastro do academico: atualizar senha e redirecionar para o create de AcademicoTCC ou AcademicoEstagio
      */
     public function create()
     {
@@ -38,15 +44,15 @@ class AcademicoController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Utilizado para completar o cadastro do academico: atualizar senha e redirecionar para o create de AcademicoTCC ou AcademicoEstagio
      */
     public function store(AcademicoRequest $request)
     {
-        $academico = Academico::where('email', auth()->user()->email)->first();
+        $academico = Academico::where('email', auth()->user()->email)->first(); // recupera o Academico
 
         if ($academico) {
             $academico->update([
-                'password' => Hash::make($request->input('password')),
+                'password' => Hash::make($request->input('password')), // atualiza a senha
             ]);
 
             if($request->input('modalidade') == 0){
@@ -116,6 +122,6 @@ class AcademicoController extends Controller
         } else {
             $academico->delete();
         }
-        return redirect()->route('admin.listar.academicos');
+        return redirect()->route('academico.index');
     }
 }

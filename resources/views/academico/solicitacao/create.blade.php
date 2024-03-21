@@ -3,7 +3,7 @@
 @section('content')
 <div class="card m-3">
     <div class="card-header justify-content-between">
-        <h3 class="card-title">Cadastro do(a) Professor(a) {{ $orientador->OrientadorGeral->nome }}</h3>
+        <h3 class="card-title">Cadastro do(a) Professor(a) {{ $orientador->Orientador->nome }}</h3>
         {{-- <div class="d-flex justify-content-between col-auto">
         </div> --}}
     </div>
@@ -11,15 +11,15 @@
         <div class="datagrid mb-4">
             <div class="datagrid-item">
                 <div class="datagrid-title">Email</div>
-                <div class="datagrid-content">{{ $orientador->OrientadorGeral->email }}</div>
+                <div class="datagrid-content">{{ $orientador->Orientador->email }}</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Formação</div>
-                <div class="datagrid-content">{{ $orientador->OrientadorGeral->Formacao->nome }}</div>
+                <div class="datagrid-content">{{ $orientador->Orientador->Formacao->nome }}</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Área de atuação</div>
-                <div class="datagrid-content">{{ $orientador->OrientadorGeral->Area->nome }}</div>
+                <div class="datagrid-content">{{ $orientador->Orientador->Area->nome }}</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Currículo Lattes</div>
@@ -70,6 +70,9 @@
         <div class="d-flex justify-content-between col-auto">
         @if ($academico->AcademicoTCC)
         <a href=" {{ route('academicoTCC.edit', ['academicoTCC' => $academico->AcademicoTCC ]) }}" class="btn me-2 btn-secondary w-100">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" /><path d="M13.5 6.5l4 4" /></svg>
+            Editar
+        </a>
         @elseif ($academico->AcademicoEstagio)
         <a href=" {{ route('empresa.edit', ['empresa' => $academico->AcademicoEstagio->Empresa ]) }}" class="btn me-2 btn-secondary w-100">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" /><path d="M13.5 6.5l4 4" /></svg>
@@ -135,7 +138,7 @@
     <form method="POST" action="{{ route('solicitacao.store') }}" autocomplete="off" novalidate>
         @csrf
         <input id="academico_id" name="academico_id" type="hidden" class="form-control" value="{{ $academico->id }}">
-        <input id="orientadorGeral_id" name="orientadorGeral_id" type="hidden" class="form-control" value="{{ $orientador->id }}">
+        <input id="Orientador_id" name="Orientador_id" type="hidden" class="form-control" value="{{ $orientador->id }}">
         <div class="mb-3">
             <label class="form-label">Mensagem ao orientador</label>
             <textarea id="mensagem" class="form-control" name="mensagem" rows="6" placeholder="(Opcional)" value="{{ old('mensagem', '') }}"></textarea>
