@@ -12,6 +12,15 @@ use Illuminate\Http\Request;
 
 class AcademicoEstagioController extends Controller
 {
+    public function __construct(){
+        $this->middleware(function ($request, $next) {
+            if (auth()->guard('web')->check() || auth()->guard('admin')->check()) {
+                return $next($request);
+            }
+
+            abort(403, 'Não autorizado.');
+        });
+    }
     /**
      * Display a listing of the resource.
      */
@@ -23,11 +32,9 @@ class AcademicoEstagioController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Empresa $empresa)
+    public function create(Empresa $empresa, Academico $academico)
     {
-        $empresa_id = $empresa->id;
-
-        return view('academico.academicoEstagio.create', ['empresa_id' => $empresa_id]);
+        return view('academico.academicoEstagio.create', ['empresa' => $empresa, 'academico' => $academico]);
     }
 
     /**
@@ -38,11 +45,7 @@ class AcademicoEstagioController extends Controller
         $academico = Academico::where('email', auth()->user()->email)->first();
         $academico_id = $academico->id;
 
-        $academicoEstagio = AcademicoEstagio::create([
-            'empresa_id' => $request->input('empresa_id'),
-            'academico_id' => $academico_id,
-            'tema' => $request->input('tema'),
-            'funcao' => $request->input('funcao')]);
+        $academicoEstagio = AcademicoEstagio::create($request->validated());
 
         return view('academico.finalacademico', ['academico' => $academico]);
     }

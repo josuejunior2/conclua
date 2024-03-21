@@ -9,6 +9,15 @@ use App\Http\Requests\SemestreRequest;
 
 class SemestreController extends Controller
 {
+    public function __construct(){
+        $this->middleware(function ($request, $next) {
+            if (auth()->guard('admin')->check()) {
+                return $next($request);
+            }
+
+            abort(403, 'Não autorizado.');
+        });
+    }
     /**
      * Display a listing of the resource.
      */

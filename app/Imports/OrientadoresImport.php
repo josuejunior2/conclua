@@ -2,11 +2,11 @@
 
 namespace App\Imports;
 
-use App\Models\OrientadorGeral;
+use App\Models\Orientador;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Illuminate\Support\Facades\Hash;
 
-class OrientadoresGeralImport implements ToModel
+class OrientadoresImport implements ToModel
 {
     /**
     * @param array $row
@@ -15,7 +15,7 @@ class OrientadoresGeralImport implements ToModel
     */
     public function model(array $row)
     {
-        return new OrientadorGeral([
+        return new Orientador([
             'nome'     => $row[0],
             'email'    => $row[1],
             'password' => Hash::make('admin123'),

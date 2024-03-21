@@ -3,12 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Models\Empresa;
+use App\Models\Academico;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\EmpresaRequest;
 
 class EmpresaController extends Controller
 {
+    public function __construct(){
+        $this->middleware(function ($request, $next) {
+            if (auth()->guard('web')->check() || auth()->guard('admin')->check()) {
+                return $next($request);
+            }
+
+            abort(403, 'Não autorizado.');
+        });
+    }
     /**
      * Display a listing of the resource.
      */
@@ -31,8 +41,9 @@ class EmpresaController extends Controller
     public function store(EmpresaRequest $request)
     {
         $empresa = Empresa::create($request->validated());
-
-        return redirect()->route('academicoEstagio.create', ['empresa' => $empresa]);
+        $academico = Academico::where('email', auth()->user()->email)->first();
+        // dd($academico);
+        return redirect()->route('academicoEstagio.create', ['empresa' => $empresa, 'academico' => $academico]);
     }
 
     /**

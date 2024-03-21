@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Models\OrientadorGeral;
+use App\Models\Orientador;
 use App\Models\Academico;
 use App\Models\AcademicoEstagio;
 use App\Models\AcademicoTCC;
@@ -22,12 +22,12 @@ class PrimeiroAcessoMiddleware
     {
         // dd(auth()->guard('web')->check());
         if(auth()->guard('admin')->check()){
-            $orientador = OrientadorGeral::where('email', auth()->guard('admin')->user()->email)->first();
+            $orientador = Orientador::where('email', auth()->guard('admin')->user()->email)->first();
 
             if (is_null($orientador)) {
                 return $next($request); // se não tiver orientador é que é admin, então pode passar
             } elseif(is_null($orientador->formacao_id) && is_null($orientador->area_id)){
-                return redirect()->route('orientadorgeral.create'); // se não completou o cadastro, vai completar
+                return redirect()->route('orientador.create'); // se não completou o cadastro, vai completar
             } else {
                 return $next($request); // se já completou o cadastro OU é admin, blz, pode passar
             }

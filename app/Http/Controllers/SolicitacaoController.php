@@ -11,6 +11,15 @@ use App\Http\Requests\SolicitacaoRequest;
 
 class SolicitacaoController extends Controller
 {
+    public function __construct(){
+        $this->middleware(function ($request, $next) {
+            if (auth()->guard('web')->check() || auth()->guard('admin')->check()) {
+                return $next($request);
+            }
+
+            abort(403, 'Não autorizado.');
+        });
+    }
     /**
      * Display a listing of the resource.
      */
@@ -24,7 +33,6 @@ class SolicitacaoController extends Controller
      */
     public function create(Orientador $orientador, Academico $academico)
     {
-        // dd($orientador);
         return view('academico.solicitacao.create', ['orientador' => $orientador, 'academico' => $academico]);
     }
 
@@ -85,36 +93,5 @@ class SolicitacaoController extends Controller
         return redirect()->route('academico.index');
     }
 
-    /**
-     * metodo post para o orientador aceitar a solicitação
-     */
-    public function aceitar(Solicitacao $solicitacao)
-    {
-        // criar um status pra solicitação? excluir ela ou não? é... tem que fazer um status mesmo
-        if($solicitacao->Academico->AcademicoTCC){
-            $solicitacao->Academico->AcademicoTCC->orientadorGeral_id = $solicitacao->orientadorGeral_id;
-            $solicitacao->Academico->AcademicoTCC->save();
-            return redirect()->route('orientadorgeral.index');
-        } elseif($solicitacao->Academico->AcademicoEstagio){
-            $solicitacao->Academico->AcademicoEstagio->orientadorGeral_id = $solicitacao->orientadorGeral_id;
-            $solicitacao->Academico->AcademicoEstagio->save();
-            return redirect()->route('orientadorgeral.index');
-        } else{
-            return back();
-        }
-
-    }
-
-    /**
-     * metodo post para o orientador rejeitar a solicitação
-     */
-    public function rejeitar($id)
-    {
-        // excluo a solicitação? status de rejeitada pra mostrar pro academico?
-
-        $solicitacao->delete();
-        return redirect()->route('orientadorgeral.index');
-
-    }
 }
 

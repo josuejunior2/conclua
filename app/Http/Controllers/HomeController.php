@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Academico;
+use App\Models\Orientador;
 
 class HomeController extends Controller
 {
@@ -25,9 +27,20 @@ class HomeController extends Controller
     {
         $user = auth()->user();
         if($user->hasRole('Academico')){
-            return redirect()->route('academico.index');
+            // ----------------------PRIMEIRO CASO: O ACADEMICO AINDA NAO TEM ORIENTADOR (pergunta futura: o academico pode fazer orientacao e estagio ao mesmo tempo? nao)
+            $academico = Academico::where('email', auth()->user()->email)->first();
+
+            $orientadorIds = $academico->solicitacoes->pluck('Orientador_id')->values()->toArray();
+
+            $orientadores = Orientador::where('disponibilidade', '>', 0)
+                            ->whereNotIn('Orientador_id', $orientadorIds)
+                            ->get();
+
+            // dd($academico->solicitacoes->Orientador);
+
+            return view('academico.home', ['orientadores' => $orientadores, 'academico' => $academico]);
         }elseif($user->hasRole('Orientador')){
-            return redirect()->route('orientadorgeral.index');
+            return redirect()->route('orientador.home');
         }elseif($user->hasRole('Administrador')){
             return redirect()->route('admin.home');
         }

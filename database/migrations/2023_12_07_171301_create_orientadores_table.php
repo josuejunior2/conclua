@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('orientadores', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('orientadorGeral_id');
-            $table->foreign('orientadorGeral_id')->references('id')->on('orientadores_geral');
+            $table->string('masp', 7)->unique();  //->primary();
+            $table->string('nome', 60);
+            $table->string('email', 40);
+            $table->string('password', 64);
             $table->unsignedTinyInteger('disponibilidade')->default(0);
-            $table->string('enderecoLattes', 38)->unique();
-            $table->string('enderecoOrcid', 37)->unique();
+            $table->string('enderecoLattes', 38)->unique()->nullable();
+            $table->string('enderecoOrcid', 37)->unique()->nullable();
             $table->string('subArea1', 60)->nullable();
             $table->string('subArea2', 60)->nullable();
             $table->string('subArea3', 60)->nullable();
@@ -35,10 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('orientadores', function(BLueprint $table) {
-            $table->dropForeign('orientadores_orientadorGeral_id_foreign');
-            $table->dropColumn('orientadorGeral_id');
-        });
         Schema::dropIfExists('orientadores');
     }
 };

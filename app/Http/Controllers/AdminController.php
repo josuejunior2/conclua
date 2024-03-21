@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use App\Models\User;
-use App\Models\OrientadorGeral;
 use App\Models\Orientador;
 use App\Models\Academico;
 use App\Models\AcademicoTCC;
@@ -13,7 +12,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\UsersImport;
-use App\Imports\OrientadoresGeralImport;
+use App\Imports\OrientadoresImport;
 use App\Imports\AcademicosImport;
 use App\Imports\AdminsImport;
 use Illuminate\Support\Facades\Validator;
@@ -21,6 +20,15 @@ use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
+    public function __construct(){
+        $this->middleware(function ($request, $next) {
+            if (auth()->guard('admin')->check()) {
+                return $next($request);
+            }
+
+            abort(403, 'Não autorizado.');
+        });
+    }
     /**
      * Display a listing of the resource.
      */
@@ -97,7 +105,7 @@ class AdminController extends Controller
         $arquivo = $request->file('tabela_orientadores');
 
         try {
-            Excel::import(new OrientadoresGeralImport, $arquivo);
+            Excel::import(new OrientadoresImport, $arquivo);
             Excel::import(new AdminsImport, $arquivo);
             // Seu código para importar e processar o arquivo aqui
         } catch (\Exception $e) {
@@ -155,28 +163,7 @@ class AdminController extends Controller
 
         $arquivo->move('/uploads', $nomeOriginal);
 
-        return redirect()->route('admin.listar.academicos')->with('success', 'Operação realizada com sucesso!');
+        return redirect()->route('academico.index')->with('success', 'Operação realizada com sucesso!');
     }
 
-     /**
-     *   Lista todos os orientadores.
-     */
-    public function listar_orientadores()
-    {
-        $especificos = Orientador::with('OrientadorGeral')->get();
-        $orientadores = OrientadorGeral::with('Formacao', 'Area')->get();
-        return view('admin.listar-orientadores', ['orientadores' => $orientadores, 'especificos' => $especificos]);
-    }
-
- /**
-     *   Lista todos os academicos.
-     */
-    public function listar_academicos()
-    {
-        $academicos = Academico::all();
-        $tcc = AcademicoTCC::all();
-        $estagio = AcademicoEstagio::all();
-
-        return view('admin.listar-academicos', ['academicos' => $academicos, 'tcc' => $tcc, 'estagio' => $estagio]);
-    }
 }

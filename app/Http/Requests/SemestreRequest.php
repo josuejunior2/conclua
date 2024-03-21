@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use App\Models\OrientadorGeral;
+use App\Models\Orientador;
 use Carbon\Carbon;
 
 class SemestreRequest extends FormRequest
@@ -14,7 +14,7 @@ class SemestreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        if(OrientadorGeral::where('email', auth()->guard('admin')->user()->email)->doesntExist() && auth()->guard('admin')->check()){
+        if(Orientador::where('email', auth()->guard('admin')->user()->email)->doesntExist() && auth()->guard('admin')->check()){
             return true;
         }
         return false;

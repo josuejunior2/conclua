@@ -15,10 +15,13 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('academico_id');
             $table->foreign('academico_id')->references('id')->on('academicos');
-            $table->unsignedBigInteger('orientadorGeral_id')->nullable();
-            $table->foreign('orientadorGeral_id')->references('id')->on('orientadores_geral');
-            $table->string('tema', 60)->unique();
-            $table->string('resumo', 750)->unique();
+
+            $table->text('tema', 10000);
+            $table->text('problema', 10000);
+            $table->text('objetivo_especifico', 10000);
+            $table->text('objetivo_geral', 10000);
+            $table->text('justificativa', 10000);
+            $table->text('metodologia', 10000);
             $table->timestamps();
         });
 
@@ -35,8 +38,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('academico_id')->unique();
             $table->foreign('academico_id')->references('id')->on('academicos');
-            $table->unsignedBigInteger('orientadorGeral_id')->nullable();
-            $table->foreign('orientadorGeral_id')->references('id')->on('orientadores_geral');
             $table->string('tema', 60);
             $table->string('funcao', 40);
             $table->unsignedBigInteger('empresa_id');

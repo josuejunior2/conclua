@@ -27,6 +27,8 @@ class AcademicoEstagioRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'academico_id' => 'required',
+            'empresa_id' => 'required',
             'tema' => 'required|min:15|max:60',
             'funcao' => 'required|min:5|max:40',
         ];

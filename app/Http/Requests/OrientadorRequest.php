@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\Orientador;
 use Illuminate\Support\Facades\Auth;
 
 class OrientadorRequest extends FormRequest
@@ -12,7 +13,7 @@ class OrientadorRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        if(auth()->guard('admin')->check()){ // + alguma verificação?
+        if(Orientador::where('email', auth()->guard('admin')->user()->email)->exists()){
             return true;
         }
         return false;
@@ -26,10 +27,15 @@ class OrientadorRequest extends FormRequest
     public function rules(): array
     {
         return [
+            // 'nome' => 'required|min:10|max:60',
+            // 'email' => 'required|min:16|max:40|email',
+            // 'masp' => 'required|digits:7',
+            'password' => 'required',//['required', Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised()],
+            'formacao_id' => 'required',
+            'area_id' => 'required',
             'enderecoLattes' => 'required|min:38|max:38',
             'enderecoOrcid' => 'required|min:37|max:37',
             'disponibilidade' => 'required',
-            'orientadorGeral_id' => 'required',
             'areaPesquisa1' => 'required',
             'areaPesquisa2' => 'nullable',
             'areaPesquisa3' => 'nullable',
@@ -40,7 +46,7 @@ class OrientadorRequest extends FormRequest
             'subArea3' => 'nullable',
         ];
     }
-     /**
+    /**
      * Get the messages array.
      *
      */
@@ -48,10 +54,20 @@ class OrientadorRequest extends FormRequest
     {
         return [
             'required' => 'O campo :attribute deve ser preenchido.',
+            'password.required' => 'O campo senha deve ser preenchido',
+            'required' => 'O campo :attribute deve ser preenchido.',
             'enderecoLattes.min' => 'O link deve ter 38 caracteres.',
             'enderecoLattes.max' => 'O link deve ter 38 caracteres.',
             'enderecoOrcid.min' => 'O link deve ter 37 caracteres.',
             'enderecoOrcid.max' => 'O link deve ter 37 caracteres.',
+
+            // 'name.min' => 'O campo nome deve ter no mínimo 10 caracteres.',
+            // 'name.max' => 'O campo nome deve ter no máximo 60 caracteres.',
+            // 'email.min' => 'O campo email deve ter no mínimo 16 caracteres.',
+            // 'email.max' => 'O campo email deve ter no máximo 40 caracteres.',
+            // 'email.email' => 'O campo email deve ser preenchido com um endereço de email.',
+            // 'masp.digits' => 'O campo MASP deve ter 7 caracteres numéricos.',
+
         ];
     }
     // public function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)

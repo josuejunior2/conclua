@@ -28,8 +28,12 @@ class AcademicoTCCRequest extends FormRequest
     {
         return [
             'academico_id' => 'required',
-            'tema' => 'required|min:15|max:60',
-            'resumo' => 'required|min:20|max:750',
+            'tema' => 'required|min:15|max:10000',
+            'problema' => 'required|min:15|max:10000',
+            'objetivo_especifico' => 'required|min:15|max:10000',
+            'objetivo_geral' => 'required|min:15|max:10000',
+            'justificativa' => 'required|min:15|max:10000',
+            'metodologia' => 'required|min:15|max:10000',
         ];
     }
         /**
@@ -40,10 +44,8 @@ class AcademicoTCCRequest extends FormRequest
     {
         return [
             'required' => 'O campo :attribute deve ser preenchido.',
-            'tema.min' => 'O campo tema deve ter no mínimo 15 caracteres.',
-            'tema.max' => 'O campo tema deve ter no máximo 60 caracteres.',
-            'resumo.min' => 'O campo resumo deve ter no mínimo 20 caracteres.',
-            'resumo.max' => 'O campo resumo deve ter no máximo 750 caracteres.',
+            'min' => 'O campo :attribute deve ter no mínimo 15 caracteres.',
+            'max' => 'O campo :attribute deve ter no máximo 10000 caracteres.',
         ];
     }
 }

@@ -28,7 +28,7 @@ class SolicitacaoRequest extends FormRequest
         // dd('oi');
         return [
             'academico_id' => 'required',
-            'orientadorGeral_id' => 'required',
+            'Orientador_id' => 'required',
             'status' => 'nullable',
             'mensagem' => 'nullable|max:255',
         ];
