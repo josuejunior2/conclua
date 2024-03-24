@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('orientacoes', function (Blueprint $table) {
             $table->id();
-            $table->date('data_solicitacao')->required();
             $table->date('data_vinculacao')->required();
             $table->unsignedBigInteger('academico_id')->required();
             $table->foreign('academico_id')->references('id')->on('academicos');
@@ -21,8 +20,10 @@ return new class extends Migration
             $table->foreign('orientador_id')->references('id')->on('orientadores');
             $table->unsignedBigInteger('semestre_id')->required();
             $table->foreign('semestre_id')->references('id')->on('semestres');
+            $table->unsignedBigInteger('solicitacao_id')->required();
+            $table->foreign('solicitacao_id')->references('id')->on('solicitacoes');
 
-            $table->tinyInteger('modalidade')->nullable()->comment('0 -> Estágio  ;  1 -> TCC');
+            // $table->tinyInteger('modalidade')->nullable()->comment('0 -> Estágio  ;  1 -> TCC');
             $table->timestamps();
         });
 

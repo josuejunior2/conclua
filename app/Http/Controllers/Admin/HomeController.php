@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Orientador;
+use App\Models\Solicitacao;
 
 class HomeController extends Controller
 {
@@ -13,7 +15,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth:admin');
     }
 
     /**
@@ -27,7 +29,10 @@ class HomeController extends Controller
         if($admin->hasRole('Admin')){
             return view('admin.home');
         } elseif($admin->hasRole('Orientador')){
-            return redirect()->route('orientador.home');
+            $orientador = Orientador::where('email', auth()->user()->email)->first();
+            $solicitacoes = Solicitacao::where('orientador_id', $orientador->id)->where('status', null)->get();
+
+            return view('orientador.home', ['solicitacoes' => $solicitacoes]);
         } else{
             return abort(403, 'Você não está autenticado ao sistema.');
         }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Orientador;
 use App\Models\Solicitacao;
 use App\Models\Academico;
+use App\Models\Semestre;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\SolicitacaoRequest;
@@ -33,7 +34,8 @@ class SolicitacaoController extends Controller
      */
     public function create(Orientador $orientador, Academico $academico)
     {
-        return view('academico.solicitacao.create', ['orientador' => $orientador, 'academico' => $academico]);
+        $semestre = Semestre::where('status', 1)->first();
+        return view('academico.solicitacao.create', ['semestre' => $semestre, 'orientador' => $orientador, 'academico' => $academico]);
     }
 
     /**
@@ -43,7 +45,7 @@ class SolicitacaoController extends Controller
     {
         $solicitacao = Solicitacao::create($request->validated());
         // dd($solicitacao);
-        return redirect()->route('academico.index')->with('success', 'Solicitação de orientação enviada com sucesso!');
+        return redirect()->route('home')->with('success', 'Solicitação de orientação enviada com sucesso!');
     }
 
     /**
@@ -80,8 +82,10 @@ class SolicitacaoController extends Controller
     public function update(SolicitacaoRequest $request, Solicitacao $solicitacao)
     {
         $solicitacao->update($request->validated());
-
-        return redirect()->route('solicitacao.show.web', ['solicitacao' => $solicitacao]);
+        if($request->input('status') == 0){
+            return redirect()->route('home');
+        }
+        return redirect()->route('solicitacao.show.web', ['solicitacao' => $solicitacao]); // pro caso do academico dar update
     }
 
     /**
@@ -90,7 +94,7 @@ class SolicitacaoController extends Controller
     public function destroy(Solicitacao $solicitacao)
     {
         $solicitacao->delete();
-        return redirect()->route('academico.index');
+        return redirect()->route('home');
     }
 
 }

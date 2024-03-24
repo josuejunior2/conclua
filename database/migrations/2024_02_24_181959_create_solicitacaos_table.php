@@ -17,6 +17,8 @@ return new class extends Migration
             $table->foreign('academico_id')->references('id')->on('academicos');
             $table->unsignedBigInteger('orientador_id')->required();
             $table->foreign('orientador_id')->references('id')->on('orientadores');
+            $table->unsignedBigInteger('semestre_id')->required();
+            $table->foreign('semestre_id')->references('id')->on('semestres');
             $table->boolean('status')->nullable()->comment('true para aceito e false para rejeitado');
             $table->string('mensagem', 255)->nullable(); // colocar um comentário? 'me aceita ai professor pfv vc é muito legal cara'
             $table->timestamps();

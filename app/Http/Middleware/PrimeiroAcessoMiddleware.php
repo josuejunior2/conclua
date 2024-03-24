@@ -23,7 +23,7 @@ class PrimeiroAcessoMiddleware
         // dd(auth()->guard('web')->check());
         if(auth()->guard('admin')->check()){
             $orientador = Orientador::where('email', auth()->guard('admin')->user()->email)->first();
-
+            // dd($orientador);
             if (is_null($orientador)) {
                 return $next($request); // se não tiver orientador é que é admin, então pode passar
             } elseif(is_null($orientador->formacao_id) && is_null($orientador->area_id)){
@@ -42,7 +42,8 @@ class PrimeiroAcessoMiddleware
                     return $next($request);
                 }
                 else{
-                    return redirect()->route('academico.create');
+                    $semestre = Semestre::where('status', 1)->first();
+                    return redirect()->route('academico.create', ['semestre' => $semestre]);
                 }
             }
             else {

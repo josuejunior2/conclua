@@ -3,18 +3,18 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\Orientador;
 
-class SolicitacaoRequest extends FormRequest
+class OrientacaoRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        if(auth()->guard('web')->check()){
+        if(Orientador::where('email', auth()->guard('admin')->user()->email)->exists() && auth()->guard('admin')->check()){
             return true;
         }
-
         return false;
     }
 
@@ -25,16 +25,16 @@ class SolicitacaoRequest extends FormRequest
      */
     public function rules(): array
     {
-        // dd('oi');
         return [
             'academico_id' => 'required',
             'orientador_id' => 'required',
             'semestre_id' => 'required',
-            'status' => 'nullable',
-            'mensagem' => 'nullable|max:255',
+            'data_vinculacao' => 'nullable',
+            'solicitacao_id' => 'nullable',
+            'modalidade' => 'nullable'
         ];
     }
-    /**
+ /**
      * Get the messages array.
      *
      */
@@ -42,11 +42,6 @@ class SolicitacaoRequest extends FormRequest
     {
         return [
             'required' => 'O campo :attribute deve ser preenchido.',
-            'mensagem.max' => 'A mensagem deve ter no máximo :max caracteres.',
         ];
     }
-    // public function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
-    // {
-    //     dd($validator->errors());
-    // }
 }

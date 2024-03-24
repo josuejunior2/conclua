@@ -36,10 +36,9 @@ Route::middleware('auth:web')->group(function () {
 
 
 Route::get('/', function () { return view('welcome'); })->name('welcome');
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('primeiro_acesso');
 
 Route::middleware('auth:web')->group(function () { // rotas para completar o cadastro do academico
-    Route::get('academico/create', 'App\Http\Controllers\AcademicoController@create')->name('academico.create');
+    Route::get('academico/create/{semestre}', 'App\Http\Controllers\AcademicoController@create')->name('academico.create');
     Route::post('academico', 'App\Http\Controllers\AcademicoController@store')->name('academico.store');
     Route::get('academicoEstagio/create/{empresa}/{academico}', 'App\Http\Controllers\AcademicoEstagioController@create')->name('academicoEstagio.create');
     Route::post('academicoEstagio', 'App\Http\Controllers\AcademicoEstagioController@store')->name('academicoEstagio.store');
@@ -49,19 +48,23 @@ Route::middleware('auth:web')->group(function () { // rotas para completar o cad
     Route::post('academicoTCC', 'App\Http\Controllers\AcademicoTCCController@store')->name('academicoTCC.store');
 });
 
-Route::middleware(['auth:web', 'primeiro_acesso'])->group(function () { //
+Route::middleware(['auth:web', 'primeiro_acesso', 'semestre_ativo'])->group(function () { //
     Route::resource('academico', App\Http\Controllers\AcademicoController::class)->except(['create', 'store', 'index']);
     Route::resource('academicoEstagio', App\Http\Controllers\AcademicoEstagioController::class)->except(['create', 'store']);
     Route::resource('empresa', App\Http\Controllers\EmpresaController::class)->except(['create', 'store']);
     Route::resource('solicitacao', App\Http\Controllers\SolicitacaoController::class)->names(['show' => 'solicitacao.show.web'])->except(['create', 'index']);
     Route::resource('academicoTCC', App\Http\Controllers\AcademicoTCCController::class)->except(['create', 'store']);
-    Route::get('solicitacao/{orientador}/{academico}', 'App\Http\Controllers\SolicitacaoController@create')->name('solicitacao.create');
+    Route::get('solicitacao/{orientador}/{academico}/{semestre}', 'App\Http\Controllers\SolicitacaoController@create')->name('solicitacao.create');
 
-    Route::get('pesquisa/orientador/{Orientador}/{academico}', [App\Http\Controllers\OrientadorController::class, 'show_web'])->name('Orientador.show.web');
+    Route::get('pesquisa/orientador/{Orientador}/{academico}', [App\Http\Controllers\OrientadorController::class, 'show_web'])->name('orientador.show.web');
 });
 
-
-
+Route::middleware(['auth:web', 'primeiro_acesso', 'semestre_ativo'])->group(function () {
+    /**
+     * Esta rota /home aqui vale apenas para academico, pq o /home para admin&orientador vai direto para /admin/home, e /admin/home na linha 93 nao tem o semestre_ativo
+     */
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+});
 
 
 
@@ -72,37 +75,34 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('login', [AdminLoginController::class, 'login'])->name('login');
     Route::post('logout', [AdminLoginController::class, 'logout'])->name('logout');
 
-    Route::middleware(['auth:admin'])->group(function () {
+    Route::middleware(['auth:admin'])->group(function () {                                 // rotas ADMIN c prefixo ANTES DE ATIVAR O SEMESTRE
         Route::get('/', function () { return redirect()->route('admin.home'); });
-        Route::get('/home', [AdminHomeController::class, 'index'])->name('home');
         Route::resource('semestre', App\Http\Controllers\SemestreController::class);
         Route::post('ativar/{semestre}', [App\Http\Controllers\SemestreController::class, 'ativar'])->name('semestre.ativar');
         Route::post('desativar/{semestre}', [App\Http\Controllers\SemestreController::class, 'desativar'])->name('semestre.desativar');
         Route::post('cadastro/orientador', [AdminController::class, 'import_orientadores'])->name('cadastro-orientador');
         Route::post('cadastro/academico', [AdminController::class, 'import_academicos'])->name('cadastro-academico');
-        Route::get('listar/orientadores', [AdminController::class, 'listar_orientadores'])->name('listar.orientadores');
+        Route::get('academico', 'App\Http\Controllers\AcademicoController@index')->name('academico.index');
+        Route::get('orientador', 'App\Http\Controllers\OrientadorController@index')->name('orientador.index');
     });
 });
-
 
 
 Route::middleware(['auth:admin'])->group(function () {
     Route::get('orientador/create', 'App\Http\Controllers\OrientadorController@create')->name('orientador.create');
     Route::post('orientador', 'App\Http\Controllers\OrientadorController@store')->name('orientador.store');
 });
+Route::middleware(['auth:admin', 'primeiro_acesso'])->group(function () { // rotas normal ANTES DE ATIVAR O SEMESTRE
+    Route::get('admin/home', [AdminHomeController::class, 'index'])->name('admin.home');
+    Route::resource('orientador', App\Http\Controllers\OrientadorController::class)->except(['create', 'store', 'index'])->names(['show' => 'orientador.show.admin']);
 
-Route::middleware(['auth:admin', 'primeiro_acesso'])->group(function () {
-    Route::get('academico', 'App\Http\Controllers\AcademicoController@index')->name('academico.index');
-    // coloquei estas rotas sem middleware para nao dar loop                                                     VVVVVV
-    Route::get('orientador/home', 'App\Http\Controllers\OrientadorController@home')->name('orientador.home');
+});
 
-    // Rel do orientador com o Academico
-    Route::post('/solicitacao/aceitar/{solicitacao}', 'App\Http\Controllers\OrientadorController@aceitar_solicitacao')->name('solicitacao.aceitar');
-    Route::post('/solicitacao/rejeitar/{solicitacao}', 'App\Http\Controllers\OrientadorController@rejeitar_solicitacao')->name('solicitacao.rejeitar');
+Route::middleware(['auth:admin', 'primeiro_acesso', 'semestre_ativo'])->group(function () { // SEMESTRE ATIVO
+    Route::resource('orientacao', App\Http\Controllers\OrientacaoController::class);
 
-    // essas abaixo eu nao pensei ainda
-    Route::resource('orientador', App\Http\Controllers\OrientadorController::class)->except(['create', 'store'])->names(['show' => 'orientador.show.admin']);
     Route::get('orientador/solicitacao/{solicitacao}/', [App\Http\Controllers\SolicitacaoController::class, 'show_admin'])->name('solicitacao.show.admin');
+    // essas abaixo eu nao pensei ainda
 });
 
 // Route::middleware('auth')->group(function () {

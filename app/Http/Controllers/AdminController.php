@@ -123,7 +123,7 @@ class AdminController extends Controller
 
         $arquivo->move('/uploads', $nomeOriginal);
 
-        return redirect()->route('admin.listar.orientadores')->with('success', 'Operação realizada com sucesso!');
+        return redirect()->route('admin.orientador.index')->with('success', 'Operação realizada com sucesso!');
     }
     /**
      * Cadastra os dados basicos de academicos por tabela excel.
@@ -163,7 +163,7 @@ class AdminController extends Controller
 
         $arquivo->move('/uploads', $nomeOriginal);
 
-        return redirect()->route('academico.index')->with('success', 'Operação realizada com sucesso!');
+        return redirect()->route('admin.academico.index')->with('success', 'Operação realizada com sucesso!');
     }
 
 }

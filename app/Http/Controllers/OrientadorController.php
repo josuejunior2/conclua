@@ -27,18 +27,6 @@ class OrientadorController extends Controller
     }
 
     /**
-     *  Tela Home do Orientador
-     */
-    public function home()
-    {
-        $orientador = Orientador::where('email', auth()->user()->email)->first();
-        $solicitacoes = Solicitacao::where('Orientador_id', $orientador->id)->get();
-        // dd($solicitacoes);
-
-        return view('orientador.home', ['solicitacoes' => $solicitacoes]);
-    }
-
-    /**
      * Display a listing of the resource.
      */
     public function index()
@@ -54,13 +42,13 @@ class OrientadorController extends Controller
     public function create()
     {
         $orientador = Orientador::where('email', auth()->guard('admin')->user()->email)->first();
-        // dd($orientador);
         if (is_null($orientador)) {
             return redirect()->route('admin.home'); // se não tiver orientador é que é admin, então pode ir pra home
         } elseif(is_null($orientador->formacao_id) && is_null($orientador->area_id)){
             $formacoes = Formacao::all();
             $areas = Area::all();
             $user = auth()->user();
+            // dd($orientador);
             return view('orientador.create', ['user' => $user, 'areas' => $areas, 'formacoes' => $formacoes ]);
         } else {
             return redirect()->route('admin.home'); // se já completou o cadastro OU é admin, vai pra home

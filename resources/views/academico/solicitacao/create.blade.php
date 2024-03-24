@@ -3,7 +3,7 @@
 @section('content')
 <div class="card m-3">
     <div class="card-header justify-content-between">
-        <h3 class="card-title">Cadastro do(a) Professor(a) {{ $orientador->Orientador->nome }}</h3>
+        <h3 class="card-title">Cadastro do(a) Professor(a) {{ $orientador->nome }}</h3>
         {{-- <div class="d-flex justify-content-between col-auto">
         </div> --}}
     </div>
@@ -11,15 +11,15 @@
         <div class="datagrid mb-4">
             <div class="datagrid-item">
                 <div class="datagrid-title">Email</div>
-                <div class="datagrid-content">{{ $orientador->Orientador->email }}</div>
+                <div class="datagrid-content">{{ $orientador->email }}</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Formação</div>
-                <div class="datagrid-content">{{ $orientador->Orientador->Formacao->nome }}</div>
+                <div class="datagrid-content">{{ $orientador->Formacao->nome }}</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Área de atuação</div>
-                <div class="datagrid-content">{{ $orientador->Orientador->Area->nome }}</div>
+                <div class="datagrid-content">{{ $orientador->Area->nome }}</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Currículo Lattes</div>
@@ -97,8 +97,24 @@
                 <div class="datagrid-content">{{ $academico->AcademicoTCC->tema }}</div>
             </div>
             <div class="datagrid-item">
-                <div class="datagrid-title">Resumo</div>
-                <div class="datagrid-content">{{ $academico->AcademicoTCC->resumo }}</div>
+                <div class="datagrid-title">Problema</div>
+                <div class="datagrid-content">{{ $academico->AcademicoTCC->problema }}</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">Objetivo Geral</div>
+                <div class="datagrid-content">{{ $academico->AcademicoTCC->objetivo_geral }}</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">Objetivo Específico</div>
+                <div class="datagrid-content">{{ $academico->AcademicoTCC->objetivo_especifico }}</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">Justificativa</div>
+                <div class="datagrid-content">{{ $academico->AcademicoTCC->justificativa }}</div>
+            </div>
+            <div class="datagrid-item">
+                <div class="datagrid-title">Metodologia</div>
+                <div class="datagrid-content">{{ $academico->AcademicoTCC->metodologia }}</div>
             </div>
             @elseif ($academico->AcademicoEstagio)
             <div class="datagrid-item">
@@ -138,7 +154,8 @@
     <form method="POST" action="{{ route('solicitacao.store') }}" autocomplete="off" novalidate>
         @csrf
         <input id="academico_id" name="academico_id" type="hidden" class="form-control" value="{{ $academico->id }}">
-        <input id="Orientador_id" name="Orientador_id" type="hidden" class="form-control" value="{{ $orientador->id }}">
+        <input id="orientador_id" name="orientador_id" type="hidden" class="form-control" value="{{ $orientador->id }}">
+        <input id="semestre_id" name="semestre_id" type="hidden" class="form-control" value="{{ $semestre->id }}">
         <div class="mb-3">
             <label class="form-label">Mensagem ao orientador</label>
             <textarea id="mensagem" class="form-control" name="mensagem" rows="6" placeholder="(Opcional)" value="{{ old('mensagem', '') }}"></textarea>

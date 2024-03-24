@@ -6,21 +6,34 @@
 <div class="card m-3">
     <div class="card-header justify-content-between">
         <h3 class="card-title">Solicitação de vinculação de {{ $solicitacao->Academico->nome }}</h3>
+        @if($solicitacao->status == null)
         <div class="d-flex justify-content-between col-auto">
-            <form method="POST" action="{{ route('solicitacao.rejeitar', ['solicitacao' => $solicitacao]) }}" >
+            <form method="POST" action="{{ route('solicitacao.update', ['solicitacao' => $solicitacao]) }}" >
                 @csrf
+                @method('PUT')
+                <input id="academico_id" name="academico_id" type="hidden" class="form-control" value="{{ $solicitacao->academico_id }}">
+                <input id="orientador_id" name="orientador_id" type="hidden" class="form-control" value="{{ $solicitacao->orientador_id }}">
+                <input id="semestre_id" name="semestre_id" type="hidden" class="form-control" value="{{ $solicitacao->semestre_id }}">
+                <input id="mensagem" name="mensagem" type="hidden" class="form-control" value="{{ $solicitacao->mensagem }}">
+                <input id="status" name="status" type="hidden" class="form-control" value="0">
                 <button type="submit" class="btn btn-danger w-100">
                     Rejeitar
                 </button>
             </form>
 
-            <form method="POST" action="{{ route('solicitacao.aceitar', ['solicitacao' => $solicitacao]) }}">
+            <form method="POST" action="{{ route('orientacao.store') }}">
                 @csrf
+                <input id="academico_id" name="academico_id" type="hidden" class="form-control" value="{{ $solicitacao->Academico->id }}">
+                <input id="orientador_id" name="orientador_id" type="hidden" class="form-control" value="{{ $solicitacao->Orientador->id }}">
+                <input id="semestre_id" name="semestre_id" type="hidden" class="form-control" value="{{ $solicitacao->Semestre->id }}">
+                <input id="solicitacao_id" name="solicitacao_id" type="hidden" class="form-control" value="{{ $solicitacao->id }}">
+                <input id="data_vinculacao" name="data_vinculacao" type="hidden" class="form-control" value="{{ now() }}">
                 <button type="submit" class="btn btn-success w-100">
                     Aceitar
                 </button>
             </form>
         </div>
+        @endif
     </div>
     <div class="card-body">
         <div class="datagrid">
@@ -51,7 +64,23 @@
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Resumo</div>
-            <div class="datagrid-content">{{ $solicitacao->Academico->AcademicoTCC->resumo }}</div>
+            <div class="datagrid-content">{{ $solicitacao->Academico->AcademicoTCC->problema }}</div>
+        </div>
+        <div class="datagrid-item">
+            <div class="datagrid-title">Resumo</div>
+            <div class="datagrid-content">{{ $solicitacao->Academico->AcademicoTCC->objetivo_especifico }}</div>
+        </div>
+        <div class="datagrid-item">
+            <div class="datagrid-title">Resumo</div>
+            <div class="datagrid-content">{{ $solicitacao->Academico->AcademicoTCC->objetivo_geral }}</div>
+        </div>
+        <div class="datagrid-item">
+            <div class="datagrid-title">Resumo</div>
+            <div class="datagrid-content">{{ $solicitacao->Academico->AcademicoTCC->justificativa }}</div>
+        </div>
+        <div class="datagrid-item">
+            <div class="datagrid-title">Resumo</div>
+            <div class="datagrid-content">{{ $solicitacao->Academico->AcademicoTCC->metodologia }}</div>
         </div>
 
         @elseif ($solicitacao->Academico->AcademicoEstagio)
@@ -82,6 +111,19 @@
         <div class="datagrid-item">
             <div class="datagrid-title">Email da Empresa/Supervisor</div>
             <div class="datagrid-content">{{ $solicitacao->Academico->AcademicoEstagio->Empresa->email }}</div>
+        </div>
+        @endif
+        @if ($solicitacao->Orientacao)
+        <div class="datagrid-item">
+            <div class="datagrid-title">Status</div>
+            <div class="datagrid-content">@if ($solicitacao->status == 1)
+                Aceito
+                @endif
+            </div>
+        </div>
+        <div class="datagrid-item">
+            <div class="datagrid-title">Data de envio da solicitação</div>
+            <div class="datagrid-content">{{ $solicitacao->Orientacao->data_vinculacao->format('d/m/Y') }}</div>
         </div>
         @endif
     </div>

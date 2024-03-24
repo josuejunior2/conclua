@@ -2,13 +2,8 @@
 
 @section('content')
 {{-- preciso melhorar essa condição depois, talvez um middleware para checar se tem orientador? --}}
-@php
 
-@endphp
-@if (
-    (is_null($academico->AcademicoEstagio) || is_null($academico->AcademicoEstagio->Orientador)) &&
-    (is_null($academico->AcademicoTCC) || is_null($academico->AcademicoTCC->Orientador))
-)
+@if (!$academico->Orientacao)
 <div class="col-12">
     <div class="card m-3">
         <div class="card-header justify-content-between">
@@ -47,11 +42,11 @@
             @foreach ($orientadores as $o)
             <tr>
                 {{-- <!--<td></td>  <input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"> -->
-                <td><span class="text-muted">{{ $o->Orientador->id }}</span></td> --}}
-                <td>{{ $o->Orientador->nome }}</td>
-                <td>{{ $o->Orientador->email }}</td>
-                <td>{{ $o->Orientador->Formacao ? $o->Orientador->Formacao->nome : 'N/A' }}</td>
-                <td>{{ $o->Orientador->Area ? $o->Orientador->Area->nome : 'N/A' }}</td>
+                <td><span class="text-muted">{{ $o->id }}</span></td> --}}
+                <td>{{ $o->nome }}</td>
+                <td>{{ $o->email }}</td>
+                <td>{{ $o->Formacao ? $o->Formacao->nome : 'N/A' }}</td>
+                <td>{{ $o->Area ? $o->Area->nome : 'N/A' }}</td>
                 <td class="text-end">
                   <span class="dropdown">
                     <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Ações</button>
@@ -59,10 +54,9 @@
                         <a class="dropdown-item" href="{{ route('orientador.show.web', ['Orientador' => $o, 'academico' => $academico]) }}">
                             Visualizar
                         </a>
-                        <a class="dropdown-item" href="{{ route('solicitacao.create', ['orientador' => $o, 'academico' => $academico]) }}">
+                        <a class="dropdown-item" href="{{ route('solicitacao.create', ['orientador' => $o, 'academico' => $academico, 'semestre' => $semestre]) }}">
                             Solicitar vinculação
                         </a>
-
                     </div>
                   </span>
                 </td>
@@ -130,8 +124,21 @@
         });
     });
 </script>
-@else
-oi parabens vc tem orientador
+@elseif ($academico->Orientacao && $academico->AcademicoTCC)
+{{ $academico->AcademicoTCC->tema }}<br>
+{{ $academico->AcademicoTCC->problema }}<br>
+{{ $academico->AcademicoTCC->objetivo_especifico }}<br>
+{{ $academico->AcademicoTCC->objetivo_geral }}<br>
+{{ $academico->AcademicoTCC->justificativa }}<br>
+{{ $academico->AcademicoTCC->metodologia }}<br>
+@elseif ($academico->Orientacao && $academico->AcademicoEstagio)
+{{ $academico->AcademicoTCC->tema }}<br>
+{{ $academico->AcademicoTCC->funcao }}<br>
+{{ $academico->AcademicoTCC->Empresa->nome }}<br>
+{{ $academico->AcademicoTCC->Empresa->email }}<br>
+{{ $academico->AcademicoTCC->Empresa->cnpj }}<br>
+{{ $academico->AcademicoTCC->Empresa->supervisor }}<br>
+
 @endif
 
 @endsection

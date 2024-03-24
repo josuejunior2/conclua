@@ -10,10 +10,10 @@ class AcademicoTCC extends Model
     use HasFactory;
     protected $table = 'academicos_tcc';
 
-    protected $fillable = ['academico_id', 'Orientador_id', 'tema', 'problema', 'objetivo_especifico', 'objetivo_geral', 'justificativa', 'metodologia'];
+    protected $fillable = ['academico_id', 'orientacao_id', 'tema', 'problema', 'objetivo_especifico', 'objetivo_geral', 'justificativa', 'metodologia'];
 
-    public function Orientador(){
-        return $this->belongsTo('App\Models\Orientador', 'Orientador_id');
+    public function Orientacao(){
+        return $this->belongsTo('App\Models\Orientacao', 'orientacao_id');
     }
 
     public function Academico(){

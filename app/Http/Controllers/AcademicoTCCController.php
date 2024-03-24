@@ -71,7 +71,7 @@ class AcademicoTCCController extends Controller
     {
         $academicoTCC->update($request->validated());
 
-        return redirect()->route('academico.index');
+        return redirect()->route('home');
     }
 
     /**

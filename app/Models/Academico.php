@@ -33,4 +33,8 @@ class Academico extends Authenticatable
     public function solicitacoes(){
         return $this->hasMany('App\Models\Solicitacao', 'academico_id');
     }
+
+    public function Orientacao(){
+        return $this->hasOne('App\Models\Orientacao', 'academico_id');
+    }
 }
