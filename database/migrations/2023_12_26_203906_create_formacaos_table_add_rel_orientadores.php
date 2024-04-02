@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('formacoes', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('nome', 40);
             $table->timestamps();
         });
 
         Schema::table('orientadores', function(BLueprint $table) {
-            $table->unsignedBigInteger('formacao_id')->nullable()->after('area_id');
+            $table->uuid('formacao_id')->nullable()->after('area_id');
             $table->foreign('formacao_id')->references('id')->on('formacoes');
         });
     }

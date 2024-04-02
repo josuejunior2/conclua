@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Formacao;
 use App\Models\Academico;
 use App\Models\Orientador;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -29,7 +30,9 @@ class DatabaseSeeder extends Seeder
             'email' => 'thiago@gmail.com',
             'password' => 'admin123',
         ]);
+        $uuid = Str::uuid()->toString();
         $academico1 = Academico::create([
+            'id' => $uuid,
             'nome' => 'Thiago Ian Cesar',
             'email' => 'thiago@gmail.com',
             'password' => 'admin123',
@@ -41,7 +44,9 @@ class DatabaseSeeder extends Seeder
             'email' => 'ian@gmail.com',
             'password' => 'admin123',
         ]);
+        $uuid = Str::uuid()->toString();
         $academico2 = Academico::create([
+            'id' => $uuid,
             'nome' => 'Ian Thiago Hadrien',
             'email' => 'ian@gmail.com',
             'password' => 'admin123',
@@ -54,7 +59,9 @@ class DatabaseSeeder extends Seeder
             'email' => 'rene@gmail.com',
             'password' => 'admin123',
         ]);
+        $uuid = Str::uuid()->toString();
         $orientador1 = Orientador::create([
+            'id' => $uuid,
             'nome' => 'Rene Veloso',
             'email' => 'rene@gmail.com',
             'password' => 'admin123',
@@ -67,7 +74,9 @@ class DatabaseSeeder extends Seeder
             'email' => 'edu@gmail.com',
             'password' => 'admin123',
         ]);
+        $uuid = Str::uuid()->toString();
         $orientador2 = Orientador::create([
+            'id' => $uuid,
             'nome' => 'Eduardo Diniz',
             'email' => 'edu@gmail.com',
             'password' => 'admin123',
@@ -81,10 +90,14 @@ class DatabaseSeeder extends Seeder
             'email' => 'josuejuniorww@gmail.com',
             'password' => 'admin123',
         ]);
+        $uuid = Str::uuid()->toString();
         $formacao = Formacao::create([
+            'id' => $uuid,
             'nome' => 'Administração'
         ]);
+        $uuid = Str::uuid()->toString();
         $area = Area::create([
+            'id' => $uuid,
             'nome' => 'Marketing'
         ]);
 

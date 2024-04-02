@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('academicos', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->boolean('status')->default(0)->comment('true para ativo e false para inativo');
             $table->string('matricula', 9)->unique();
             $table->string('nome', 60);
