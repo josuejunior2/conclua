@@ -82,10 +82,17 @@
                             <div>
                                 <div class="row">
                                     <div class="col">
-                                    <div class="text-truncate">
-                                        {{ $as->Orientador->nome }}
-                                    </div>
-                                    <div class="text-muted">{{ $as->created_at->format('d/m/Y') }}</div>
+                                        <div class="text-truncate">
+                                            {{ $as->Orientador->nome }}
+                                        </div>
+                                        <div class="text-muted">{{ $as->created_at->format('d/m/Y') }}</div>
+                                        @if (is_null($as->status))
+                                            <span class="badge bg-indigo text-white">Aguardando resposta</span>
+                                        @elseif (!$as->status)
+                                            <span class="badge bg-red text-white">Rejeitada</span>
+                                        @elseif ($as->status)
+                                            <span class="badge bg-green text-white">Aceita</span>
+                                        @endif
                                     </div>
                                     <div class="col-auto align-self-center">
                                         <a href="{{ route('solicitacao.show.web', ['solicitacao' => $as]) }}" class="btn btn-primary btn-pill w-100">

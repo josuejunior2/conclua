@@ -16,6 +16,8 @@
                     @csrf
                     @method('PUT')
                     <input id="empresa_id" name="empresa_id" type="hidden" class="form-control" value="{{ $academicoEstagio->Empresa->id }}">
+                    <input id="academico_id" name="academico_id" type="hidden" class="form-control" value="{{ $academicoEstagio->academico_id }}">
+                    <input id="semestre_id" name="semestre_id" type="hidden" class="form-control" value="{{ $academicoEstagio->Semestre->id }}">
                     <div class="row g-3 mb-4">
                         <div class="col-md">
                            <div class="mb-3">

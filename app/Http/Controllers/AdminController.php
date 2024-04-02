@@ -121,7 +121,7 @@ class AdminController extends Controller
 
         $nomeOriginal = $arquivo->getClientOriginalName();
 
-        $arquivo->move('/uploads', $nomeOriginal);
+        $arquivo->move('/uploads', $nomeOriginal);//ta dando errado
 
         return redirect()->route('admin.orientador.index')->with('success', 'Operação realizada com sucesso!');
     }
@@ -148,7 +148,7 @@ class AdminController extends Controller
         try {
             Excel::import(new AcademicosImport, $arquivo);
             Excel::import(new UsersImport, $arquivo);
-            // Seu código para importar e processar o arquivo aqui
+
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['erro' => 'Erro: Planilha vazia ou dados repetidos.'.$e]);
         }
@@ -161,9 +161,46 @@ class AdminController extends Controller
 
         $nomeOriginal = $arquivo->getClientOriginalName();
 
-        $arquivo->move('/uploads', $nomeOriginal);
+        $arquivo->move('/uploads', $nomeOriginal);// ta dando errado, ver depois
 
         return redirect()->route('admin.academico.index')->with('success', 'Operação realizada com sucesso!');
     }
+    /**
+     * Ativa o cadastro do Orientador
+     */
+    public function ativar_orientador(Orientador $orientador)
+    {
+        $orientador->update(['status' => 1]);
 
+        return redirect()->route('admin.orientador.index');
+    }
+
+    /**
+     * Desativa o o cadastro do orientador
+     */
+    public function desativar_orientador(Orientador $orientador)
+    {
+        $orientador->update(['status' => 0]);
+
+        return redirect()->route('admin.orientador.index');
+    }
+    /**
+     * Ativa o cadastro do Academico
+     */
+    public function ativar_academico(Academico $academico)
+    {
+        $academico->update(['status' => 1]);
+
+        return redirect()->route('admin.academico.index');
+    }
+
+    /**
+     * Desativa o o cadastro do academico
+     */
+    public function desativar_academico(Academico $academico)
+    {
+        $academico->update(['status' => 0]);
+
+        return redirect()->route('admin.academico.index');
+    }
 }

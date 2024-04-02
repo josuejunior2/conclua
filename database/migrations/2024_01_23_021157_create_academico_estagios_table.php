@@ -11,10 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::create('semestres', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedSmallInteger('ano');
+            $table->tinyInteger('numero')->comment('1 para 1º semestre, 2 para 2º semestre');
+            $table->date('data_inicio');
+            $table->date('data_fim');
+            $table->date('limite_doc_estagio');
+            $table->date('limite_orientacao');
+            $table->boolean('status')->default(0)->comment('true para ativo e false para inativo');
+            $table->timestamps();
+        });
+
         Schema::create('academicos_TCC', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('academico_id');
             $table->foreign('academico_id')->references('id')->on('academicos');
+            $table->unsignedBigInteger('semestre_id')->required();
+            $table->foreign('semestre_id')->references('id')->on('semestres');
 
             $table->text('tema', 10000);
             $table->text('problema', 10000);
@@ -38,6 +52,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('academico_id')->unique();
             $table->foreign('academico_id')->references('id')->on('academicos');
+            $table->unsignedBigInteger('semestre_id')->required();
+            $table->foreign('semestre_id')->references('id')->on('semestres');
             $table->string('tema', 60);
             $table->string('funcao', 40);
             $table->unsignedBigInteger('empresa_id');
@@ -51,6 +67,8 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('semestres');
+
         Schema::dropIfExists('academicos_estagio');
 
         Schema::dropIfExists('empresas');

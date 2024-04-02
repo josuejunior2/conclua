@@ -15,11 +15,23 @@ class AcademicosImport implements ToModel
     */
     public function model(array $row)
     {
+        $academico = Academico::where('matricula', $row[2])->first();
+
+        if($academico){
+            $academico->update([
+                'nome'     => $row[0],
+                'email'    => $row[1],
+                'matricula'=> $row[2],
+                'status'   => 1 // ativou o cadastro NO semestre
+            ]);
+            return $academico;
+        }
         return new Academico([
             'nome'     => $row[0],
             'email'    => $row[1],
             'password' => Hash::make('admin123'),
             'matricula'=> $row[2],
+            'status'   => 1 // ativou o cadastro NO semestre
         ]);
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Semestre;
+use App\Models\Academico;
+use App\Models\Orientador;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\SemestreRequest;
@@ -24,7 +26,7 @@ class SemestreController extends Controller
     public function index()
     {
         $semestres = Semestre::all();
-        return view('semestre.index', ['semestres' => $semestres]);
+        return view('admin.semestre.index', ['semestres' => $semestres]);
     }
 
     /**
@@ -32,7 +34,7 @@ class SemestreController extends Controller
      */
     public function create()
     {
-        return view('semestre.create');
+        return view('admin.semestre.create');
     }
 
     /**
@@ -52,7 +54,7 @@ class SemestreController extends Controller
     {
         $dados = Semestre::find($id);
 
-        return view('semestre.show', ['semestre' => $dados]);
+        return view('admin.semestre.show', ['semestre' => $dados]);
     }
 
     /**
@@ -60,7 +62,7 @@ class SemestreController extends Controller
      */
     public function edit(Semestre $semestre)
     {
-        return view('semestre.edit', ['semestre' => $semestre]);
+        return view('admin.semestre.edit', ['semestre' => $semestre]);
     }
 
     /**
@@ -99,11 +101,17 @@ class SemestreController extends Controller
     }
 
     /**
-     * Desativa o semestre
+     * Desativa o semestre e o cadastro de academicos e orientadores
      */
     public function desativar(string $id)
     {
         $semestre = Semestre::find($id);
+        foreach(Academico::all() as $academico){
+            $academico->status = 0;
+        }
+        foreach(Orientador::all() as $orientador){
+            $orientador->status = 0;
+        }
 
         $semestre->update(['status' => 0]);
 

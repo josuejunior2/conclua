@@ -28,6 +28,7 @@ class AcademicoEstagioRequest extends FormRequest
     {
         return [
             'academico_id' => 'required',
+            'semestre_id' => 'required',
             'empresa_id' => 'required',
             'tema' => 'required|min:15|max:60',
             'funcao' => 'required|min:5|max:40',
@@ -46,5 +47,9 @@ class AcademicoEstagioRequest extends FormRequest
             'funcao.min' => 'O campo função deve ter no mínimo 5 caracteres.',
             'funcao.max' => 'O campo função deve ter no máximo 40 caracteres.',
         ];
+    }
+    public function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+    {
+        dd($validator->errors());
     }
 }

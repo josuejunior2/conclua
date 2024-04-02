@@ -4,21 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Empresa;
 use App\Models\Academico;
+use App\Models\Semestre;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\EmpresaRequest;
 
 class EmpresaController extends Controller
 {
-    public function __construct(){
-        $this->middleware(function ($request, $next) {
-            if (auth()->guard('web')->check() || auth()->guard('admin')->check()) {
-                return $next($request);
-            }
-
-            abort(403, 'Não autorizado.');
-        });
-    }
     /**
      * Display a listing of the resource.
      */
@@ -43,7 +35,9 @@ class EmpresaController extends Controller
         $empresa = Empresa::create($request->validated());
         $academico = Academico::where('email', auth()->user()->email)->first();
         // dd($academico);
-        return redirect()->route('academicoEstagio.create', ['empresa' => $empresa, 'academico' => $academico]);
+        $semestre = Semestre::where('status', 1)->first();
+
+        return redirect()->route('academicoEstagio.create', ['empresa' => $empresa, 'academico' => $academico, 'semestre' => $semestre]);
     }
 
     /**
@@ -69,7 +63,7 @@ class EmpresaController extends Controller
     public function update(EmpresaRequest $request, Empresa $empresa)
     {
         $empresa->update($request->validated());
-        return redirect()->route('academico.index');
+        return redirect()->route('home'); // o redirecionamento aqui ta paia, n sei se ta mudando na solicitacao, ou se vai ser em outro lugar...
     }
 
     /**

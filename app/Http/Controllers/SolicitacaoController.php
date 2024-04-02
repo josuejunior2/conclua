@@ -58,15 +58,6 @@ class SolicitacaoController extends Controller
         return view('academico.solicitacao.show', ['solicitacao' => $solicitacao, 'layouts' => $layouts]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show_admin(Solicitacao $solicitacao)
-    {
-        $layouts = 'layouts.admin';
-        // dd($solicitacao->Academico->);
-        return view('academico.solicitacao.show', ['solicitacao' => $solicitacao, 'layouts' => $layouts]);
-    }
 
     /**
      * Show the form for editing the specified resource.

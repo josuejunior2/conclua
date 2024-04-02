@@ -6,6 +6,7 @@ use App\Http\Requests\AcademicoEstagioRequest;
 use App\Models\AcademicoEstagio;
 use App\Models\Academico;
 use App\Models\Empresa;
+use App\Models\Semestre;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -32,9 +33,9 @@ class AcademicoEstagioController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Empresa $empresa, Academico $academico)
+    public function create(Empresa $empresa, Academico $academico, Semestre $semestre)
     {
-        return view('academico.academicoEstagio.create', ['empresa' => $empresa, 'academico' => $academico]);
+        return view('academico.academicoEstagio.create', ['empresa' => $empresa, 'academico' => $academico, 'semestre' => $semestre]);
     }
 
     /**
@@ -43,8 +44,7 @@ class AcademicoEstagioController extends Controller
     public function store(AcademicoEstagioRequest $request)
     {
         $academico = Academico::where('email', auth()->user()->email)->first();
-        $academico_id = $academico->id;
-
+        // dd($request->all());
         $academicoEstagio = AcademicoEstagio::create($request->validated());
 
         return view('academico.finalacademico', ['academico' => $academico]);
@@ -73,7 +73,7 @@ class AcademicoEstagioController extends Controller
     {
         $academicoEstagio->update($request->validated());
 
-        return redirect()->route('academico.index');
+        return redirect()->route('home');
     }
 
     /**

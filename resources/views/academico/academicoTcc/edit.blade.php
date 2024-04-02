@@ -10,6 +10,7 @@
                 <form method="POST" action="{{ route('academicoTCC.update', ['academicoTCC' => $academicoTCC]) }}" autocomplete="off" novalidate>
                     @csrf
                     @method('PUT')
+                    <input id="semestre_id" name="semestre_id" type="hidden" class="form-control" value="{{ $academicoTCC->Semestre->id }}">
                     <input id="academico_id" name="academico_id" type="hidden" class="form-control" value="{{ $academicoTCC->Academico->id }}">
                     <div class="row g-3 mb-4">
                         <div class="col-md">

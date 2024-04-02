@@ -11,7 +11,9 @@ class Academico extends Authenticatable
 {
     use HasFactory, HasRoles;
 
-    protected $fillable = ['nome', 'email', 'password', 'matricula'];
+    protected $guard_name = 'web';
+
+    protected $fillable = ['nome', 'email', 'password', 'matricula', 'status'];
     /**
      * The attributes that should be hidden for serialization.
      *

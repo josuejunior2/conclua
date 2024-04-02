@@ -71,27 +71,27 @@
                             Editar
                         </a>
                         @if ($s->status == 0)
-                        <form id="form_{{$s->id}}" method="post" action="{{ route('admin.semestre.ativar', ['semestre' => $s->id]) }}">
+                        <form id="form_ativar_{{$s->id}}" method="post" action="{{ route('admin.semestre.ativar', ['semestre' => $s->id]) }}">
                             @csrf
                             <!-- <button type="submit">Excluir</button>  -->
-                            <a href="#" onclick="document.getElementById('form_{{$s->id}}').submit()" class="dropdown-item">
+                            <a href="#" onclick="document.getElementById('form_ativar_{{$s->id}}').submit()" class="dropdown-item">
                                 Ativar
                             </a>
                         </form>
                         @else
-                        <form id="form_{{$s->id}}" method="post" action="{{ route('admin.semestre.desativar', ['semestre' => $s->id]) }}">
+                        <form id="form_desativar_{{$s->id}}" method="post" action="{{ route('admin.semestre.desativar', ['semestre' => $s->id]) }}">
                             @csrf
                             <!-- <button type="submit">Excluir</button>  -->
-                            <a href="#" onclick="document.getElementById('form_{{$s->id}}').submit()" class="dropdown-item">
+                            <a href="#" onclick="document.getElementById('form_desativar_{{$s->id}}').submit()" class="dropdown-item">
                                 Desativar
                             </a>
                         </form>
                         @endif
-                        <form id="form_{{$s->id}}" method="post" action="{{ route('admin.semestre.destroy', ['semestre' => $s->id]) }}">
+                        <form id="form_destroy_{{$s->id}}" method="post" action="{{ route('admin.semestre.destroy', ['semestre' => $s->id]) }}">
                             @method('DELETE')
                             @csrf
                             <!-- <button type="submit">Excluir</button>  -->
-                            <a href="#" onclick="document.getElementById('form_{{$s->id}}').submit()" class="dropdown-item">
+                            <a href="#" onclick="document.getElementById('form_destroy_{{$s->id}}').submit()" class="dropdown-item">
                                 Excluir cadastro
                             </a>
                         </form>

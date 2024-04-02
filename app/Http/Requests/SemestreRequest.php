@@ -14,7 +14,7 @@ class SemestreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        if(Orientador::where('email', auth()->guard('admin')->user()->email)->doesntExist() && auth()->guard('admin')->check()){
+        if(Orientador::where('email', auth()->guard('admin')->user()->email)->exists() && auth()->guard('admin')->check()){
             return true;
         }
         return false;

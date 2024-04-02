@@ -6,7 +6,10 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Admin;
 use App\Models\Area;
+use App\Models\User;
 use App\Models\Formacao;
+use App\Models\Academico;
+use App\Models\Orientador;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,6 +24,58 @@ class DatabaseSeeder extends Seeder
         //     'nome' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        $user1 = User::create([
+            'nome' => 'Thiago Ian Cesar',
+            'email' => 'thiago@gmail.com',
+            'password' => 'admin123',
+        ]);
+        $academico1 = Academico::create([
+            'nome' => 'Thiago Ian Cesar',
+            'email' => 'thiago@gmail.com',
+            'password' => 'admin123',
+            'matricula' => '100087456',
+            'status' => 0,
+        ]);
+        $user2 = User::create([
+            'nome' => 'Ian Thiago Hadrien',
+            'email' => 'ian@gmail.com',
+            'password' => 'admin123',
+        ]);
+        $academico2 = Academico::create([
+            'nome' => 'Ian Thiago Hadrien',
+            'email' => 'ian@gmail.com',
+            'password' => 'admin123',
+            'matricula' => '100087654',
+            'status' => 0,
+        ]);
+
+        $oriadmin1 = Admin::create([
+            'nome' => 'Rene Veloso',
+            'email' => 'rene@gmail.com',
+            'password' => 'admin123',
+        ]);
+        $orientador1 = Orientador::create([
+            'nome' => 'Rene Veloso',
+            'email' => 'rene@gmail.com',
+            'password' => 'admin123',
+            'masp' => '1032654',
+            'status' => 0,
+        ]);
+
+        $oriadmin2 = Admin::create([
+            'nome' => 'Eduardo Diniz',
+            'email' => 'edu@gmail.com',
+            'password' => 'admin123',
+        ]);
+        $orientador2 = Orientador::create([
+            'nome' => 'Eduardo Diniz',
+            'email' => 'edu@gmail.com',
+            'password' => 'admin123',
+            'masp' => '1032655',
+            'status' => 0,
+        ]);
+
+
         $user = Admin::create( [
             'nome' => 'admin',
             'email' => 'josuejuniorww@gmail.com',
@@ -39,6 +94,10 @@ class DatabaseSeeder extends Seeder
         );
 
         $user->assignRole('Admin', 'admin');
+        $user1->assignRole('Academico');
+        $user2->assignRole('Academico');
+        $oriadmin1->assignRole('Orientador');
+        $oriadmin2->assignRole('Orientador');
 
     }
 }

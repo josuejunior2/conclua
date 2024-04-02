@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AcademicoTCCRequest;
 use App\Models\AcademicoTCC;
 use App\Models\Academico;
+use App\Models\Semestre;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -30,9 +31,9 @@ class AcademicoTCCController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Academico $academico)
+    public function create(Academico $academico, Semestre $semestre)
     {
-        return view('academico.academicoTcc.create', ['academico' => $academico]);
+        return view('academico.academicoTcc.create', ['academico' => $academico, 'semestre' => $semestre]);
     }
 
     /**
@@ -71,7 +72,7 @@ class AcademicoTCCController extends Controller
     {
         $academicoTCC->update($request->validated());
 
-        return redirect()->route('home');
+        return redirect()->route('home')->with('success', 'Cadastro atualizado com sucesso!');
     }
 
     /**

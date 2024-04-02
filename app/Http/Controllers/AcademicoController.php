@@ -6,6 +6,7 @@ use App\Models\AcademicoEstagio;
 use App\Models\Orientador;
 use App\Models\AcademicoTCC;
 use App\Models\Academico;
+use App\Models\Semestre;
 use App\Models\Empresa;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request\Request;
@@ -14,16 +15,6 @@ use Illuminate\Support\Facades\Hash;
 
 class AcademicoController extends Controller
 {
-
-    public function __construct(){
-        $this->middleware(function ($request, $next) {
-            if (auth()->guard('web')->check() || auth()->guard('admin')->check()) {
-                return $next($request);
-            }
-
-            abort(403, 'Não autorizado.');
-        });
-    }
     /**
      * Display a listing of the resource.
      */
@@ -31,7 +22,7 @@ class AcademicoController extends Controller
     {
         $academicos = Academico::all();
 
-        return view('academico.index', ['academicos' => $academicos]);
+        return view('admin.academico.index', ['academicos' => $academicos]);
     }
 
     /**
@@ -59,7 +50,8 @@ class AcademicoController extends Controller
                 return redirect()->route('empresa.create');
             }
             elseif($request->input('modalidade') == 1){
-                return redirect()->route('academicoTCC.create', ['academico' => $academico]);
+                $semestre = Semestre::where('status', 1)->first();
+                return redirect()->route('academicoTCC.create', ['academico' => $academico, 'semestre' => $semestre]);
             }
         }
 
@@ -83,10 +75,10 @@ class AcademicoController extends Controller
         } else {
             $modalidade = 'N/A';
             $especifico = 'Cadastro incompleto';
-            return view('academico.show', ['academico' => $academico, 'modalidade' => $modalidade]);
+            return view('admin.academico.show', ['academico' => $academico, 'modalidade' => $modalidade]);
         }
 
-        return view('academico.show', ['academico' => $academico, 'especifico' => $especifico, 'modalidade' => $modalidade]);
+        return view('admin.academico.show', ['academico' => $academico, 'especifico' => $especifico, 'modalidade' => $modalidade]);
     }
 
     /**
@@ -100,7 +92,7 @@ class AcademicoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Academico $academico)
+    public function update(AcademicoRequest $request, Academico $academico)
     {
         //
     }

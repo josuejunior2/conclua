@@ -52,7 +52,7 @@
                     <div class="card-footer bg-transparent mt-auto">
                         <div class="btn-list justify-content-end">
                             <button type="submit" class="btn btn-primary">
-                                Submit
+                                Enviar
                             </button>
                         </div>
                     </div>

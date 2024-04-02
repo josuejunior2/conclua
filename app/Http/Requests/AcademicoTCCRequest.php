@@ -28,6 +28,7 @@ class AcademicoTCCRequest extends FormRequest
     {
         return [
             'academico_id' => 'required',
+            'semestre_id' => 'required',
             'tema' => 'required|min:15|max:10000',
             'problema' => 'required|min:15|max:10000',
             'objetivo_especifico' => 'required|min:15|max:10000',
@@ -48,4 +49,8 @@ class AcademicoTCCRequest extends FormRequest
             'max' => 'O campo :attribute deve ter no máximo 10000 caracteres.',
         ];
     }
+    // public function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+    // {
+    //     dd($validator->errors());
+    // }
 }

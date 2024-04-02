@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Models\Orientador;
 use App\Models\Academico;
 use App\Models\AcademicoEstagio;
+use App\Models\Semestre;
 use App\Models\AcademicoTCC;
 
 class PrimeiroAcessoMiddleware

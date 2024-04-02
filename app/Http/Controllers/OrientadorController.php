@@ -32,12 +32,13 @@ class OrientadorController extends Controller
     public function index()
     {
         $orientadores = Orientador::with('Formacao', 'Area')->get();
-        return view('orientador.index', ['orientadores' => $orientadores]);
+        return view('admin.orientador.index', ['orientadores' => $orientadores]);
 
     }
 
     /**
-     * Show the form for creating a new resource.
+     * O método create() está sendo usado para completar o cadastro do Orientador.
+     * atualiza-se a senha e os outros campos nullable são preenchidos.
      */
     public function create()
     {
@@ -47,43 +48,34 @@ class OrientadorController extends Controller
         } elseif(is_null($orientador->formacao_id) && is_null($orientador->area_id)){
             $formacoes = Formacao::all();
             $areas = Area::all();
-            $user = auth()->user();
             // dd($orientador);
-            return view('orientador.create', ['user' => $user, 'areas' => $areas, 'formacoes' => $formacoes ]);
+            return view('orientador.create', ['orientador' => $orientador, 'areas' => $areas, 'formacoes' => $formacoes ]);
         } else {
             return redirect()->route('admin.home'); // se já completou o cadastro OU é admin, vai pra home
         }
     }
 
     /**
-     * Store a newly created resource in storage.
+     * O método store() está sendo usado para completar o cadastro do Orientador.
      */
-    public function store(OrientadorRequest $request)
+    public function store(OrientadorRequest $request, Orientador $orientador)
     {
-        $Orientador = Orientador::where('email', auth()->guard('admin')->user()->email)->first();
+        $orientador->update($request->validated());
 
-        if ($Orientador) {
-            $Orientador->update($request->validated());
+        $orientador->update([
+            'password' => Hash::make($request->input('password')),
+            'status'   => 1
+        ]);
 
-            $Orientador->update([
-                'password' => Hash::make($request->input('password')),
-            ]);
-
-            return redirect()->route('orientador.create', ['Orientador_id' => $Orientador->id]);
-        }
-
-        return abort(404);
+        return redirect()->route('admin.home');
     }
 
     /**
      * Display the specified resource. FOR GUARD ADMIN
      */
-    public function show(Orientador $Orientador)
+    public function show(Orientador $orientador)
     {
-        $layouts = 'layouts.admin';
-        $orientador = Orientador::where('Orientador_id', $Orientador->id)->first();
-
-        return view('orientador.Orientador.show', ['Orientador' => $Orientador, 'orientador' => $orientador, 'layouts' => $layouts]);
+        return view('orientador.show', ['orientador' => $orientador]);
     }
 
     /**
@@ -122,46 +114,4 @@ class OrientadorController extends Controller
         return redirect()->route('admin.listar.orientadores');
     }
 
-    /**
-     * metodo post para o orientador aceitar a solicitação
-     */
-    public function aceitar_solicitacao(Solicitacao $solicitacao)
-    {
-        if($solicitacao->Academico->AcademicoTCC){
-            $solicitacao->Academico->AcademicoTCC->Orientador_id = $solicitacao->Orientador_id;
-            $solicitacao->Academico->AcademicoTCC->save();
-
-            $solicitacao->status = 1; // status de aprovada
-            $solicitacao->save();
-
-            $outras = Solicitacao::whereNot('id', $solicitacao->id);
-            foreach($outras as $o){
-                $o->status = 0;
-                $o->save();
-            }
-
-            return redirect()->route('orientador.home');
-        } elseif($solicitacao->Academico->AcademicoEstagio){
-            $solicitacao->Academico->AcademicoEstagio->Orientador_id = $solicitacao->Orientador_id;
-            $solicitacao->Academico->AcademicoEstagio->save();
-            $outras = Solicitacao::whereNot('id', $solicitacao->id);
-            $outras->delete();
-            return redirect()->route('orientador.home');
-        } else{
-            return back();
-        }
-
-    }
-
-    /**
-     * metodo post para o orientador rejeitar a solicitação
-     */
-    public function rejeitar_solicitacao($id)
-    {
-        // excluo a solicitação? status de rejeitada pra mostrar pro academico?
-
-        $solicitacao->delete();
-        return redirect()->route('orientador.home');
-
-    }
 }
