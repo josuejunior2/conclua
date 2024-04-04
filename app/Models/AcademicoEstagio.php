@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class AcademicoEstagio extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
     protected $table = 'academicos_estagio';
 
     protected $fillable = ['academico_id', 'semestre_id', 'orientacao_id', 'tema', 'funcao', 'empresa_id'];
