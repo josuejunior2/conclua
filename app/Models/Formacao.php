@@ -12,5 +12,7 @@ class Formacao extends Model
 
     protected $table = 'formacoes';
 
+    protected $keyType = 'string';
+
     protected $fillable = ['id', 'nome'];
 }

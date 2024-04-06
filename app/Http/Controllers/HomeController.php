@@ -34,10 +34,18 @@ class HomeController extends Controller
             // dd($this->middleware('semestre_ativo'));
             $academico = Academico::where('email', auth()->user()->email)->first();
 
-            $orientadorIds = $academico->solicitacoes->pluck('orientador_id')->values()->toArray();
+            // A ideia aqui é pegar os id's dos orientadores em solicitações nulas(não respondidas).
+            // Dessa forma, aparecerá para o academico apenas orientadores que não foram solicitados Ou os que foram solicitados,
+            // mas que rejeitaram a solicitação (status == 0), e assim o academico pode pedir denovo
+            $OrientadoresEmSolicitacoesNulas = [];
+            foreach($academico->solicitacoes as $key => $solicitacao){
+                if(is_null($solicitacao->status)){
+                    $OrientadoresEmSolicitacoesNulas[] = $solicitacao->getAttribute('orientador_id');
+                }
+            }
 
             $orientadores = Orientador::where('disponibilidade', '>', 0)
-                            ->whereNotIn('id', $orientadorIds)
+                            ->whereNotIn('id', $OrientadoresEmSolicitacoesNulas)
                             ->get();
 
             $semestre = Semestre::where('status', 1)->first();

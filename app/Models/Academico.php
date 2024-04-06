@@ -13,6 +13,8 @@ class Academico extends Authenticatable
 
     protected $guard_name = 'web';
 
+    protected $keyType = 'string';
+
     protected $fillable = ['nome', 'email', 'password', 'matricula', 'status'];
     /**
      * The attributes that should be hidden for serialization.

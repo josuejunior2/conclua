@@ -14,6 +14,8 @@ class Orientador extends Authenticatable
 
     protected $guard_name = 'admin';
 
+    protected $keyType = 'string';
+
     protected $table = 'orientadores';
 
     protected $fillable = ['masp', 'status', 'nome', 'email', 'password', 'formacao_id', 'area_id', 'disponibilidade', 'subArea1', 'subArea2', 'subArea3', 'areaPesquisa1', 'areaPesquisa2', 'areaPesquisa3', 'areaPesquisa4', 'areaPesquisa5', 'enderecoLattes', 'enderecoOrcid'];

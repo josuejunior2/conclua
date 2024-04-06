@@ -69,15 +69,15 @@
                             Visualizar
                         </a>
                         @if($a->status == 0)
-                            <form id="form_ativar_{{$a->id}}" method="post" action="{{ route('admin.academico.ativar', ['academico' => $a]) }}">
+                            <form id="form_ativar_{{ $a->id }}" method="post" action="{{ route('admin.academico.ativar', ['academico' => $a]) }}">
                                 @csrf
                                 <!-- <button type="submit">Excluir</button>  -->
-                                <a href="#" onclick="document.getElementById('form_ativar_{{$a->id}}').submit()" class="dropdown-item">
+                                <a href="#" onclick="document.getElementById('form_ativar_{{ $a->id }}').submit()" class="dropdown-item">
                                     Ativar cadastro
                                 </a>
                             </form>
                         @elseif ($a->status == 1)
-                            <form id="form_desativar_{{$a->id}}" method="post" action="{{ route('admin.academico.desativar', ['academico' => $a]) }}">
+                            <form id="form_desativar_{{ $a->id }}" method="post" action="{{ route('admin.academico.desativar', ['academico' => $a]) }}">
                                 @csrf
                                 <!-- <button type="submit">Excluir</button>  -->
                                 <a href="#" onclick="document.getElementById('form_desativar_{{$a->id}}').submit()" class="dropdown-item">

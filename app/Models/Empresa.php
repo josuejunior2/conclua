@@ -10,5 +10,7 @@ class Empresa extends Model
 {
     use HasFactory, HasUuids;
 
+    protected $keyType = 'string';
+
     protected $fillable = ['nome', 'email', 'cnpj', 'supervisor'];
 }

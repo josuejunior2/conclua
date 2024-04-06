@@ -10,6 +10,8 @@ class Semestre extends Model
 {
     use HasFactory, HasUuids;
 
+    protected $keyType = 'string';
+
     protected $fillable = ['ano', 'numero', 'data_inicio', 'data_fim', 'limite_doc_estagio', 'limite_orientacao', 'status'];
 
     public function AcademicoEstagio(){

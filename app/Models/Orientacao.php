@@ -10,6 +10,8 @@ class Orientacao extends Model
 {
     use HasFactory, HasUuids;
 
+    protected $keyType = 'string';
+
     protected $table = 'orientacoes';
 
     protected $fillable = ['academico_id', 'orientador_id', 'semestre_id', 'solicitacao_id', 'data_vinculacao'];//, 'modalidade'];

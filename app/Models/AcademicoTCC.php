@@ -11,6 +11,8 @@ class AcademicoTCC extends Model
     use HasFactory, HasUuids;
     protected $table = 'academicos_tcc';
 
+    protected $keyType = 'string';
+
     protected $fillable = ['academico_id', 'orientacao_id', 'semestre_id', 'tema', 'problema', 'objetivo_especifico', 'objetivo_geral', 'justificativa', 'metodologia'];
 
     public function Orientacao(){

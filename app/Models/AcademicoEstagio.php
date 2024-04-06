@@ -11,6 +11,8 @@ class AcademicoEstagio extends Model
     use HasFactory, HasUuids;
     protected $table = 'academicos_estagio';
 
+    protected $keyType = 'string';
+
     protected $fillable = ['academico_id', 'semestre_id', 'orientacao_id', 'tema', 'funcao', 'empresa_id'];
 
     public function Empresa(){

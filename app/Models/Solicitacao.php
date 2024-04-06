@@ -12,6 +12,8 @@ class Solicitacao extends Model
 
     protected $table = 'solicitacoes';
 
+    protected $keyType = 'string';
+
     protected $fillable = ['academico_id', 'semestre_id', 'orientador_id', 'status', 'mensagem'];
 
     public function Academico(){

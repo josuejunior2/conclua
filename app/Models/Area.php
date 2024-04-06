@@ -10,5 +10,7 @@ class Area extends Model
 {
     use HasFactory, HasUuids;
 
+    protected $keyType = 'string';
+
     protected $fillable = ['id', 'nome'];
 }

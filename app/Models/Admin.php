@@ -13,6 +13,8 @@ class Admin extends Authenticatable
 {
     use HasFactory, Notifiable, HasRoles, HasUuids;
 
+    protected $keyType = 'string';
+
     protected $fillable = [
         'id',
         'nome',
