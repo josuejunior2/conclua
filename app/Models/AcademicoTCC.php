@@ -16,14 +16,14 @@ class AcademicoTCC extends Model
     protected $fillable = ['academico_id', 'orientacao_id', 'semestre_id', 'tema', 'problema', 'objetivo_especifico', 'objetivo_geral', 'justificativa', 'metodologia'];
 
     public function Orientacao(){
-        return $this->belongsTo('App\Models\Orientacao', 'orientacao_id');
+        return $this->belongsTo(Orientacao::class, 'orientacao_id');
     }
 
     public function Academico(){
-        return $this->belongsTo('App\Models\Academico', 'academico_id');
+        return $this->belongsTo(Academico::class, 'academico_id');
     }
 
     public function Semestre(){
-        return $this->belongsTo('App\Models\Semestre', 'semestre_id');
+        return $this->belongsTo(Semestre::class, 'semestre_id');
     }
 }

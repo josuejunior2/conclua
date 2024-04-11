@@ -43,6 +43,16 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('orientacoes', function(BLueprint $table) {
+            $table->dropForeign('solicitacoes_solicitacao_id_foreign');
+            $table->dropColumn('solicitacao_id');
+            $table->dropForeign('semestres_semestre_id_foreign');
+            $table->dropColumn('semestre_id');
+            $table->dropForeign('academicos_academico_id_foreign');
+            $table->dropColumn('academico_id');
+            $table->dropForeign('orientadores_orientador_id_foreign');
+            $table->dropColumn('orientador_id');
+        });
         Schema::dropIfExists('orientacoes');
     }
 };

@@ -18,7 +18,7 @@ class Orientador extends Authenticatable
 
     protected $table = 'orientadores';
 
-    protected $fillable = ['masp', 'status', 'nome', 'email', 'password', 'formacao_id', 'area_id', 'disponibilidade', 'subArea1', 'subArea2', 'subArea3', 'areaPesquisa1', 'areaPesquisa2', 'areaPesquisa3', 'areaPesquisa4', 'areaPesquisa5', 'enderecoLattes', 'enderecoOrcid'];
+    protected $fillable = ['masp', 'nome', 'email', 'password', 'formacao_id', 'area_id', 'disponibilidade', 'subArea1', 'subArea2', 'subArea3', 'areaPesquisa1', 'areaPesquisa2', 'areaPesquisa3', 'areaPesquisa4', 'areaPesquisa5', 'enderecoLattes', 'enderecoOrcid'];
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -30,18 +30,22 @@ class Orientador extends Authenticatable
     ];
 
     public function Formacao(){
-        return $this->belongsTo('App\Models\Formacao'); // orientador tem 1 Formacao, ele olha a FK
+        return $this->belongsTo(Formacao::class); // orientador tem 1 Formacao, ele olha a FK
     }
 
     public function Area(){
-        return $this->belongsTo('App\Models\Area'); // orientador tem 1 Area, ele olha a FK
+        return $this->belongsTo(Area::class); // orientador tem 1 Area, ele olha a FK
     }
 
     public function solicitacoes(){
-        return $this->hasMany('App\Models\Solicitacao');
+        return $this->hasMany(Solicitacao::class);
     }
 
     public function orientacoes(){
-        return $this->hasMany('App\Models\Orientacao', 'orientador_id');
+        return $this->hasMany(Orientacao::class, 'orientador_id');
+    }
+
+    public function cadastrosAtivos(){
+        return $this->belongsToMany(Semestre::class, 'semestre_orientador', 'orientador_id', 'semestre_id');
     }
 }

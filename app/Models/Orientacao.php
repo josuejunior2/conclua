@@ -17,14 +17,14 @@ class Orientacao extends Model
     protected $fillable = ['academico_id', 'orientador_id', 'semestre_id', 'solicitacao_id', 'data_vinculacao'];//, 'modalidade'];
 
     public function Orientador(){
-        return $this->belongsTo('App\Models\Orientador', 'orientador_id');
+        return $this->belongsTo(Orientador::class, 'orientador_id');
     }
 
     public function Academico(){
-        return $this->belongsTo('App\Models\Academico', 'academico_id');
+        return $this->belongsTo(Academico::class, 'academico_id');
     }
 
     public function Solicitacao(){
-        return $this->belongsTo('App\Models\Solicitacao', 'solicitacao_id');
+        return $this->belongsTo(Solicitacao::class, 'solicitacao_id');
     }
 }
