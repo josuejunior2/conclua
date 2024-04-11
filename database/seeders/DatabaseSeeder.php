@@ -40,7 +40,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'thiago@gmail.com',
             'password' => 'admin123',
             'matricula' => '100087456',
-            'status' => 0,
         ]);
         $uuid = Str::uuid()->toString();
         $user2 = User::create([
@@ -56,7 +55,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'ian@gmail.com',
             'password' => 'admin123',
             'matricula' => '100087654',
-            'status' => 0,
         ]);
         $uuid = Str::uuid()->toString();
         $oriadmin1 = Admin::create([
@@ -72,7 +70,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'rene@gmail.com',
             'password' => 'admin123',
             'masp' => '1032654',
-            'status' => 0,
         ]);
 
         $uuid = Str::uuid()->toString();
@@ -89,7 +86,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'edu@gmail.com',
             'password' => 'admin123',
             'masp' => '1032655',
-            'status' => 0,
         ]);
 
         $uuid = Str::uuid()->toString();

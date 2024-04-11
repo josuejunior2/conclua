@@ -171,7 +171,7 @@
         @csrf
         <input id="academico_id" name="academico_id" type="hidden" class="form-control" value="{{ $academico->id }}">
         <input id="orientador_id" name="orientador_id" type="hidden" class="form-control" value="{{ $orientador->id }}">
-        <input id="semestre_id" name="semestre_id" type="hidden" class="form-control" value="{{ $semestre->id }}">
+        <input id="semestre_id" name="semestre_id" type="hidden" class="form-control" value="{{ $semestreAtivo->id }}">
         <div class="mb-3">
             <label class="form-label">Mensagem ao orientador</label>
             <textarea id="mensagem" class="form-control" name="mensagem" rows="6" placeholder="(Opcional)" value="{{ old('mensagem', '') }}"></textarea>

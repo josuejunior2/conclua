@@ -12,13 +12,7 @@ use App\Http\Requests\SemestreRequest;
 class SemestreController extends Controller
 {
     public function __construct(){
-        $this->middleware(function ($request, $next) {
-            if (auth()->guard('admin')->check()) {
-                return $next($request);
-            }
-
-            abort(403, 'Não autorizado.');
-        });
+        $this->middleware('permission:configurar semestre');
     }
     /**
      * Display a listing of the resource.
@@ -92,7 +86,7 @@ class SemestreController extends Controller
         $semestre = Semestre::find($id);
 
         if(Semestre::where('status', 1)->exists()){
-            return abort(403, 'Desative o semestre em ativo');
+            return redirect()->route('admin.semestre.index')->withErrors('Para ativar outro semestre, desative o semestre em ativo');
         } else{
             $semestre->update(['status' => 1]);
         }

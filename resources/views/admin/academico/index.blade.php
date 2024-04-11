@@ -5,24 +5,24 @@
     <div class="card m-3">
         <div class="card-header justify-content-between">
             <h3 class="card-title">Lista de acadêmicos</h3>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
             <div>
                 <a href="#" class="btn btn-success w-100 mb-1" data-bs-toggle="modal" data-bs-target="#modal-cadastro-academico">
                     Adicionar novos acadêmicos
                 </a>
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-                @if (session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
-                @endif
             </div>
         </div>
       <div class="table-responsive m-4">
@@ -53,12 +53,10 @@
                     @endif
                 </td>
                 <td>
-                    @if ($a->status == 0)
-                        Cadastro inativo
-                    @elseif ($a->status == 1)
+                    @if (!is_null($academicosAtivos) && $academicosAtivos->contains($a))
                         Cadastro ativo
                     @else
-                        N/A
+                        Cadastro inativo
                     @endif
                 </td>
                 <td class="text-end">
@@ -85,7 +83,7 @@
                                 </a>
                             </form>
                         @endif
-                        <form id="form_destroy_{{$a->id}}" method="post" action="{{ route('academico.destroy', ['academico' => $a->id]) }}">
+                        <form id="form_destroy_{{$a->id}}" method="post" action="{{ route('admin.academico.destroy', ['academico' => $a->id]) }}">
                             @method('DELETE')
                             @csrf
                             <!-- <button type="submit">Excluir</button>  -->

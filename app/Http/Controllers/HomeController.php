@@ -44,9 +44,8 @@ class HomeController extends Controller
                 }
             }
 
-            $orientadores = Orientador::where('disponibilidade', '>', 0)
-                            ->whereNotIn('id', $OrientadoresEmSolicitacoesNulas)
-                            ->get();
+            $orientadores = app('semestreAtivo')->orientadores->where('disponibilidade', '>', 0)
+                            ->whereNotIn('id', $OrientadoresEmSolicitacoesNulas);
 
             $semestre = Semestre::where('status', 1)->first();
             // dd($semestre);

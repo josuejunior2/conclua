@@ -8,23 +8,23 @@
         <div class="card-header justify-content-between">
             <h3 class="card-title">Lista de orientadores</h3>
             <div>
-                <a href="#" class="btn btn-success w-100 mb-1" data-bs-toggle="modal" data-bs-target="#modal-cadastro-orientador">
-                    Adicionar novos orientadores
-                </a>
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
                 @if (session('success'))
                     <div class="alert alert-success">
                         {{ session('success') }}
                     </div>
                 @endif
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                <a href="#" class="btn btn-success w-100 mb-1" data-bs-toggle="modal" data-bs-target="#modal-cadastro-orientador">
+                    Adicionar novos orientadores
+                </a>
             </div>
         </div>
       <div class="table-responsive m-4">
@@ -50,19 +50,17 @@
                 <td>{{ $o->email }}</td>
                 <td>{{ $o->Formacao ? $o->Formacao->nome : 'N/A' }}</td>
                 <td>{{ $o->Area ? $o->Area->nome : 'N/A' }}</td>
-                <td>{{ $o->disponibilidade }}</td>
+                <td>@if($o->disponibilidade == 0)N/A @else {{ $o->disponibilidade - $o->orientacoes->count() }}/{{ $o->disponibilidade }} @endif</td>
                 <td>
                     @foreach ($o->orientacoes as $orientacao)
                         {{ $orientacao->Academico->nome }} - @if ($orientacao->Academico->AcademicoTCC) TCC @elseif ($orientacao->Academico->AcademicoEstagio) Estagio @endif
                     @endforeach
                 </td>
                 <td>
-                    @if ($o->status == 0)
-                        Cadastro inativo
-                    @elseif ($o->status == 1)
+                    @if (!is_null($orientadoresAtivos) && $orientadoresAtivos->contains($o))
                         Cadastro ativo
                     @else
-                        N/A
+                        Cadastro inativo
                     @endif
                 </td>
                 <td class="text-end">
@@ -89,7 +87,7 @@
                                 </a>
                             </form>
                         @endif
-                        <form id="form_{{$o->id}}" method="post" action="{{ route('orientador.destroy', ['orientador' => $o->id]) }}">
+                        <form id="form_{{$o->id}}" method="post" action="{{ route('admin.orientador.destroy', ['orientador' => $o->id]) }}">
                             @method('DELETE')
                             @csrf
                             <!-- <button type="submit">Excluir</button>  -->

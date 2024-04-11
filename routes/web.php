@@ -49,7 +49,7 @@ Route::middleware(['auth:web', 'semestre_ativo'])->group(function () { // rotas 
 });
 
 Route::middleware(['auth:web', 'primeiro_acesso', 'semestre_ativo'])->group(function () { //
-    Route::resource('academico', App\Http\Controllers\AcademicoController::class)->except(['create', 'store', 'index']);
+    Route::resource('academico', App\Http\Controllers\AcademicoController::class)->except(['create', 'store', 'index', 'destroy']);
     Route::resource('academicoEstagio', App\Http\Controllers\AcademicoEstagioController::class)->except(['create', 'store']);
     Route::resource('empresa', App\Http\Controllers\EmpresaController::class)->except(['create', 'store']);
     Route::resource('solicitacao', App\Http\Controllers\SolicitacaoController::class)->names(['show' => 'solicitacao.show.web'])->except(['create', 'index']);
@@ -80,29 +80,31 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('semestre', App\Http\Controllers\SemestreController::class);
         Route::post('ativar/semestre/{semestre}', [App\Http\Controllers\SemestreController::class, 'ativar'])->name('semestre.ativar');
         Route::post('desativar/semestre/{semestre}', [App\Http\Controllers\SemestreController::class, 'desativar'])->name('semestre.desativar');
-        Route::post('cadastro/orientador', [AdminController::class, 'import_orientadores'])->name('cadastro-orientador');
-        Route::post('cadastro/academico', [AdminController::class, 'import_academicos'])->name('cadastro-academico');
-        Route::get('academico', 'App\Http\Controllers\AcademicoController@index')->name('academico.index');
-        Route::get('orientador', 'App\Http\Controllers\OrientadorController@index')->name('orientador.index');
-        Route::post('ativar/orientador/{orientador}', 'App\Http\Controllers\AdminController@ativar_orientador')->name('orientador.ativar');
-        Route::post('desativar/orientador/{orientador}', 'App\Http\Controllers\AdminController@desativar_orientador')->name('orientador.desativar');
-        Route::post('ativar/academico/{academico}', 'App\Http\Controllers\AdminController@ativar_academico')->name('academico.ativar');
-        Route::post('desativar/academico/{academico}', 'App\Http\Controllers\AdminController@desativar_academico')->name('academico.desativar');
+        Route::post('cadastro/orientador', 'App\Http\Controllers\OrientadorAdminController@import_orientadores')->name('cadastro-orientador');
+        Route::post('cadastro/academico', 'App\Http\Controllers\AcademicoAdminController@import_academicos')->name('cadastro-academico');
+        Route::post('academico', 'App\Http\Controllers\AcademicoAdminController@destroy')->name('academico.destroy');
+        Route::get('academico', 'App\Http\Controllers\AcademicoAdminController@index')->name('academico.index');
+        Route::post('orientador', 'App\Http\Controllers\OrientadorAdminController@destroy')->name('orientador.destroy');
+        Route::get('orientador', 'App\Http\Controllers\OrientadorAdminController@index')->name('orientador.index');
+        Route::post('ativar/orientador/{orientador}', 'App\Http\Controllers\OrientadorAdminController@ativar_orientador')->name('orientador.ativar');
+        Route::post('desativar/orientador/{orientador}', 'App\Http\Controllers\OrientadorAdminController@desativar_orientador')->name('orientador.desativar');
+        Route::post('ativar/academico/{academico}', 'App\Http\Controllers\AcademicoAdminController@ativar_academico')->name('academico.ativar');
+        Route::post('desativar/academico/{academico}', 'App\Http\Controllers\AcademicoAdminController@desativar_academico')->name('academico.desativar');
     });
 });
 
 
-Route::middleware(['auth:admin'])->group(function () {
+Route::middleware(['auth:admin', 'semestre_ativo'])->group(function () {
     Route::get('orientador/create', 'App\Http\Controllers\OrientadorController@create')->name('orientador.create');
     Route::post('orientador/{orientador}', 'App\Http\Controllers\OrientadorController@store')->name('orientador.store');
 });
 Route::middleware(['auth:admin', 'primeiro_acesso'])->group(function () { // rotas normal ANTES DE ATIVAR O SEMESTRE
     Route::get('admin/home', [AdminHomeController::class, 'index'])->name('admin.home');
-    Route::resource('orientador', App\Http\Controllers\OrientadorController::class)->except(['create', 'store', 'index'])->names(['show' => 'orientador.show.admin']);
+    Route::resource('orientador', App\Http\Controllers\OrientadorController::class)->except(['create', 'store', 'index', 'destroy'])->names(['show' => 'orientador.show.admin']);
 
 });
 
-Route::middleware(['auth:admin', 'primeiro_acesso', 'semestre_ativo'])->group(function () { // ORIENTADOR. SEMESTRE ATIVO
+Route::middleware(['auth:admin', 'semestre_ativo', 'primeiro_acesso'])->group(function () { // ORIENTADOR. SEMESTRE ATIVO
 
     Route::post('orientador/aceitar/solicitacao/{solicitacao}', [App\Http\Controllers\SolicitacaoOrientadorController::class, 'aceitar_solicitacao'])->name('solicitacao.orientador.aceitar');
     Route::post('orientador/rejeitar/solicitacao/{solicitacao}', [App\Http\Controllers\SolicitacaoOrientadorController::class, 'rejeitar_solicitacao'])->name('solicitacao.orientador.rejeitar');

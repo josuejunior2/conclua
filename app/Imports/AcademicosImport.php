@@ -3,11 +3,18 @@
 namespace App\Imports;
 
 use App\Models\Academico;
+use App\Models\SemestreAcademico;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Illuminate\Support\Facades\Hash;
 
 class AcademicosImport implements ToModel
 {
+    protected $ativar;
+
+    public function __construct(string $ativar = null){
+        $this->ativar = $ativar;
+    }
+
     /**
     * @param array $row
     *
@@ -15,23 +22,23 @@ class AcademicosImport implements ToModel
     */
     public function model(array $row)
     {
-        $academico = Academico::where('matricula', $row[2])->first();
+        $academico = Academico::updateOrCreate(
+            ['matricula' => $row[2]], // Condições para procurar o acadêmico existente
+            [
+                'nome' => $row[0],
+                'email' => $row[1],
+                'matricula' => $row[2],
+                'password' => Hash::make('admin123'),
+            ]
+        );
 
-        if($academico){
-            $academico->update([
-                'nome'     => $row[0],
-                'email'    => $row[1],
-                'matricula'=> $row[2],
-                'status'   => 1 // ativou o cadastro NO semestre
+        if(app('semestreAtivo') && $this->ativar == "on"){
+            SemestreAcademico::create([
+                'semestre_id' => app('semestreAtivo')->id,
+                'academico_id' => $academico->id,
             ]);
-            return $academico;
         }
-        return new Academico([
-            'nome'     => $row[0],
-            'email'    => $row[1],
-            'password' => Hash::make('admin123'),
-            'matricula'=> $row[2],
-            'status'   => 1 // ativou o cadastro NO semestre
-        ]);
+
+        return $academico;
     }
 }

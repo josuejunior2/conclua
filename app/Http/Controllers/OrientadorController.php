@@ -26,15 +26,6 @@ class OrientadorController extends Controller
         });
     }
 
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        $orientadores = Orientador::with('Formacao', 'Area')->get();
-        return view('admin.orientador.index', ['orientadores' => $orientadores]);
-
-    }
 
     /**
      * O método create() está sendo usado para completar o cadastro do Orientador.
@@ -64,7 +55,6 @@ class OrientadorController extends Controller
 
         $orientador->update([
             'password' => Hash::make($request->input('password')),
-            'status'   => 1
         ]);
 
         return redirect()->route('admin.home');
@@ -104,14 +94,5 @@ class OrientadorController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Orientador $Orientador) // Não coloquei o softDeletes, talvez deva colocar depois
-    {
-        if($Orientador){ $Orientador->delete(); }
-        $Orientador->delete();
-        return redirect()->route('admin.listar.orientadores');
-    }
 
 }

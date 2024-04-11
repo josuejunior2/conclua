@@ -6,6 +6,11 @@
     <div class="card m-3">
         <div class="card-header justify-content-between">
             <h3 class="card-title">Lista de semestres</h3>
+            @if (session('error'))
+            <div class="alert alert-danger m-3">
+                {{ session('error') }}
+            </div>
+            @endif
             <div>
                 <a href="{{ route('admin.semestre.create') }}" class="btn btn-success w-100">
                     Iniciar novo semestre
@@ -31,9 +36,9 @@
           <thead>
             <tr>
               {{--<th class="w-1"></th>  <input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select all invoices"> --}}
-              <th class="w-1">ID <!-- Download SVG icon from http://tabler-icons.io/i/chevron-up -->
+              {{-- <th class="w-1">ID <!-- Download SVG icon from http://tabler-icons.io/i/chevron-up -->
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-sm icon-thick" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 15l6 -6l6 6" /></svg>
-              </th>
+              </th> --}}
               <th>Ano</th>
               <th>Nº</th>
               <th>Data de início</th>
@@ -48,13 +53,13 @@
             @foreach ($semestres as $s)
             <tr>
                 <!--<td></td>  <input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"> -->
-                <td><span class="text-muted">{{ $s->id }}</span></td>
+                {{-- <td><span class="text-muted">{{ $s->id }}</span></td> --}}
                 <td>{{ $s->ano }}</td>
                 <td>{{ $s->numero }}</td>
                 <td>{{ \Carbon\Carbon::parse($s->data_inicio)->format('d/m/Y') }}</td>
-                <td>{{ \Carbon\Carbon::parse($s->data_fim)->format('d/m/Y') }}</td>
                 <td>{{ \Carbon\Carbon::parse($s->limite_doc_estagio)->format('d/m/Y') }}</td>
                 <td>{{ \Carbon\Carbon::parse($s->limite_orientacao)->format('d/m/Y') }}</td>
+                <td>{{ \Carbon\Carbon::parse($s->data_fim)->format('d/m/Y') }}</td>
                 <td>@if ($s->status == 0)
                     Inativo
                     @elseif ($s->status == 1)

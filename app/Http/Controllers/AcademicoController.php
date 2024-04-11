@@ -50,8 +50,7 @@ class AcademicoController extends Controller
                 return redirect()->route('empresa.create');
             }
             elseif($request->input('modalidade') == 1){
-                $semestre = Semestre::where('status', 1)->first();
-                return redirect()->route('academicoTCC.create', ['academico' => $academico, 'semestre' => $semestre]);
+                return redirect()->route('academicoTCC.create', ['academico' => $academico]);
             }
         }
 

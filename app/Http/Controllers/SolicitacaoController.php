@@ -34,8 +34,7 @@ class SolicitacaoController extends Controller
      */
     public function create(Orientador $orientador, Academico $academico)
     {
-        $semestre = Semestre::where('status', 1)->first();
-        return view('academico.solicitacao.create', ['semestre' => $semestre, 'orientador' => $orientador, 'academico' => $academico]);
+        return view('academico.solicitacao.create', ['orientador' => $orientador, 'academico' => $academico]);
     }
 
     /**
