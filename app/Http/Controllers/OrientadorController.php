@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Orientador;
 use App\Models\Academico;
 use App\Models\Solicitacao;
+use App\Models\SemestreOrientador;
 use App\Models\User;
 use App\Models\Area;
 use App\Models\Formacao;
@@ -16,17 +17,6 @@ use Illuminate\Support\Facades\Hash;
 
 class OrientadorController extends Controller
 {
-    public function __construct(){
-        $this->middleware(function ($request, $next) {
-            if (auth()->guard('web')->check() || auth()->guard('admin')->check()) {
-                return $next($request);
-            }
-
-            abort(403, 'Não autorizado.');
-        });
-    }
-
-
     /**
      * O método create() está sendo usado para completar o cadastro do Orientador.
      * atualiza-se a senha e os outros campos nullable são preenchidos.
@@ -51,11 +41,18 @@ class OrientadorController extends Controller
      */
     public function store(OrientadorRequest $request, Orientador $orientador)
     {
-        $orientador->update($request->validated());
+        $orientador->update($request->safe()->except(['disponibilidade']));
 
         $orientador->update([
             'password' => Hash::make($request->input('password')),
         ]);
+        // dd($request->safe()->only('disponibilidade'));
+        SemestreOrientador::where('orientador_id', $orientador->id)
+            ->where('semestre_id', app('semestreAtivo')->id)
+            ->update([
+                'disponibilidade' => $request->safe()->only('disponibilidade')['disponibilidade']
+        ]);
+        // dd(SemestreOrientador::where('orientador_id', $orientador->id)->where('semestre_id', app('semestreAtivo')->id)->first());
 
         return redirect()->route('admin.home');
     }

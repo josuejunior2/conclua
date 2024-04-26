@@ -10,9 +10,23 @@ class Semestre extends Model
 {
     use HasFactory, HasUuids;
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'id' => 'string',
+        'data_inicio' => 'datetime',
+        'data_fim' => 'datetime',
+        'limite_doc_estagio' => 'datetime',
+        'limite_orientacao' => 'datetime',
+        // 'status' => 'boolean',
+    ];
+
     protected $keyType = 'string';
 
-    protected $fillable = ['ano', 'numero', 'data_inicio', 'data_fim', 'limite_doc_estagio', 'limite_orientacao', 'status'];
+    protected $fillable = ['ano', 'numero', 'data_inicio', 'data_fim', 'limite_doc_estagio', 'limite_orientacao'];
 
     public function AcademicoEstagio(){
         return $this->hasMany(AcademicoEstagio::class);
@@ -30,6 +44,10 @@ class Semestre extends Model
     public function orientadores()
     {
         return $this->hasManyThrough(Orientador::class, SemestreOrientador::class, 'semestre_id', 'id', 'id', 'orientador_id');
+    }
+
+    public function isLast(){
+        return true;
     }
 }
 

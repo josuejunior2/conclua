@@ -68,7 +68,6 @@
                 </div>
             </div>
         </div>
-        <input type="hidden" name="status" id="status" value="">
     </div>
     <div class="card-footer text-end">
         <button type="submit" class="btn btn-primary">

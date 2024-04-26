@@ -33,66 +33,29 @@
               <th>Nome</th>
               <th>Email</th>
               <th>Modalidade</th>
-              <th>Status</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            @foreach ($academicos as $a)
+            @foreach ($academicos as $academico)
             <tr>
                 <!--<td></td>  <input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"> -->
-                <td>{{ $a->nome }}</td>
-                <td>{{ $a->email }}</td>
+                <td>{{ $academico->nome }}</td>
+                <td>{{ $academico->email }}</td>
                 <td>
-                    @if ($a->AcademicoTCC)
-                    TCC
-                    @elseif ($a->AcademicoEstagio)
-                    Estágio
+                    @if (isset($tccSemestre) && $tccSemestre->where('academico_id', $academico->id)->exists())
+                        TCC
+                    @elseif (isset($estagioSemestre) && $estagioSemestre->where('academico_id', $academico->id)->exists())
+                        Estágio
                     @else
-                    N/A
-                    @endif
-                </td>
-                <td>
-                    @if (!is_null($academicosAtivos) && $academicosAtivos->contains($a))
-                        Cadastro ativo
-                    @else
-                        Cadastro inativo
+                        N/A
                     @endif
                 </td>
                 <td class="text-end">
-                  <span class="dropdown">
-                    <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Ações</button>
-                    <div class="dropdown-menu dropdown-menu-end">
-                        <a class="dropdown-item" href="{{ route('academico.show', ['academico' => $a]) }}">
-                            Visualizar
-                        </a>
-                        @if($a->status == 0)
-                            <form id="form_ativar_{{ $a->id }}" method="post" action="{{ route('admin.academico.ativar', ['academico' => $a]) }}">
-                                @csrf
-                                <!-- <button type="submit">Excluir</button>  -->
-                                <a href="#" onclick="document.getElementById('form_ativar_{{ $a->id }}').submit()" class="dropdown-item">
-                                    Ativar cadastro
-                                </a>
-                            </form>
-                        @elseif ($a->status == 1)
-                            <form id="form_desativar_{{ $a->id }}" method="post" action="{{ route('admin.academico.desativar', ['academico' => $a]) }}">
-                                @csrf
-                                <!-- <button type="submit">Excluir</button>  -->
-                                <a href="#" onclick="document.getElementById('form_desativar_{{$a->id}}').submit()" class="dropdown-item">
-                                    Desativar cadastro
-                                </a>
-                            </form>
-                        @endif
-                        <form id="form_destroy_{{$a->id}}" method="post" action="{{ route('admin.academico.destroy', ['academico' => $a->id]) }}">
-                            @method('DELETE')
-                            @csrf
-                            <!-- <button type="submit">Excluir</button>  -->
-                            <a href="#" onclick="document.getElementById('form_destroy_{{$a->id}}').submit()" class="dropdown-item">
-                                Excluir cadastro
-                            </a>
-                        </form>
-                    </div>
-                  </span>
+                    <a class="btn justify-content-center" href="{{ route('academico.show', ['academico' => $academico]) }}">
+                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-eye"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg>
+                        Visualizar
+                    </a>
                 </td>
               </tr>
             @endforeach
@@ -113,7 +76,7 @@
             "searching": true,
             "pageLength": 10,
             "language": {
-                url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/pt-BR.json',
+                url: '//cdn.datatables.net/plug-ins/2.0.3/i18n/pt-BR.json',
             },
         });
     });

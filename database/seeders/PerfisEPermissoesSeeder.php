@@ -30,6 +30,7 @@ class PerfisEPermissoesSeeder extends Seeder
 
         //Orientador
         $permissionsOrientador = collect([
+            ['guard_name' => 'admin', 'name' => 'TesteOri',  'description' => 'Permite a criação de atividades.'],
             ['guard_name' => 'admin', 'name' => 'criar atividades',  'description' => 'Permite a criação de atividades.'],
             ['guard_name' => 'admin', 'name' => 'visualizar atividades',  'description' => 'Permite a visualização de atividades.'],
             ['guard_name' => 'admin', 'name' => 'visualizar solicitacoes de orientacao',  'description' => 'Permite a visualização de solicitações de orientação.'],
@@ -37,6 +38,7 @@ class PerfisEPermissoesSeeder extends Seeder
         ]);// aqui as do orientador (incluindo algumas que o admin tbm terá)
 
         $permissionsUser = collect([
+            ['guard_name' => 'web', 'name' => 'TesteAcad',  'description' => 'Permite a criação de atividades.'],
             ['guard_name' => 'web', 'name' => 'pesquisar orientador',  'description' => 'Permite pesquisar e visualizar orientadores.'],
             ['guard_name' => 'web', 'name' => 'solicitar orientacao',  'description' => 'Permite criar uma solicitação de orientação.'],
         ]);

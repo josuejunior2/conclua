@@ -15,7 +15,7 @@
                 @csrf
                 <label for="tabela_orientadores" class="visually-hidden">Escolha um arquivo</label>
                 <input type="file" name="tabela_orientadores" id="tabela_orientadores" accept=".xlsx" class="form-control">
-                <div class="divide-y">
+                {{-- <div class="divide-y">
                     <div>
                         <label class="row">
                             @if ($semestreAtivo)
@@ -33,7 +33,7 @@
                         </span>
                         </label>
                     </div>
-                </div>
+                </div> --}}
                 @error('tabela_orientadores')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>

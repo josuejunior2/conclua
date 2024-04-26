@@ -8,6 +8,8 @@ use App\Models\Semestre;
 use App\Models\SemestreAcademico;
 use App\Models\SemestreOrientador;
 use App\Models\Academico;
+use App\Models\AcademicoTCC;
+use App\Models\AcademicoEstagio;
 
 class AcademicoAdminController extends Controller
 {
@@ -16,10 +18,15 @@ class AcademicoAdminController extends Controller
      */
     public function index()
     {
+        // dd(session('semestre_id'));
         $todosAcademicos = Academico::all();
-        app('semestreAtivo') ? $academicosAtivos = app('semestreAtivo')->academicos : $academicosAtivos = null;
+        if(session('semestre_id')){
+            $estagioSemestre = AcademicoEstagio::where('semestre_id', session('semestre_id'));
+            $tccSemestre = AcademicoTCC::where('semestre_id', session('semestre_id'));
+            return view('admin.academico.index', ['academicos' => $todosAcademicos, 'estagioSemestre' => $estagioSemestre, 'tccSemestre' => $tccSemestre]);
+        }
         // dd($academicosAtivos);
-        return view('admin.academico.index', ['academicos' => $todosAcademicos, 'academicosAtivos' => $academicosAtivos]);
+        return view('admin.academico.index', ['academicos' => $todosAcademicos]);
     }
 
     /**
@@ -43,7 +50,7 @@ class AcademicoAdminController extends Controller
     }
 
     /**
-     * Cadastra os dados basicos de academicos por tabela excel.
+     * Cadastra os dados basicos de academicos por tabela excel E oferece opção para ativar junto de importar.
      */
     public function import_academicos(Request $request)
     {

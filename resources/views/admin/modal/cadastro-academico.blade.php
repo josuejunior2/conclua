@@ -15,25 +15,6 @@
                 @csrf
                 <label for="tabela_orientadores" class="visually-hidden">Escolha um arquivo</label>
                 <input type="file" name="tabela_academicos" id="tabela_academicos" accept=".xlsx" class="form-control">
-                <div class="divide-y">
-                    <div>
-                        <label class="row">
-                            @if ($semestreAtivo)
-                                <span class="col">Ativar o cadastro dos academicos no semestre ativo</span>
-                                <span class="col-auto">
-                                    <label class="form-check form-check-single form-switch">
-                                        <input class="form-check-input" id="ativar" name="ativar" type="checkbox" checked>
-                            @else
-                                <span class="col">Ative um semestre para poder ativar o cadastro dos academicos</span>
-                                <span class="col-auto">
-                                    <label class="form-check form-check-single form-switch">
-                                        <input class="form-check-input" id="ativar" name="ativar" type="checkbox" disabled>
-                            @endif
-                            </label>
-                        </span>
-                        </label>
-                    </div>
-                </div>
                 @error('tabela_academicos')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>

@@ -4,13 +4,13 @@
 
 <div class="card m-3">
     <div class="card-header justify-content-between">
-        <h3 class="card-title">Cadastro do Professor</h3>
+        <h3 class="card-title">Cadastro do Academico</h3>
         <div class="d-flex justify-content-between col-auto">
-            {{-- <a href=" {{ route('orientador.edit', ['Orientador' => $academico->id ]) }}" class="btn me-2 btn-secondary w-100">
+            <a href=" {{ route('academico.edit', ['academico' => $academico->id ]) }}" class="btn me-2 btn-secondary w-100">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" /><path d="M13.5 6.5l4 4" /></svg>
                 Editar
-            </a> --}} {{-- Desisti de colocar Editar pq acho improvável que o admin queira fazê-lo --}}
-            <form id="form_{{$academico->id}}" method="post" action="{{ route('academico.destroy', ['academico' => $academico->id]) }}">
+            </a> {{-- Desisti de colocar Editar pq acho improvável que o admin queira fazê-lo --}}
+            <form id="form_{{$academico->id}}" method="post" action="{{ route('admin.academico.destroy', ['academico' => $academico->id]) }}">
                 @method('DELETE')
                 @csrf
                 <!-- <button type="submit">Excluir</button>  -->
@@ -39,7 +39,7 @@
             <div class="datagrid-title">Telefone</div>
             <div class="datagrid-content">colocar depois</div>
         </div>
-        @if ($modalidade == 'TCC')
+        @if (isset($tcc))
         <div class="datagrid-item">
             <div class="datagrid-title">Modalidade</div>
             <div class="datagrid-content">TCC</div>
@@ -57,7 +57,7 @@
             <div class="datagrid-content">{{ $especifico->resumo }}</div>
         </div>
 
-        @elseif ($modalidade == 'Estagio')
+        @elseif (isset($estagio))
         <div class="datagrid-item">
             <div class="datagrid-title">Modalidade</div>
             <div class="datagrid-content">Estágio</div>
@@ -94,7 +94,7 @@
         @else
         <div class="datagrid-item">
             <div class="datagrid-title">Modalidade</div>
-            <div class="datagrid-content">Indefinida. Cadastro incompleto.</div>
+            <div class="datagrid-content">Cadastro incompleto.</div>
         </div>
 
         @endif

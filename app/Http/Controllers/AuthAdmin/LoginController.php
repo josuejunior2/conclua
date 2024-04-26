@@ -7,6 +7,8 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\SemestreOrientador;
+use App\Models\Semestre;
 
 class LoginController extends Controller
 {
@@ -54,5 +56,13 @@ class LoginController extends Controller
     protected function loggedOut(Request $request)
     {
         return redirect()->route('admin.login');
+    }
+
+    public function authenticated(Request $request, $user)
+    {
+        $ultimoSemestre = Semestre::all()->last();
+
+        if($ultimoSemestre){ $request->session()->put('semestre_id', $ultimoSemestre->id); }
+        // dd(session('semestre_id'));
     }
 }

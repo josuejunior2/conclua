@@ -18,7 +18,7 @@ class Orientador extends Authenticatable
 
     protected $table = 'orientadores';
 
-    protected $fillable = ['masp', 'nome', 'email', 'password', 'formacao_id', 'area_id', 'disponibilidade', 'subArea1', 'subArea2', 'subArea3', 'areaPesquisa1', 'areaPesquisa2', 'areaPesquisa3', 'areaPesquisa4', 'areaPesquisa5', 'enderecoLattes', 'enderecoOrcid'];
+    protected $fillable = ['masp', 'nome', 'email', 'password', 'formacao_id', 'area_id', 'subArea1', 'subArea2', 'subArea3', 'areaPesquisa1', 'areaPesquisa2', 'areaPesquisa3', 'areaPesquisa4', 'areaPesquisa5', 'enderecoLattes', 'enderecoOrcid'];
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -45,7 +45,8 @@ class Orientador extends Authenticatable
         return $this->hasMany(Orientacao::class, 'orientador_id');
     }
 
-    public function cadastrosAtivos(){
+    public function semestresOrientador(){
         return $this->belongsToMany(Semestre::class, 'semestre_orientador', 'orientador_id', 'semestre_id');
     }
+
 }

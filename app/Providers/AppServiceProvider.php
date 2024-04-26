@@ -23,11 +23,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Facades\View::composer('*', function ($view) {
-            $view->with('semestreAtivo', Semestre::where('status', 1)->first());
+            $view->with('semestres', Semestre::all());
         });
 
         $this->app->singleton('semestreAtivo', function () {  // para que o semestreAtivo possa ser acessado em qualquer lugar
-            return Semestre::where('status', 1)->first();     // por meio de app('semestreAtivo');
+            return session('semestre_id');     // por meio de app('semestreAtivo');
         });
 
     }

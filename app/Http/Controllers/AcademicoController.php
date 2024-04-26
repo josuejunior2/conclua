@@ -62,22 +62,15 @@ class AcademicoController extends Controller
      */
     public function show(Academico $academico)
     {
-        $tcc = AcademicoTCC::where('academico_id', $academico->id)->exists();
-        $estagio = AcademicoEstagio::where('academico_id', $academico->id)->exists();
-
-        if($tcc){
-            $especifico = AcademicoTCC::where('academico_id', $academico->id)->first();
-            $modalidade = 'TCC';
-        } else if($estagio){
-            $modalidade = 'Estagio';
-            $especifico = AcademicoEstagio::with('Empresa')->where('academico_id', $academico->id)->first();
+        if(AcademicoTCC::where('academico_id', $academico->id)->exists()){
+            $tcc = AcademicoTCC::where('academico_id', $academico->id)->first();
+            return view('admin.academico.show', ['academico' => $academico, 'tcc' => $tcc]);
+        } else if(AcademicoEstagio::where('academico_id', $academico->id)->exists()){
+            $estagio = AcademicoEstagio::with('Empresa')->where('academico_id', $academico->id)->first();
+            return view('admin.academico.show', ['academico' => $academico, 'estagio' => $estagio]);
         } else {
-            $modalidade = 'N/A';
-            $especifico = 'Cadastro incompleto';
-            return view('admin.academico.show', ['academico' => $academico, 'modalidade' => $modalidade]);
+            return view('admin.academico.show', ['academico' => $academico]);
         }
-
-        return view('admin.academico.show', ['academico' => $academico, 'especifico' => $especifico, 'modalidade' => $modalidade]);
     }
 
     /**

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use App\Models\Semestre;
 
 class LoginController extends Controller
 {
@@ -48,5 +49,12 @@ class LoginController extends Controller
     protected function loggedOut(Request $request)
     {
         return redirect()->route('login');
+    }
+
+    public function authenticated(Request $request, $user)
+    { // aqui eu quero colocar a session do semestreAtivo, mas se não tiver, colocar a session do último semestre que o acad/orientador participou
+        $ultimoSemestre = Semestre::all()->last();
+//    dd($ultimoSemestre);
+        if($ultimoSemestre){ $request->session()->put('semestre_id', $ultimoSemestre->id); }
     }
 }

@@ -18,7 +18,7 @@ return new class extends Migration
          * como não se prevê qual que será cadastrado, estarão como nullable.
          */
         Schema::create('semestre_academico', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid('id')->primary();
             $table->uuid('academico_id')->required();
             $table->foreign('academico_id')->references('id')->on('academicos');
             $table->uuid('semestre_id')->required();
@@ -27,11 +27,12 @@ return new class extends Migration
         });
 
         Schema::create('semestre_orientador', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid('id')->primary();
             $table->uuid('orientador_id')->required();
             $table->foreign('orientador_id')->references('id')->on('orientadores');
             $table->uuid('semestre_id')->required();
             $table->foreign('semestre_id')->references('id')->on('semestres');
+            $table->unsignedTinyInteger('disponibilidade')->nullable();
             $table->timestamps();
         });
     }

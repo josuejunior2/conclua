@@ -45,7 +45,6 @@
               <th>Data-limite doc. estágio</th>
               <th>Data-limite doc. orientação</th>
               <th>Data de fim</th>
-              <th>Status</th>
               <th></th>
             </tr>
           </thead>
@@ -60,11 +59,6 @@
                 <td>{{ \Carbon\Carbon::parse($s->limite_doc_estagio)->format('d/m/Y') }}</td>
                 <td>{{ \Carbon\Carbon::parse($s->limite_orientacao)->format('d/m/Y') }}</td>
                 <td>{{ \Carbon\Carbon::parse($s->data_fim)->format('d/m/Y') }}</td>
-                <td>@if ($s->status == 0)
-                    Inativo
-                    @elseif ($s->status == 1)
-                    Ativo
-                @endif</td>
                 <td class="text-end">
                   <span class="dropdown">
                     <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Ações</button>
@@ -75,23 +69,6 @@
                         <a class="dropdown-item" href="{{ route('admin.semestre.edit', ['semestre' => $s]) }}">
                             Editar
                         </a>
-                        @if ($s->status == 0)
-                        <form id="form_ativar_{{$s->id}}" method="post" action="{{ route('admin.semestre.ativar', ['semestre' => $s->id]) }}">
-                            @csrf
-                            <!-- <button type="submit">Excluir</button>  -->
-                            <a href="#" onclick="document.getElementById('form_ativar_{{$s->id}}').submit()" class="dropdown-item">
-                                Ativar
-                            </a>
-                        </form>
-                        @else
-                        <form id="form_desativar_{{$s->id}}" method="post" action="{{ route('admin.semestre.desativar', ['semestre' => $s->id]) }}">
-                            @csrf
-                            <!-- <button type="submit">Excluir</button>  -->
-                            <a href="#" onclick="document.getElementById('form_desativar_{{$s->id}}').submit()" class="dropdown-item">
-                                Desativar
-                            </a>
-                        </form>
-                        @endif
                         <form id="form_destroy_{{$s->id}}" method="post" action="{{ route('admin.semestre.destroy', ['semestre' => $s->id]) }}">
                             @method('DELETE')
                             @csrf
@@ -122,7 +99,7 @@
             "searching": true,
             "pageLength": 10,
             "language": {
-                url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/pt-BR.json',
+                url: '//cdn.datatables.net/plug-ins/2.0.3/i18n/pt-BR.json',
             },
         });
     });

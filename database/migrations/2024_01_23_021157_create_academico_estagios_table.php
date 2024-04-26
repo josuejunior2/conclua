@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('data_fim');
             $table->date('limite_doc_estagio');
             $table->date('limite_orientacao');
-            $table->boolean('status')->default(0)->comment('true para ativo e false para inativo');
+            // $table->boolean('status')->default(0)->comment('true para ativo e false para inativo');
             $table->timestamps();
         });
 
@@ -50,7 +50,7 @@ return new class extends Migration
 
         Schema::create('academicos_estagio', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('academico_id')->unique();
+            $table->uuid('academico_id');
             $table->foreign('academico_id')->references('id')->on('academicos');
             $table->uuid('semestre_id')->required();
             $table->foreign('semestre_id')->references('id')->on('semestres');

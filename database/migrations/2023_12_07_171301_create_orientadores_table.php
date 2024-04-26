@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('nome', 60);
             $table->string('email', 40);
             $table->string('password', 64);
-            $table->unsignedTinyInteger('disponibilidade')->default(0);
             $table->string('enderecoLattes', 38)->unique()->nullable();
             $table->string('enderecoOrcid', 37)->unique()->nullable();
             $table->string('subArea1', 60)->nullable();

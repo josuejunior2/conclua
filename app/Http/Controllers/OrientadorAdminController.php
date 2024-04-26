@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Semestre;
+use App\Models\SemestreOrientador;
 use App\Models\Orientador;
+use App\Models\Orientacao;
 
 class OrientadorAdminController extends Controller
 {
@@ -16,8 +18,11 @@ class OrientadorAdminController extends Controller
     public function index()
     {
         $todosOrientadores = Orientador::all();
-        app('semestreAtivo') ? $orientadoresAtivos = app('semestreAtivo')->orientadores : $orientadoresAtivos = null;
-        return view('admin.orientador.index', ['orientadores' => $todosOrientadores, 'orientadoresAtivos' => $orientadoresAtivos]);
+        if(session('semestre_id')){
+            $orientacoesSemestre = Orientacao::where('semestre_id', session('semestre_id'));
+            return view('admin.orientador.index', ['orientadores' => $todosOrientadores, 'orientacoesSemestre' => $orientacoesSemestre]);
+        }
+        return view('admin.orientador.index', ['orientadores' => $todosOrientadores]);
 
     }
 
@@ -30,8 +35,9 @@ class OrientadorAdminController extends Controller
         $Orientador->delete();
         return redirect()->route('admin.listar.orientadores');
     }
+
     /**
-     * Cadastra os dados basicos de orientadores por tabela excel.
+     * Cadastra os dados basicos de orientadores por tabela excel E oferece opção para ativar junto de importar.
      */
     public function import_orientadores(Request $request)
     {

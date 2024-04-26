@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Orientador;
 use App\Models\Solicitacao;
+use App\Models\Semestre;
 
 class HomeController extends Controller
 {
@@ -25,9 +26,11 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // dd(session('semestre_id'));
         $admin = auth()->guard('admin')->user();
         if($admin->hasRole('Admin')){
-            return view('admin.home');
+            $semestres = Semestre::all();
+            return view('admin.home', ['semestres' => $semestres]);
         } elseif($admin->hasRole('Orientador')){
             $orientador = Orientador::where('email', auth()->user()->email)->first();
             $solicitacoes = Solicitacao::where('orientador_id', $orientador->id)->where('status', null)->get();

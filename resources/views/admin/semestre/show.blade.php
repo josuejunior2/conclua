@@ -20,7 +20,7 @@
                 </a>
             </form>
         </div>
-    </div> {{--'ano', 'numero', 'data_inicio', 'data_fim', 'limite_doc_estagio', 'limite_orientacao', 'status'--}}
+    </div>
     <div class="card-body">
         <div class="datagrid">
         <div class="datagrid-item">
@@ -46,10 +46,6 @@
         <div class="datagrid-item">
             <div class="datagrid-title">Data-limite de envio da documentação de orientação</div>
             <div class="datagrid-content">{{ \Carbon\Carbon::parse($semestre->limite_orientacao)->format('d/m/Y') }}</div>
-        </div>
-        <div class="datagrid-item">
-            <div class="datagrid-title">Status</div>
-            <div class="datagrid-content">{{ $semestre->status }}</div>
         </div>
     </div>
 </div>

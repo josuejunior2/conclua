@@ -1,10 +1,18 @@
 @extends('layouts.app');
 
 @section('content')
-{{-- preciso melhorar essa condição depois, talvez um middleware para checar se tem orientador? --}}
 
-@if (!$academico->Orientacao)
-<div class="col-12">
+@if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+@can('TesteAcad')
+$oi
+@endcan
+
+{{-- HOME DO ACAD QUE NAO TEM ORIENTADOR AINDA --}}
+{{-- <div class="col-12">
     <div class="card m-3">
         <div class="card-header justify-content-between">
             <h3 class="card-title">Lista de orientadores</h3>
@@ -24,13 +32,10 @@
             </div>
         @endif
       <div class="table-responsive m-4">
-        <table class="display w-100" id="tabela-orientadores-web"> {{-- table card-table table-vcenter text-nowrap datatable --}}
+        <table class="display w-100" id="tabela-orientadores-web">
           <thead>
             <tr>
-              {{--<th class="w-1"></th>  <input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select all invoices"> --}}
-              {{-- <th class="w-1">ID <!-- Download SVG icon from http://tabler-icons.io/i/chevron-up -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-sm icon-thick" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 15l6 -6l6 6" /></svg>
-              </th> --}}
+
               <th>Nome</th>
               <th>Email</th>
               <th>Formação</th>
@@ -41,8 +46,7 @@
           <tbody>
             @foreach ($orientadores as $o)
             <tr>
-                {{-- <!--<td></td>  <input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"> -->
-                <td><span class="text-muted">{{ $o->id }}</span></td> --}}
+
                 <td>{{ $o->nome }}</td>
                 <td>{{ $o->email }}</td>
                 <td>{{ $o->Formacao ? $o->Formacao->nome : 'N/A' }}</td>
@@ -54,7 +58,7 @@
                         <a class="dropdown-item" href="{{ route('orientador.show.web', ['Orientador' => $o, 'academico' => $academico]) }}">
                             Visualizar
                         </a>
-                        <a class="dropdown-item" href="{{ route('solicitacao.create', ['orientador' => $o, 'academico' => $academico, 'semestre' => $semestre]) }}">
+                        <a class="dropdown-item" href="{{ route('solicitacao.create', ['orientador' => $o, 'academico' => $academico, 'semestre' => $semestreAtivo]) }}">
                             Solicitar vinculação
                         </a>
                     </div>
@@ -114,7 +118,7 @@
     @endif
     </div>
   </div>
-</div>
+</div> --}}
 @endsection
 
 @section('js')
@@ -126,27 +130,10 @@
             "searching": true,
             "pageLength": 10,
             "language": {
-                url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/pt-BR.json',
+                url: '//cdn.datatables.net/plug-ins/2.0.3/i18n/pt-BR.json',
             },
         });
     });
 </script>
-@elseif ($academico->Orientacao && $academico->AcademicoTCC)
-{{ $academico->AcademicoTCC->tema }}<br>
-{{ $academico->AcademicoTCC->problema }}<br>
-{{ $academico->AcademicoTCC->objetivo_especifico }}<br>
-{{ $academico->AcademicoTCC->objetivo_geral }}<br>
-{{ $academico->AcademicoTCC->justificativa }}<br>
-{{ $academico->AcademicoTCC->metodologia }}<br>
-@elseif ($academico->Orientacao && $academico->AcademicoEstagio)
-{{ $academico->AcademicoTCC->tema }}<br>
-{{ $academico->AcademicoTCC->funcao }}<br>
-{{ $academico->AcademicoTCC->Empresa->nome }}<br>
-{{ $academico->AcademicoTCC->Empresa->email }}<br>
-{{ $academico->AcademicoTCC->Empresa->cnpj }}<br>
-{{ $academico->AcademicoTCC->Empresa->supervisor }}<br>
-
-@endif
-
 @endsection
 

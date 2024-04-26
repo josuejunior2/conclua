@@ -8,17 +8,21 @@ use App\Models\Orientador;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\SemestreRequest;
+use App\Http\Requests\MudarSemestreRequest;
+use App\Models\Role;
+use App\Models\Permission;
 
 class SemestreController extends Controller
 {
     public function __construct(){
-        $this->middleware('permission:configurar semestre');
+        // $this->middleware('permission:configurar semestre');
     }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        // dd(app('semestreAtivo'));
         $semestres = Semestre::all();
         return view('admin.semestre.index', ['semestres' => $semestres]);
     }
@@ -78,38 +82,38 @@ class SemestreController extends Controller
         return redirect()->route('admin.semestre.index');
     }
 
+    // /**
+    //  * Ativa o semestre
+    //  */
+    // public function ativar(Semestre $semestre)
+    // {
+    //     if(app('semestreAtivo')){
+    //         return redirect()->route('admin.semestre.index')->withErrors('Para ativar outro semestre, desative o semestre em ativo');
+    //     } else{
+    //         $semestre->update(['status' => 1]);
+    //     }
+
+    //     return redirect()->route('admin.semestre.index');
+    // }
+
+    // /**
+    //  * Desativa o semestre e o cadastro de academicos e orientadores
+    //  */
+    // public function desativar(Semestre $semestre)
+    // {
+    //     $semestre->update(['status' => 0]);
+
+
+    //     return redirect()->route('admin.semestre.index');
+    // }
+
     /**
-     * Ativa o semestre
+     * Muda de semestre
      */
-    public function ativar(string $id)
+    public function mudar_semestre(MudarSemestreRequest $request)
     {
-        $semestre = Semestre::find($id);
-
-        if(Semestre::where('status', 1)->exists()){
-            return redirect()->route('admin.semestre.index')->withErrors('Para ativar outro semestre, desative o semestre em ativo');
-        } else{
-            $semestre->update(['status' => 1]);
-        }
-
-        return redirect()->route('admin.semestre.index');
-    }
-
-    /**
-     * Desativa o semestre e o cadastro de academicos e orientadores
-     */
-    public function desativar(string $id)
-    {
-        $semestre = Semestre::find($id);
-        foreach(Academico::all() as $academico){
-            $academico->status = 0;
-        }
-        foreach(Orientador::all() as $orientador){
-            $orientador->status = 0;
-        }
-
-        $semestre->update(['status' => 0]);
-
-        return redirect()->route('admin.semestre.index');
+        $request->session()->put('semestre_id', $request->validated()['semestre_id']);
+        // dd(session('semestre_id'));
+        return redirect()->route('home')->with(['success' => 'mudou o semestre']);
     }
 }
-
