@@ -12,15 +12,15 @@
         <div class="mb-3">
             <label class="col-3 col-form-label required">Ano</label>
             <div class="col">
-                <input type="text" class="form-control" name="ano" id="ano">
+                <input type="text" class="form-control" name="ano" id="ano" value="{{ old('ano') }}">
             </div>
         </div>
         <div class="col-md mb-3">
             <div class="form-label required">Número do semestre</div>
             <select class="form-select" name="numero" id="numero" value="{{ old('numero', '') }}">
                 <option value=""> -- Selecione o semestre -- </option>
-                <option value="1">1º Semestre</option>
-                <option value="2">2º Semestre</option>
+                <option value="1" {{ old('numero') == 1 ? 'selected' : '' }}>1º Semestre</option>
+                <option value="2" {{ old('numero') == 2 ? 'selected' : '' }}>2º Semestre</option>
             </select>
             <span class="{{ $errors->has('numero') ? 'text-danger' : '' }}">
                     {{ $errors->has('numero') ? $errors->first('numero') : '' }}

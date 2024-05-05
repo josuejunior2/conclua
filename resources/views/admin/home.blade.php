@@ -11,7 +11,7 @@
             </div>
         @endif
         aaa
-         {{-- @dd($semestreAtivo) --}}
+         {{-- @dd($semestreAtual) --}}
     </div>
 </div>
 @endsection

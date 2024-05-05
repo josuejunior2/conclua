@@ -47,11 +47,11 @@
                 <!--<td></td>  <input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"> -->
                 <td>{{ $orientador->nome }}</td>
                 <td>{{ $orientador->email }}</td>
-                <td>{{ $orientador->Formacao ? $o->Formacao->nome : 'N/A' }}</td>
+                <td>{{ $orientador->Formacao ? $orientador->Formacao->nome : 'N/A' }}</td>
                 <td>{{ $orientador->Area ? $orientador->Area->nome : 'N/A' }}</td>
-                <td>{{-- @if($o->disponibilidade == 0)N/A @elseif(isset($semestreAtivo)) {{ $o->disponibilidade - $o->orientacoes->where('semestre_id', $semestreAtivo->id)->count() }} de {{ $o->disponibilidade }} @endif--}}</td>
+                <td>{{-- @if($o->disponibilidade == 0)N/A @elseif(isset($semestreAtual)) {{ $o->disponibilidade - $o->orientacoes->where('semestre_id', $semestreAtual->id)->count() }} de {{ $o->disponibilidade }} @endif--}}</td>
                 <td>
-                    @if (isset($orientacoesSemestre) && $orientacoesSemestre->contains($orientador))
+                    @if (isset($orientacoesSemestre) && $orientacoesSemestre->where('orientador_id', $orientador->id)->exists())
                         @foreach ($orientacoesSemestre->where('orientador_id', $orientador->id) as $orientacao)
                             {{ $orientacao->Academico->nome }} - @if ($orientacao->Academico->AcademicoTCC) TCC @elseif ($orientacao->Academico->AcademicoEstagio) Estagio @endif
                         @endforeach

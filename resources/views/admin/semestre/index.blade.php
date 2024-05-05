@@ -66,9 +66,11 @@
                         <a class="dropdown-item" href="{{ route('admin.semestre.show', ['semestre' => $s]) }}">
                             Visualizar
                         </a>
+                        @if($s->id == $semestreAtual)
                         <a class="dropdown-item" href="{{ route('admin.semestre.edit', ['semestre' => $s]) }}">
                             Editar
                         </a>
+                        @endif
                         <form id="form_destroy_{{$s->id}}" method="post" action="{{ route('admin.semestre.destroy', ['semestre' => $s->id]) }}">
                             @method('DELETE')
                             @csrf

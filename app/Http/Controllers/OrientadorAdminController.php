@@ -31,9 +31,8 @@ class OrientadorAdminController extends Controller
      */
     public function destroy(Orientador $Orientador) // Não coloquei o softDeletes, talvez deva colocar depois
     {
-        if($Orientador){ $Orientador->delete(); }
         $Orientador->delete();
-        return redirect()->route('admin.listar.orientadores');
+        return redirect()->route('orientador.index');
     }
 
     /**
@@ -77,28 +76,5 @@ class OrientadorAdminController extends Controller
         $arquivo->move('/uploads', $nomeOriginal);//ta dando errado
 
         return redirect()->route('admin.orientador.index')->with('success', 'Operação realizada com sucesso!');
-    }
-    /**
-     * Ativa o cadastro do Orientador no semestre que está ATIVO
-     */
-    public function ativar_orientador(Orientador $orientador)
-    {
-        if(is_null(app('semestreAtivo'))){ return redirect()->route('admin.academico.index')->withErrors('Cadastre e/ou ative um semestre para poder ativar o cadastro do orientador.'); }
-        SemestreOrientador::create([
-            'semestre_id' => app('semestreAtivo')->id,
-            'orientador_id' => $orientador->id,
-        ]);
-
-        return redirect()->route('admin.orientador.index');
-    }
-
-    /**
-     * Desativa o o cadastro do orientador no semestre que está ATIVO
-     */
-    public function desativar_orientador(Orientador $orientador)
-    {
-        SemestreOrientador::where('orientador_id', $orientador->id)->delete();
-
-        return redirect()->route('admin.orientador.index');
     }
 }

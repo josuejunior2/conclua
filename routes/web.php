@@ -98,11 +98,17 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 
 
-Route::middleware(['auth:admin', 'semestre_ativo'])->group(function () {
+Route::middleware(['auth:admin', 'semestre_ativo', 'permission:permissao de escrita orientador'])->group(function () {
     Route::get('orientador/create', 'App\Http\Controllers\OrientadorController@create')->name('orientador.create');
     Route::post('orientador/{orientador}', 'App\Http\Controllers\OrientadorController@store')->name('orientador.store');
 });
-Route::middleware(['auth:admin', 'primeiro_acesso'])->group(function () { // rotas normal ANTES DE ATIVAR O SEMESTRE
+
+
+
+
+Route::middleware(['auth:admin', 'semestre_ativo'])->group(function () {
+});
+Route::middleware(['auth:admin', 'semestre_ativo', 'primeiro_acesso'])->group(function () { // rotas normal ANTES DE ATIVAR O SEMESTRE
     Route::get('admin/home', [AdminHomeController::class, 'index'])->name('admin.home');
     Route::resource('orientador', App\Http\Controllers\OrientadorController::class)->except(['create', 'store', 'index', 'destroy'])->names(['show' => 'orientador.show.admin']);
 

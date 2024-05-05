@@ -24,16 +24,11 @@ class OrientadorController extends Controller
     public function create()
     {
         $orientador = Orientador::where('email', auth()->guard('admin')->user()->email)->first();
-        if (is_null($orientador)) {
-            return redirect()->route('admin.home'); // se não tiver orientador é que é admin, então pode ir pra home
-        } elseif(is_null($orientador->formacao_id) && is_null($orientador->area_id)){
-            $formacoes = Formacao::all();
-            $areas = Area::all();
-            // dd($orientador);
-            return view('orientador.create', ['orientador' => $orientador, 'areas' => $areas, 'formacoes' => $formacoes ]);
-        } else {
-            return redirect()->route('admin.home'); // se já completou o cadastro OU é admin, vai pra home
-        }
+
+        $formacoes = Formacao::all();
+        $areas = Area::all();
+        // dd($orientador);
+        return view('orientador.create', ['orientador' => $orientador, 'areas' => $areas, 'formacoes' => $formacoes ]);
     }
 
     /**
@@ -41,19 +36,11 @@ class OrientadorController extends Controller
      */
     public function store(OrientadorRequest $request, Orientador $orientador)
     {
-        $orientador->update($request->safe()->except(['disponibilidade']));
+        $orientador->update($request->validated());
 
         $orientador->update([
             'password' => Hash::make($request->input('password')),
         ]);
-        // dd($request->safe()->only('disponibilidade'));
-        SemestreOrientador::where('orientador_id', $orientador->id)
-            ->where('semestre_id', app('semestreAtivo')->id)
-            ->update([
-                'disponibilidade' => $request->safe()->only('disponibilidade')['disponibilidade']
-        ]);
-        // dd(SemestreOrientador::where('orientador_id', $orientador->id)->where('semestre_id', app('semestreAtivo')->id)->first());
-
         return redirect()->route('admin.home');
     }
 

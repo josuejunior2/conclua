@@ -24,11 +24,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Facades\View::composer('*', function ($view) {
             $view->with('semestres', Semestre::all());
+            $view->with('semestreAtual', session('semestre_id'));
         });
-
-        $this->app->singleton('semestreAtivo', function () {  // para que o semestreAtivo possa ser acessado em qualquer lugar
-            return session('semestre_id');     // por meio de app('semestreAtivo');
-        });
-
     }
 }

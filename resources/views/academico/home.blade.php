@@ -7,12 +7,11 @@
         {{ session('success') }}
     </div>
 @endif
-@can('TesteAcad')
-$oi
+@can('permissao de escrita academico')
 @endcan
 
 {{-- HOME DO ACAD QUE NAO TEM ORIENTADOR AINDA --}}
-{{-- <div class="col-12">
+<div class="col-12">
     <div class="card m-3">
         <div class="card-header justify-content-between">
             <h3 class="card-title">Lista de orientadores</h3>
@@ -26,16 +25,10 @@ $oi
                 </ul>
             </div>
         @endif
-        @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
       <div class="table-responsive m-4">
         <table class="display w-100" id="tabela-orientadores-web">
           <thead>
             <tr>
-
               <th>Nome</th>
               <th>Email</th>
               <th>Formação</th>
@@ -46,31 +39,25 @@ $oi
           <tbody>
             @foreach ($orientadores as $o)
             <tr>
-
                 <td>{{ $o->nome }}</td>
                 <td>{{ $o->email }}</td>
                 <td>{{ $o->Formacao ? $o->Formacao->nome : 'N/A' }}</td>
                 <td>{{ $o->Area ? $o->Area->nome : 'N/A' }}</td>
                 <td class="text-end">
-                  <span class="dropdown">
-                    <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Ações</button>
-                    <div class="dropdown-menu dropdown-menu-end">
-                        <a class="dropdown-item" href="{{ route('orientador.show.web', ['Orientador' => $o, 'academico' => $academico]) }}">
-                            Visualizar
-                        </a>
-                        <a class="dropdown-item" href="{{ route('solicitacao.create', ['orientador' => $o, 'academico' => $academico, 'semestre' => $semestreAtivo]) }}">
-                            Solicitar vinculação
-                        </a>
-                    </div>
-                  </span>
+                    <a class="btn btn-outline-success" href="{{ route('solicitacao.create', ['orientador' => $o, 'academico' => $academico, 'semestre' => $semestreAtual]) }}">
+                        Solicitar vinculação
+                    </a>
+                    <a class="btn btn-outline-primary" href="{{ route('orientador.show.web', ['Orientador' => $o, 'academico' => $academico]) }}">
+                        Visualizar
+                    </a>
                 </td>
-              </tr>
+            </tr>
             @endforeach
           </tbody>
         </table>
       </div>
     </div>
-    @if ($academico->solicitacoes->isNotEmpty())
+    @if ($solicitacoes->isNotEmpty())
     <div class="container-xl">
         <div class="row row-deck row-cards">
             <div class="col-sm-6 col-lg-3">
@@ -82,7 +69,7 @@ $oi
                         </div>
                         <div class="card-body card-body-scrollable card-body-scrollable-shadow">
                         <div class="divide-y">
-                            @foreach($academico->solicitacoes as $as)
+                            @foreach($solicitacoes as $as)
                             <div>
                                 <div class="row">
                                     <div class="col">
@@ -118,7 +105,7 @@ $oi
     @endif
     </div>
   </div>
-</div> --}}
+</div>
 @endsection
 
 @section('js')

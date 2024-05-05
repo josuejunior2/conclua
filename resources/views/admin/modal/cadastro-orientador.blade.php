@@ -18,7 +18,7 @@
                 {{-- <div class="divide-y">
                     <div>
                         <label class="row">
-                            @if ($semestreAtivo)
+                            @if ($semestreAtual)
                                 <span class="col">Ativar o cadastro dos orientadores no semestre ativo</span>
                                 <span class="col-auto">
                                     <label class="form-check form-check-single form-switch">

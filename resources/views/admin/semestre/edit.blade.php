@@ -20,8 +20,8 @@
         </span>
         </div>
         <div class="col-md mb-3">
-            <div class="form-label required">Número do semestre</div>
-            <select class="form-select" name="numero" id="numero" value="{{ $semestre->numero }}">
+            <div class="form-label required">Número do semestre: {{ $semestre->numero }}</div>
+            <select class="d-none" name="numero" id="numero" value="{{ $semestre->numero }}">
                 <option value=""> -- Selecione o semestre -- </option>
                 <option value="1" {{ $semestre->numero == '1' ? 'selected' : '' }}>1º Semestre</option>
                 <option value="2" {{ $semestre->numero == '2' ? 'selected' : '' }}>2º Semestre</option>
@@ -34,7 +34,7 @@
             <div class="datagrid-item">
                 <div class="form-label">Data de início</div>
                 <div class="datagrid-content">
-                    <input type="hidden" id="data_inicio" name="data_inicio" value="{{ $semestre->data_inicio }}" autocomplete="off"/>
+                    <input type="hidden" id="data_inicio" name="data_inicio" value="{{ old('data_inicio') ?? $semestre->data_inicio }}" autocomplete="off"/>
                     <span class="{{ $errors->has('data_inicio') ? 'text-danger' : '' }}">
                         {{ $errors->has('data_inicio') ? $errors->first('data_inicio') : '' }}
                     </span>
@@ -43,7 +43,7 @@
             <div class="datagrid-item">
                 <div class="form-label">Data de finalização</div>
                 <div class="datagrid-content">
-                    <input type="hidden" id="data_fim" name="data_fim" value="{{ $semestre->data_fim }}" autocomplete="off"/>
+                    <input type="hidden" id="data_fim" name="data_fim" value="{{ old('data_fim') ?? $semestre->data_fim }}" autocomplete="off"/>
                     <span class="{{ $errors->has('data_fim') ? 'text-danger' : '' }}">
                         {{ $errors->has('data_fim') ? $errors->first('data_fim') : '' }}
                     </span>
@@ -52,7 +52,7 @@
             <div class="datagrid-item">
                 <div class="form-label">Data-limite de entrega de documentos de estágio</div>
                 <div class="datagrid-content">
-                    <input type="hidden" id="limite_doc_estagio" name="limite_doc_estagio" value="{{ $semestre->limite_doc_estagio }}" autocomplete="off"/>
+                    <input type="hidden" id="limite_doc_estagio" name="limite_doc_estagio" value="{{ old('limite_doc_estagio') ?? $semestre->limite_doc_estagio }}" autocomplete="off"/>
                     <span class="{{ $errors->has('limite_doc_estagio') ? 'text-danger' : '' }}">
                         {{ $errors->has('limite_doc_estagio') ? $errors->first('limite_doc_estagio') : '' }}
                     </span>
@@ -61,7 +61,7 @@
             <div class="datagrid-item">
                 <div class="form-label">Data-limite de entrega de documentos de orientação</div>
                 <div class="datagrid-content">
-                    <input type="hidden" id="limite_orientacao" name="limite_orientacao" value="{{ $semestre->limite_orientacao }}" autocomplete="off"/>
+                    <input type="hidden" id="limite_orientacao" name="limite_orientacao" value="{{ old('limite_orientacao') ?? $semestre->limite_orientacao }}" autocomplete="off"/>
                     <span class="{{ $errors->has('limite_orientacao') ? 'text-danger' : '' }}">
                         {{ $errors->has('limite_orientacao') ? $errors->first('limite_orientacao') : '' }}
                     </span>

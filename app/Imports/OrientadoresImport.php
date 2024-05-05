@@ -31,13 +31,6 @@ class OrientadoresImport implements ToModel
             ]
         );
 
-        if(app('semestreAtivo') && $this->ativar == "on"){
-            SemestreOrientador::create([
-                'semestre_id' => app('semestreAtivo')->id,
-                'orientador_id' => $orientador->id,
-            ]);
-        }
-
         return $orientador;
     }
 }

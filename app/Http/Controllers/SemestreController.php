@@ -11,6 +11,7 @@ use App\Http\Requests\SemestreRequest;
 use App\Http\Requests\MudarSemestreRequest;
 use App\Models\Role;
 use App\Models\Permission;
+use Illuminate\Support\Facades\DB;
 
 class SemestreController extends Controller
 {
@@ -41,7 +42,7 @@ class SemestreController extends Controller
     public function store(SemestreRequest $request)
     {
         $semestre = Semestre::create($request->validated());
-
+        session()->put('semestre_id', $semestre->id);
         return redirect()->route('admin.semestre.index');
     }
 
@@ -60,7 +61,11 @@ class SemestreController extends Controller
      */
     public function edit(Semestre $semestre)
     {
-        return view('admin.semestre.edit', ['semestre' => $semestre]);
+        if($semestre->id == session('semestre_id')){
+            return view('admin.semestre.edit', ['semestre' => $semestre]);
+        } else{
+            return redirect()->back();
+        }
     }
 
     /**
@@ -78,6 +83,15 @@ class SemestreController extends Controller
      */
     public function destroy(Semestre $semestre)
     {
+        foreach($semestre->academicosEstagio as $academicoEstagio){
+            $academicosEstagio->delete();
+        }
+        foreach($semestre->academicosTCC as $academicoTCC){
+            $academicoTCC->delete();
+        }
+        DB::table('semestre_orientador')
+            ->where('semestre_id', $semestre->id)
+            ->delete();
         $semestre->delete();
         return redirect()->route('admin.semestre.index');
     }

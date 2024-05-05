@@ -130,7 +130,7 @@
                                 <div class="col-3">
                                     <div class="form-label required">Disponibilidade</div>
                                     <select id="disponibilidade" name="disponibilidade" class="form-select" value="{{ old('disponibilidade', '') }}">
-                                        <option value="0" selected>0</option>
+                                        <option value="0">0</option>
                                         <option value="1" {{ old('disponibilidade') == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ old('disponibilidade') == '2' ? 'selected' : '' }}>2</option>
                                         <option value="3" {{ old('disponibilidade') == '3' ? 'selected' : '' }}>3</option>

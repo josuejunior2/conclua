@@ -70,8 +70,8 @@ class OrientadorRequest extends FormRequest
 
         ];
     }
-    // public function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
-    // {
-    //     dd($validator->errors());
-    // }
+    public function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+    {
+        dd($validator->errors());
+    }
 }

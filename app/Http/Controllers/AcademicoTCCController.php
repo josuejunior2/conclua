@@ -41,10 +41,9 @@ class AcademicoTCCController extends Controller
      */
     public function store(AcademicoTCCRequest $request)
     {
+        AcademicoTCC::create($request->validated());
         $academico = Academico::where('email', auth()->user()->email)->first();
-        $academico_id = $academico->id;
 
-        $academicoEstagio = AcademicoTCC::create($request->validated());
 
         return view('academico.finalacademico', ['academico' => $academico]);
     }
