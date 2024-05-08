@@ -84,17 +84,17 @@
     <div class="card-header justify-content-between">
         <h3 class="card-title">Revise seus dados</h3>
         <div class="d-flex justify-content-between col-auto">
-        @if ($academico->AcademicoTCC)
-        <a href=" {{ route('academicoTCC.edit', ['academicoTCC' => $academico->AcademicoTCC ]) }}" class="btn me-2 btn-secondary w-100">
+        @if (isset($tcc))
+        <a href=" {{ route('academicoTCC.edit', ['academicoTCC' => $tcc ]) }}" class="btn me-2 btn-secondary w-100">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" /><path d="M13.5 6.5l4 4" /></svg>
             Editar
         </a>
-        @elseif ($academico->AcademicoEstagio)
-        <a href=" {{ route('empresa.edit', ['empresa' => $academico->AcademicoEstagio->Empresa ]) }}" class="btn me-2 btn-secondary w-100">
+        @elseif (isset($estagio))
+        <a href=" {{ route('empresa.edit', ['empresa' => $estagio->Empresa ]) }}" class="btn me-2 btn-secondary w-100">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" /><path d="M13.5 6.5l4 4" /></svg>
             Editar Empresa
         </a>
-        <a href=" {{ route('academicoEstagio.edit', ['academicoEstagio' => $academico->AcademicoEstagio ]) }}" class="btn me-2 btn-secondary w-100">
+        <a href=" {{ route('academicoEstagio.edit', ['academicoEstagio' => $estagio ]) }}" class="btn me-2 btn-secondary w-100">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" /><path d="M13.5 6.5l4 4" /></svg>
             Editar Estagio
         </a>
@@ -103,63 +103,63 @@
     </div>
     <div class="card-body">
         <div class="datagrid mb-4">
-            @if ($academico->AcademicoTCC)
+            @if (isset($tcc))
             <div class="datagrid-item">
                 <div class="datagrid-title">Modalidade</div>
                 <div class="datagrid-content">TCC</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Tema</div>
-                <div class="datagrid-content">{{ $academico->AcademicoTCC->tema }}</div>
+                <div class="datagrid-content">{{ $tcc->tema }}</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Problema</div>
-                <div class="datagrid-content">{{ $academico->AcademicoTCC->problema }}</div>
+                <div class="datagrid-content">{{ $tcc->problema }}</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Objetivo Geral</div>
-                <div class="datagrid-content">{{ $academico->AcademicoTCC->objetivo_geral }}</div>
+                <div class="datagrid-content">{{ $tcc->objetivo_geral }}</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Objetivo Específico</div>
-                <div class="datagrid-content">{{ $academico->AcademicoTCC->objetivo_especifico }}</div>
+                <div class="datagrid-content">{{ $tcc->objetivo_especifico }}</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Justificativa</div>
-                <div class="datagrid-content">{{ $academico->AcademicoTCC->justificativa }}</div>
+                <div class="datagrid-content">{{ $tcc->justificativa }}</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Metodologia</div>
-                <div class="datagrid-content">{{ $academico->AcademicoTCC->metodologia }}</div>
+                <div class="datagrid-content">{{ $tcc->metodologia }}</div>
             </div>
-            @elseif ($academico->AcademicoEstagio)
+            @elseif (isset($estagio))
             <div class="datagrid-item">
                 <div class="datagrid-title">Modalidade</div>
                 <div class="datagrid-content">Estágio</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Tema</div>
-                <div class="datagrid-content">{{ $academico->AcademicoEstagio->tema }}</div>
+                <div class="datagrid-content">{{ $estagio->tema }}</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Função</div>
-                <div class="datagrid-content">{{ $academico->AcademicoEstagio->funcao }}</div>
+                <div class="datagrid-content">{{ $estagio->funcao }}</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Nome da Empresa</div>
-                <div class="datagrid-content">{{ $academico->AcademicoEstagio->Empresa->nome }}</div>
+                <div class="datagrid-content">{{ $estagio->Empresa->nome }}</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">CNPJ da Empresa</div>
-                <div class="datagrid-content">{{ $academico->AcademicoEstagio->Empresa->cnpj }}</div>
+                <div class="datagrid-content">{{ $estagio->Empresa->cnpj }}</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Supervisor</div>
-                <div class="datagrid-content">{{ $academico->AcademicoEstagio->Empresa->supervisor }}</div>
+                <div class="datagrid-content">{{ $estagio->Empresa->supervisor }}</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Email da Empresa/Supervisor</div>
-                <div class="datagrid-content">{{ $academico->AcademicoEstagio->Empresa->email }}</div>
+                <div class="datagrid-content">{{ $estagio->Empresa->email }}</div>
             </div>
             @endif
         </div>
@@ -169,6 +169,11 @@
     <div class="card-body">
     <form method="POST" action="{{ route('solicitacao.store') }}" autocomplete="off" novalidate>
         @csrf
+        @if (isset($tcc))
+            <input id="academico_tcc_id" name="academico_tcc_id" type="hidden" class="form-control" value="{{ $tcc->id }}">
+        @elseif (isset($estagio))
+            <input id="academico_estagio_id" name="academico_estagio_id" type="hidden" class="form-control" value="{{ $estagio->id }}">
+        @endif
         <input id="academico_id" name="academico_id" type="hidden" class="form-control" value="{{ $academico->id }}">
         <input id="orientador_id" name="orientador_id" type="hidden" class="form-control" value="{{ $orientador->id }}">
         <input id="semestre_id" name="semestre_id" type="hidden" class="form-control" value="{{ $semestreAtual   }}">

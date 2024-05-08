@@ -49,7 +49,7 @@
             </tr>
           </thead>
           <tbody>
-            @foreach ($semestres as $s)
+            @foreach ($semestres->sortByDesc('created_at') as $s)
             <tr>
                 <!--<td></td>  <input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"> -->
                 {{-- <td><span class="text-muted">{{ $s->id }}</span></td> --}}

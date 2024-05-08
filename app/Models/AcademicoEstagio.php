@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 class AcademicoEstagio extends Model
 {
     use HasFactory, HasUuids;
-    protected $table = 'academicos_estagio';
+    protected $table = 'academico_estagio';
 
     protected $keyType = 'string';
 

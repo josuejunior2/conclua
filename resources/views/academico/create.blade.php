@@ -46,11 +46,11 @@
                                <div class="form-label required">Qual será sua modalidade de orientação?</div>
                                <div>
                                  <label class="form-check form-check-inline">
-                                   <input class="form-check-input" type="radio" name="modalidade" value="0">
+                                   <input class="form-check-input" type="radio" name="modalidade" value="0" {{ old('modalidade') == "0" ? 'checked' : ''}}>
                                    <span class="form-check-label">Estágio</span>
                                  </label>
                                  <label class="form-check form-check-inline">
-                                   <input class="form-check-input" type="radio" name="modalidade" value="1">
+                                   <input class="form-check-input" type="radio" name="modalidade" value="1" {{ old('modalidade') == "1" ? 'checked' : ''}}>
                                    <span class="form-check-label">Trabalho de Conclusão de Curso</span>
                                  </label>
                                </div>

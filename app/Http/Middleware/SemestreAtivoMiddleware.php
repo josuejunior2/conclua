@@ -32,7 +32,7 @@ class SemestreAtivoMiddleware
         if(session('semestre_id')){ $semestreEmSession = Semestre::where('id', session('semestre_id'))->first(); }
 
         if(isset($semestreEmSession)){
-            if($semestreEmSession != $semestreAtual){ // na regra do form request de semestre eu devo criar uma regra pra não criar semestre sem que a data_fim do anterior não tenha chegado
+            if($semestreEmSession != $semestreAtual || $semestreAtual->data_fim < now()){ // na regra do form request de semestre eu devo criar uma regra pra não criar semestre sem que a data_fim do anterior não tenha chegado
                 if(auth()->guard('web')->check()){
                     auth()->guard('web')->user()->revokePermissionTo(Permission::where('name', 'permissao de escrita academico')->first());
                 }
@@ -47,8 +47,9 @@ class SemestreAtivoMiddleware
                 if(auth()->guard('admin')->check()){
                     auth()->guard('admin')->user()->givePermissionTo(Permission::where('name', 'permissao de escrita orientador')->first());
                 }
+                return $next($request);
             }
-            return $next($request);
+            return abort(403, "o midd semestreativo nao prevê tudo");
         } else{
             return redirect()->route('welcome')->with('error', 'Sem semestre cadastrado');
         }

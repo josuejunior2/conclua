@@ -14,7 +14,7 @@ class Orientacao extends Model
 
     protected $table = 'orientacoes';
 
-    protected $fillable = ['academico_id', 'orientador_id', 'semestre_id', 'solicitacao_id', 'data_vinculacao'];//, 'modalidade'];
+    protected $fillable = ['academico_id', 'academico_tcc_id', 'academico_estagio_id', 'orientador_id', 'semestre_id', 'solicitacao_id'];//, 'modalidade'];
 
     public function Orientador(){
         return $this->belongsTo(Orientador::class, 'orientador_id');
@@ -26,5 +26,13 @@ class Orientacao extends Model
 
     public function Solicitacao(){
         return $this->belongsTo(Solicitacao::class, 'solicitacao_id');
+    }
+
+    public function AcademicoTCC(){
+        return $this->belongsTo(AcademicoTCC::class, 'academico_tcc_id');
+    }
+
+    public function AcademicoEstagio(){
+        return $this->belongsTo(AcademicoEstagio::class, 'academico_estagio_id');
     }
 }

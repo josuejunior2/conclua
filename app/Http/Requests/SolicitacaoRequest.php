@@ -32,6 +32,8 @@ class SolicitacaoRequest extends FormRequest
             'semestre_id' => 'required',
             'status' => 'nullable',
             'mensagem' => 'nullable|max:255',
+            'academico_tcc_id' => 'nullable',
+            'academico_estagio_id' => 'nullable',
         ];
     }
     /**

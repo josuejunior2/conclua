@@ -23,7 +23,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('academicos_TCC', function (Blueprint $table) {
+        Schema::create('academico_TCC', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('academico_id');
             $table->foreign('academico_id')->references('id')->on('academicos');
@@ -48,7 +48,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('academicos_estagio', function (Blueprint $table) {
+        Schema::create('academico_estagio', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('academico_id');
             $table->foreign('academico_id')->references('id')->on('academicos');
@@ -69,10 +69,10 @@ return new class extends Migration
     {
         Schema::dropIfExists('semestres');
 
-        Schema::dropIfExists('academicos_estagio');
+        Schema::dropIfExists('academico_estagio');
 
         Schema::dropIfExists('empresas');
 
-        Schema::dropIfExists('academicos_TCC');
+        Schema::dropIfExists('academico_tcc');
     }
 };

@@ -13,9 +13,15 @@ return new class extends Migration
     {
         Schema::create('orientacoes', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->date('data_vinculacao')->required();
             $table->uuid('academico_id')->required();
             $table->foreign('academico_id')->references('id')->on('academicos');
+
+            $table->uuid('academico_tcc_id')->nullable();
+            $table->foreign('academico_tcc_id')->references('id')->on('academico_tcc');
+
+            $table->uuid('academico_estagio_id')->nullable();
+            $table->foreign('academico_estagio_id')->references('id')->on('academico_estagio');
+
             $table->uuid('orientador_id')->required();
             $table->foreign('orientador_id')->references('id')->on('orientadores');
             $table->uuid('semestre_id')->required();
@@ -27,12 +33,12 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::table('academicos_TCC', function (Blueprint $table) {
+        Schema::table('academico_tcc', function (Blueprint $table) {
             $table->uuid('orientacao_id')->nullable();
             $table->foreign('orientacao_id')->references('id')->on('orientacoes');
         });
 
-        Schema::table('academicos_estagio', function (Blueprint $table) {
+        Schema::table('academico_estagio', function (Blueprint $table) {
             $table->uuid('orientacao_id')->nullable();
             $table->foreign('orientacao_id')->references('id')->on('orientacoes');
         });

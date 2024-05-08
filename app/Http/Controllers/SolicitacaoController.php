@@ -21,20 +21,21 @@ class SolicitacaoController extends Controller
             abort(403, 'Não autorizado.');
         });
     }
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
 
     /**
      * Show the form for creating a new resource.
      */
     public function create(Orientador $orientador, Academico $academico)
     {
-        return view('academico.solicitacao.create', ['orientador' => $orientador, 'academico' => $academico]);
+        if($academico->AcademicoTCC->where('academico_id', $academico->id)->where('semestre_id', session('semestre_id'))->exists()){
+            $tcc = $academico->AcademicoTCC->where('academico_id', $academico->id)->where('semestre_id', session('semestre_id'))->first();
+
+            return view('academico.solicitacao.create', ['orientador' => $orientador, 'academico' => $academico, 'tcc' => $tcc]);
+        } else if($academico->AcademicoEstagio->where('academico_id', $academico->id)->where('semestre_id', session('semestre_id'))->exists()){
+            $estagio = $academico->AcademicoEstagio->where('academico_id', $academico->id)->where('semestre_id', session('semestre_id'))->first();
+
+            return view('academico.solicitacao.create', ['orientador' => $orientador, 'academico' => $academico, 'estagio' => $estagio]);
+        }
     }
 
     /**

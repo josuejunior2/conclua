@@ -15,7 +15,7 @@ class SolicitacaoOrientadorController extends Controller
      */
     public function show(Solicitacao $solicitacao)
     {
-        return view('orientador.show-solicitacao', ['solicitacao' => $solicitacao]);
+        return view('orientador.solicitacao.show', ['solicitacao' => $solicitacao]);
     }
 
     /**
@@ -28,16 +28,31 @@ class SolicitacaoOrientadorController extends Controller
      */
     public function aceitar_solicitacao(Solicitacao $solicitacao)
     {
-        $orientacao = Orientacao::create([
-            'academico_id' => $solicitacao->Academico->id,
-            'orientador_id' => $solicitacao->Orientador->id,
-            'semestre_id' => $solicitacao->Semestre->id,
-            'solicitacao_id' => $solicitacao->id,
-            'data_vinculacao' => now(),
-        ]);
+        if(isset($solicitacao->AcademicoTCC)){
+            $orientacao = Orientacao::create([
+                'academico_id' => $solicitacao->Academico->id,
+                'orientador_id' => $solicitacao->Orientador->id,
+                'semestre_id' => $solicitacao->Semestre->id,
+                'solicitacao_id' => $solicitacao->id,
+                'academico_tcc_id' => $solicitacao->AcademicoTCC->id
+            ]);
+            $solicitacao->AcademicoTCC->update(['orientacao_id' => $orientacao->id]);
+        }elseif(isset($solicitacao->AcademicoEstagio)){
+            $orientacao = Orientacao::create([
+                'academico_id' => $solicitacao->Academico->id,
+                'orientador_id' => $solicitacao->Orientador->id,
+                'semestre_id' => $solicitacao->Semestre->id,
+                'solicitacao_id' => $solicitacao->id,
+                'academico_estagio_id' => $solicitacao->AcademicoEstagio->id
+            ]);
+            $solicitacao->AcademicoEstagio->update(['orientacao_id' => $orientacao->id]);
+        }
 
         $solicitacao->status = 1; // status de aprovada
         $solicitacao->save();
+
+        $solicitacao->Orientador->disponibilidade -= 1;
+        $solicitacao->Orientador->save();
 
         $outras = Solicitacao::where('academico_id', $solicitacao->Academico->id)->whereNot('id', $solicitacao->id);
         foreach($outras as $outra){

@@ -14,7 +14,7 @@ class Solicitacao extends Model
 
     protected $keyType = 'string';
 
-    protected $fillable = ['academico_id', 'semestre_id', 'orientador_id', 'status', 'mensagem'];
+    protected $fillable = ['academico_id', 'academico_tcc_id', 'academico_estagio_id', 'semestre_id', 'orientador_id', 'status', 'mensagem'];
 
     public function Academico(){
         return $this->belongsTo(Academico::class, 'academico_id'); //
@@ -30,5 +30,13 @@ class Solicitacao extends Model
 
     public function Orientacao(){
         return $this->hasOne(Orientacao::class, 'solicitacao_id');
+    }
+
+    public function AcademicoTCC(){
+        return $this->belongsTo(AcademicoTCC::class, 'academico_tcc_id');
+    }
+
+    public function AcademicoEstagio(){
+        return $this->belongsTo(AcademicoEstagio::class, 'academico_estagio_id');
     }
 }

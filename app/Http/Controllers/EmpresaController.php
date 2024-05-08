@@ -35,9 +35,8 @@ class EmpresaController extends Controller
         $empresa = Empresa::create($request->validated());
         $academico = Academico::where('email', auth()->user()->email)->first();
         // dd($academico);
-        $semestre = Semestre::where('status', 1)->first();
 
-        return redirect()->route('academicoEstagio.create', ['empresa' => $empresa, 'academico' => $academico, 'semestre' => $semestre]);
+        return redirect()->route('academicoEstagio.create', ['empresa' => $empresa, 'academico' => $academico]);
     }
 
     /**

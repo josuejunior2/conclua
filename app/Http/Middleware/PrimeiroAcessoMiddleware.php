@@ -22,6 +22,7 @@ class PrimeiroAcessoMiddleware // Aqui é o primeiroAcesso NO SEMESTRE
      */
     public function handle(Request $request, Closure $next): Response
     {
+
         $semestreEmSession = Semestre::find(session('semestre_id'));
         // dd(auth()->guard('admin')->check());
         if(auth()->guard('admin')->check()){

@@ -66,7 +66,7 @@ class SemestreRequest extends FormRequest
             case 'POST':
                 return [
                     'ano' => 'required|integer|min:' . $anoAtual . '|max:' . $anoSeguinte,
-                    'numero' => [
+                    'numero' => [ //periodo
                         'required',
                         'integer',
                         'min:1',
@@ -101,12 +101,10 @@ class SemestreRequest extends FormRequest
                             'required',
                             'before:data_fim',
                             $this->afterDataFimAnterior($dataInicio, $ano, $numero),
-                            Rule::unique('semestres')->where(fn (Builder $query) => $query->where('ano', $ano)->where('data_inicio', $dataInicio))
                         ],
                         'data_fim' => [
                             'required',
                             $this->gapMinimo($dataInicio, 0),
-                            Rule::unique('semestres')->where(fn (Builder $query) => $query->where('ano', $ano)->where('data_fim', $dataFim)),
                         ], //, 4)],
                         'limite_doc_estagio' => 'required|before:data_fim', //. $data_fim,
                         'limite_orientacao' => 'required|before:data_fim', //. $data_fim,

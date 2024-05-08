@@ -1,10 +1,13 @@
 @extends('layouts.app');
 
 @section('content')
-{{ $academico->AcademicoTCC->tema }}<br>
-{{ $academico->AcademicoTCC->problema }}<br>
-{{ $academico->AcademicoTCC->objetivo_especifico }}<br>
-{{ $academico->AcademicoTCC->objetivo_geral }}<br>
-{{ $academico->AcademicoTCC->justificativa }}<br>
-{{ $academico->AcademicoTCC->metodologia }}<br>
+@can('permissao de escrita academico')
+adasa
+{{ $tcc->tema }}<br>
+{{ $tcc->problema }}<br>
+{{ $tcc->objetivo_especifico }}<br>
+{{ $tcc->objetivo_geral }}<br>
+{{ $tcc->justificativa }}<br>
+@endcan
+{{ $tcc->metodologia }}<br>
 @endsection

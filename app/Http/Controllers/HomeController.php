@@ -37,13 +37,14 @@ class HomeController extends Controller
             $academico = Academico::where('email', auth()->user()->email)->first();
 
             if($academico->Orientacao){
-                if($academico->Orientacao->where('semestre_id', session('semestre_id'))->exists()){
-                    if($academico->AcademicoTCC->where('semestre_id', session('semestre_id'))->exists()){
-                        return view('academico.academicoTcc.home', ['academico' => $academico]);
+                if($academico->Orientacao->where('academico_id', $academico->id)->where('semestre_id', session('semestre_id'))->exists()){
+                    if($academico->AcademicoTCC->where('academico_id', $academico->id)->where('semestre_id', session('semestre_id'))->exists()){
+                        return view('academico.academicoTcc.home', ['academico' => $academico, 'tcc' => $academico->AcademicoTCC->where('semestre_id', session('semestre_id'))->where('academico_id', $academico->id)->first()]);
                     } else if($academico->AcademicoEstagio->where('semestre_id', session('semestre_id'))->exists()){
-                        return view('academico.academicoEstagio.home', ['academico' => $academico]);
+                        return view('academico.academicoEstagio.home', ['academico' => $academico, 'estagio' => $academico->AcademicoEstagio->where('semestre_id', session('semestre_id'))->where('academico_id', $academico->id)->first()]);
                     }
                 }
+            }
                 /** A ideia aqui é pegar os id's dos orientadores em solicitações nulas(não respondidas).
                  *  Dessa forma, aparecerá para o academico apenas orientadores que não foram solicitados Ou os que foram solicitados,
                  *  mas que rejeitaram a solicitação (status == 0), e assim o academico pode pedir denovo
@@ -62,7 +63,7 @@ class HomeController extends Controller
                 return view('academico.home', ['orientadores' => $orientadores, 'academico' => $academico, 'solicitacoes' => $solicitacoesNoSemestre]);
             }
 
-        return $OrientadoresEmSolicitacoesNulas;
-        }
+        return abort(403, "acesso não autorizado");
+
     }
 }

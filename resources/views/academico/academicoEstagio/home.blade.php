@@ -1,10 +1,10 @@
 @extends('layouts.app');
 
 @section('content')
-{{ $academico->AcademicoTCC->tema }}<br>
-{{ $academico->AcademicoTCC->funcao }}<br>
-{{ $academico->AcademicoTCC->Empresa->nome }}<br>
-{{ $academico->AcademicoTCC->Empresa->email }}<br>
-{{ $academico->AcademicoTCC->Empresa->cnpj }}<br>
-{{ $academico->AcademicoTCC->Empresa->supervisor }}<br>
+{{ $estagio->funcao }}<br>
+{{ $estagio->tema }}<br>
+{{ $estagio->Empresa->nome }}<br>
+{{ $estagio->Empresa->email }}<br>
+{{ $estagio->Empresa->cnpj }}<br>
+{{ $estagio->Empresa->supervisor }}<br>
 @endsection

@@ -45,13 +45,14 @@ class PerfisEPermissoesSeeder extends Seeder
 
         $permissionsAdmin->each(function ($item) use ($admin) {
             $permission = Permission::create($item);
-            $permission->syncRoles([$admin]);
+            $admin->syncPermissions($permission);
+            $permission->syncRoles($admin);
         });
 
-        $permissionsOrientador->each(function ($item) use ($orientador, $admin) { // sincroniza permissoes do orientador
+        $permissionsOrientador->each(function ($item) use ($orientador) { // sincroniza permissoes do orientador
             $permission = Permission::create($item);
+            $orientador->syncPermissions($permission);
             $permission->syncRoles([$orientador]);
-            $permission->syncRoles([$admin]);
         });
 
         // $permissionsAdminwithdOrientador = $permissionsOrientador->slice(1, 2); // aqui seleciona cada permission que orientador = admin
@@ -62,6 +63,7 @@ class PerfisEPermissoesSeeder extends Seeder
 
         $permissionsUser->each(function ($item) use ($usuario) {
             $permission = Permission::create($item);
+            $usuario->syncPermissions($permission);
             $permission->syncRoles([$usuario]);
         });
 

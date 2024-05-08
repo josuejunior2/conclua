@@ -39,65 +39,140 @@
             <div class="datagrid-title">Telefone</div>
             <div class="datagrid-content">colocar depois</div>
         </div>
-        @if (isset($tcc))
         <div class="datagrid-item">
-            <div class="datagrid-title">Modalidade</div>
-            <div class="datagrid-content">TCC</div>
+            <div class="datagrid-title">Criação do usuário</div>
+            <div class="datagrid-content">{{ \Carbon\Carbon::parse($academico->created_at)->format('d/m/Y') }}</div>
         </div>
-        <div class="datagrid-item">
-            <div class="datagrid-title">Orientador</div>
-            <div class="datagrid-content"></div>
-        </div>
-        <div class="datagrid-item">
-            <div class="datagrid-title">Tema</div>
-            <div class="datagrid-content">{{ $especifico->tema }}</div>
-        </div>
-        <div class="datagrid-item">
-            <div class="datagrid-title">Resumo</div>
-            <div class="datagrid-content">{{ $especifico->resumo }}</div>
-        </div>
-
-        @elseif (isset($estagio))
-        <div class="datagrid-item">
-            <div class="datagrid-title">Modalidade</div>
-            <div class="datagrid-content">Estágio</div>
-        </div>
-        <div class="datagrid-item">
-            <div class="datagrid-title">Orientador</div>
-            <div class="datagrid-content"></div>
-        </div>
-        <div class="datagrid-item">
-            <div class="datagrid-title">Tema</div>
-            <div class="datagrid-content">{{ $especifico->tema }}</div>
-        </div>
-        <div class="datagrid-item">
-            <div class="datagrid-title">Função</div>
-            <div class="datagrid-content">{{ $especifico->funcao }}</div>
-        </div>
-        <div class="datagrid-item">
-            <div class="datagrid-title">Nome da Empresa</div>
-            <div class="datagrid-content">{{ $especifico->Empresa->nome }}</div>
-        </div>
-        <div class="datagrid-item">
-            <div class="datagrid-title">CNPJ da Empresa</div>
-            <div class="datagrid-content">{{ $especifico->Empresa->cnpj }}</div>
-        </div>
-        <div class="datagrid-item">
-            <div class="datagrid-title">Supervisor</div>
-            <div class="datagrid-content">{{ $especifico->Empresa->supervisor }}</div>
-        </div>
-        <div class="datagrid-item">
-            <div class="datagrid-title">Email da Empresa/Supervisor</div>
-            <div class="datagrid-content">{{ $especifico->Empresa->email }}</div>
-        </div>
-
-        @else
-        <div class="datagrid-item">
-            <div class="datagrid-title">Modalidade</div>
-            <div class="datagrid-content">Cadastro incompleto.</div>
-        </div>
-
-        @endif
     </div>
 </div>
+
+@if (isset($tccs))
+    <div class="card m-3">
+        <div class="card-header justify-content-between">
+            <h3 class="card-title">TCC</h3>
+        </div>
+        <div class="card-body">
+            <div class="accordion" id="accordion">
+                @foreach ($tccs->sortByDesc('created_at') as $key => $tcc) {{-- ->sortBy('nome')--}}
+                    <div class="accordion-item m-3">
+                        <div class="d-flex justify-content-between" id="heading-1">
+                            <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#accordion-collapse-{{ $tcc->id }}" aria-expanded="true">
+                                ({{ $tcc->Semestre->numero }}/{{ $tcc->Semestre->ano }}){{ $tcc->tema }}
+                            </button>
+                        </div>
+                        <div id="accordion-collapse-{{ $tcc->id }}" class="accordion-collapse collapse" data-bs-parent="#accordion-{{ $tcc->id }}">
+                            <div class="accordion-body pt-0">
+                                <div class="datagrid">
+                                    <div class="datagrid-item">
+                                        <div class="datagrid-title">Data do cadastro</div>
+                                        <div class="datagrid-content">{{ \Carbon\Carbon::parse($tcc->created_at)->format('d/m/Y') }}</div>
+                                    </div>
+                                    <div class="datagrid-item">
+                                        <div class="datagrid-title">Semestre</div>
+                                        <div class="datagrid-content">{{ $tcc->Semestre->numero }}º de {{ $tcc->Semestre->ano }}</div>
+                                    </div>
+                                    @if(isset($tcc->Orientacao))
+                                        <div class="datagrid-item">
+                                            <div class="datagrid-title">Orientador</div>
+                                            <div class="datagrid-content">{{ $tcc->Orientacao->Orientador->nome }}</div>
+                                        </div>
+                                        <div class="datagrid-item">
+                                            <div class="datagrid-title">Data de vinculação</div>
+                                            <div class="datagrid-content">{{ \Carbon\Carbon::parse($tcc->Orientacao->created_at)->format('d/m/Y') }}</div>
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="row mt-2 g-4">
+                                    <div class="col-12 markdown">
+                                        <h2>Tema</h2>
+                                        <p>{{ $tcc->tema }}</p>
+                                    </div>
+                                    <div class="col-12 markdown">
+                                        <h2>Problema</h2>
+                                        <p>{{ $tcc->problema }}</p>
+                                    </div>
+                                    <div class="col-12 markdown">
+                                        <h2>Objetivo específico</h2>
+                                        <p>{{ $tcc->objetivo_especifico }}</p>
+                                    </div>
+                                    <div class="col-12 markdown">
+                                        <h2>Objetivo geral</h2>
+                                        <p>{{ $tcc->objetivo_geral }}</p>
+                                    </div>
+                                    <div class="col-12 markdown">
+                                        <h2>Justificativa</h2>
+                                        <p>{{ $tcc->justificativa }}</p>
+                                    </div>
+                                    <div class="col-12 markdown">
+                                        <h2>Metodologia</h2>
+                                        <p>{{ $tcc->metodologia }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+@endif
+@if (isset($estagios))
+    <div class="card m-3">
+        <div class="card-header justify-content-between">
+            <h3 class="card-title">Estágio</h3>
+        </div>
+        <div class="card-body">
+            <div class="accordion" id="accordion">
+                @foreach ($estagios->sortByDesc('created_at') as $key => $estagio) {{-- ->sortBy('nome')--}}
+                    <div class="accordion-item m-3">
+                        <div class="d-flex justify-content-between" id="heading-1">
+                            <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#accordion-collapse-{{ $estagio->id }}" aria-expanded="true">
+                                ({{ $estagio->Semestre->numero }}/{{ $estagio->Semestre->ano }}){{ $estagio->tema }}
+                            </button>
+                        </div>
+                        <div id="accordion-collapse-{{ $estagio->id }}" class="accordion-collapse collapse" data-bs-parent="#accordion-{{ $estagio->id }}">
+                            <div class="accordion-body pt-0">
+                                <div class="datagrid">
+                                    <div class="datagrid-item">
+                                        <div class="datagrid-title">Data do cadastro</div>
+                                        <div class="datagrid-content">{{ \Carbon\Carbon::parse($estagio->created_at)->format('d/m/Y') }}</div>
+                                    </div>
+                                    <div class="datagrid-item">
+                                        <div class="datagrid-title">Semestre</div>
+                                        <div class="datagrid-content">{{ $estagio->Semestre->numero }}º de {{ $estagio->Semestre->ano }}</div>
+                                    </div>
+                                    @if(isset($estagio->Orientacao))
+                                        <div class="datagrid-item">
+                                            <div class="datagrid-title">Orientador</div>
+                                            <div class="datagrid-content">{{ $estagio->Orientacao->Orientador->nome }}</div>
+                                        </div>
+                                        <div class="datagrid-item">
+                                            <div class="datagrid-title">Data de vinculação</div>
+                                            <div class="datagrid-content">{{ \Carbon\Carbon::parse($estagio->Orientacao->created_at)->format('d/m/Y') }}</div>
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="row mt-2 g-4">
+                                    <div class="col-12 markdown">
+                                        <h2>Tema</h2>
+                                        <p>{{ $estagio->tema }}</p>
+                                    </div>
+                                    <div class="col-12 markdown">
+                                        <h2>Função</h2>
+                                        <p>{{ $estagio->funcao }}</p>
+                                    </div>
+                                    <div class="col-12 markdown">
+                                        <h2>Empresa</h2>
+                                        <p>{{ $estagio->Empresa->nome }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+@endif
+
 @endsection

@@ -127,7 +127,7 @@ class SemestreController extends Controller
     public function mudar_semestre(MudarSemestreRequest $request)
     {
         $request->session()->put('semestre_id', $request->validated()['semestre_id']);
-        // dd(session('semestre_id'));
+
         return redirect()->route('home')->with(['success' => 'mudou o semestre']);
     }
 }
