@@ -20,14 +20,14 @@
         </span>
         </div>
         <div class="col-md mb-3">
-            <div class="form-label required">Número do semestre: {{ $semestre->numero }}</div>
-            <select class="d-none" name="numero" id="numero" value="{{ $semestre->numero }}">
+            <div class="form-label required">Número do semestre: {{ $semestre->periodo }}</div>
+            <select class="d-none" name="periodo" id="periodo" value="{{ $semestre->periodo }}">
                 <option value=""> -- Selecione o semestre -- </option>
-                <option value="1" {{ $semestre->numero == '1' ? 'selected' : '' }}>1º Semestre</option>
-                <option value="2" {{ $semestre->numero == '2' ? 'selected' : '' }}>2º Semestre</option>
+                <option value="1" {{ $semestre->periodo == '1' ? 'selected' : '' }}>1º Semestre</option>
+                <option value="2" {{ $semestre->periodo == '2' ? 'selected' : '' }}>2º Semestre</option>
             </select>
-            <span class="{{ $errors->has('numero') ? 'text-danger' : '' }}">
-                    {{ $errors->has('numero') ? $errors->first('numero') : '' }}
+            <span class="{{ $errors->has('periodo') ? 'text-danger' : '' }}">
+                    {{ $errors->has('periodo') ? $errors->first('periodo') : '' }}
             </span>
         </div>
         <div class="datagrid">

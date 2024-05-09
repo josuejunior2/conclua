@@ -25,9 +25,9 @@ class SemestreRequest extends FormRequest
     /**
      * Checa se a data_fim de algum semestre é maior ou igual a data inicio do que está sendo criado.
      */
-    private function afterDataFimAnterior($data_inicio, $ano, $numero)
+    private function afterDataFimAnterior($data_inicio, $ano)
     {
-        $semestreAnterior = Semestre::where('data_fim', '>=', $data_inicio)->whereNot('ano', $ano)->whereNot('numero', $numero)->first();
+        $semestreAnterior = Semestre::where('ano', $ano)->where('data_fim', '>=', $data_inicio)->first();
         if(isset($semestreAnterior)){
             return 'after:'.$semestreAnterior->data_fim;
         }
@@ -57,7 +57,7 @@ class SemestreRequest extends FormRequest
         $anoAtual = Carbon::now()->year;
         $anoSeguinte = $anoAtual + 1;
         $ano = request()->input('ano');
-        $numero = request()->input('numero');
+        $periodo = request()->input('periodo');
         $dataInicio = request()->input('data_inicio');
         $dataFim = request()->input('data_fim');
 
@@ -66,7 +66,7 @@ class SemestreRequest extends FormRequest
             case 'POST':
                 return [
                     'ano' => 'required|integer|min:' . $anoAtual . '|max:' . $anoSeguinte,
-                    'numero' => [ //periodo
+                    'periodo' => [ //periodo
                         'required',
                         'integer',
                         'min:1',
@@ -76,7 +76,7 @@ class SemestreRequest extends FormRequest
                     'data_inicio' => [
                         'required',
                         'before:data_fim',
-                        $this->afterDataFimAnterior($dataInicio, $ano, $numero),
+                        $this->afterDataFimAnterior($dataInicio, $ano),
                         Rule::unique('semestres')->where(fn (Builder $query) => $query->where('ano', $ano)->where('data_inicio', $dataInicio))
                     ],
                     'data_fim' => [
@@ -91,7 +91,7 @@ class SemestreRequest extends FormRequest
                 case 'PUT':
                     return [
                         'ano' => 'required|integer|min:' . $anoAtual . '|max:' . $anoSeguinte,
-                        'numero' => [
+                        'periodo' => [
                             'required',
                             'integer',
                             'min:1',
@@ -100,7 +100,7 @@ class SemestreRequest extends FormRequest
                         'data_inicio' => [
                             'required',
                             'before:data_fim',
-                            $this->afterDataFimAnterior($dataInicio, $ano, $numero),
+                            $this->afterDataFimAnterior($dataInicio, $ano, $periodo),
                         ],
                         'data_fim' => [
                             'required',
@@ -123,8 +123,8 @@ class SemestreRequest extends FormRequest
             'ano.integer' => 'O campo ano deve ser um número inteiro.',
             'ano.min' => 'O campo ano deve ser maior em 1 ano ou igual a :min.',
             'ano.max' => 'O campo ano deve ser menor em 1 ano ou igual a :max.',
-            'numero.integer' => 'O campo número deve ser um número inteiro.',
-            'numero.unique' => 'Já existe um semestre '.request()->input('ano').'/'.request()->input('numero').'.',
+            'periodo.integer' => 'O campo número deve ser um número inteiro.',
+            'periodo.unique' => 'Já existe um semestre '.request()->input('ano').'/'.request()->input('periodo').'.',
             'data_inicio.date' => 'O campo data de início deve ser uma data válida.',
             'data_inicio.before' => 'A data de início deve ser uma data anterior a data de finalização do semestre.',
             'data_inicio.after' => 'A data de início deve ser anterior a data de finalização do semestre atual.',

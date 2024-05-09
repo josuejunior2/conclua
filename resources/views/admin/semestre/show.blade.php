@@ -29,7 +29,7 @@
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">N° do Semestre</div>
-            <div class="datagrid-content">{{ $semestre->numero }}</div>
+            <div class="datagrid-content">{{ $semestre->periodo }}</div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Data de início</div>

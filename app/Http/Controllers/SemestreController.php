@@ -33,7 +33,9 @@ class SemestreController extends Controller
      */
     public function create()
     {
-        return view('admin.semestre.create');
+        $tem1periodo = Semestre::where('ano', now())->where('periodo', 1)->exists();
+        $tem2periodo = Semestre::where('ano', now())->where('periodo', 2)->exists();
+        return view('admin.semestre.create', ['tem1periodo' => $tem1periodo, 'tem2periodo' => $tem2periodo]);
     }
 
     /**
@@ -89,9 +91,6 @@ class SemestreController extends Controller
         foreach($semestre->academicosTCC as $academicoTCC){
             $academicoTCC->delete();
         }
-        DB::table('semestre_orientador')
-            ->where('semestre_id', $semestre->id)
-            ->delete();
         $semestre->delete();
         return redirect()->route('admin.semestre.index');
     }

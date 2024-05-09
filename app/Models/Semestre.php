@@ -26,7 +26,7 @@ class Semestre extends Model
 
     protected $keyType = 'string';
 
-    protected $fillable = ['ano', 'numero', 'data_inicio', 'data_fim', 'limite_doc_estagio', 'limite_orientacao'];
+    protected $fillable = ['ano', 'periodo', 'data_inicio', 'data_fim', 'limite_doc_estagio', 'limite_orientacao'];
 
     public function academicosEstagio(){
         return $this->hasMany(AcademicoEstagio::class);
@@ -35,7 +35,7 @@ class Semestre extends Model
     public function academicosTCC(){
         return $this->hasMany(AcademicoTCC::class);
     }
-    
+
     public function isLast(){
         return true;
     }

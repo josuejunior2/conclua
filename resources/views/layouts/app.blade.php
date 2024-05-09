@@ -48,7 +48,7 @@
                         <select class="form-select" name="semestre_id" id="semestre_id">
                             @foreach ($semestres as $semestre)
                                 <option value="{{ $semestre->id }}" {{ $semestre->id == session('semestre_id') ? 'selected' : '' }}>
-                                    0{{ $semestre->numero }}/{{ $semestre->ano }}
+                                    0{{ $semestre->periodo }}/{{ $semestre->ano }}
                                 </option>
                             @endforeach
                         </select>

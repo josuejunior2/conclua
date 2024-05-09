@@ -36,10 +36,10 @@ class AcademicoAdminController extends Controller
     {
         if(AcademicoTCC::where('academico_id', $academico->id)->exists()){
             $tccs = AcademicoTCC::where('academico_id', $academico->id)->get();
-        }
+        } else { $tccs = null; }
         if(AcademicoEstagio::where('academico_id', $academico->id)->exists()){
             $estagios = AcademicoEstagio::with('Empresa')->where('academico_id', $academico->id)->get();
-        }
+        } else{ $estagios = null; }
         return view('admin.academico.show', ['academico' => $academico, 'estagios' => $estagios, 'tccs' => $tccs]);
     }
 

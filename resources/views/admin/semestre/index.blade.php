@@ -54,7 +54,7 @@
                 <!--<td></td>  <input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"> -->
                 {{-- <td><span class="text-muted">{{ $s->id }}</span></td> --}}
                 <td>{{ $s->ano }}</td>
-                <td>{{ $s->numero }}</td>
+                <td>{{ $s->periodo }}</td>
                 <td>{{ \Carbon\Carbon::parse($s->data_inicio)->format('d/m/Y') }}</td>
                 <td>{{ \Carbon\Carbon::parse($s->limite_doc_estagio)->format('d/m/Y') }}</td>
                 <td>{{ \Carbon\Carbon::parse($s->limite_orientacao)->format('d/m/Y') }}</td>

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('semestres', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->unsignedSmallInteger('ano');
-            $table->tinyInteger('numero')->comment('1 para 1º semestre, 2 para 2º semestre');
+            $table->tinyInteger('periodo')->comment('1 para 1º semestre, 2 para 2º semestre');
             $table->date('data_inicio');
             $table->date('data_fim');
             $table->date('limite_doc_estagio');

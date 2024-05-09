@@ -3,29 +3,25 @@
 @section('content')
 <div class="card m-3">
     <div class="card-header">
-      <h3 class="card-title">Cadastro de semestre</h3>
+      <h3 class="card-title">Cadastro de semestre: @if($tem1periodo) 2/{{ now()->format('Y') }} @elseif($tem2periodo || (!$tem1periodo && !$tem2periodo)) 1/{{ now()->format('Y') }} @endif</h3>
     </div>
 
     <div class="card-body">
     <form method="POST" action="{{ route('admin.semestre.store') }}" enctype="multipart/form-data">
         @csrf
-        <div class="mb-3">
-            <label class="col-3 col-form-label required">Ano</label>
-            <div class="col">
-                <input type="text" class="form-control" name="ano" id="ano" value="{{ old('ano') }}">
-            </div>
-        </div>
-        <div class="col-md mb-3">
-            <div class="form-label required">Número do semestre</div>
-            <select class="form-select" name="numero" id="numero" value="{{ old('numero', '') }}">
-                <option value=""> -- Selecione o semestre -- </option>
-                <option value="1" {{ old('numero') == 1 ? 'selected' : '' }}>1º Semestre</option>
-                <option value="2" {{ old('numero') == 2 ? 'selected' : '' }}>2º Semestre</option>
-            </select>
-            <span class="{{ $errors->has('numero') ? 'text-danger' : '' }}">
-                    {{ $errors->has('numero') ? $errors->first('numero') : '' }}
-            </span>
-        </div>
+        <input type="hidden" name="ano" id="ano" value="{{ now()->format('Y') }}">
+        <span class="{{ $errors->has('ano') ? 'text-danger' : '' }}">
+            {{ $errors->has('ano') ? $errors->first('ano') : '' }}
+        </span>
+        @if($tem1periodo)
+            <input type="hidden" name="periodo" id="periodo" value="2">
+        @elseif($tem2periodo || (!$tem1periodo && !$tem2periodo))
+            <input type="hidden" name="periodo" id="periodo" value="1">
+        @endif
+        <span class="{{ $errors->has('periodo') ? 'text-danger' : '' }}">
+            {{ $errors->has('periodo') ? $errors->first('periodo') : '' }}
+        </span>
+
         <div class="datagrid">
             <div class="datagrid-item">
                 <div class="form-label">Data de início</div>

@@ -32,7 +32,7 @@ class SemestreAtivoMiddleware
         if(session('semestre_id')){ $semestreEmSession = Semestre::where('id', session('semestre_id'))->first(); }
 
         if(isset($semestreEmSession)){
-            if($semestreEmSession != $semestreAtual || $semestreAtual->data_fim < now()){ // na regra do form request de semestre eu devo criar uma regra pra não criar semestre sem que a data_fim do anterior não tenha chegado
+            if($semestreEmSession != $semestreAtual || $semestreAtual->data_fim->format('d/m/Y') < now()->format('d/m/Y')){ // na regra do form request de semestre eu devo criar uma regra pra não criar semestre sem que a data_fim do anterior não tenha chegado
                 if(auth()->guard('web')->check()){
                     auth()->guard('web')->user()->revokePermissionTo(Permission::where('name', 'permissao de escrita academico')->first());
                 }
@@ -40,7 +40,7 @@ class SemestreAtivoMiddleware
                     auth()->guard('admin')->user()->revokePermissionTo(Permission::where('name', 'permissao de escrita orientador')->first());
                 }
                 return $next($request);
-            } else if($semestreEmSession == $semestreAtual && $semestreAtual->data_fim > now()){
+            } else if($semestreEmSession == $semestreAtual && $semestreAtual->data_fim->format('d/m/Y') >= now()->format('d/m/Y')){
                 if(auth()->guard('web')->check()){
                     auth()->guard('web')->user()->givePermissionTo(Permission::where('name', 'permissao de escrita academico')->first());
                 }

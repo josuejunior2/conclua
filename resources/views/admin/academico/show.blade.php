@@ -28,7 +28,7 @@
             <div class="datagrid-content">{{ $academico->nome }}</div>
         </div>
         <div class="datagrid-item">
-            <div class="datagrid-title">MASP</div>
+            <div class="datagrid-title">Matrícula</div>
             <div class="datagrid-content">{{ $academico->matricula }}</div>
         </div>
         <div class="datagrid-item">
@@ -57,7 +57,7 @@
                     <div class="accordion-item m-3">
                         <div class="d-flex justify-content-between" id="heading-1">
                             <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#accordion-collapse-{{ $tcc->id }}" aria-expanded="true">
-                                ({{ $tcc->Semestre->numero }}/{{ $tcc->Semestre->ano }}){{ $tcc->tema }}
+                                ({{ $tcc->Semestre->periodo }}/{{ $tcc->Semestre->ano }}){{ $tcc->tema }}
                             </button>
                         </div>
                         <div id="accordion-collapse-{{ $tcc->id }}" class="accordion-collapse collapse" data-bs-parent="#accordion-{{ $tcc->id }}">
@@ -69,7 +69,7 @@
                                     </div>
                                     <div class="datagrid-item">
                                         <div class="datagrid-title">Semestre</div>
-                                        <div class="datagrid-content">{{ $tcc->Semestre->numero }}º de {{ $tcc->Semestre->ano }}</div>
+                                        <div class="datagrid-content">{{ $tcc->Semestre->periodo }}º de {{ $tcc->Semestre->ano }}</div>
                                     </div>
                                     @if(isset($tcc->Orientacao))
                                         <div class="datagrid-item">
@@ -127,7 +127,7 @@
                     <div class="accordion-item m-3">
                         <div class="d-flex justify-content-between" id="heading-1">
                             <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#accordion-collapse-{{ $estagio->id }}" aria-expanded="true">
-                                ({{ $estagio->Semestre->numero }}/{{ $estagio->Semestre->ano }}){{ $estagio->tema }}
+                                ({{ $estagio->Semestre->periodo }}/{{ $estagio->Semestre->ano }}){{ $estagio->tema }}
                             </button>
                         </div>
                         <div id="accordion-collapse-{{ $estagio->id }}" class="accordion-collapse collapse" data-bs-parent="#accordion-{{ $estagio->id }}">
@@ -139,7 +139,7 @@
                                     </div>
                                     <div class="datagrid-item">
                                         <div class="datagrid-title">Semestre</div>
-                                        <div class="datagrid-content">{{ $estagio->Semestre->numero }}º de {{ $estagio->Semestre->ano }}</div>
+                                        <div class="datagrid-content">{{ $estagio->Semestre->periodo }}º de {{ $estagio->Semestre->ano }}</div>
                                     </div>
                                     @if(isset($estagio->Orientacao))
                                         <div class="datagrid-item">
