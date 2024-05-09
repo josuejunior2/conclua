@@ -25,9 +25,9 @@ class SemestreRequest extends FormRequest
     /**
      * Checa se a data_fim de algum semestre é maior ou igual a data inicio do que está sendo criado.
      */
-    private function afterDataFimAnterior($data_inicio, $ano)
+    private function afterDataFimAnterior($data_inicio, $ano, $periodo)
     {
-        $semestreAnterior = Semestre::where('ano', $ano)->where('data_fim', '>=', $data_inicio)->first();
+        $semestreAnterior = Semestre::where('ano', $ano)->where('data_fim', '>=', $data_inicio)->whereNot('periodo', $periodo)->first();
         if(isset($semestreAnterior)){
             return 'after:'.$semestreAnterior->data_fim;
         }
@@ -76,7 +76,7 @@ class SemestreRequest extends FormRequest
                     'data_inicio' => [
                         'required',
                         'before:data_fim',
-                        $this->afterDataFimAnterior($dataInicio, $ano),
+                        $this->afterDataFimAnterior($dataInicio, $ano, $periodo),
                         Rule::unique('semestres')->where(fn (Builder $query) => $query->where('ano', $ano)->where('data_inicio', $dataInicio))
                     ],
                     'data_fim' => [
@@ -118,6 +118,8 @@ class SemestreRequest extends FormRequest
      */
     public function messages(): array
     {
+        $semestreAnterior = Semestre::where('ano', request()->input('ano'))->where('data_fim', '>=', request()->input('data_inicio'))->whereNot('periodo', request()->input('periodo'))->first();
+        if(isset($semestreAnterior)){ $dataFimSemestreAnterior = $semestreAnterior->data_fim->format('d/m/Y'); } else { $dataFimSemestreAnterior = ''; }
         return [
             'required' => 'O campo :attribute deve ser preenchido.',
             'ano.integer' => 'O campo ano deve ser um número inteiro.',
@@ -127,7 +129,7 @@ class SemestreRequest extends FormRequest
             'periodo.unique' => 'Já existe um semestre '.request()->input('ano').'/'.request()->input('periodo').'.',
             'data_inicio.date' => 'O campo data de início deve ser uma data válida.',
             'data_inicio.before' => 'A data de início deve ser uma data anterior a data de finalização do semestre.',
-            'data_inicio.after' => 'A data de início deve ser anterior a data de finalização do semestre atual.',
+            'data_inicio.after' => 'A data de início deve ser posterior a data de finalização do semestre passado ('.$dataFimSemestreAnterior.').',
             'data_fim.date' => 'O campo data de término deve ser uma data válida.',
             'data_fim.after' => 'A data de término deve ser igual ou posterior no mínimo 5 meses após a data de início.',
             'limite_doc_estagio.date' => 'O campo de data-limite para entrega da documentação de estágio deve ser uma data válida.',

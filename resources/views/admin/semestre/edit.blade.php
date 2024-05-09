@@ -3,38 +3,27 @@
 @section('content')
 <div class="card m-3">
     <div class="card-header">
-      <h3 class="card-title">Cadastro de semestre</h3>
+       <h3 class="card-title">Cadastro de semestre: {{ $semestre->periodo }}/{{ now()->format('Y') }}</h3>
     </div>
 
     <div class="card-body">
     <form method="POST" action="{{ route('admin.semestre.update', ['semestre' => $semestre]) }}" enctype="multipart/form-data">
         @csrf
         @method('PUT')
-        <div class="mb-3">
-            <label class="col-3 col-form-label required">Ano</label>
-            <div class="col">
-                <input type="text" class="form-control" name="ano" id="ano" value="{{ $semestre->ano }}">
-            </div>
-            <span class="{{ $errors->has('ano') ? 'text-danger' : '' }}">
-                {{ $errors->has('ano') ? $errors->first('ano') : '' }}
+       <input type="hidden" name="ano" id="ano" value="{{ now()->format('Y') }}">
+        <span class="{{ $errors->has('ano') ? 'text-danger' : '' }}">
+            {{ $errors->has('ano') ? $errors->first('ano') : '' }}
         </span>
-        </div>
-        <div class="col-md mb-3">
-            <div class="form-label required">Número do semestre: {{ $semestre->periodo }}</div>
-            <select class="d-none" name="periodo" id="periodo" value="{{ $semestre->periodo }}">
-                <option value=""> -- Selecione o semestre -- </option>
-                <option value="1" {{ $semestre->periodo == '1' ? 'selected' : '' }}>1º Semestre</option>
-                <option value="2" {{ $semestre->periodo == '2' ? 'selected' : '' }}>2º Semestre</option>
-            </select>
-            <span class="{{ $errors->has('periodo') ? 'text-danger' : '' }}">
-                    {{ $errors->has('periodo') ? $errors->first('periodo') : '' }}
-            </span>
-        </div>
+
+        <input type="hidden" name="periodo" id="periodo" value="{{ $semestre->periodo }}">
+        <span class="{{ $errors->has('periodo') ? 'text-danger' : '' }}">
+            {{ $errors->has('periodo') ? $errors->first('periodo') : '' }}
+        </span>
         <div class="datagrid">
             <div class="datagrid-item">
                 <div class="form-label">Data de início</div>
                 <div class="datagrid-content">
-                    <input type="hidden" id="data_inicio" name="data_inicio" value="{{ old('data_inicio') ?? $semestre->data_inicio }}" autocomplete="off"/>
+                    <input type="hidden" id="data_inicio" name="data_inicio" value="{{ old('data_inicio') ?? $semestre->data_inicio }}" autocomplete="off" readonly/>
                     <span class="{{ $errors->has('data_inicio') ? 'text-danger' : '' }}">
                         {{ $errors->has('data_inicio') ? $errors->first('data_inicio') : '' }}
                     </span>
