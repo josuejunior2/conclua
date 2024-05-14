@@ -43,64 +43,64 @@
             <div class="datagrid-title">Mensagem do Acadêmico</div>
             <div class="datagrid-content">{{ $solicitacao->mensagem }}</div>
         </div>
-        @if ($solicitacao->AcademicoTCC)
+        @if (isset($tcc))
         <div class="datagrid-item">
             <div class="datagrid-title">Modalidade</div>
             <div class="datagrid-content">TCC</div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Tema</div>
-            <div class="datagrid-content">{{ $solicitacao->AcademicoTCC->tema }}</div>
+            <div class="datagrid-content">{{ $tcc->tema }}</div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Resumo</div>
-            <div class="datagrid-content">{{ $solicitacao->AcademicoTCC->problema }}</div>
+            <div class="datagrid-content">{{ $tcc->problema }}</div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Resumo</div>
-            <div class="datagrid-content">{{ $solicitacao->AcademicoTCC->objetivo_especifico }}</div>
+            <div class="datagrid-content">{{ $tcc->objetivo_especifico }}</div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Resumo</div>
-            <div class="datagrid-content">{{ $solicitacao->AcademicoTCC->objetivo_geral }}</div>
+            <div class="datagrid-content">{{ $tcc->objetivo_geral }}</div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Resumo</div>
-            <div class="datagrid-content">{{ $solicitacao->AcademicoTCC->justificativa }}</div>
+            <div class="datagrid-content">{{ $tcc->justificativa }}</div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Resumo</div>
-            <div class="datagrid-content">{{ $solicitacao->AcademicoTCC->metodologia }}</div>
+            <div class="datagrid-content">{{ $tcc->metodologia }}</div>
         </div>
 
-        @elseif ($solicitacao->AcademicoEstagio)
+        @elseif (isset($estagio))
         <div class="datagrid-item">
             <div class="datagrid-title">Modalidade</div>
             <div class="datagrid-content">Estágio</div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Tema</div>
-            <div class="datagrid-content">{{ $solicitacao->AcademicoEstagio->tema }}</div>
+            <div class="datagrid-content">{{ $estagio->tema }}</div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Função</div>
-            <div class="datagrid-content">{{ $solicitacao->AcademicoEstagio->funcao }}</div>
+            <div class="datagrid-content">{{ $estagio->funcao }}</div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Nome da Empresa</div>
-            <div class="datagrid-content">{{ $solicitacao->AcademicoEstagio->Empresa->nome }}</div>
+            <div class="datagrid-content">{{ $estagio->Empresa->nome }}</div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">CNPJ da Empresa</div>
-            <div class="datagrid-content">{{ $solicitacao->AcademicoEstagio->Empresa->cnpj }}</div>
+            <div class="datagrid-content">{{ $estagio->Empresa->cnpj }}</div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Supervisor</div>
-            <div class="datagrid-content">{{ $solicitacao->AcademicoEstagio->Empresa->supervisor }}</div>
+            <div class="datagrid-content">{{ $estagio->Empresa->supervisor }}</div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Email da Empresa/Supervisor</div>
-            <div class="datagrid-content">{{ $solicitacao->AcademicoEstagio->Empresa->email }}</div>
+            <div class="datagrid-content">{{ $estagio->Empresa->email }}</div>
         </div>
         @endif
         @if ($solicitacao->Orientacao)

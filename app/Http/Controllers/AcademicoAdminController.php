@@ -106,26 +106,37 @@ class AcademicoAdminController extends Controller
     }
 
     /**
-     * Ativa o cadastro do Academico
+     * Desativa o o cadastro do academico
      */
-    public function ativar_academico(Academico $academico)
+    public function desvincular_academico_tcc(AcademicoTCC $tcc)
     {
-        if(is_null(app('semestreAtivo'))){ return redirect()->route('admin.academico.index')->withErrors('Cadastre e/ou ative um semestre para poder ativar o cadastro do acadêmico.'); }
-        SemestreAcademico::create([
-            'semestre_id' => app('semestreAtivo')->id,
-            'academico_id' => $academico->id,
-        ]);
+        $orientacao = $tcc->Orientacao;
+        $orientacao->Solicitacao->status = 0;
+        $orientacao->Solicitacao->save();
 
-        return redirect()->route('admin.academico.index');
+        $tcc->orientacao_id = null;
+        $tcc->save();
+
+        $orientacao->Orientador->disponibilidade += 1;
+        $orientacao->Orientador->save();
+        $orientacao->delete();
+        return redirect()->route('admin.academico.show', ['academico' => $tcc->Academico]);
     }
-
     /**
      * Desativa o o cadastro do academico
      */
-    public function desativar_academico(Academico $academico)
+    public function desvincular_academico_estagio(AcademicoEstagio $estagio)
     {
-        SemestreAcademico::where('academico_id', $academico->id)->delete();
+        // dd("oi");
+        $orientacao = $estagio->Orientacao;
+        $orientacao->Solicitacao->status = null;
+        $orientacao->Solicitacao->save();
+        $estagio->orientacao_id = null;
+        $estagio->save();
 
-        return redirect()->route('admin.academico.index');
+        $orientacao->Orientador->disponibilidade += 1;
+        $orientacao->Orientador->save();
+        $orientacao->delete();
+        return redirect()->route('admin.academico.show', ['academico' => $estagio->Academico]);
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Imports;
 
 use App\Models\Academico;
-use App\Models\SemestreAcademico;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Illuminate\Support\Facades\Hash;
 
@@ -31,13 +30,6 @@ class AcademicosImport implements ToModel
                 'password' => Hash::make('admin123'),
             ]
         );
-
-        if(app('semestreAtivo') && $this->ativar == "on"){
-            SemestreAcademico::create([
-                'semestre_id' => app('semestreAtivo')->id,
-                'academico_id' => $academico->id,
-            ]);
-        }
 
         return $academico;
     }

@@ -31,7 +31,9 @@ class AcademicoController extends Controller
     public function create()
     {
         $user = auth()->user();
-        return view('academico.create', ['user' => $user]);
+
+        $password = Hash::make($user->password);
+        return view('academico.create', ['user' => $user, 'password' => $password]);
     }
 
     /**

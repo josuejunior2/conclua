@@ -32,7 +32,7 @@
                                <div class="mb-3">
                                    <label class="form-label required">Atualize sua senha</label>
                                    <div>
-                                     <input name="password" type="password" class="form-control" placeholder="Password">
+                                     <input name="password" type="password" class="form-control" placeholder="Password" value="{{ isset($user) && $user->password ? $password : old('password', '') }}">
                                      <small class="form-hint">
                                        A senha deve ter no mínimo 8 caracteres, deve conter pelo menos uma letra maiúscula e minúscula, número e símbolo. (colocar regra no Request depois)
                                      </small>

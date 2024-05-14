@@ -27,20 +27,20 @@ class Academico extends Authenticatable
         'remember_token',
     ];
 
-    public function AcademicoTCC(){
-        return $this->hasOne(AcademicoTCC::class, 'academico_id');
+    public function academicosTCC(){
+        return $this->hasMany(AcademicoTCC::class, 'academico_id');
     }
 
-    public function AcademicoEstagio(){
-        return $this->hasOne(AcademicoEstagio::class, 'academico_id');
+    public function academicosEstagio(){
+        return $this->hasMany(AcademicoEstagio::class, 'academico_id');
     }
 
     public function solicitacoes(){
         return $this->hasMany(Solicitacao::class, 'academico_id');
     }
 
-    public function Orientacao(){
-        return $this->hasOne(Orientacao::class, 'academico_id');
+    public function orientacoes(){
+        return $this->hasMany(Orientacao::class, 'academico_id');
     }
 
     public function cadastrosAtivos(){// era bom eu mudar esse nome do metodo...

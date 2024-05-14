@@ -27,5 +27,10 @@ class AcademicoEstagio extends Model
         return $this->belongsTo(Semestre::class, 'semestre_id');
     }
 
+    public function Academico(){
+        return $this->belongsTo(Academico::class, 'academico_id');
+    }
+
+
 
 }

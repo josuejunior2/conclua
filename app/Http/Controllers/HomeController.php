@@ -18,7 +18,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth:web');
     }
 
     /**
@@ -28,9 +28,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // $this->middleware('permission:permissao de escrita academico');
+        //$this->middleware('permission:permissao de escrita academico');
         $user = auth()->guard('web')->user();
+        // dd($user);
         if($user->hasRole('Academico')){
+            dd($user->check());
             // -(só entra aqui depois de semestreAtivo)-PRIMEIRO CASO: O ACADEMICO AINDA NAO TEM ORIENTADOR
 
             // dd($this->middleware('semestre_ativo'));
@@ -38,30 +40,31 @@ class HomeController extends Controller
 
             if($academico->Orientacao){
                 if($academico->Orientacao->where('academico_id', $academico->id)->where('semestre_id', session('semestre_id'))->exists()){
-                    if($academico->AcademicoTCC->where('academico_id', $academico->id)->where('semestre_id', session('semestre_id'))->exists()){
-                        return view('academico.academicoTcc.home', ['academico' => $academico, 'tcc' => $academico->AcademicoTCC->where('semestre_id', session('semestre_id'))->where('academico_id', $academico->id)->first()]);
-                    } else if($academico->AcademicoEstagio->where('semestre_id', session('semestre_id'))->exists()){
-                        return view('academico.academicoEstagio.home', ['academico' => $academico, 'estagio' => $academico->AcademicoEstagio->where('semestre_id', session('semestre_id'))->where('academico_id', $academico->id)->first()]);
+                    if($academico->academicosTCC->where('academico_id', $academico->id)->where('semestre_id', session('semestre_id'))->exists()){
+                        return view('academico.academicoTcc.home', ['academico' => $academico, 'tcc' => $academico->academicosTCC->where('semestre_id', session('semestre_id')->where('academico_id', $academico->id)->first())]);
+                    } else if($academico->academicosEstagio->where('semestre_id', session('semestre_id'))->first()->where('semestre_id', session('semestre_id'))->exists()){
+                        return view('academico.academicoEstagio.home', ['academico' => $academico, 'estagio' => $academico->academicosEstagio->where('semestre_id', session('semestre_id'))->first()->where('semestre_id', session('semestre_id'))->where('academico_id', $academico->id)->first()]);
                     }
                 }
             }
-                /** A ideia aqui é pegar os id's dos orientadores em solicitações nulas(não respondidas).
-                 *  Dessa forma, aparecerá para o academico apenas orientadores que não foram solicitados Ou os que foram solicitados,
-                 *  mas que rejeitaram a solicitação (status == 0), e assim o academico pode pedir denovo
-                 */
-                $OrientadoresEmSolicitacoesNulas = [];
-                foreach($academico->solicitacoes->where('semestre_id', session('semestre_id')) as $key => $solicitacao){
-                    if(is_null($solicitacao->status)){
-                        $OrientadoresEmSolicitacoesNulas[] = $solicitacao->getAttribute('orientador_id');
-                    }
+            /** A ideia aqui é pegar os id's dos orientadores em solicitações nulas(não respondidas).
+             *  Dessa forma, aparecerá para o academico apenas orientadores que não foram solicitados Ou os que foram solicitados,
+             *  mas que rejeitaram a solicitação (status == 0), e assim o academico pode pedir denovo
+             */
+            $OrientadoresEmSolicitacoesNulas = [];
+            foreach($academico->solicitacoes->where('semestre_id', session('semestre_id')) as $key => $solicitacao){
+                if(is_null($solicitacao->status)){
+                    $OrientadoresEmSolicitacoesNulas[] = $solicitacao->getAttribute('orientador_id');
                 }
-                $orientadores = Orientador::where('disponibilidade', '>', 0)
-                            ->whereNotIn('id', $OrientadoresEmSolicitacoesNulas)
-                            ->get();
+            }
+            $orientadores = Orientador::where('disponibilidade', '>', 0)
+                        ->whereNotIn('id', $OrientadoresEmSolicitacoesNulas)
+                        ->get();
 
-                $solicitacoesNoSemestre = Solicitacao::where('semestre_id', session('semestre_id'))->where('academico_id', $academico->id)->get();
-                return view('academico.home', ['orientadores' => $orientadores, 'academico' => $academico, 'solicitacoes' => $solicitacoesNoSemestre]);
-            }
+            $solicitacoesNoSemestre = Solicitacao::where('semestre_id', session('semestre_id'))->where('academico_id', $academico->id)->get();
+
+            return view('academico.home', ['orientadores' => $orientadores, 'academico' => $academico, 'solicitacoes' => $solicitacoesNoSemestre]);
+        }
 
         return abort(403, "acesso não autorizado");
 

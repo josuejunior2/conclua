@@ -89,8 +89,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('desativar/orientador/{orientador}', 'App\Http\Controllers\OrientadorAdminController@desativar_orientador')->name('orientador.desativar');
         Route::post('cadastro/orientador', 'App\Http\Controllers\OrientadorAdminController@import_orientadores')->name('cadastro-orientador');
 
+        Route::post('desvincular/academico/estagio/{estagio}', 'App\Http\Controllers\AcademicoAdminController@desvincular_academico_estagio')->name('academico.desvincular.estagio');
+        Route::post('desvincular/academico/tcc/{tcc}', 'App\Http\Controllers\AcademicoAdminController@desvincular_academico_tcc')->name('academico.desvincular.tcc');
         Route::post('ativar/academico/{academico}', 'App\Http\Controllers\AcademicoAdminController@ativar_academico')->name('academico.ativar');
-        Route::post('desativar/academico/{academico}', 'App\Http\Controllers\AcademicoAdminController@desativar_academico')->name('academico.desativar');
         Route::post('cadastro/academico', 'App\Http\Controllers\AcademicoAdminController@import_academicos')->name('cadastro-academico');
         Route::post('academico', 'App\Http\Controllers\AcademicoAdminController@destroy')->name('academico.destroy');
         Route::get('academico', 'App\Http\Controllers\AcademicoAdminController@index')->name('academico.index');

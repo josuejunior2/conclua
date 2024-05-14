@@ -15,7 +15,11 @@ class SolicitacaoOrientadorController extends Controller
      */
     public function show(Solicitacao $solicitacao)
     {
-        return view('orientador.solicitacao.show', ['solicitacao' => $solicitacao]);
+        $tcc = $estagio = null;
+        if($solicitacao->AcademicoTCC) { $tcc = $solicitacao->AcademicoTCC->where('semestre_id', session('semestre_id'))->first(); }
+        if($solicitacao->AcademicoEstagio) { $estagio = $solicitacao->AcademicoEstagio->where('semestre_id', session('semestre_id'))->first(); }
+
+        return view('orientador.solicitacao.show', ['solicitacao' => $solicitacao, 'tcc' => $tcc, 'estagio' => $estagio]);
     }
 
     /**
@@ -28,26 +32,34 @@ class SolicitacaoOrientadorController extends Controller
      */
     public function aceitar_solicitacao(Solicitacao $solicitacao)
     {
-        if(isset($solicitacao->AcademicoTCC)){
-            $orientacao = Orientacao::create([
-                'academico_id' => $solicitacao->Academico->id,
-                'orientador_id' => $solicitacao->Orientador->id,
-                'semestre_id' => $solicitacao->Semestre->id,
-                'solicitacao_id' => $solicitacao->id,
-                'academico_tcc_id' => $solicitacao->AcademicoTCC->id
-            ]);
-            $solicitacao->AcademicoTCC->update(['orientacao_id' => $orientacao->id]);
-        }elseif(isset($solicitacao->AcademicoEstagio)){
-            $orientacao = Orientacao::create([
-                'academico_id' => $solicitacao->Academico->id,
-                'orientador_id' => $solicitacao->Orientador->id,
-                'semestre_id' => $solicitacao->Semestre->id,
-                'solicitacao_id' => $solicitacao->id,
-                'academico_estagio_id' => $solicitacao->AcademicoEstagio->id
-            ]);
-            $solicitacao->AcademicoEstagio->update(['orientacao_id' => $orientacao->id]);
-        }
+        if($solicitacao->AcademicoTCC){
+            if($solicitacao->AcademicoTCC->where('semestre_id', session('semestre_id'))->first()){
+                $tcc = $solicitacao->AcademicoTCC->where('semestre_id', session('semestre_id'))->first();
 
+                $orientacao = Orientacao::create([
+                    'academico_id' => $solicitacao->Academico->id,
+                    'orientador_id' => $solicitacao->Orientador->id,
+                    'semestre_id' => $solicitacao->Semestre->id,
+                    'solicitacao_id' => $solicitacao->id,
+                    'academico_tcc_id' => $tcc->id
+                ]);
+                $tcc->update(['orientacao_id' => $orientacao->id]);
+            }
+        }
+        if($solicitacao->AcademicoEstagio){
+            if($solicitacao->AcademicoEstagio->where('semestre_id', session('semestre_id'))->first()){
+                $estagio = $solicitacao->AcademicoEstagio->where('semestre_id', session('semestre_id'))->first();
+
+                $orientacao = Orientacao::create([
+                    'academico_id' => $solicitacao->Academico->id,
+                    'orientador_id' => $solicitacao->Orientador->id,
+                    'semestre_id' => $solicitacao->Semestre->id,
+                    'solicitacao_id' => $solicitacao->id,
+                    'academico_estagio_id' => $estagio->id
+                ]);
+                $estagio->update(['orientacao_id' => $orientacao->id]);
+            }
+        }
         $solicitacao->status = 1; // status de aprovada
         $solicitacao->save();
 
@@ -60,7 +72,7 @@ class SolicitacaoOrientadorController extends Controller
             $outra->save();
         }
 
-        return redirect()->route('home');
+        return redirect()->route('admin.home');
     }
 
     /**
@@ -71,7 +83,7 @@ class SolicitacaoOrientadorController extends Controller
             $solicitacao->status = 0;
             $solicitacao->save();
 
-        return redirect()->route('home');
+        return redirect()->route('admin.home');
 
     }
 }

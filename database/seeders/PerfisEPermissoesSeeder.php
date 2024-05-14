@@ -25,6 +25,7 @@ class PerfisEPermissoesSeeder extends Seeder
         $permissionsAdmin = collect([
             ['guard_name' => 'admin', 'name' => 'CRUD usuarios',  'description' => 'Permite fazer CRUD de todos usuários.'],
             ['guard_name' => 'admin', 'name' => 'configurar semestre',  'description' => 'Permite configurar um semestre.'],
+            ['guard_name' => 'admin', 'name' => 'desvincular academico',  'description' => 'Permite desvincular um academico de seu orientador.'],
         ]);
 
 
@@ -45,14 +46,14 @@ class PerfisEPermissoesSeeder extends Seeder
 
         $permissionsAdmin->each(function ($item) use ($admin) {
             $permission = Permission::create($item);
-            $admin->syncPermissions($permission);
-            $permission->syncRoles($admin);
+            $admin->givePermissionTo($permission);
+            $permission->assignRole($admin);
         });
 
         $permissionsOrientador->each(function ($item) use ($orientador) { // sincroniza permissoes do orientador
             $permission = Permission::create($item);
-            $orientador->syncPermissions($permission);
-            $permission->syncRoles([$orientador]);
+            $orientador->givePermissionTo($permission);
+            $permission->assignRole($orientador);
         });
 
         // $permissionsAdminwithdOrientador = $permissionsOrientador->slice(1, 2); // aqui seleciona cada permission que orientador = admin
@@ -63,8 +64,8 @@ class PerfisEPermissoesSeeder extends Seeder
 
         $permissionsUser->each(function ($item) use ($usuario) {
             $permission = Permission::create($item);
-            $usuario->syncPermissions($permission);
-            $permission->syncRoles([$usuario]);
+            $usuario->givePermissionTo($permission);
+            $permission->assignRole($usuario);
         });
 
     }

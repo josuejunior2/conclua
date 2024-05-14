@@ -24,11 +24,11 @@ class OrientadorController extends Controller
     public function create()
     {
         $orientador = Orientador::where('email', auth()->guard('admin')->user()->email)->first();
-
+        $password = Hash::make($orientador->password);
         $formacoes = Formacao::all();
         $areas = Area::all();
         // dd($orientador);
-        return view('orientador.create', ['orientador' => $orientador, 'areas' => $areas, 'formacoes' => $formacoes ]);
+        return view('orientador.create', ['orientador' => $orientador, 'areas' => $areas, 'formacoes' => $formacoes, 'password' => $password ]);
     }
 
     /**

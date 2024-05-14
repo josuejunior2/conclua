@@ -27,13 +27,12 @@ class SolicitacaoController extends Controller
      */
     public function create(Orientador $orientador, Academico $academico)
     {
-        if($academico->AcademicoTCC->where('academico_id', $academico->id)->where('semestre_id', session('semestre_id'))->exists()){
-            $tcc = $academico->AcademicoTCC->where('academico_id', $academico->id)->where('semestre_id', session('semestre_id'))->first();
+        $tcc = $academico->academicosTCC->where('academico_id', $academico->id)->where('semestre_id', session('semestre_id'))->first();
+        $estagio = $academico->academicosEstagio->where('academico_id', $academico->id)->where('semestre_id', session('semestre_id'))->first();
 
+        if(isset($tcc)){
             return view('academico.solicitacao.create', ['orientador' => $orientador, 'academico' => $academico, 'tcc' => $tcc]);
-        } else if($academico->AcademicoEstagio->where('academico_id', $academico->id)->where('semestre_id', session('semestre_id'))->exists()){
-            $estagio = $academico->AcademicoEstagio->where('academico_id', $academico->id)->where('semestre_id', session('semestre_id'))->first();
-
+        } else if($estagio){
             return view('academico.solicitacao.create', ['orientador' => $orientador, 'academico' => $academico, 'estagio' => $estagio]);
         }
     }
