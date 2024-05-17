@@ -129,7 +129,7 @@ class AcademicoAdminController extends Controller
     {
         // dd("oi");
         $orientacao = $estagio->Orientacao;
-        $orientacao->Solicitacao->status = null;
+        $orientacao->Solicitacao->status = 0;
         $orientacao->Solicitacao->save();
         $estagio->orientacao_id = null;
         $estagio->save();
@@ -137,6 +137,7 @@ class AcademicoAdminController extends Controller
         $orientacao->Orientador->disponibilidade += 1;
         $orientacao->Orientador->save();
         $orientacao->delete();
+
         return redirect()->route('admin.academico.show', ['academico' => $estagio->Academico]);
     }
 }

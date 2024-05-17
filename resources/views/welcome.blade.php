@@ -32,48 +32,48 @@
   <body  class=" d-flex flex-column">
     <script src="./dist/js/demo-theme.min.js?1684106062"></script>
     <div class="page page-center">
-      <div class="container container-narrow py-4">
-        <div class="text-center mb-4">
-          <a href="." class="navbar-brand navbar-brand-autodark"><img src="/logo.png" width="110" height="32" alt="Tabler" class="navbar-brand-image"></a>
-        </div>
-        <div class="card card-md">
-          <div class="card-body">
-            @if (session('error'))
-                    <div class="alert alert-danger">
-                        {{ session('error') }}
-                    </div>
-                @endif
-            <h3 class="card-title">Instruções</h3>
-            <div class="markdown">
-                <p></p>
-                @auth
-                    <a href="{{ route('home') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Home</a>
-                @elseif (auth()->guard('admin')->check())
-                    <a href="{{ route('admin.home') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Home</a>
-                @else
-                    <a href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log in</a>
-                @endauth
+        <div class="container container-narrow py-4">
+          <div class="text-center mb-4">
+            <a href="." class="navbar-brand navbar-brand-autodark"><img src="/logo.png" width="110" height="32" alt="Tabler" class="navbar-brand-image"></a>
+          </div>
+          <div class="card card-md">
+            <div class="card-body">
+              @if (session('error'))
+                      <div class="alert alert-danger">
+                          {{ session('error') }}
+                      </div>
+                  @endif
+              <h3 class="card-title">Instruções</h3>
+              <div class="markdown">
+                  <p></p>
+                  @auth
+                      <a href="{{ route('home') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Home</a>
+                  @elseif (auth()->guard('admin')->check())
+                      <a href="{{ route('admin.home') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Home</a>
+                  @else
+                      <a href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log in</a>
+                  @endauth
 
-                @if(auth()->guard('admin')->check())
-                    <form method="POST" action="{{ route('admin.logout') }}">
-                @else
-                    <form method="POST" action="{{ route('logout') }}">
-                @endif
-                    @csrf
-                    <button class="nav-link" type="submit" >
-                    <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-logout-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" /><path d="M15 12h-12l3 -3" /><path d="M6 15l-3 -3" /></svg>
-                    </span>
-                    <span class="nav-link-title">
-                        Logout
-                    </span>
-                    </button>
-                </form>
+                  @if(auth()->guard('admin')->check())
+                      <form method="POST" action="{{ route('admin.logout') }}">
+                  @else
+                      <form method="POST" action="{{ route('logout') }}">
+                  @endif
+                      @csrf
+                      <button class="nav-link" type="submit" >
+                      <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                          <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-logout-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" /><path d="M15 12h-12l3 -3" /><path d="M6 15l-3 -3" /></svg>
+                      </span>
+                      <span class="nav-link-title">
+                          Logout
+                      </span>
+                      </button>
+                  </form>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
     <!-- Libs JS -->
     <!-- Tabler Core -->
     <script src="https://cdn.jsdelivr.net/npm/@tabler/core/dist/js/tabler.min.js?1684106062" defer></script>

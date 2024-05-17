@@ -27,6 +27,15 @@ class OrientadorAdminController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     */
+    public function show(Orientador $orientador)
+    {
+        $orientacoes = $orientador->orientacoes->where('semestre_id', session('semestre_id'));
+        return view('admin.orientador.show', ['orientador' => $orientador, 'orientacoes' => $orientacoes]);
+    }
+
+    /**
      * Remove the specified resource from storage.
      */
     public function destroy(Orientador $Orientador) // Não coloquei o softDeletes, talvez deva colocar depois

@@ -32,7 +32,7 @@ class HomeController extends Controller
         $user = auth()->guard('web')->user();
         // dd($user);
         if($user->hasRole('Academico')){
-            dd($user->check());
+            // dd($user->check());
             // -(só entra aqui depois de semestreAtivo)-PRIMEIRO CASO: O ACADEMICO AINDA NAO TEM ORIENTADOR
 
             // dd($this->middleware('semestre_ativo'));

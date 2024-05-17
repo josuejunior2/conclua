@@ -35,4 +35,8 @@ class Orientacao extends Model
     public function AcademicoEstagio(){
         return $this->belongsTo(AcademicoEstagio::class, 'academico_estagio_id');
     }
+
+    public function Semestre(){
+        return $this->belongsTo(Semestre::class, 'semestre_id');
+    }
 }

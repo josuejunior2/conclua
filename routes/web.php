@@ -35,9 +35,9 @@ Route::middleware('auth:web')->group(function () {
 });
 
 
-Route::get('/', function () { return view('welcome'); })->name('welcome');
 // Importante: as rotas funcionam em cascata, uma depois a outra na ordem que foi colocado.
 Route::middleware(['auth:web', 'semestre_ativo', 'permission:permissao de escrita academico'])->group(function () { // rotas para completar o cadastro do academico
+    Route::get('/', function () { return view('welcome'); })->name('welcome');
     Route::get('academico/create', 'App\Http\Controllers\AcademicoController@create')->name('academico.create');
     Route::post('academico', 'App\Http\Controllers\AcademicoController@store')->name('academico.store');
     Route::get('academicoEstagio/create/{empresa}/{academico}', 'App\Http\Controllers\AcademicoEstagioController@create')->name('academicoEstagio.create');
@@ -83,6 +83,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Route::post('ativar/semestre/{semestre}', [App\Http\Controllers\SemestreController::class, 'ativar'])->name('semestre.ativar');
         // Route::post('desativar/semestre/{semestre}', [App\Http\Controllers\SemestreController::class, 'desativar'])->name('semestre.desativar');
 
+        Route::get('orientador/{orientador}', 'App\Http\Controllers\OrientadorAdminController@show')->name('orientador.show');
         Route::post('orientador', 'App\Http\Controllers\OrientadorAdminController@destroy')->name('orientador.destroy');
         Route::get('orientador', 'App\Http\Controllers\OrientadorAdminController@index')->name('orientador.index');
         Route::post('ativar/orientador/{orientador}', 'App\Http\Controllers\OrientadorAdminController@ativar_orientador')->name('orientador.ativar');
@@ -112,7 +113,7 @@ Route::middleware(['auth:admin', 'semestre_ativo'])->group(function () {
 });
 Route::middleware(['auth:admin', 'semestre_ativo', 'primeiro_acesso'])->group(function () { // rotas normal ANTES DE ATIVAR O SEMESTRE
     Route::get('admin/home', [AdminHomeController::class, 'index'])->name('admin.home');
-    Route::resource('orientador', App\Http\Controllers\OrientadorController::class)->except(['create', 'store', 'index', 'destroy'])->names(['show' => 'orientador.show.admin']);
+    Route::resource('orientador', App\Http\Controllers\OrientadorController::class)->except(['create', 'store', 'index', 'destroy', 'show']);
 
 });
 
