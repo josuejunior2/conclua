@@ -38,9 +38,9 @@ class OrientadorAdminController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Orientador $Orientador) // Não coloquei o softDeletes, talvez deva colocar depois
+    public function destroy(Orientador $orientador) // Não coloquei o softDeletes, talvez deva colocar depois
     {
-        $Orientador->delete();
+        $orientador->delete();
         return redirect()->route('orientador.index');
     }
 

@@ -26,25 +26,50 @@ class OrientadorRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            // 'nome' => 'required|min:10|max:60',
-            // 'email' => 'required|min:16|max:40|email',
-            // 'masp' => 'required|digits:7',
-            'password' => 'required',//['required', Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised()],
-            'formacao_id' => 'required',
-            'area_id' => 'required',
-            'enderecoLattes' => 'required|min:38|max:38',
-            'enderecoOrcid' => 'required|min:37|max:37',
-            'disponibilidade' => 'required',
-            'areaPesquisa1' => 'required',
-            'areaPesquisa2' => 'nullable',
-            'areaPesquisa3' => 'nullable',
-            'areaPesquisa4' => 'nullable',
-            'areaPesquisa5' => 'nullable',
-            'subArea1' => 'nullable',
-            'subArea2' => 'nullable',
-            'subArea3' => 'nullable',
-        ];
+        switch ($this->method())
+        {
+            case 'POST':
+                return [
+                    // 'nome' => 'required|min:10|max:60',
+                    // 'email' => 'required|min:16|max:40|email',
+                    // 'masp' => 'required|digits:7',
+                    'password' => 'required',//['required', Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised()],
+                    'formacao_id' => 'required',
+                    'area_id' => 'required',
+                    'enderecoLattes' => 'required|min:38|max:38',
+                    'enderecoOrcid' => 'required|min:37|max:37',
+                    'disponibilidade' => 'required',
+                    'areaPesquisa1' => 'required',
+                    'areaPesquisa2' => 'nullable',
+                    'areaPesquisa3' => 'nullable',
+                    'areaPesquisa4' => 'nullable',
+                    'areaPesquisa5' => 'nullable',
+                    'subArea1' => 'nullable',
+                    'subArea2' => 'nullable',
+                    'subArea3' => 'nullable',
+                ];
+                break;
+                case 'PUT':
+                    return [
+                        // 'nome' => 'required|min:10|max:60',
+                        // 'email' => 'required|min:16|max:40|email',
+                        // 'masp' => 'required|digits:7',
+                        'formacao_id' => 'required',
+                        'area_id' => 'required',
+                        'enderecoLattes' => 'required|min:38|max:38',
+                        'enderecoOrcid' => 'required|min:37|max:37',
+                        'disponibilidade' => 'required',
+                        'areaPesquisa1' => 'required',
+                        'areaPesquisa2' => 'nullable',
+                        'areaPesquisa3' => 'nullable',
+                        'areaPesquisa4' => 'nullable',
+                        'areaPesquisa5' => 'nullable',
+                        'subArea1' => 'nullable',
+                        'subArea2' => 'nullable',
+                        'subArea3' => 'nullable',
+                    ];
+                break;
+        }
     }
     /**
      * Get the messages array.
@@ -70,8 +95,8 @@ class OrientadorRequest extends FormRequest
 
         ];
     }
-    public function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
-    {
-        dd($validator->errors());
-    }
+    // public function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+    // {
+    //     dd($validator->errors());
+    // }
 }

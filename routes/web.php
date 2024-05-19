@@ -56,7 +56,6 @@ Route::middleware(['auth:web', 'primeiro_acesso', 'semestre_ativo'])->group(func
     Route::resource('academicoTCC', App\Http\Controllers\AcademicoTCCController::class)->except(['create', 'store']);
     Route::get('solicitacao/{orientador}/{academico}', 'App\Http\Controllers\SolicitacaoController@create')->name('solicitacao.create');
 
-    Route::get('pesquisa/orientador/{Orientador}/{academico}', [App\Http\Controllers\OrientadorController::class, 'show_web'])->name('orientador.show.web');
 });
 
 Route::middleware(['auth:web', 'primeiro_acesso', 'semestre_ativo'])->group(function () {
@@ -113,7 +112,7 @@ Route::middleware(['auth:admin', 'semestre_ativo'])->group(function () {
 });
 Route::middleware(['auth:admin', 'semestre_ativo', 'primeiro_acesso'])->group(function () { // rotas normal ANTES DE ATIVAR O SEMESTRE
     Route::get('admin/home', [AdminHomeController::class, 'index'])->name('admin.home');
-    Route::resource('orientador', App\Http\Controllers\OrientadorController::class)->except(['create', 'store', 'index', 'destroy', 'show']);
+    Route::resource('orientador', App\Http\Controllers\OrientadorController::class)->except(['create', 'store', 'index', 'destroy']);
 
 });
 

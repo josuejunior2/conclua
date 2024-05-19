@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.orientador')
 
 @section('content')
 <div class="card m-3">

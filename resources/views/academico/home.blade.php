@@ -47,9 +47,6 @@
                         <a class="btn btn-outline-success" href="{{ route('solicitacao.create', ['orientador' => $o, 'academico' => $academico]) }}">
                             Solicitar vinculação
                         </a>
-                        <a class="btn btn-outline-primary" href="{{ route('orientador.show.web', ['Orientador' => $o, 'academico' => $academico]) }}">
-                            Visualizar
-                        </a>
                     </td>
                 </tr>
                 @endforeach
