@@ -23,7 +23,7 @@ class OrientadorController extends Controller
      */
     public function create()
     {
-        dd(auth()->user()->getAllPermissions());
+        // dd(auth()->user()->getAllPermissions());
         $orientador = Orientador::where('email', auth()->guard('admin')->user()->email)->first();
         $password = Hash::make($orientador->password);
         $formacoes = Formacao::all();
@@ -54,29 +54,24 @@ class OrientadorController extends Controller
     }
 
     /**
-     * Display the specified resource. FOR GUARD WEB
-     */
-    public function show_web(Orientador $Orientador, Academico $academico)
-    {
-        $layouts = 'layouts.app';
-
-        return view('orientador.Orientador.show', ['Orientador' => $Orientador, 'academico' => $academico, 'layouts' => $layouts]);
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Orientador $Orientador)
+    public function edit(Orientador $orientador)
     {
-        //
+        $password = Hash::make($orientador->password);
+        $formacoes = Formacao::all();
+        $areas = Area::all();
+        return view('orientador.edit', ['areas' => $areas, 'formacoes' => $formacoes, 'orientador' => $orientador, 'password' => $password ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Orientador $Orientador)
+    public function update(OrientadorRequest $request, Orientador $orientador)
     {
-        //
+        $orientador->update($request->validated());
+
+        return redirect()->route('orientador.show', ['orientador' => $orientador]);
     }
 
 
