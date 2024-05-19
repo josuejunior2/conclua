@@ -35,7 +35,7 @@ class HomeController extends Controller
             $orientador = Orientador::where('email', auth()->user()->email)->first();
             $solicitacoes = Solicitacao::where('orientador_id', $orientador->id)->where('status', null)->get();
 
-            return view('orientador.home', ['solicitacoes' => $solicitacoes]);
+            return view('orientador.home', ['orientador' => $orientador, 'solicitacoes' => $solicitacoes]);
         } else{
             return abort(403, 'Você não está autenticado ao sistema.');
         }

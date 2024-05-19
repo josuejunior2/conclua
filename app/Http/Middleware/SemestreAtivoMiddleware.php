@@ -39,7 +39,7 @@ class SemestreAtivoMiddleware
                 if(auth()->guard('admin')->check()){
                     auth()->guard('admin')->user()->revokePermissionTo(Permission::where('name', 'permissao de escrita orientador')->first());
 
-                    dd(auth()->guard('admin')->user()->hasPermissionTo('permissao de escrita orientador'));
+                    // dd(auth()->guard('admin')->user()->hasPermissionTo('permissao de escrita orientador'));
                 }
                 return $next($request);
             } else if($semestreEmSession == $semestreAtual && $semestreAtual->data_fim->format('d/m/Y') >= now()->format('d/m/Y')){
