@@ -28,7 +28,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        //$this->middleware('permission:permissao de escrita academico');
         $user = auth()->guard('web')->user();
         // dd($user);
         if($user->hasRole('Academico')){

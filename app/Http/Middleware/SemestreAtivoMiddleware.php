@@ -27,6 +27,7 @@ class SemestreAtivoMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+        // return $next($request);
         if(auth()->user()->hasRole('Admin')){ return $next($request); }
 
         $semestreAtual = Semestre::all()->last();
@@ -34,20 +35,14 @@ class SemestreAtivoMiddleware
         if(isset($semestreEmSession)){
             if($semestreEmSession != $semestreAtual || $semestreAtual->data_fim->format('d/m/Y') < now()->format('d/m/Y')){ // na regra do form request de semestre eu devo criar uma regra pra não criar semestre sem que a data_fim do anterior não tenha chegado
                 if(auth()->guard('web')->check()){
-                    auth()->guard('web')->user()->revokePermissionTo(Permission::where('name', 'permissao de escrita academico')->first());
+                    return redirect()->route('welcome')->with('error', 'O prazo para acesso ao semestre acabou.');
                 }
                 if(auth()->guard('admin')->check()){
-                    auth()->guard('admin')->user()->revokePermissionTo(Permission::where('name', 'permissao de escrita orientador')->first());
-
-                    // dd(auth()->guard('admin')->user()->hasPermissionTo('permissao de escrita orientador'));
+                    return redirect()->route('welcome')->with('error', 'Sem permissão de atuar no semestre');
                 }
-                return $next($request);
             } else if($semestreEmSession == $semestreAtual && $semestreAtual->data_fim->format('d/m/Y') >= now()->format('d/m/Y')){
                 if(auth()->guard('web')->check()){
-                    auth()->guard('web')->user()->givePermissionTo(Permission::where('name', 'permissao de escrita academico')->first());
-                }
-                if(auth()->guard('admin')->check()){
-                    auth()->guard('admin')->user()->givePermissionTo(Permission::where('name', 'permissao de escrita orientador')->first());
+                    return redirect()->route('welcome')->with('error', 'O prazo para acesso ao semestre acabou.');
                 }
                 return $next($request);
             }
