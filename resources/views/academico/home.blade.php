@@ -38,8 +38,8 @@
         <tbody>
             @foreach ($orientadores as $o)
             <tr>
-                <td>{{ $o->nome }}</td>
-                <td>{{ $o->email }}</td>
+                <td>{{ $o->Admin->nome }}</td>
+                <td>{{ $o->Admin->email }}</td>
                 <td>{{ $o->Formacao ? $o->Formacao->nome : 'N/A' }}</td>
                 <td>{{ $o->Area ? $o->Area->nome : 'N/A' }}</td>
                 <td class="text-end">
@@ -70,7 +70,7 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="text-truncate">
-                                            {{ $as->Orientador->nome }}
+                                            {{ $as->Orientador->Admin->nome }}
                                         </div>
                                         <div class="text-muted">{{ $as->created_at->format('d/m/Y') }}</div>
                                         @if (is_null($as->status))

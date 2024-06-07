@@ -36,9 +36,7 @@ class DatabaseSeeder extends Seeder
         $uuid = Str::uuid()->toString();
         $academico1 = Academico::create([
             'id' => $uuid,
-            'nome' => 'Thiago Ian Cesar',
-            'email' => 'thiago@gmail.com',
-            'password' => 'admin123',
+            'user_id' => $user1->id,
             'matricula' => '100087456',
         ]);
         $uuid = Str::uuid()->toString();
@@ -51,9 +49,7 @@ class DatabaseSeeder extends Seeder
         $uuid = Str::uuid()->toString();
         $academico2 = Academico::create([
             'id' => $uuid,
-            'nome' => 'Ian Thiago Hadrien',
-            'email' => 'ian@gmail.com',
-            'password' => 'admin123',
+            'user_id' => $user2->id,
             'matricula' => '100087654',
         ]);
         $uuid = Str::uuid()->toString();
@@ -66,9 +62,7 @@ class DatabaseSeeder extends Seeder
         $uuid = Str::uuid()->toString();
         $orientador1 = Orientador::create([
             'id' => $uuid,
-            'nome' => 'Rene Veloso',
-            'email' => 'rene@gmail.com',
-            'password' => 'admin123',
+            'admin_id' => $oriadmin1->id,
             'masp' => '1032654',
         ]);
 
@@ -82,14 +76,12 @@ class DatabaseSeeder extends Seeder
         $uuid = Str::uuid()->toString();
         $orientador2 = Orientador::create([
             'id' => $uuid,
-            'nome' => 'Eduardo Diniz',
-            'email' => 'edu@gmail.com',
-            'password' => 'admin123',
+            'admin_id' => $oriadmin2->id,
             'masp' => '1032655',
         ]);
 
         $uuid = Str::uuid()->toString();
-        $user = Admin::create( [
+        $admin = Admin::create( [
             'id' => $uuid,
             'nome' => 'admin',
             'email' => 'josuejuniorww@gmail.com',
@@ -111,7 +103,7 @@ class DatabaseSeeder extends Seeder
             PerfisEPermissoesSeeder::class,
         );
 
-        $user->assignRole('Admin', 'admin');
+        $admin->assignRole('Admin', 'admin');
         $user1->assignRole('Academico');
         $user2->assignRole('Academico');
         $oriadmin1->assignRole('Orientador');

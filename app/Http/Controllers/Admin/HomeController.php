@@ -32,7 +32,7 @@ class HomeController extends Controller
             $semestres = Semestre::all();
             return view('admin.home', ['semestres' => $semestres]);
         } elseif($admin->hasRole('Orientador')){
-            $orientador = Orientador::where('email', auth()->user()->email)->first();
+            $orientador = Orientador::where('admin_id', auth()->guard('admin')->user()->id)->first();
             $solicitacoes = Solicitacao::where('orientador_id', $orientador->id)->where('status', null)->get();
             $orientacoes = $orientador->orientacoes->where('semestre_id', session('semestre_id'));
 

@@ -16,7 +16,7 @@ class SemestreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        if(!Orientador::where('email', auth()->guard('admin')->user()->email)->exists() && auth()->guard('admin')->check()){
+        if(!Orientador::where('admin_id', auth()->guard('admin')->user()->id)->exists() && auth()->guard('admin')->check()){
             return true;
         }
         return false;
@@ -88,7 +88,7 @@ class SemestreRequest extends FormRequest
                     'limite_orientacao' => 'required|before:data_fim', //. $data_fim,
                 ];
                 break;
-                case 'PUT':
+            case 'PUT':
                     return [
                         'ano' => 'required|integer|min:' . $anoAtual . '|max:' . $anoSeguinte,
                         'periodo' => [
@@ -109,7 +109,7 @@ class SemestreRequest extends FormRequest
                         'limite_doc_estagio' => 'required|before:data_fim', //. $data_fim,
                         'limite_orientacao' => 'required|before:data_fim', //. $data_fim,
                     ];
-                break;
+                    break;
         }
     }
     /**

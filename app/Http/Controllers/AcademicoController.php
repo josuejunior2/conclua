@@ -31,9 +31,10 @@ class AcademicoController extends Controller
     public function create()
     {
         $user = auth()->user();
-
-        $password = Hash::make($user->password);
-        return view('academico.create', ['user' => $user, 'password' => $password]);
+        //if(!$semestre->isAtual()){  // EXEMPLO DE THIAGO
+        //    return back()->with('');
+        //}
+        return view('academico.create', ['user' => $user]);
     }
 
     /**
@@ -41,10 +42,10 @@ class AcademicoController extends Controller
      */
     public function store(AcademicoRequest $request)
     {
-        $academico = Academico::where('email', auth()->user()->email)->first(); // recupera o Academico
+        $academico = Academico::where('user_id', auth()->user()->id)->first(); // recupera o Academico
 
         if ($academico) {
-            $academico->update([
+            auth()->user()->update([
                 'password' => Hash::make($request->input('password')), // atualiza a senha
             ]);
 

@@ -26,7 +26,7 @@ class PrimeiroAcessoMiddleware // Aqui é o primeiroAcesso NO SEMESTRE
         $semestreEmSession = Semestre::find(session('semestre_id'));
         // dd(auth()->guard('admin')->check());
         if(auth()->guard('admin')->check()){
-            $orientador = Orientador::where('email', auth()->guard('admin')->user()->email)->first();
+            $orientador = Orientador::where('admin_id', auth()->guard('admin')->user()->id)->first();
             if (is_null($orientador)) {
                 return $next($request); // se não tiver orientador é que é admin, então pode passar
             } elseif(!is_null($orientador->disponibilidade)){ // se tá ativado o cadastro...
@@ -36,7 +36,7 @@ class PrimeiroAcessoMiddleware // Aqui é o primeiroAcesso NO SEMESTRE
                 return redirect()->route('orientador.create'); // se disp. tá nula, não completou o cadastro, vai completar
             }
         } elseif(auth()->guard('web')->check()){
-            $academico = Academico::where('email', auth()->user()->email)->first();
+            $academico = Academico::where('user_id', auth()->user()->id)->first();
 
             if ($academico) {
                 $tcc = AcademicoTCC::where('academico_id', $academico->id)->where('semestre_id', session('semestre_id'))->exists();

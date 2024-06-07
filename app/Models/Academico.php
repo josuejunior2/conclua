@@ -16,7 +16,7 @@ class Academico extends Authenticatable
 
     protected $keyType = 'string';
 
-    protected $fillable = ['nome', 'email', 'password', 'matricula'];
+    protected $fillable = ['user_id', 'matricula'];
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -26,6 +26,10 @@ class Academico extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function User(){
+        return $this->belongsTo(User::class);
+    }
 
     public function academicosTCC(){
         return $this->hasMany(AcademicoTCC::class, 'academico_id');

@@ -4,7 +4,7 @@
 <div class="col-12">
     <div class="card m-3">
         <div class="card-header justify-content-between">
-            <h3 class="card-title">Lista de acadêmicos</h3>
+            <h3 class="card-title">Lista de perfis</h3>
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -20,8 +20,8 @@
                 </div>
             @endif
             <div>
-                <a href="#" class="btn btn-success w-100 mb-1" data-bs-toggle="modal" data-bs-target="#modal-cadastro-academico">
-                    Adicionar novos acadêmicos
+                <a href="#" class="btn btn-success w-100 mb-1">
+                    Adicionar novo perfil
                 </a>
             </div>
         </div>
@@ -31,17 +31,15 @@
             <tr>
               {{--<th class="w-1"></th>  <input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select all invoices"> --}}
               <th>Nome</th>
-              <th>Email</th>
-              {{-- <th>Modalidade</th> --}}
+              {{-- <th>Email</th> --}}
               <th></th>
             </tr>
           </thead>
           <tbody>
-            @foreach ($academicos as $academico)
+            @foreach ($roles as $role)
             <tr>
                 <!--<td></td>  <input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"> -->
-                <td>{{ $Academico->User->nome }}</td>
-                <td>{{ $Academico->User->email }}</td>
+                <td>{{ $role->nome }}</td>
                 {{-- <td>
                     @if (isset($tccSemestre) && $tccSemestre->where('academico_id', $academico->id)->exists())
                         TCC
@@ -52,7 +50,7 @@
                     @endif
                 </td> --}}
                 <td class="text-end">
-                    <a class="btn justify-content-center" href="{{ route('admin.academico.show', ['academico' => $academico]) }}">
+                    <a class="btn justify-content-center" href="{{ route('admin.role.show', ['role' => $role]) }}">
                         <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-eye"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg>
                         Visualizar
                     </a>
@@ -70,7 +68,7 @@
 @section('js')
 <script>
     $(document).ready( function () {
-        $('#tabela-academicos').DataTable({
+        $('#tabela-roles').DataTable({
             "paging": true,
             "ordering": true,
             "searching": true,
@@ -83,4 +81,3 @@
 </script>
 @endsection
 
-@include('admin.modal.cadastro-academico')

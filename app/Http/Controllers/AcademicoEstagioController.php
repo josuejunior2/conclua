@@ -43,7 +43,7 @@ class AcademicoEstagioController extends Controller
      */
     public function store(AcademicoEstagioRequest $request)
     {
-        $academico = Academico::where('email', auth()->user()->email)->first();
+        $academico = Academico::where('user_id', auth()->user()->id)->first();
         // dd($request->all());
         $academicoEstagio = AcademicoEstagio::create($request->validated());
 

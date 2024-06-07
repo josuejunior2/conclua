@@ -18,16 +18,11 @@ class Orientador extends Authenticatable
 
     protected $table = 'orientadores';
 
-    protected $fillable = ['masp', 'nome', 'email', 'password', 'formacao_id', 'area_id', 'disponibilidade',  'subArea1', 'subArea2', 'subArea3', 'areaPesquisa1', 'areaPesquisa2', 'areaPesquisa3', 'areaPesquisa4', 'areaPesquisa5', 'enderecoLattes', 'enderecoOrcid'];
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    protected $fillable = ['masp', 'admin_id', 'formacao_id', 'area_id', 'disponibilidade',  'subArea1', 'subArea2', 'subArea3', 'areaPesquisa1', 'areaPesquisa2', 'areaPesquisa3', 'areaPesquisa4', 'areaPesquisa5', 'enderecoLattes', 'enderecoOrcid'];
+
+    public function Admin(){
+        return $this->belongsTo(Admin::class); // orientador tem 1 Formacao, ele olha a FK
+    }
 
     public function Formacao(){
         return $this->belongsTo(Formacao::class); // orientador tem 1 Formacao, ele olha a FK

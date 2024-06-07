@@ -24,7 +24,7 @@ class OrientadorController extends Controller
     public function create()
     {
         // dd(auth()->user()->getAllPermissions());
-        $orientador = Orientador::where('email', auth()->guard('admin')->user()->email)->first();
+        $orientador = Orientador::where('admin_id', auth()->guard('admin')->user()->id)->first();
         $password = Hash::make($orientador->password);
         $formacoes = Formacao::all();
         $areas = Area::all();

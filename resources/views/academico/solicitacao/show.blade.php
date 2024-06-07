@@ -3,7 +3,7 @@
 @section('content')
 <div class="card m-3">
     <div class="card-header justify-content-between">
-        <h3 class="card-title">Solicitação de vinculação ao(à) {{ $solicitacao->Orientador->nome }}</h3>
+        <h3 class="card-title">Solicitação de vinculação ao(à) {{ $solicitacao->Orientador->Admin->nome }}</h3>
         <div class="d-flex justify-content-between col-auto">
         @if (is_null($solicitacao->status))
             <a href=" {{ route('solicitacao.edit', ['solicitacao' => $solicitacao ]) }}" class="btn me-2 btn-secondary w-100">
@@ -49,7 +49,7 @@
         <div class="datagrid">
         <div class="datagrid-item">
             <div class="datagrid-title">Nome</div>
-            <div class="datagrid-content">{{ $solicitacao->Orientador->nome }}</div>
+            <div class="datagrid-content">{{ $solicitacao->Orientador->Admin->nome }}</div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">MASP</div>
@@ -57,7 +57,7 @@
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Email</div>
-            <div class="datagrid-content">{{ $solicitacao->Orientador->email }}</div>
+            <div class="datagrid-content">{{ $solicitacao->Orientador->Admin->email }}</div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Formação</div>

@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('orientadores', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('masp', 7)->unique();  //->primary();
-            $table->string('nome', 60);
-            $table->string('email', 40);
-            $table->string('password', 64);
+            $table->string('masp', 7)->unique();
+            $table->uuid('admin_id')->required();
+            $table->foreign('admin_id')->references('id')->on('admins');
+
             $table->unsignedTinyInteger('disponibilidade')->nullable();
             $table->string('enderecoLattes', 38)->unique()->nullable();
             $table->string('enderecoOrcid', 37)->unique()->nullable();

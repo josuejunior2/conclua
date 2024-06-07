@@ -13,7 +13,7 @@ class OrientadorRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        if(Orientador::where('email', auth()->guard('admin')->user()->email)->exists()){
+        if(Orientador::where('admin_id', auth()->guard('admin')->user()->id)->exists()){
             return true;
         }
         return false;

@@ -33,7 +33,7 @@ class EmpresaController extends Controller
     public function store(EmpresaRequest $request)
     {
         $empresa = Empresa::create($request->validated());
-        $academico = Academico::where('email', auth()->user()->email)->first();
+        $academico = Academico::where('user_id', auth()->user()->id)->first();
         // dd($academico);
 
         return redirect()->route('academicoEstagio.create', ['empresa' => $empresa, 'academico' => $academico]);

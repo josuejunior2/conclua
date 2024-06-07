@@ -25,7 +25,7 @@
         <div class="datagrid">
             <div class="datagrid-item">
                 <div class="datagrid-title">Nome</div>
-                <div class="datagrid-content">{{ $academico->nome }}</div>
+                <div class="datagrid-content">{{ $Academico->User->nome }}</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Matrícula</div>
@@ -33,7 +33,7 @@
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Email</div>
-                <div class="datagrid-content">{{ $academico->email }}</div>
+                <div class="datagrid-content">{{ $Academico->User->email }}</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Telefone</div>
@@ -76,7 +76,7 @@
                                     @if(isset($tcc->Orientacao))
                                         <div class="datagrid-item">
                                             <div class="datagrid-title">Orientador</div>
-                                            <div class="datagrid-content">{{ $tcc->Orientacao->Orientador->nome }}</div>
+                                            <div class="datagrid-content">{{ $tcc->Orientacao->Orientador->Admin->nome }}</div>
                                         </div>
                                         <div class="datagrid-item">
                                             <div class="datagrid-title">Data de vinculação</div>
@@ -180,7 +180,7 @@
                                     @if(isset($estagio->Orientacao))
                                         <div class="datagrid-item">
                                             <div class="datagrid-title">Orientador</div>
-                                            <div class="datagrid-content">{{ $estagio->Orientacao->Orientador->nome }}</div>
+                                            <div class="datagrid-content">{{ $estagio->Orientacao->Orientador->Admin->nome }}</div>
                                         </div>
                                         <div class="datagrid-item">
                                             <div class="datagrid-title">Data de vinculação</div>
@@ -223,7 +223,7 @@
                 <div class="accordion-item m-3">
                     <div class="d-flex justify-content-between" id="heading-1">
                         <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#accordion-collapse-{{ $solicitacao->id }}" aria-expanded="true">
-                            ({{ $solicitacao->Semestre->periodo }}/{{ $solicitacao->Semestre->ano }}) {{ $solicitacao->Orientador->nome }} - {{ \Carbon\Carbon::parse($solicitacao->created_at)->format('d/m/Y') }}
+                            ({{ $solicitacao->Semestre->periodo }}/{{ $solicitacao->Semestre->ano }}) {{ $solicitacao->Orientador->Admin->nome }} - {{ \Carbon\Carbon::parse($solicitacao->created_at)->format('d/m/Y') }}
                         </button>
                     </div>
                     <div id="accordion-collapse-{{ $solicitacao->id }}" class="accordion-collapse collapse" data-bs-parent="#accordion-{{ $solicitacao->id }}">
@@ -251,7 +251,7 @@
                                 </div>
                                 <div class="datagrid-item">
                                     <div class="datagrid-title">Orientador</div>
-                                    <div class="datagrid-content"><a href="{{ route('admin.orientador.show', ['orientador' => $solicitacao->Orientador]) }}">{{ $solicitacao->Orientador->nome }}</a></div>
+                                    <div class="datagrid-content"><a href="{{ route('admin.orientador.show', ['orientador' => $solicitacao->Orientador]) }}">{{ $solicitacao->Orientador->Admin->nome }}</a></div>
                                 </div>
                                 @if (isset($solicitacao->AcademicoTCC))
                                 <div class="datagrid-item">

@@ -13,7 +13,7 @@ class AcademicoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        if(Academico::where('email', auth()->user()->email)->exists()){
+        if(Academico::where('user_id', auth()->user()->id)->exists()){
             return true;
         }
         return false;

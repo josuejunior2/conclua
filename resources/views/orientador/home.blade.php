@@ -22,7 +22,7 @@
                             <div class="row">
                                 <div class="col">
                                 <div class="text-truncate">
-                                    {{ $s->Academico->nome }}
+                                    {{ $s->Academico->User->nome }}
                                 </div>
                                 <div class="text-muted">{{ $s->created_at->format('d/m/Y') }}</div>
                                 </div>
@@ -53,7 +53,7 @@
                             <div class="row">
                                 <div class="col">
                                 <div class="text-truncate">
-                                    {{ $orientacao->Academico->nome }}
+                                    {{ $orientacao->Academico->User->nome }}
                                 </div>
                                 <div class="text-muted">
                                     @if (isset($orientacao->AcademicoEstagio))

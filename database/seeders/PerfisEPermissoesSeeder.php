@@ -25,6 +25,7 @@ class PerfisEPermissoesSeeder extends Seeder
         $permissionsAdmin = collect([
             ['guard_name' => 'admin', 'name' => 'CRUD usuarios',  'description' => 'Permite fazer CRUD de todos usuários.'],
             ['guard_name' => 'admin', 'name' => 'configurar semestre',  'description' => 'Permite configurar um semestre.'],
+            ['guard_name' => 'admin', 'name' => 'configurar perfil',  'description' => 'Permite configurar perfis e permissoes dos usuários.'],
             ['guard_name' => 'admin', 'name' => 'desvincular academico',  'description' => 'Permite desvincular um academico de seu orientador.'],
         ]);
 

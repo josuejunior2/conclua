@@ -48,6 +48,10 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function Academico(){
+        return $this->hasOne(Academico::class, 'user_id');
+    }
+    
     // public function sendPasswordResetNotification($token){
     //   $this->notify(new RedefinirSenhaNotification($token, $this->email, $this->name));
     // }

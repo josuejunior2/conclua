@@ -37,4 +37,9 @@ class Admin extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+    public function Orientador(){
+        return $this->hasOne(Orientador::class);
+    }
 }

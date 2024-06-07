@@ -3,7 +3,7 @@
 @section('content')
 <div class="card m-3">
     <div class="card-header justify-content-between">
-        <h3 class="card-title">Solicitação de vinculação de {{ $solicitacao->Academico->nome }}</h3>
+        <h3 class="card-title">Solicitação de vinculação de {{ $solicitacao->Academico->User->nome }}</h3>
         @if($solicitacao->status == null)
         <div class="d-flex justify-content-between">
             <div class="me-2">
@@ -28,12 +28,8 @@
     <div class="card-body">
         <div class="datagrid">
         <div class="datagrid-item">
-            <div class="datagrid-title">Nome</div>
-            <div class="datagrid-content">{{ $solicitacao->Academico->nome }}</div>
-        </div>
-        <div class="datagrid-item">
             <div class="datagrid-title">Email</div>
-            <div class="datagrid-content">{{ $solicitacao->Academico->email }}</div>
+            <div class="datagrid-content">{{ $solicitacao->Academico->User->email }}</div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Data de envio da solicitação</div>

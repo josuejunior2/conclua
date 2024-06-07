@@ -3,7 +3,7 @@
 @section('content')
 <div class="card m-3">
     <div class="card-header justify-content-between">
-        <h3 class="card-title">Cadastro do(a) Professor(a) {{ $solicitacao->Orientador->nome }}</h3>
+        <h3 class="card-title">Cadastro do(a) Professor(a) {{ $solicitacao->Orientador->Admin->nome }}</h3>
         {{-- <div class="d-flex justify-content-between col-auto">
         </div> --}}
     </div>
@@ -11,7 +11,7 @@
         <div class="datagrid mb-4">
             <div class="datagrid-item">
                 <div class="datagrid-title">Email</div>
-                <div class="datagrid-content">{{ $solicitacao->Orientador->email }}</div>
+                <div class="datagrid-content">{{ $solicitacao->Orientador->Admin->email }}</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Formação</div>

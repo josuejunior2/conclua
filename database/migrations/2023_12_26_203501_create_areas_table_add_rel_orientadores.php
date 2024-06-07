@@ -18,7 +18,7 @@ return new class extends Migration
         });
 
         Schema::table('orientadores', function(BLueprint $table) {
-            $table->uuid('area_id')->nullable()->after('email');
+            $table->uuid('area_id')->nullable()->after('admin_id');
             $table->foreign('area_id')->references('id')->on('areas');
         });
     }

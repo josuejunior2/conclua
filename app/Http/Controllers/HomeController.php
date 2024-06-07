@@ -35,14 +35,14 @@ class HomeController extends Controller
             // -(só entra aqui depois de semestreAtivo)-PRIMEIRO CASO: O ACADEMICO AINDA NAO TEM ORIENTADOR
 
             // dd($this->middleware('semestre_ativo'));
-            $academico = Academico::where('email', auth()->user()->email)->first();
+            $academico = Academico::where('user_id', auth()->user()->id)->first();
 
-            if($academico->Orientacao){
-                if($academico->Orientacao->where('academico_id', $academico->id)->where('semestre_id', session('semestre_id'))->exists()){
-                    if($academico->academicosTCC->where('academico_id', $academico->id)->where('semestre_id', session('semestre_id'))->exists()){
-                        return view('academico.academicoTcc.home', ['academico' => $academico, 'tcc' => $academico->academicosTCC->where('semestre_id', session('semestre_id')->where('academico_id', $academico->id)->first())]);
-                    } else if($academico->academicosEstagio->where('semestre_id', session('semestre_id'))->first()->where('semestre_id', session('semestre_id'))->exists()){
-                        return view('academico.academicoEstagio.home', ['academico' => $academico, 'estagio' => $academico->academicosEstagio->where('semestre_id', session('semestre_id'))->first()->where('semestre_id', session('semestre_id'))->where('academico_id', $academico->id)->first()]);
+            if($academico->orientacoes){
+                if(!is_null($academico->orientacoes->firstWhere('semestre_id', session('semestre_id')))){
+                    if(!is_null($academico->academicosTCC->where('semestre_id', session('semestre_id')))){
+                        return view('academico.academicoTcc.home', ['academico' => $academico, 'tcc' => $academico->academicosTCC->where('semestre_id', session('semestre_id'))->first()]);
+                    } else if($academico->academicosEstagio->where('semestre_id', session('semestre_id'))->exists()){
+                        return view('academico.academicoEstagio.home', ['academico' => $academico, 'estagio' => $academico->academicosEstagio->where('semestre_id', session('semestre_id'))->first()]);
                     }
                 }
             }
