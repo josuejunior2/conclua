@@ -78,8 +78,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::middleware(['auth:admin'])->group(function () {                                 // rotas ADMIN c prefixo ANTES DE ATIVAR O SEMESTRE
         Route::get('/', function () { return redirect()->route('admin.home'); });
 
-        Route::resource('permission', App\Http\Controllers\PermissionController::class);
-        Route::resource('role', App\Http\Controllers\RoleController::class);
+        Route::resource('permission', App\Http\Controllers\Admin\PermissionController::class);
+        Route::resource('role', App\Http\Controllers\Admin\RoleController::class);
         Route::resource('semestre', App\Http\Controllers\SemestreController::class);
         // Route::post('ativar/semestre/{semestre}', [App\Http\Controllers\SemestreController::class, 'ativar'])->name('semestre.ativar');
         // Route::post('desativar/semestre/{semestre}', [App\Http\Controllers\SemestreController::class, 'desativar'])->name('semestre.desativar');
