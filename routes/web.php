@@ -80,6 +80,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::resource('permission', App\Http\Controllers\Admin\PermissionController::class);
         Route::resource('role', App\Http\Controllers\Admin\RoleController::class);
+        Route::get('role/edit/permissoes/{role}', 'App\Http\Controllers\Admin\RoleController@edit_permissions')->name('role.edit-permissions');
+        Route::post('role/update/permissoes/{role}', 'App\Http\Controllers\Admin\RoleController@update_permissions')->name('role.update-permissions');
         Route::resource('semestre', App\Http\Controllers\SemestreController::class);
         // Route::post('ativar/semestre/{semestre}', [App\Http\Controllers\SemestreController::class, 'ativar'])->name('semestre.ativar');
         // Route::post('desativar/semestre/{semestre}', [App\Http\Controllers\SemestreController::class, 'desativar'])->name('semestre.desativar');
