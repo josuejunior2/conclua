@@ -40,8 +40,8 @@
             @foreach ($academicos as $academico)
             <tr>
                 <!--<td></td>  <input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"> -->
-                <td>{{ $Academico->User->nome }}</td>
-                <td>{{ $Academico->User->email }}</td>
+                <td>{{ $academico->User->nome }}</td>
+                <td>{{ $academico->User->email }}</td>
                 {{-- <td>
                     @if (isset($tccSemestre) && $tccSemestre->where('academico_id', $academico->id)->exists())
                         TCC
