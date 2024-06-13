@@ -21,6 +21,7 @@ return new class extends Migration
             $table->date('limite_orientacao');
             // $table->boolean('status')->default(0)->comment('true para ativo e false para inativo');
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('academico_TCC', function (Blueprint $table) {
@@ -37,6 +38,7 @@ return new class extends Migration
             $table->text('justificativa', 10000);
             $table->text('metodologia', 10000);
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('empresas', function (Blueprint $table) {
@@ -46,6 +48,7 @@ return new class extends Migration
             $table->string('supervisor', 60);
             $table->string('email', 40);
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('academico_estagio', function (Blueprint $table) {
@@ -59,6 +62,7 @@ return new class extends Migration
             $table->uuid('empresa_id');
             $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -60,7 +60,7 @@ class AcademicoAdminController extends Controller
         } else {
             $academico->delete();
         }
-        return redirect()->route('academico.index');
+        return redirect()->route('admin.academico.index');
     }
 
     /**

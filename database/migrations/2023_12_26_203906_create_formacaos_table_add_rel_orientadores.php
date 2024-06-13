@@ -15,6 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('nome', 40);
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::table('orientadores', function(BLueprint $table) {

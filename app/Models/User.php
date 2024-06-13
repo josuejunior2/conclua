@@ -6,13 +6,14 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, HasUuids;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, HasUuids, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -51,7 +52,7 @@ class User extends Authenticatable
     public function Academico(){
         return $this->hasOne(Academico::class, 'user_id');
     }
-    
+
     // public function sendPasswordResetNotification($token){
     //   $this->notify(new RedefinirSenhaNotification($token, $this->email, $this->name));
     // }

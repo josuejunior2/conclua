@@ -97,7 +97,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('desvincular/academico/tcc/{tcc}', 'App\Http\Controllers\AcademicoAdminController@desvincular_academico_tcc')->name('academico.desvincular.tcc');
         Route::post('ativar/academico/{academico}', 'App\Http\Controllers\AcademicoAdminController@ativar_academico')->name('academico.ativar');
         Route::post('cadastro/academico', 'App\Http\Controllers\AcademicoAdminController@import_academicos')->name('cadastro-academico');
-        Route::post('academico', 'App\Http\Controllers\AcademicoAdminController@destroy')->name('academico.destroy');
+        Route::delete('academico/delete/{academico}', 'App\Http\Controllers\AcademicoAdminController@destroy')->name('academico.destroy');
         Route::get('academico', 'App\Http\Controllers\AcademicoAdminController@index')->name('academico.index');
         Route::get('academico/{academico}', 'App\Http\Controllers\AcademicoAdminController@show')->name('academico.show');
     });

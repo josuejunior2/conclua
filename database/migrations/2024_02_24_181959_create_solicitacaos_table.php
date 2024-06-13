@@ -31,6 +31,7 @@ return new class extends Migration
             $table->boolean('status')->nullable()->comment('true para aceito e false para rejeitado');
             $table->string('mensagem', 255)->nullable(); // colocar um comentário? 'me aceita ai professor pfv vc é muito legal cara'
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

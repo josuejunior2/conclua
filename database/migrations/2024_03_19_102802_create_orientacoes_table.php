@@ -31,6 +31,7 @@ return new class extends Migration
 
             // $table->tinyInteger('modalidade')->nullable()->comment('0 -> Estágio  ;  1 -> TCC');
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::table('academico_tcc', function (Blueprint $table) {

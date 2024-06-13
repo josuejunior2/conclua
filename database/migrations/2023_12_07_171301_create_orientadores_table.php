@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('areaPesquisa4', 60)->nullable();
             $table->string('areaPesquisa5', 60)->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
