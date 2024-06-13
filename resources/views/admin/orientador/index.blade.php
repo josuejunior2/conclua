@@ -45,8 +45,8 @@
             @foreach ($orientadores as $orientador)
             <tr>
                 <!--<td></td>  <input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"> -->
-                <td>{{ $Orientador->Admin->nome }}</td>
-                <td>{{ $Orientador->Admin->email }}</td>
+                <td>{{ $orientador->Admin->nome }}</td>
+                <td>{{ $orientador->Admin->email }}</td>
                 <td>{{ $orientador->Formacao ? $orientador->Formacao->nome : 'N/A' }}</td>
                 <td>{{ $orientador->Area ? $orientador->Area->nome : 'N/A' }}</td>
                 <td>{{-- @if($o->disponibilidade == 0)N/A @elseif(isset($semestreAtual)) {{ $o->disponibilidade - $o->orientacoes->where('semestre_id', $semestreAtual->id)->count() }} de {{ $o->disponibilidade }} @endif--}}</td>

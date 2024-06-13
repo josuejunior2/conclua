@@ -27,7 +27,7 @@
         <div class="datagrid">
         <div class="datagrid-item">
             <div class="datagrid-title">Nome</div>
-            <div class="datagrid-content">{{ $Orientador->Admin->nome }}</div>
+            <div class="datagrid-content">{{ $orientador->Admin->nome }}</div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">MASP</div>
@@ -35,7 +35,7 @@
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Email</div>
-            <div class="datagrid-content">{{ $Orientador->Admin->email }}</div>
+            <div class="datagrid-content">{{ $orientador->Admin->email }}</div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Telefone</div>
