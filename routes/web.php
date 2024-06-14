@@ -78,7 +78,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::middleware(['auth:admin'])->group(function () {                                 // rotas ADMIN c prefixo ANTES DE ATIVAR O SEMESTRE
         Route::get('/', function () { return redirect()->route('admin.home'); });
 
-        Route::resource('permission', App\Http\Controllers\Admin\PermissionController::class);
+        Route::get('/permission', 'App\Http\Controllers\Admin\PermissionController@index')->name('permission.index');
         Route::resource('role', App\Http\Controllers\Admin\RoleController::class);
         Route::get('role/edit/permissoes/{role}', 'App\Http\Controllers\Admin\RoleController@edit_permissions')->name('role.edit-permissions');
         Route::post('role/update/permissoes/{role}', 'App\Http\Controllers\Admin\RoleController@update_permissions')->name('role.update-permissions');
