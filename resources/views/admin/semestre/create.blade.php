@@ -2,8 +2,13 @@
 
 @section('content')
 <div class="card m-3">
-    <div class="card-header">
-      <h3 class="card-title">Cadastro de semestre: @if($tem1periodo) 2/{{ now()->format('Y') }} @elseif($tem2periodo || (!$tem1periodo && !$tem2periodo)) 1/{{ now()->format('Y') }} @endif</h3>
+    <div class="card-header flex-column align-items-start">
+        <h3 class="card-title">Cadastro de semestre: @if($tem1periodo) 2/{{ now()->format('Y') }} @elseif($tem2periodo || (!$tem1periodo && !$tem2periodo)) 1/{{ now()->format('Y') }} @endif</h3>
+        <div>
+            <span class="{{ $errors->has('periodo') ? 'text-danger' : '' }}">
+                {{ $errors->has('periodo') ? $errors->first('periodo') : '' }}
+            </span>
+        </div>
     </div>
 
     <div class="card-body">
@@ -18,9 +23,6 @@
         @elseif($tem2periodo || (!$tem1periodo && !$tem2periodo))
             <input type="hidden" name="periodo" id="periodo" value="1">
         @endif
-        <span class="{{ $errors->has('periodo') ? 'text-danger' : '' }}">
-            {{ $errors->has('periodo') ? $errors->first('periodo') : '' }}
-        </span>
 
         <div class="datagrid">
             <div class="datagrid-item">

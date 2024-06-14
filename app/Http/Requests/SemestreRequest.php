@@ -71,18 +71,18 @@ class SemestreRequest extends FormRequest
                         'integer',
                         'min:1',
                         'max:2',
-                        Rule::unique('semestres')->where(fn (Builder $query) => $query->where('ano', $ano))
+                        Rule::unique('semestres')->withoutTrashed()->where(fn (Builder $query) => $query->where('ano', $ano))
                     ],
                     'data_inicio' => [
                         'required',
                         'before:data_fim',
                         $this->afterDataFimAnterior($dataInicio, $ano, $periodo),
-                        Rule::unique('semestres')->where(fn (Builder $query) => $query->where('ano', $ano)->where('data_inicio', $dataInicio))
+                        Rule::unique('semestres')->withoutTrashed()->where(fn (Builder $query) => $query->where('ano', $ano)->where('data_inicio', $dataInicio))
                     ],
                     'data_fim' => [
                         'required',
                         $this->gapMinimo($dataInicio, 0),
-                        Rule::unique('semestres')->where(fn (Builder $query) => $query->where('ano', $ano)->where('data_fim', $dataFim)),
+                        Rule::unique('semestres')->withoutTrashed()->where(fn (Builder $query) => $query->where('ano', $ano)->where('data_fim', $dataFim)),
                     ], //, 4)],
                     'limite_doc_estagio' => 'required|before:data_fim', //. $data_fim,
                     'limite_orientacao' => 'required|before:data_fim', //. $data_fim,
@@ -130,6 +130,8 @@ class SemestreRequest extends FormRequest
             'data_inicio.date' => 'O campo data de início deve ser uma data válida.',
             'data_inicio.before' => 'A data de início deve ser uma data anterior a data de finalização do semestre.',
             'data_inicio.after' => 'A data de início deve ser posterior a data de finalização do semestre passado ('.$dataFimSemestreAnterior.').',
+            'data_inicio.unique' => 'Essa data de início já foi cadastrada.',
+            'data_fim.unique' => 'Essa data de fim já foi cadastrada.',
             'data_fim.date' => 'O campo data de término deve ser uma data válida.',
             'data_fim.after' => 'A data de término deve ser igual ou posterior no mínimo 5 meses após a data de início.',
             'limite_doc_estagio.date' => 'O campo de data-limite para entrega da documentação de estágio deve ser uma data válida.',
