@@ -32,10 +32,12 @@ class SemestreAtivoMiddleware
 
         $semestreAtual = Semestre::all()->last();
         if(session('semestre_id')){ $semestreEmSession = Semestre::where('id', session('semestre_id'))->first(); }
+
         if(isset($semestreEmSession)){
             if($semestreEmSession != $semestreAtual || $semestreAtual->data_fim < now()){ // na regra do form request de semestre eu devo criar uma regra pra não criar semestre sem que a data_fim do anterior não tenha chegado
                 if(auth()->guard('web')->check()){
-                    return redirect()->route('welcome')->with('error', 'O prazo para acesso ao semestre acabou.');
+                    return $next($request);
+                    // return redirect()->route('welcome')->with('error', 'O prazo para acesso ao semestre acabou.');
                 }
                 if(auth()->guard('admin')->check()){
                     return redirect()->route('welcome')->with('error', 'Sem permissão de atuar no semestre');
@@ -47,7 +49,7 @@ class SemestreAtivoMiddleware
             return abort(403, "o midd semestreativo nao prevê tudo");
         }elseif(!isset($semestreEmSession) && isset($semestreAtual)){
             $request->session()->put('semestre_id', $semestreAtual->id);
-            
+
             return $next($request);
         } else{
 

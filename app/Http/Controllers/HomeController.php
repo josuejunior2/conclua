@@ -36,14 +36,13 @@ class HomeController extends Controller
 
             // dd($this->middleware('semestre_ativo'));
             $academico = Academico::where('user_id', auth()->user()->id)->first();
+            $orientacaoNoSemestre = $academico->orientacoes->where('semestre_id', session('semestre_id'))->first();
 
-            if($academico->orientacoes){
-                if(!is_null($academico->orientacoes->firstWhere('semestre_id', session('semestre_id')))){
-                    if(!is_null($academico->academicosTCC->where('semestre_id', session('semestre_id')))){
-                        return view('academico.academicoTcc.home', ['academico' => $academico, 'tcc' => $academico->academicosTCC->where('semestre_id', session('semestre_id'))->first()]);
-                    } else if($academico->academicosEstagio->where('semestre_id', session('semestre_id'))->exists()){
-                        return view('academico.academicoEstagio.home', ['academico' => $academico, 'estagio' => $academico->academicosEstagio->where('semestre_id', session('semestre_id'))->first()]);
-                    }
+            if(isset($orientacaoNoSemestre)){
+                if(isset($orientacaoNoSemestre->academico_tcc_id)){
+                    return view('academico.academicoTcc.home', ['academico' => $academico, 'tcc' => $academico->academicosTCC->where('semestre_id', session('semestre_id'))->first()]);
+                } else if(isset($orientacaoNoSemestre->academico_estagio_id)){
+                    return view('academico.academicoEstagio.home', ['academico' => $academico, 'estagio' => $academico->academicosEstagio->where('semestre_id', session('semestre_id'))->first()]);
                 }
             }
             /** A ideia aqui é pegar os id's dos orientadores em solicitações nulas(não respondidas).

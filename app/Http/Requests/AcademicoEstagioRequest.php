@@ -48,8 +48,8 @@ class AcademicoEstagioRequest extends FormRequest
             'funcao.max' => 'O campo função deve ter no máximo 40 caracteres.',
         ];
     }
-    public function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
-    {
-        dd($validator->errors());
-    }
+    // public function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+    // {
+    //     dd($validator->errors());
+    // }
 }

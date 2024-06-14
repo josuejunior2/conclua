@@ -27,4 +27,8 @@ class AcademicoTCC extends Model
     public function Semestre(){
         return $this->belongsTo(Semestre::class, 'semestre_id');
     }
+
+    // public function Atual(){
+    //     return $this->where('semestre_id', session('semestre_id'));
+    // }
 }
