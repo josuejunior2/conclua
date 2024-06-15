@@ -54,6 +54,7 @@ class OrientadorRequest extends FormRequest
                         // 'nome' => 'required|min:10|max:60',
                         // 'email' => 'required|min:16|max:40|email',
                         // 'masp' => 'required|digits:7',
+                        'password' => 'nullable',
                         'formacao_id' => 'required',
                         'area_id' => 'required',
                         'enderecoLattes' => 'required|min:38|max:38',

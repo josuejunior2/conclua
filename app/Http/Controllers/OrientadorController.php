@@ -9,6 +9,7 @@ use App\Models\SemestreOrientador;
 use App\Models\User;
 use App\Models\Area;
 use App\Models\Formacao;
+use App\Models\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\OrientadorRequest;
@@ -48,9 +49,9 @@ class OrientadorController extends Controller
     /**
      * Display the specified resource. FOR GUARD ADMIN
      */
-    public function show(Orientador $orientador)
+    public function show(Admin $orientador)
     {
-        return view('orientador.show', ['orientador' => $orientador]);
+        return view('orientador.show', ['admin' => $orientador]);
     }
 
     /**
@@ -58,10 +59,10 @@ class OrientadorController extends Controller
      */
     public function edit(Orientador $orientador)
     {
-        $password = Hash::make($orientador->password);
+        $orientacoes = $orientador->orientacoes->where('semestre_id', session('semestre_id'));
         $formacoes = Formacao::all();
         $areas = Area::all();
-        return view('orientador.edit', ['areas' => $areas, 'formacoes' => $formacoes, 'orientador' => $orientador, 'password' => $password ]);
+        return view('orientador.edit', ['areas' => $areas, 'formacoes' => $formacoes, 'orientador' => $orientador, 'orientacoes' => $orientacoes]);
     }
 
     /**
@@ -69,9 +70,16 @@ class OrientadorController extends Controller
      */
     public function update(OrientadorRequest $request, Orientador $orientador)
     {
-        $orientador->update($request->validated());
+        $dados = $request->validated();
+        if(is_null($dados['password'])){
+            $dados['password'] = $orientador->Admin->password;
+        } else{
+            $orientador->Admin->update(['password' => Hash::make($dados['password'])]);
+        }
 
-        return redirect()->route('orientador.show', ['orientador' => $orientador]);
+        $orientador->update($dados);
+
+        return redirect()->route('orientador.show', ['orientador' => $orientador->Admin]);
     }
 
 

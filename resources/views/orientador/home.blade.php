@@ -42,7 +42,7 @@
                 </div>
             </div>
         {{-- </div> --}}
-            <div class="col-sm-6 col-lg-3">
+            <div class="col-sm-6 col-lg-3"> 
                 <div class="row row-cards">
                     <div class="col-12">
                     <div class="card" style="height: 28rem">

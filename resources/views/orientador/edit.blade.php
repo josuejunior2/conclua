@@ -24,6 +24,20 @@
                         @csrf
                         @method('PUT')
                         <div class="row g-3 mb-4">
+                            <div class="mb-3">
+                                <label class="form-label required">Atualize sua senha</label>
+                                <div>
+                                    <input name="password" type="password" class="form-control" placeholder="Password"  value="">
+                                    <small class="form-hint">
+                                    A senha deve ter no mínimo 8 caracteres, deve conter pelo menos uma letra maiúscula e minúscula, número e símbolo. (colocar regra no Request depois)
+                                    </small>
+                                    <span class="{{ $errors->has('password') ? 'text-danger' : '' }}">
+                                    {{ $errors->has('password') ? $errors->first('password') : '' }}
+                                </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-3 mb-4">
                         <div class="col-md">
                             <div class="form-label required">Selecione sua formação</div>
                             <select class="form-select" name="formacao_id" id="formacao_id">
@@ -114,11 +128,17 @@
                                 <span class="{{ $errors->has('subArea3') ? 'text-danger' : '' }}">
                                     {{ $errors->has('subArea3') ? $errors->first('subArea3') : '' }}
                                 </span>
-                                <div class="col-3">
+                                <div class="col-3 mb-3">
                                     <div class="form-label required">Disponibilidade</div>
-                                    <select id="disponibilidade" name="disponibilidade" class="form-select" value="{{ old('disponibilidade', '') }}">
-                                        @for ($i = $orientador->orientacoes->count() + 1; $i <= 6; $i++)
-                                            @if ($orientador->orientacoes->isEmpty(0)) $i = 0; @endif
+                                    <select id="disponibilidade" name="disponibilidade" class="form-select" value="{{ old('disponibilidade', '') }}" {{ $orientador->disponibilidade == 6 ?? 'disabled' }}>
+                                        @php
+                                            if ($orientacoes->isEmpty(0) || $orientador->disponibilidade == 6){
+                                                $i = $orientador->disponibilidade;
+                                            }else {
+                                                $i = $orientacoes->count() + 1;
+                                            }
+                                        @endphp
+                                        @for ($i; $i <= 6; $i++)
                                             <option value="{{ $i }}" {{ old('disponibilidade') == $i || $orientador->disponibilidade == $i ? 'selected' : '' }}>{{ $i }}</option>
                                         @endfor
                                         {{-- <option value="0">0</option>
@@ -129,7 +149,7 @@
                                         <option value="5" {{ old('disponibilidade') == '5' ? 'selected' : '' }}>5</option>
                                         <option value="6" {{ old('disponibilidade') == '6' ? 'selected' : '' }}>6</option> --}}
                                     </select>
-                                    </div>
+                                </div>
                             </div>
                         <div class="card-footer bg-transparent mt-auto">
                             <div class="btn-list justify-content-end">

@@ -22,7 +22,7 @@ class Orientador extends Authenticatable
     protected $fillable = ['masp', 'admin_id', 'formacao_id', 'area_id', 'disponibilidade',  'subArea1', 'subArea2', 'subArea3', 'areaPesquisa1', 'areaPesquisa2', 'areaPesquisa3', 'areaPesquisa4', 'areaPesquisa5', 'enderecoLattes', 'enderecoOrcid'];
 
     public function Admin(){
-        return $this->belongsTo(Admin::class); // orientador tem 1 Formacao, ele olha a FK
+        return $this->belongsTo(Admin::class, 'admin_id'); // orientador tem 1 Formacao, ele olha a FK
     }
 
     public function Formacao(){
