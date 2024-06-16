@@ -36,7 +36,7 @@ Route::middleware('auth:web')->group(function () {
 
 Route::get('/', function () { return view('welcome'); })->name('welcome');
 
-// Importante: as rotas funcionam em cascata, uma depois a outra na ordem que foi colocado.
+// Importante: os midd funcionam em cascata, uma depois a outra na ordem que foi colocado.
 Route::middleware(['auth:web', 'semestre_ativo'])->group(function () { // rotas para completar o cadastro do academico
     Route::get('academico/create', 'App\Http\Controllers\AcademicoController@create')->name('academico.create');
     Route::post('academico', 'App\Http\Controllers\AcademicoController@store')->name('academico.store');
@@ -46,14 +46,16 @@ Route::middleware(['auth:web', 'semestre_ativo'])->group(function () { // rotas 
     Route::post('empresa', 'App\Http\Controllers\EmpresaController@store')->name('empresa.store');
     Route::get('academicoTCC/create/{academico}', 'App\Http\Controllers\AcademicoTCCController@create')->name('academicoTCC.create');
     Route::post('academicoTCC', 'App\Http\Controllers\AcademicoTCCController@store')->name('academicoTCC.store');
-});
+    });
 Route::resource('academico', App\Http\Controllers\AcademicoController::class)->except(['create', 'store', 'show', 'index', 'destroy']);
 
 Route::middleware(['auth:web', 'primeiro_acesso', 'semestre_ativo'])->group(function () { //
+    Route::get('academico/{user}', 'App\Http\Controllers\AcademicoController@show')->name('academico.show');
+
     Route::resource('academicoEstagio', App\Http\Controllers\AcademicoEstagioController::class)->except(['create', 'store']);
     Route::resource('empresa', App\Http\Controllers\EmpresaController::class)->except(['create', 'store']);
     Route::resource('solicitacao', App\Http\Controllers\SolicitacaoController::class)->names(['show' => 'solicitacao.show.web'])->except(['create', 'index']);
-    Route::resource('academicoTCC', App\Http\Controllers\AcademicoTCCController::class)->except(['create', 'store']);
+    Route::resource('academicoTCC', App\Http\Controllers\AcademicoTCCController::class)->except(['create', 'store', 'destroy']);
     Route::get('solicitacao/{orientador}/{academico}', 'App\Http\Controllers\SolicitacaoController@create')->name('solicitacao.create');
 
 });

@@ -7,10 +7,12 @@ use App\Models\Orientador;
 use App\Models\AcademicoTCC;
 use App\Models\Academico;
 use App\Models\Semestre;
+use App\Models\User;
 use App\Models\Empresa;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request\Request;
 use App\Http\Requests\AcademicoRequest;
+use App\Http\Requests\AcademicoUpdateRequest;
 use Illuminate\Support\Facades\Hash;
 
 class AcademicoController extends Controller
@@ -63,16 +65,17 @@ class AcademicoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Academico $academico)
+    public function show(User $user)
     {
-        if(AcademicoTCC::where('academico_id', $academico->id)->exists()){
-            $tcc = AcademicoTCC::where('academico_id', $academico->id)->first();
-            return view('admin.academico.show', ['academico' => $academico, 'tcc' => $tcc]);
-        } else if(AcademicoEstagio::where('academico_id', $academico->id)->exists()){
-            $estagio = AcademicoEstagio::with('Empresa')->where('academico_id', $academico->id)->first();
-            return view('admin.academico.show', ['academico' => $academico, 'estagio' => $estagio]);
+        $academico = $user->Academico;
+        if(AcademicoTCC::where('academico_id', $academico->id)->where('semestre_id', session('semestre_id'))->exists()){
+            $tcc = AcademicoTCC::where('academico_id', $academico->id)->where('semestre_id', session('semestre_id'))->first();
+            return view('academico.show', ['academico' => $academico, 'tcc' => $tcc]);
+        } else if(AcademicoEstagio::where('academico_id', $academico->id)->where('semestre_id', session('semestre_id'))->exists()){
+            $estagio = AcademicoEstagio::with('Empresa')->where('academico_id', $academico->id)->where('semestre_id', session('semestre_id'))->first();
+            return view('academico.show', ['academico' => $academico, 'estagio' => $estagio]);
         } else {
-            return view('admin.academico.show', ['academico' => $academico]);
+            return view('academico.show', ['academico' => $academico]);
         }
     }
 
@@ -81,15 +84,17 @@ class AcademicoController extends Controller
      */
     public function edit(Academico $academico)
     {
-        //
+        return view('academico.edit', ['academico' => $academico]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(AcademicoRequest $request, Academico $academico)
+    public function update(AcademicoUpdateRequest $request, Academico $academico)
     {
-        //
+        $dados = $request->validated();
+        $academico->User->update(['password' => Hash::make($dados['password'])]);
+        return redirect()->route('academico.show', ['user' => $academico->User]);
     }
 
     /**

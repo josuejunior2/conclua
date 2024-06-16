@@ -16,7 +16,7 @@ class SolicitacaoOrientadorController extends Controller
     public function show(Solicitacao $solicitacao)
     {
         if($solicitacao->Orientador->disponibilidade == 0) { return redirect()->route('admin.home'); }
-        
+
         $tcc = $estagio = null;
         if($solicitacao->AcademicoTCC) { $tcc = $solicitacao->AcademicoTCC->where('semestre_id', session('semestre_id'))->first(); }
         if($solicitacao->AcademicoEstagio) { $estagio = $solicitacao->AcademicoEstagio->where('semestre_id', session('semestre_id'))->first(); }
@@ -33,7 +33,7 @@ class SolicitacaoOrientadorController extends Controller
      *      relacões entre obj's
      */
     public function aceitar_solicitacao(Solicitacao $solicitacao)
-    {
+    { //acho que tem que colocar aqui a verificação se já tá orientado
         if($solicitacao->AcademicoTCC){
             if($solicitacao->AcademicoTCC->where('semestre_id', session('semestre_id'))->first()){
                 $tcc = $solicitacao->AcademicoTCC->where('semestre_id', session('semestre_id'))->first();

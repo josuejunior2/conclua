@@ -135,6 +135,6 @@ class SemestreController extends Controller
     {
         $request->session()->put('semestre_id', $request->validated()['semestre_id']);
 
-        return redirect()->route('home')->with(['success' => 'mudou o semestre']);
+        return redirect()->back()->with(['success' => 'mudou o semestre']);
     }
 }

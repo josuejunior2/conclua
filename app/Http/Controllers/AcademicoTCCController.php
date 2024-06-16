@@ -72,12 +72,4 @@ class AcademicoTCCController extends Controller
 
         return redirect()->route('home')->with('success', 'Cadastro atualizado com sucesso!');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(AcademicoTCC $academicoTCC)
-    {
-        //
-    }
 }
