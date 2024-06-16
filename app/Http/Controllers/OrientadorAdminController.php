@@ -8,6 +8,10 @@ use App\Models\Semestre;
 use App\Models\SemestreOrientador;
 use App\Models\Orientador;
 use App\Models\Orientacao;
+use App\Models\Admin;
+use App\Imports\AdminsImport;
+use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 
 class OrientadorAdminController extends Controller
 {
@@ -65,9 +69,7 @@ class OrientadorAdminController extends Controller
         $arquivo = $request->file('tabela_orientadores');
 
         try {
-            $ativar = $request->input('ativar');//A ideia aqui é ativar o cadastro dos orientadores no semestre em ativo SE tiver marcado a opção 'ativar' na view.
-            Excel::import(new OrientadoresImport($ativar), $arquivo);
-            Excel::import(new AdminsImport($ativar), $arquivo);
+            Excel::import(new AdminsImport(), $arquivo);
             // Seu código para importar e processar o arquivo aqui
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['erro' => 'Erro: Planilha vazia ou dados repetidos.']);

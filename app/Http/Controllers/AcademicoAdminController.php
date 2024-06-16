@@ -8,8 +8,12 @@ use App\Models\Semestre;
 use App\Models\SemestreAcademico;
 use App\Models\SemestreOrientador;
 use App\Models\Academico;
+use App\Models\User;
 use App\Models\AcademicoTCC;
 use App\Models\AcademicoEstagio;
+use Illuminate\Support\Facades\Validator;
+use App\Imports\UsersImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AcademicoAdminController extends Controller
 {
@@ -83,12 +87,10 @@ class AcademicoAdminController extends Controller
         $arquivo = $request->file('tabela_academicos');
 
         try {
-            $ativar = $request->input('ativar'); //A ideia aqui é ativar o cadastro dos academicos que acabaram de ser cadastrados SE tiver marcado a opção 'ativar' na view.
-            Excel::import(new AcademicosImport($ativar), $arquivo);
-            Excel::import(new UsersImport($ativar), $arquivo);
-
+            // Excel::import(new AcademicosImport(), $arquivo);
+            $users = Excel::import(new UsersImport(), $arquivo);
         } catch (\Exception $e) {
-            return redirect()->back()->withErrors(['erro' => 'Erro: Planilha vazia ou dados repetidos.']);
+            return redirect()->back()->withErrors(['erro' => 'Erro: Planilha vazia ou dados repetidos. '.$e]);
         }
 
         $usuarios = User::where('created_at', '>=', now()->subSeconds(3))->get();
