@@ -35,6 +35,7 @@ class OrientadorAdminController extends Controller
      */
     public function show(Orientador $orientador)
     {
+        // dd($orientador);
         $orientacoes = $orientador->orientacoes->where('semestre_id', session('semestre_id'));
         return view('admin.orientador.show', ['orientador' => $orientador, 'orientacoes' => $orientacoes]);
     }
@@ -42,10 +43,12 @@ class OrientadorAdminController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Orientador $orientador) // Não coloquei o softDeletes, talvez deva colocar depois
+    public function destroy(Orientador $orientador)
     {
-        $orientador->delete();
-        return redirect()->route('orientador.index');
+        $orientador->Admin->forceDelete();
+        $orientador->forceDelete();
+
+        return redirect()->route('admin.orientador.index');
     }
 
     /**
@@ -62,17 +65,15 @@ class OrientadorAdminController extends Controller
         ]);
 
         if ($validator->fails()) {
-            // Redireciona de volta com os erros
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $arquivo = $request->file('tabela_orientadores');
 
         try {
-            Excel::import(new AdminsImport(), $arquivo);
-            // Seu código para importar e processar o arquivo aqui
+            Excel::import(new AdminsImport, $arquivo);
         } catch (\Exception $e) {
-            return redirect()->back()->withErrors(['erro' => 'Erro: Planilha vazia ou dados repetidos.']);
+            return redirect()->back()->withErrors(['erro' => 'Erro: Planilha vazia ou dados repetidos.'.$e]);
         }
 
         // pega cada orientador que acabou de ser cadastrado da tabela admins
@@ -84,7 +85,7 @@ class OrientadorAdminController extends Controller
 
         $nomeOriginal = $arquivo->getClientOriginalName();
 
-        $arquivo->move('/uploads', $nomeOriginal);//ta dando errado
+        $arquivo->move('uploads', $nomeOriginal);//ta dando errado
 
         return redirect()->route('admin.orientador.index')->with('success', 'Operação realizada com sucesso!');
     }

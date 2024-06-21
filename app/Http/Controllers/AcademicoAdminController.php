@@ -54,15 +54,21 @@ class AcademicoAdminController extends Controller
     {
         if(AcademicoTCC::where('academico_id', $academico->id)->exists()){
 
-            AcademicoTCC::where('academico_id', $academico->id)->delete();
-            $academico->delete();
+            $user = $academico->User;
+            $academico->academicosTCC->forceDelete();
+            $academico->forceDelete();
+            $user->forceDelete();
 
         } else if(AcademicoEstagio::where('academico_id', $academico->id)->exists()){
 
-            AcademicoEstagio::where('academico_id', $academico->id)->delete();
-            $academico->delete();
+            $user = $academico->User;
+            $academico->academicosEstagio->forceDelete();
+            $academico->forceDelete();
+            $user->forceDelete();
         } else {
-            $academico->delete();
+            $user = $academico->User;
+            $academico->forceDelete();
+            $user->forceDelete();
         }
         return redirect()->route('admin.academico.index');
     }
@@ -90,7 +96,7 @@ class AcademicoAdminController extends Controller
             // Excel::import(new AcademicosImport(), $arquivo);
             $users = Excel::import(new UsersImport(), $arquivo);
         } catch (\Exception $e) {
-            return redirect()->back()->withErrors(['erro' => 'Erro: Planilha vazia ou dados repetidos. '.$e]);
+            return redirect()->back()->withErrors(['erro' => 'Erro: Planilha vazia ou dados repetidos. ']);
         }
 
         $usuarios = User::where('created_at', '>=', now()->subSeconds(3))->get();
@@ -102,7 +108,7 @@ class AcademicoAdminController extends Controller
 
         $nomeOriginal = $arquivo->getClientOriginalName();
 
-        $arquivo->move('/uploads', $nomeOriginal);// ta dando errado, ver depois
+        $arquivo->move('uploads', $nomeOriginal);// ta dando errado, ver depois
 
         return redirect()->route('admin.academico.index')->with('success', 'Operação realizada com sucesso!');
     }
