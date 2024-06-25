@@ -10,7 +10,7 @@
                 {{ session('success') }}
             </div>
         @endif
-        aaa
+        Home - Admin
          {{-- @dd($semestreAtual) --}}
     </div>
 </div>

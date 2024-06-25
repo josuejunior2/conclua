@@ -43,9 +43,11 @@
                 <td>{{ $o->Formacao ? $o->Formacao->nome : 'N/A' }}</td>
                 <td>{{ $o->Area ? $o->Area->nome : 'N/A' }}</td>
                 <td class="text-end">
+                    @can('solicitar orientacao')
                     <a class="btn btn-outline-success" href="{{ route('solicitacao.create', ['orientador' => $o, 'academico' => $academico]) }}">
                         Solicitar vinculação
                     </a>
+                    @endcan
                 </td>
             </tr>
             @endforeach

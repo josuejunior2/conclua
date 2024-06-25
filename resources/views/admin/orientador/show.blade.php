@@ -11,7 +11,7 @@
                 Editar
             </a> --}} {{-- Desisti de colocar Editar pq acho improvável que o admin queira fazê-lo --}}
             @can('CRUD usuarios')
-                <form id="form_{{$orientador->id}}" method="post" action="{{ route('admin.orientador.destroy', ['orientador' => $orientador->id]) }}">
+                <form id="form_{{$orientador->id}}" method="post" action="{{ route('admin.orientador.destroy', ['orientador' => $orientador]) }}">
                     @method('DELETE')
                     @csrf
                     <!-- <button type="submit">Excluir</button>  -->

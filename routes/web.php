@@ -89,7 +89,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Route::post('desativar/semestre/{semestre}', [App\Http\Controllers\SemestreController::class, 'desativar'])->name('semestre.desativar');
 
         Route::get('orientador/{orientador}', 'App\Http\Controllers\OrientadorAdminController@show')->name('orientador.show');
-        Route::post('orientador', 'App\Http\Controllers\OrientadorAdminController@destroy')->name('orientador.destroy');
+        Route::delete('orientador/{orientador}', 'App\Http\Controllers\OrientadorAdminController@destroy')->name('orientador.destroy');
         Route::get('orientador', 'App\Http\Controllers\OrientadorAdminController@index')->name('orientador.index');
         Route::post('ativar/orientador/{orientador}', 'App\Http\Controllers\OrientadorAdminController@ativar_orientador')->name('orientador.ativar');
         Route::post('desativar/orientador/{orientador}', 'App\Http\Controllers\OrientadorAdminController@desativar_orientador')->name('orientador.desativar');
