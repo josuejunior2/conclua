@@ -45,8 +45,9 @@ class OrientadorAdminController extends Controller
      */
     public function destroy(Orientador $orientador)
     {
-        $orientador->Admin->forceDelete();
+        $admin = $orientador->Admin;
         $orientador->forceDelete();
+        $admin->forceDelete();
 
         return redirect()->route('admin.orientador.index');
     }
@@ -73,7 +74,7 @@ class OrientadorAdminController extends Controller
         try {
             Excel::import(new AdminsImport, $arquivo);
         } catch (\Exception $e) {
-            return redirect()->back()->withErrors(['erro' => 'Erro: Planilha vazia ou dados repetidos.'.$e]);
+            return redirect()->back()->withErrors(['erro' => 'Erro: '.$e->getMessage()]);
         }
 
         // pega cada orientador que acabou de ser cadastrado da tabela admins

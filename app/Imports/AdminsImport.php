@@ -6,33 +6,50 @@ use App\Models\Admin;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Orientador;
+use Maatwebsite\Excel\Concerns\WithValidation;
+use Maatwebsite\Excel\Concerns\ToCollection;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
-class AdminsImport implements ToModel
+class AdminsImport implements ToCollection, WithValidation
 {
+   
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
+    * @param Collection $collection
     */
-    public function model(array $row)
+    public function collection(Collection $rows)
     {
-        $admin = Admin::updateOrCreate(
-            ['nome'    => $row[0]],
-            [
-            'nome'     => $row[0],
-            'email'    => $row[1],
-            'password' => Hash::make('admin123'),
-            ]
-        );
+        // dd($rows);
+        foreach ($rows as $row)
+        {
+            DB::transaction(function() use($row){
+                $admin = Admin::updateOrCreate(
+                    ['nome'    => $row[0]],
+                    [
+                        'nome'     => $row[0],
+                        'email'    => $row[1],
+                        'password' => Hash::make('admin123'),
+                    ]
+                );
 
-        $orientador = Orientador::updateOrCreate(
-            ['masp' => $row[2]], // Condições para procurar o orientador existente
-            [
-                'admin_id' => $admin->id,
-                'masp' => $row[2],
-            ]
-        );
+                $orientador = Orientador::updateOrCreate(
+                    ['masp' => $row[2]], // Condições para procurar o orientador existente
+                    [
+                        'admin_id' => $admin->id,
+                        'masp' => $row[2],
+                    ]
+                );
+            }); 
+        
+        }
+    }
 
-        return array($admin, $orientador);
+    public function rules(): array
+    {
+        return [
+            '0' => 'required|string',
+            '1' => 'required|email',
+            '2' => 'required|digits:7',
+        ];
     }
 }
