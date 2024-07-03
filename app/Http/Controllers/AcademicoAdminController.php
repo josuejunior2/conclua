@@ -14,6 +14,7 @@ use App\Models\AcademicoEstagio;
 use Illuminate\Support\Facades\Validator;
 use App\Imports\UsersImport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Response;
 
 class AcademicoAdminController extends Controller
 {
@@ -147,5 +148,14 @@ class AcademicoAdminController extends Controller
         $orientacao->delete();
 
         return redirect()->route('admin.academico.show', ['academico' => $estagio->Academico]);
+    }
+    
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function downloadModeloPlanilha()
+    {
+        $filePath = public_path('files/modelo_importacao_academico.xlsx');
+        return Response::download($filePath);
     }
 }

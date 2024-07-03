@@ -8,9 +8,26 @@
         <div class="modal-body">
             Instruções: <br>
             Para cadastrar, basta enviar um arquivo excel com a extensão '.xlsx' contendo as seguintes informações: <br>
-            Na primeira coluna, o nome completo do professor; <br>
-            Na segunda coluna, o email do professor; <br>
-            Na terceira coluna, o MASP do professor. <br>
+            <ol>
+                <li>Na primeira coluna, o nome completo do acadêmico; </li>
+                <li>Na segunda coluna, o email do acadêmico;</li>
+                <li>Na terceira coluna, a matricula do acadêmico. </li>
+            </ol>
+            <form id="form" method="post"
+                action="{{ route('admin.academico.download.modelo.planilha') }}">
+                @csrf
+                <button type="submit" class="btn btn-outline-secondary w-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-download">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />
+                        <path d="M7 11l5 5l5 -5" />
+                        <path d="M12 4l0 12" />
+                    </svg>
+                    Baixe aqui a planilha de modelo
+                </button>
+            </form>
             <form method="POST" action="{{ route('admin.cadastro-academico') }}" enctype="multipart/form-data" class="row g-3 align-items-center">
                 @csrf
                 <label for="tabela_orientadores" class="visually-hidden">Escolha um arquivo</label>

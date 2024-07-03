@@ -10,8 +10,9 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class AdminsImport implements ToCollection, WithValidation
+class AdminsImport implements ToCollection, WithValidation, WithHeadingRow
 {
    
     /**
@@ -22,34 +23,49 @@ class AdminsImport implements ToCollection, WithValidation
         // dd($rows);
         foreach ($rows as $row)
         {
-            DB::transaction(function() use($row){
-                $admin = Admin::updateOrCreate(
-                    ['nome'    => $row[0]],
-                    [
-                        'nome'     => $row[0],
-                        'email'    => $row[1],
-                        'password' => Hash::make('admin123'),
-                    ]
-                );
+            if($row->filter()->isNotEmpty()){
+                DB::transaction(function() use($row){           
+                    $admin = Admin::updateOrCreate(
+                        ['nome'         => $row['nome']],
+                        [
+                            'nome'      => $row['nome'],
+                            'email'     => $row['email'],
+                            'password'  => Hash::make('admin123'),
+                        ]
+                    );
 
-                $orientador = Orientador::updateOrCreate(
-                    ['masp' => $row[2]], // Condições para procurar o orientador existente
-                    [
-                        'admin_id' => $admin->id,
-                        'masp' => $row[2],
-                    ]
-                );
-            }); 
-        
+                    $orientador = Orientador::updateOrCreate(
+                        ['masp'         => $row['masp']], // Condições para procurar o orientador existente
+                        [
+                            'admin_id'  => $admin->id,
+                            'masp'      => $row['masp'],
+                        ]
+                    );
+                }); 
+            }
         }
     }
 
     public function rules(): array
     {
         return [
-            '0' => 'required|string',
-            '1' => 'required|email',
-            '2' => 'required|digits:7',
+            'nome'  => 'required|string',
+            'email' => 'required|email',
+            'masp'  => 'required|digits:7',
+        ];
+    }
+    /**
+     * Get the messages array.
+     *
+     */
+    public function customValidationMessages(): array
+    {
+        return [
+            'nome.required' => 'O campo nome deve ser preenchido.',
+            'email.required' => 'O campo email deve ser preenchido.',
+            'masp.required' => 'O campo masp deve ser preenchido.',
+            'email.email' => 'O email do orientador deve ser um email válido.',
+            'masp.digits' => 'O MASP deve ter 7 dígitos numéricos.',
         ];
     }
 }

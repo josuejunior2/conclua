@@ -12,6 +12,7 @@ use App\Models\Admin;
 use App\Imports\AdminsImport;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Response;
 
 class OrientadorAdminController extends Controller
 {
@@ -89,5 +90,14 @@ class OrientadorAdminController extends Controller
         $arquivo->move('uploads', $nomeOriginal);//ta dando errado
 
         return redirect()->route('admin.orientador.index')->with('success', 'Operação realizada com sucesso!');
+    }
+    
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function downloadModeloPlanilha()
+    {
+        $filePath = public_path('files/modelo_importacao_orientador.xlsx');
+        return Response::download($filePath);
     }
 }

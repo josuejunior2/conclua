@@ -88,16 +88,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Route::post('ativar/semestre/{semestre}', [App\Http\Controllers\SemestreController::class, 'ativar'])->name('semestre.ativar');
         // Route::post('desativar/semestre/{semestre}', [App\Http\Controllers\SemestreController::class, 'desativar'])->name('semestre.desativar');
 
+        Route::post('orientador/download/modelo/planilha', 'App\Http\Controllers\OrientadorAdminController@downloadModeloPlanilha')->name('orientador.download.modelo.planilha');
         Route::get('orientador/{orientador}', 'App\Http\Controllers\OrientadorAdminController@show')->name('orientador.show');
         Route::delete('orientador/{orientador}', 'App\Http\Controllers\OrientadorAdminController@destroy')->name('orientador.destroy');
         Route::get('orientador', 'App\Http\Controllers\OrientadorAdminController@index')->name('orientador.index');
-        Route::post('ativar/orientador/{orientador}', 'App\Http\Controllers\OrientadorAdminController@ativar_orientador')->name('orientador.ativar');
-        Route::post('desativar/orientador/{orientador}', 'App\Http\Controllers\OrientadorAdminController@desativar_orientador')->name('orientador.desativar');
         Route::post('cadastro/orientador', 'App\Http\Controllers\OrientadorAdminController@import_orientadores')->name('cadastro-orientador');
-
+        
+        Route::post('academico/download/modelo/planilha', 'App\Http\Controllers\AcademicoAdminController@downloadModeloPlanilha')->name('academico.download.modelo.planilha');
         Route::post('desvincular/academico/estagio/{estagio}', 'App\Http\Controllers\AcademicoAdminController@desvincular_academico_estagio')->name('academico.desvincular.estagio');
         Route::post('desvincular/academico/tcc/{tcc}', 'App\Http\Controllers\AcademicoAdminController@desvincular_academico_tcc')->name('academico.desvincular.tcc');
-        Route::post('ativar/academico/{academico}', 'App\Http\Controllers\AcademicoAdminController@ativar_academico')->name('academico.ativar');
         Route::post('cadastro/academico', 'App\Http\Controllers\AcademicoAdminController@import_academicos')->name('cadastro-academico');
         Route::delete('academico/delete/{academico}', 'App\Http\Controllers\AcademicoAdminController@destroy')->name('academico.destroy');
         Route::get('academico', 'App\Http\Controllers\AcademicoAdminController@index')->name('academico.index');

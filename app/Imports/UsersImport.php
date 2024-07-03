@@ -5,9 +5,11 @@ namespace App\Imports;
 use App\Models\User;
 use App\Models\Academico;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithValidation;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class UsersImport implements ToModel
+class UsersImport implements ToModel, WithValidation, WithHeadingRow
 {
     /**
     * @param array $row
@@ -17,20 +19,44 @@ class UsersImport implements ToModel
     public function model(array $row)
     {
         $user = User::updateOrCreate(
-            ['nome'     => $row[0]],
+            ['nome'     => $row['nome']],
             [
-            'nome'     => $row[0],
-            'email'    => $row[1],
+            'nome'     => $row['nome'],
+            'email'    => $row['email'],
             'password' => Hash::make('admin123'),
             ]
         );
         $academico = Academico::updateOrCreate(
-            ['matricula'    => $row[2]], // Condições para procurar o acadêmico existente
+            ['matricula'    => $row['matricula']], // Condições para procurar o acadêmico existente
             [
                 'user_id'   => $user->id,
-                'matricula' => $row[2],
+                'matricula' => $row['matricula'],
             ]
         );
         return array($user, $academico);
+    }
+    
+    public function rules(): array
+    {
+        return [
+            'nome'  => 'required|string',
+            'email' => 'required|email',
+            'matricula'  => 'required|digits:9',
+        ];
+    }
+    /**
+     * Get the messages array.
+     *
+     */
+    public function customValidationMessages(): array
+    {
+        return [
+            'nome.required' => 'O campo nome deve ser preenchido.',
+            'email.required' => 'O campo email deve ser preenchido.',
+            'masp.required' => 'O campo masp deve ser preenchido.',
+            'email.required' => 'O campo email deve ser preenchido.',
+            'email.email' => 'O email do orientador deve ser um email válido.',
+            'matricula.digits' => 'O MASP deve ter 9 dígitos numéricos.',
+        ];
     }
 }
