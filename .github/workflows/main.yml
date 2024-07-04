@@ -2,7 +2,7 @@ on:
     push:
       branches:
         - main
-name: 🚀 Deploy test website on push
+name: 🚀 Deploy conclua website on push
 jobs:
     web-deploy:
         name: 🎉 Deploy
