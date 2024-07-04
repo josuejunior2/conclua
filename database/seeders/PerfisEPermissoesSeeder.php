@@ -18,9 +18,9 @@ class PerfisEPermissoesSeeder extends Seeder
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
          //Criar Papel deo administrador
-        $admin = Role::create(['name' => 'Admin', 'guard_name' => 'admin', 'description' => 'Acesso completo ao sistema']);
-        $orientador = Role::create(['name' => 'Orientador', 'guard_name' => 'admin', 'description' => 'Acesso completo ao sistema com excessões']);
-        $usuario = Role::create(['name' => 'Academico', 'guard_name' => 'web', 'description' => 'Acesso parcial ao sistema']);
+        $admin = Role::firstOrCreate(['name' => 'Admin', 'guard_name' => 'admin', 'description' => 'Acesso completo ao sistema']);
+        $orientador = Role::firstOrCreate(['name' => 'Orientador', 'guard_name' => 'admin', 'description' => 'Acesso completo ao sistema com excessões']);
+        $usuario = Role::firstOrCreate(['name' => 'Academico', 'guard_name' => 'web', 'description' => 'Acesso parcial ao sistema']);
 
         $permissionsAdmin = collect([
             ['guard_name' => 'admin', 'name' => 'CRUD usuarios',  'description' => 'Permite fazer CRUD de todos usuários.'],
@@ -36,6 +36,9 @@ class PerfisEPermissoesSeeder extends Seeder
             ['guard_name' => 'admin', 'name' => 'visualizar atividades',  'description' => 'Permite a visualização de atividades.'],
             ['guard_name' => 'admin', 'name' => 'visualizar solicitacoes de orientacao',  'description' => 'Permite a visualização de solicitações de orientação.'],
             ['guard_name' => 'admin', 'name' => 'responder solicitacoes de orientacao',  'description' => 'Permite responder positiva ou negativamente as solicitações de orientação.'],
+            ['guard_name' => 'admin', 'name' => 'criar atividade',  'description' => 'Permite criar atividade.'],
+            ['guard_name' => 'admin', 'name' => 'editar atividade',  'description' => 'Permite editar atividade.'],
+            ['guard_name' => 'admin', 'name' => 'deletar atividade',  'description' => 'Permite deletar atividade.'],
         ]);// aqui as do orientador (incluindo algumas que o admin tbm terá)
 
         $permissionsUser = collect([
@@ -44,13 +47,13 @@ class PerfisEPermissoesSeeder extends Seeder
         ]);
 
         $permissionsAdmin->each(function ($item) use ($admin) {
-            $permission = Permission::create($item);
+            $permission = Permission::firstOrCreate($item);
             $admin->givePermissionTo($permission);
             $permission->assignRole($admin);
         });
 
         $permissionsOrientador->each(function ($item) use ($orientador) { // sincroniza permissoes do orientador
-            $permission = Permission::create($item);
+            $permission = Permission::firstOrCreate($item);
             $orientador->givePermissionTo($permission);
             $permission->assignRole($orientador);
         });
@@ -62,7 +65,7 @@ class PerfisEPermissoesSeeder extends Seeder
         // });
 
         $permissionsUser->each(function ($item) use ($usuario) {
-            $permission = Permission::create($item);
+            $permission = Permission::firstOrCreate($item);
             $usuario->givePermissionTo($permission);
             $permission->assignRole($usuario);
         });

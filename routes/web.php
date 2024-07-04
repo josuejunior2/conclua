@@ -110,15 +110,11 @@ Route::middleware(['auth:admin', 'semestre_ativo'])->group(function () {
     Route::post('orientador/{orientador}', 'App\Http\Controllers\OrientadorController@store')->name('orientador.store');
 });
 
-
-
-
-Route::middleware(['auth:admin', 'semestre_ativo'])->group(function () {
-});
 Route::middleware(['auth:admin', 'semestre_ativo', 'primeiro_acesso'])->group(function () { // rotas normal ANTES DE ATIVAR O SEMESTRE
     Route::get('admin/home', [AdminHomeController::class, 'index'])->name('admin.home');
     Route::resource('orientador', App\Http\Controllers\OrientadorController::class)->except(['create', 'store', 'index', 'destroy']);
-
+    
+    Route::resource('atividade', App\Http\Controllers\AtividadeController::class);
 });
 
 Route::middleware(['auth:admin', 'semestre_ativo', 'primeiro_acesso'])->group(function () { // ORIENTADOR. SEMESTRE ATIVO
