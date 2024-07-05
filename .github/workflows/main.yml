@@ -17,6 +17,6 @@ jobs:
                 server: ${{ secrets.ftp_host }}
                 username: ${{ secrets.ftp_user }}
                 password: ${{ secrets.ftp_password }}
-                server-dir: /home/conclua/htdocs/homologacao.orce.net.br/
-                port: 55004
+                server-dir: home/conclua/htdocs/homologacao.orce.net.br/
+                port: ${{ secrets.ftp_port }}
                 protocol: ftps
