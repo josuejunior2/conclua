@@ -19,3 +19,4 @@ jobs:
                 password: ${{ secrets.ftp_password }}
                 server-dir: /home/conclua/htdocs/homologacao.orce.net.br/
                 port: 55004
+                protocol: sftp
