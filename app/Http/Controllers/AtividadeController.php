@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Atividade;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Http\Requests\AtividadeRequest;
 
 class AtividadeController extends Controller
@@ -35,7 +36,8 @@ class AtividadeController extends Controller
      */
     public function store(AtividadeRequest $request)
     {
-        Atividade::create($request->validated());
+        $dados = Atividade::create($request->validated());
+        // dd($request->input('data_limite'));
         return redirect()->route('atividade.index');
     }
 

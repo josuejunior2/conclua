@@ -45,13 +45,25 @@
                     </div>
                 </div>
                 <div class="mb-3">
-                    <div class="form-label">Data limite para entrega</div>
-                    <div class="datagrid-content">
-                        <input type="hidden" id="data_limite" name="data_limite" value="{{ old('data_limite', '') }}"
-                            autocomplete="off" />
-                        <span class="{{ $errors->has('data_limite') ? 'text-danger' : '' }}">
-                            {{ $errors->has('data_limite') ? $errors->first('data_limite') : '' }}
-                        </span>
+                    <div class="row d-flex justify-content-start">
+                        <div class="col flex-column">
+                            <div class="form-label required">Data limite para entrega</div>
+                            <div>
+                                <input type="hidden" id="data_limite" name="data_limite" value="{{ old('data_limite', '') }}" autocomplete="off" />
+                            </div>
+                            <div>
+                                <span class="{{ $errors->has('data_limite') ? 'text-danger' : '' }}">
+                                    {{ $errors->has('data_limite') ? $errors->first('data_limite') : '' }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Hora</label>
+                            <input type="text" name="hora" id="hora" class="form-control" data-mask="00:00" data-mask-visible="true" placeholder="00:00" autocomplete="off" value="{{ old('hora', '') }}"/>
+                            <span class="{{ $errors->has('hora') ? 'text-danger' : '' }}">
+                                {{ $errors->has('hora') ? $errors->first('hora') : '' }}
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <div class="card-footer bg-transparent mt-auto">

@@ -19,8 +19,8 @@ return new class extends Migration
             $table->text('titulo', 256)->required();
             $table->text('descricao', 10000)->nullable();
 
-            $table->date('data_limite')->required();
-            $table->date('data_entrega')->nullable();
+            $table->dateTime('data_limite')->required();
+            $table->dateTime('data_entrega')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
