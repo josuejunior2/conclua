@@ -46,7 +46,7 @@ class AtividadeController extends Controller
      */
     public function show(Atividade $atividade)
     {
-        //
+        return view('atividade.show', ['atividade' => $atividade]);
     }
 
     /**
@@ -54,7 +54,10 @@ class AtividadeController extends Controller
      */
     public function edit(Atividade $atividade)
     {
-        //
+        $this->middleware('permission:editar atividade');
+        $orientacoes = auth()->guard('admin')->user()->Orientador->orientacoes->where('semestre_id', session('semestre_id'));
+
+        return view('atividade.edit', ['atividade' => $atividade, 'orientacoes' => $orientacoes]);
     }
 
     /**
