@@ -63,9 +63,10 @@ class AtividadeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Atividade $atividade)
+    public function update(AtividadeRequest $request, Atividade $atividade)
     {
-        //
+        $atividade->update($request->validated());
+        return redirect()->route('atividade.show', ['atividade' => $atividade]);
     }
 
     /**
@@ -73,6 +74,7 @@ class AtividadeController extends Controller
      */
     public function destroy(Atividade $atividade)
     {
-        //
+        $atividade->forceDelete();
+        return redirect()->route('atividade.index');
     }
 }

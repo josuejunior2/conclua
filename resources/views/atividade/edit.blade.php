@@ -7,8 +7,9 @@
         </div>
 
         <div class="card-body">
-            <form method="POST" action="{{ route('atividade.store') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('atividade.update', ['atividade' => $atividade]) }}" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
                 <div class="mb-3">
                     <div class="form-label required">Orientando</div>
                     <select class="form-select" name="orientacao_id" id="orientacao_id">
