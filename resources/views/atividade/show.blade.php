@@ -64,6 +64,10 @@
                     </div>
                 </div>
                 <div class="datagrid-item">
+                    <div class="datagrid-title">Atualizado em:</div>
+                    <div class="datagrid-content">{{ \Carbon\Carbon::parse($atividade->updated_at)->format('d/m/Y H:i') }}</div>
+                </div>
+                <div class="datagrid-item">
                     <div class="datagrid-title">Data-limite para entrega</div>
                     <div class="datagrid-content">{{ \Carbon\Carbon::parse($atividade->data_limite)->format('d/m/Y H:i') }}
                     </div>

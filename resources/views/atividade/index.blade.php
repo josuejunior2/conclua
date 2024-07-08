@@ -35,6 +35,7 @@
               <th>Título</th>
               <th>Descrição</th>
               <th>Criado em</th>
+              <th>Atualizado em</th>
               <th>Data-limite</th>
               <th>Entregue em</th>
               <th></th>
@@ -47,6 +48,7 @@
                 <td>{{ $atividade->titulo }}</td>
                 <td>{{ $atividade->descricao }}</td>
                 <td>{{ \Carbon\Carbon::parse($atividade->created_at)->format('d/m/Y H:i') }}</td>
+                <td>{{ \Carbon\Carbon::parse($atividade->updated_at)->format('d/m/Y H:i') }}</td>
                 <td>{{ \Carbon\Carbon::parse($atividade->data_limite)->format('d/m/Y H:i') }}</td>
                 <td>{{ $atividade->data_entrega ? \Carbon\Carbon::parse($atividade->data_entrega)->format('d/m/Y G:h') : '' }}</td>
                 <td class="d-flex align-items-center justify-content-center text-end">
