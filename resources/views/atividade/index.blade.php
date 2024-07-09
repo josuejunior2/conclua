@@ -34,7 +34,7 @@
               {{--<th class="w-1"></th>  <input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select all invoices"> --}}
               <th>Título</th>
               <th>Descrição</th>
-              <th>Criado em</th>
+              <th>Criada em</th>
               <th>Atualizado em</th>
               <th>Data-limite</th>
               <th>Entregue em</th>

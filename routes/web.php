@@ -65,6 +65,8 @@ Route::middleware(['auth:web', 'primeiro_acesso', 'semestre_ativo'])->group(func
      * Esta rota /home aqui vale apenas para academico, pq o /home para admin&orientador vai direto para /admin/home, e /admin/home na linha 93 nao tem o semestre_ativo
      */
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/academico/atividade/{atividade}', [App\Http\Controllers\AtividadeAcademicoController::class, 'show'])->name('academico.atividade.show');
+    Route::resource('submissao_atividade', App\Http\Controllers\SubmissaoAtividadeController::class)->except(['create']);
 });
 
 

@@ -21,6 +21,9 @@ return new class extends Migration
 
             $table->dateTime('data_limite')->required();
             $table->dateTime('data_entrega')->nullable();
+
+            $table->decimal('nota', 5, 2)->nullable();
+
             $table->timestamps();
             $table->softDeletes();
         });

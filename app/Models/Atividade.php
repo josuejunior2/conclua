@@ -12,8 +12,14 @@ class Atividade extends Model
     use HasFactory, HasUuids, SoftDeletes;
 
     protected $fillable = ['orientacao_id', 'titulo', 'descricao', 'data_limite', 'data_entrega'];
-    
-    public function Orientacao(){
+
+    public function Orientacao()
+    {
         return $this->belongsTo(Orientacao::class);
+    }
+
+    public function SubmissaoAtividade()
+    {
+        return $this->hasOne(SubmissaoAtividade::class, 'atividade_id');
     }
 }
