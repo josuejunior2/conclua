@@ -74,6 +74,7 @@ class AtividadeController extends Controller
      */
     public function destroy(Atividade $atividade)
     {
+        if($atividade->SubmissaoAtividade) $atividade->SubmissaoAtividade->forceDelete();
         $atividade->forceDelete();
         return redirect()->route('atividade.index');
     }
