@@ -37,7 +37,7 @@ class HomeController extends Controller
             // dd($this->middleware('semestre_ativo'));
             $academico = Academico::where('user_id', auth()->user()->id)->first();
             $orientacaoNoSemestre = $academico->orientacoes->where('semestre_id', session('semestre_id'))->first();
-            $atividades = $orientacaoNoSemestre->atividades;
+            $atividades = $orientacaoNoSemestre->atividades ?? null;
 
             if(isset($orientacaoNoSemestre)){
                 if(isset($orientacaoNoSemestre->academico_tcc_id)){

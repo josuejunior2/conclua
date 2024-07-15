@@ -59,7 +59,7 @@
                         </div>
                         <div class="col">
                             <label class="form-label">Hora</label>
-                            <input type="text" name="hora" id="hora" class="form-control" data-mask="00:00" data-mask-visible="true" placeholder="00:00" autocomplete="off" value="{{ old('hora', '') }}"/>
+                            <input type="time" name="hora" id="hora" class="form-control w-auto" autocomplete="off" value="{{ old('hora', '') }}"/>
                             <span class="{{ $errors->has('hora') ? 'text-danger' : '' }}">
                                 {{ $errors->has('hora') ? $errors->first('hora') : '' }}
                             </span>

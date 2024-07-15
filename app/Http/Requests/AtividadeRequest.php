@@ -24,7 +24,7 @@ class AtividadeRequest extends FormRequest
      */
     protected function prepareForValidation()
     {
-        if ($this->input('hora') === '__:__' && !empty($this->input('data_limite'))) {
+        if (empty($this->input('hora')) && !empty($this->input('data_limite'))) {
             $this->merge(['hora' => null, 'data_limite' => $this->input('data_limite').' 23:59:59']);
         } else if (!empty($this->input('data_limite'))) {
             $this->merge(['data_limite' => $this->input('data_limite').' '.$this->input('hora')]);

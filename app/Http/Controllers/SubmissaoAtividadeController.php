@@ -37,7 +37,7 @@ class SubmissaoAtividadeController extends Controller
             'data_entrega' => $submissao->created_at
         ]);
 
-        return redirect()->route('home');
+        return redirect()->route('atividade.show', ['atividade' => $atividade]);
     }
 
     /**
