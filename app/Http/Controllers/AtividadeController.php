@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Http\Requests\AtividadeRequest;
+use App\Http\Requests\AvaliarAtividadeRequest;
 
 class AtividadeController extends Controller
 {
@@ -77,5 +78,14 @@ class AtividadeController extends Controller
         if($atividade->SubmissaoAtividade) $atividade->SubmissaoAtividade->forceDelete();
         $atividade->forceDelete();
         return redirect()->route('atividade.index');
+    }
+    
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function avaliar(AvaliarAtividadeRequest $request, Atividade $atividade)
+    {
+        $atividade->update($request->validated());
+        return redirect()->route('atividade.show', ['atividade' => $atividade]);
     }
 }

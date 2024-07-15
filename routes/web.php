@@ -116,6 +116,7 @@ Route::middleware(['auth:admin', 'semestre_ativo', 'primeiro_acesso'])->group(fu
     Route::get('admin/home', [AdminHomeController::class, 'index'])->name('admin.home');
     Route::resource('orientador', App\Http\Controllers\OrientadorController::class)->except(['create', 'store', 'index', 'destroy']);
     
+    Route::post('avaliar/atividade/{atividade}', 'App\Http\Controllers\AtividadeController@avaliar')->name('atividade.avaliar');
     Route::resource('atividade', App\Http\Controllers\AtividadeController::class);
 });
 

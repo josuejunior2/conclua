@@ -39,6 +39,7 @@ class PerfisEPermissoesSeeder extends Seeder
             ['guard_name' => 'admin', 'name' => 'criar atividade',  'description' => 'Permite criar atividade.'],
             ['guard_name' => 'admin', 'name' => 'editar atividade',  'description' => 'Permite editar atividade.'],
             ['guard_name' => 'admin', 'name' => 'deletar atividade',  'description' => 'Permite deletar atividade.'],
+            ['guard_name' => 'admin', 'name' => 'avaliar atividade',  'description' => 'Permite avaliar atividade.'],
         ]);// aqui as do orientador (incluindo algumas que o admin tbm terá)
 
         $permissionsUser = collect([

@@ -1,15 +1,24 @@
 @extends(auth()->guard('admin')->user()->hasRole('Orientador') ? 'layouts.orientador' : 'layouts.admin')
 
 @include('atividade.modal.destroy')
+@include('atividade.modal.avaliar')
 
 @section('content')
     <div class="card m-3">
         <div class="card-header justify-content-between">
             <h3 class="card-title">Atividade {{ $atividade->titulo }}</h3>
             <div class="d-flex justify-content-between col-auto">
+                @can('avaliar atividade')
+                    <div class="me-2">
+                        <a href="#" class="btn btn-primary w-100  " data-bs-toggle="modal" data-bs-target="#modal-avaliar-atividade">
+                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-stars"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17.8 19.817l-2.172 1.138a.392 .392 0 0 1 -.568 -.41l.415 -2.411l-1.757 -1.707a.389 .389 0 0 1 .217 -.665l2.428 -.352l1.086 -2.193a.392 .392 0 0 1 .702 0l1.086 2.193l2.428 .352a.39 .39 0 0 1 .217 .665l-1.757 1.707l.414 2.41a.39 .39 0 0 1 -.567 .411l-2.172 -1.138z" /><path d="M6.2 19.817l-2.172 1.138a.392 .392 0 0 1 -.568 -.41l.415 -2.411l-1.757 -1.707a.389 .389 0 0 1 .217 -.665l2.428 -.352l1.086 -2.193a.392 .392 0 0 1 .702 0l1.086 2.193l2.428 .352a.39 .39 0 0 1 .217 .665l-1.757 1.707l.414 2.41a.39 .39 0 0 1 -.567 .411l-2.172 -1.138z" /><path d="M12 9.817l-2.172 1.138a.392 .392 0 0 1 -.568 -.41l.415 -2.411l-1.757 -1.707a.389 .389 0 0 1 .217 -.665l2.428 -.352l1.086 -2.193a.392 .392 0 0 1 .702 0l1.086 2.193l2.428 .352a.39 .39 0 0 1 .217 .665l-1.757 1.707l.414 2.41a.39 .39 0 0 1 -.567 .411l-2.172 -1.138z" /></svg>
+                            {{ !empty($atividade->nota) ? 'Alterar nota' : 'Avaliar atividade' }}
+                        </a>
+                    </div>
+                @endcan
                 @can('editar atividade')
-                    <div>
-                        <a href=" {{ route('atividade.edit', ['atividade' => $atividade]) }}" class="btn me-2 btn-secondary">
+                    <div class="me-2">
+                        <a href=" {{ route('atividade.edit', ['atividade' => $atividade]) }}" class="btn btn-secondary">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="24"
                                 height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                 stroke-linecap="round" stroke-linejoin="round">
@@ -78,6 +87,12 @@
                         {{ $atividade->data_entrega ? \Carbon\Carbon::parse($atividade->data_limite)->format('d/m/Y H:i') : 'N/A' }}
                     </div>
                 </div>
+                <div class="datagrid-item">
+                    <div class="datagrid-title">Nota</div>
+                    <div class="datagrid-content">
+                        <b>{{ $atividade->nota ? $atividade->nota : 'N/A' }}</b>
+                    </div>
+                </div>
             </div>
             <div class="col-12 markdown">
                 <h3>Descrição</h3>
@@ -85,4 +100,21 @@
             </div>
         </div>
     </div>
+    @if(!empty($atividade->SubmissaoAtividade))
+    <div class="card m-3">
+        <div class="card-header justify-content-between">
+            <h3 class="card-title">Submissão {{ \Carbon\Carbon::parse($atividade->SubmissaoAtividade->created_at)->format('d/m/Y H:i') }}</h3>
+            <div class="d-flex justify-content-between col-auto">
+                {{-- edição, deleção, nota aqui? --}}
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="col-12 markdown">
+                <h3>arquivo?</h3>
+                <h3>Comentário</h3>
+                <p>{{ $atividade->SubmissaoAtividade->comentario }}</p>
+            </div>
+        </div>
+    </div>
+    @endif
 @endsection

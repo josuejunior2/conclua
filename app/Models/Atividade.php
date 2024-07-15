@@ -11,7 +11,7 @@ class Atividade extends Model
 {
     use HasFactory, HasUuids, SoftDeletes;
 
-    protected $fillable = ['orientacao_id', 'titulo', 'descricao', 'data_limite', 'data_entrega'];
+    protected $fillable = ['orientacao_id', 'titulo', 'descricao', 'nota', 'data_limite', 'data_entrega'];
 
     public function Orientacao()
     {
