@@ -38,9 +38,9 @@ class Orientacao extends Model
     }
 
     public function modalidade(){
-        if(!empty($this->AcademicoTCC())){
+        if(!empty($this->AcademicoTCC)){
             return 'TCC';
-        } elseif (!empty($this->AcademicoEstagio())){
+        } elseif (!empty($this->AcademicoEstagio)){
             return 'Estágio';
         }
     }
