@@ -32,12 +32,14 @@
           <thead>
             <tr>
               {{--<th class="w-1"></th>  <input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select all invoices"> --}}
+              <th>Acadêmico</th>
               <th>Título</th>
               <th>Descrição</th>
               <th>Criada em</th>
               <th>Atualizado em</th>
               <th>Data-limite</th>
               <th>Entregue em</th>
+              <th>Nota</th>
               <th></th>
             </tr>
           </thead>
@@ -45,12 +47,14 @@
             @foreach ($atividades as $atividade)
             <tr>
                 <!--<td></td>  <input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"> -->
+                <td>{{ $atividade->Orientacao->Academico->User->nome }} - {{ $atividade->Orientacao->modalidade() }}</td>
                 <td>{{ $atividade->titulo }}</td>
                 <td>{{ $atividade->descricao }}</td>
                 <td>{{ \Carbon\Carbon::parse($atividade->created_at)->format('d/m/Y H:i') }}</td>
                 <td>{{ \Carbon\Carbon::parse($atividade->updated_at)->format('d/m/Y H:i') }}</td>
                 <td>{{ \Carbon\Carbon::parse($atividade->data_limite)->format('d/m/Y H:i') }}</td>
                 <td>{{ $atividade->data_entrega ? \Carbon\Carbon::parse($atividade->data_entrega)->format('d/m/Y G:h') : '' }}</td>
+                <td>{{ $atividade->nota ?? '' }}</td>
                 <td class="d-flex align-items-center justify-content-center text-end">
                     <div class="col-6 col-sm-4 col-md-2 col-xl py-3 ">
                         <a href="{{ route('atividade.show', ['atividade' => $atividade]) }}" class="btn btn-secondary w-100 ">

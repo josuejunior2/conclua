@@ -37,6 +37,14 @@ class Orientacao extends Model
         return $this->belongsTo(AcademicoEstagio::class, 'academico_estagio_id');
     }
 
+    public function modalidade(){
+        if(!empty($this->AcademicoTCC())){
+            return 'TCC';
+        } elseif (!empty($this->AcademicoEstagio())){
+            return 'Estágio';
+        }
+    }
+
     public function Semestre(){
         return $this->belongsTo(Semestre::class, 'semestre_id');
     }
