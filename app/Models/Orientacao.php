@@ -52,4 +52,12 @@ class Orientacao extends Model
     public function atividades(){
         return $this->hasMany(Atividade::class, 'orientacao_id');
     }
+        
+    public function notaTotal(){
+        $notaTotal = 0;
+        foreach ($this->atividades as $atividade) {
+            $notaTotal += $atividade->nota;
+        }
+        return $notaTotal;
+    }
 }
