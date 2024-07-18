@@ -1,3 +1,4 @@
+@if(count($atividade->arquivosAuxiliares) > 0)
 <div class="card-footer mt-3">
     <h3>Arquivos auxiliares</h3>
     <div class="row">
@@ -23,3 +24,4 @@
         @endforeach
     </div>
 </div>
+@endif

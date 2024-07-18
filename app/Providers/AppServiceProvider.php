@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Facades\View::composer('*', function ($view) {
             $view->with('semestres', Semestre::all());
-            $view->with('semestreAtual', Semestre::all()->last());
+            $view->with('semestreIsAtual', (Semestre::all()->last()->id == session('semestre_id')));
             $view->with('semestreSession', session('semestre_id'));
         });
     }

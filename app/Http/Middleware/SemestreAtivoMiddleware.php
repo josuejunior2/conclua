@@ -36,11 +36,12 @@ class SemestreAtivoMiddleware
         if(isset($semestreEmSession)){
             if($semestreEmSession != $semestreAtual || $semestreAtual->data_fim < now()){ // na regra do form request de semestre eu devo criar uma regra pra não criar semestre sem que a data_fim do anterior não tenha chegado
                 if(auth()->guard('web')->check()){
-                    return $next($request);
                     // return redirect()->route('welcome')->with('error', 'O prazo para acesso ao semestre acabou.');
+                    return $next($request);
                 }
                 if(auth()->guard('admin')->check()){
-                    return redirect()->route('welcome')->with('error', 'Sem permissão de atuar no semestre');
+                    return $next($request);
+                    // return redirect()->route('welcome')->with('error', 'Sem permissão de atuar no semestre');
                 }
             } else if($semestreEmSession == $semestreAtual && $semestreAtual->data_fim >= now()){
 
