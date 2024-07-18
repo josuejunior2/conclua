@@ -27,7 +27,8 @@ class SubmissaoAtividadeRequest extends FormRequest
     {
         return [
             'atividade_id' => 'required',
-            'comentario' => 'nullable|string'
+            'comentario' => 'nullable|string',
+            'arquivos_submissao.*' => 'nullable|mimes:pdf,doc,docx,jpg,jpeg,png,bmp,gif,svg,xlsx,csv|max:2048',
         ];
     }
 }

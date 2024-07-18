@@ -28,4 +28,14 @@ class Atividade extends Model
         return $this->hasMany(Arquivo::class, 'atividade_id')->where('arquivoable_type', 'App\Models\Admin');
     }
 
+    public function arquivosSubmissao()
+    {
+        return $this->hasMany(Arquivo::class, 'atividade_id')->where('arquivoable_type', 'App\Models\User');
+    }
+
+    public function arquivos()
+    {
+        return $this->hasMany(Arquivo::class, 'atividade_id');
+    }
+
 }

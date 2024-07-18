@@ -4,7 +4,7 @@
         @foreach($atividade->arquivosAuxiliares as $arquivo)
         <div class="col">
             <form id="form" method="post"
-                action="{{ route('atividade.download.arquivo.aux') }}">
+                action="{{ route('download.arquivo') }}">
                 @csrf
                 <input id="caminho" name="caminho" type="hidden" class="form-control" value="{{ $arquivo->caminho . '/' . $arquivo->nome }}">
                 <button type="submit" class="btn btn-outline-secondary w-100">

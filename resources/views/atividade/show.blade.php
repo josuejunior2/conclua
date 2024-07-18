@@ -113,7 +113,9 @@
         </div>
         <div class="card-body">
             <div class="col-12 markdown">
-                <h3>arquivo?</h3>
+                @if($atividade->arquivosSubmissao)
+                    @include('arquivo.download-submissao')
+                @endif
                 <h3>Comentário</h3>
                 <p>{{ $atividade->SubmissaoAtividade->comentario }}</p>
             </div>

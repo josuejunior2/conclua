@@ -31,13 +31,27 @@ class SubmissaoAtividadeController extends Controller
      */
     public function store(SubmissaoAtividadeRequest $request)
     {
+        $dados = $request->validated();
+        $arquivos = $dados['arquivos_submissao'];
+        $usuario = auth()->guard('web')->user();
         $submissao = SubmissaoAtividade::create($request->validated());
-        $atividade = Atividade::find($submissao->atividade_id)->first();
-        $atividade->update([
+        $submissao->Atividade->update([
             'data_entrega' => $submissao->created_at
         ]);
 
-        return redirect()->route('atividade.show', ['atividade' => $atividade]);
+        if ($request->hasFile('arquivos_submissao')) {
+            $caminho = 'uploads/'.$submissao->Atividade->Orientacao->Semestre->periodoAno() . '/' . $submissao->Atividade->Orientacao->Orientador->diretorio() . '/' . $submissao->Atividade->Orientacao->Academico->diretorio();
+            foreach ($arquivos as $key => $arquivo) {
+                $usuario->arquivos()->create([
+                    'nome' => $arquivo->getClientOriginalName(),
+                    'atividade_id' => $submissao->Atividade->id,
+                    'caminho' => $caminho,
+                ]);
+                $arquivo->move($caminho, $arquivo->getClientOriginalName());
+            }
+        }
+
+        return redirect()->route('atividade.show', ['atividade' => $submissao->Atividade]);
     }
 
     /**

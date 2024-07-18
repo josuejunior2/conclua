@@ -69,7 +69,7 @@ Route::middleware(['auth:web', 'primeiro_acesso', 'semestre_ativo'])->group(func
     Route::resource('submissao_atividade', App\Http\Controllers\SubmissaoAtividadeController::class)->except(['create']);
 });
 
-Route::post('download/arquivo/auxiliar/', 'App\Http\Controllers\AtividadeController@downloadArquivoAux')->name('atividade.download.arquivo.aux');
+Route::post('download/arquivo/auxiliar/', 'App\Http\Controllers\ArquivoController@downloadArquivo')->name('download.arquivo');
 Route::post('mudar/semestre', [App\Http\Controllers\SemestreController::class, 'mudar_semestre'])->name('semestre.mudar-semestre');
 
 // =========================================================================== ADMIN & ORIENTADOR ==========================================

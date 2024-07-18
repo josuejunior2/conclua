@@ -8,8 +8,6 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Http\Requests\AtividadeRequest;
 use App\Http\Requests\AvaliarAtividadeRequest;
-use App\Http\Requests\DownloadArquivoAuxiliarRequest;
-use Illuminate\Support\Facades\Response;
 
 class AtividadeController extends Controller
 {
@@ -47,7 +45,7 @@ class AtividadeController extends Controller
         $atividade = Atividade::create($dados);
 
         if ($request->hasFile('arquivos_aux')) {
-            $caminho = 'uploads/'.$atividade->Orientacao->Semestre->periodoAno() . '/' . $atividade->Orientacao->Orientador->diretorio() . '/' . $atividade->Orientacao->Academico->diretorio();
+            $caminho = 'uploads/'.$atividade->Orientacao->Semestre->periodoAno() . '/' . $atividade->Orientacao->Orientador->diretorio() . '/' . $atividade->Orientacao->Academico->diretorio() . '/enviado';
             foreach ($arquivos as $key => $arquivo) {
                 $usuario->arquivos()->create([
                     'nome' => $arquivo->getClientOriginalName(),
@@ -57,7 +55,7 @@ class AtividadeController extends Controller
                 $arquivo->move($caminho, $arquivo->getClientOriginalName());
             }
         }
-        return redirect()->route('atividade.index');
+        return redirect()->route('atividade.show', ['atividade' => $atividade]);
     }
 
     /**
@@ -107,14 +105,5 @@ class AtividadeController extends Controller
         $atividade->update($request->validated());
         return redirect()->route('atividade.show', ['atividade' => $atividade]);
     }
-        
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function downloadArquivoAux(DownloadArquivoAuxiliarRequest $request)
-    {
-        $caminho = $request->validated()['caminho'];
-        $filePath = public_path($caminho);
-        return Response::download($filePath);
-    }
+
 }

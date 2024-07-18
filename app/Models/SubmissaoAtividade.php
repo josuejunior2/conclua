@@ -19,4 +19,5 @@ class SubmissaoAtividade extends Model
     {
         return $this->belongsTo(Atividade::class, 'atividade_id');
     }
+
 }
