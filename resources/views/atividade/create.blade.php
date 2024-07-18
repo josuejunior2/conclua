@@ -42,6 +42,13 @@
                                 {{ $errors->has('descricao') ? $errors->first('descricao') : '' }}
                             </span>
                         </div>
+                        <div class="mb-3">
+                            <div class="form-label">Arquivos auxiliares</div>
+                            <input type="file" name="arquivos_aux[]" id="arquivos_aux" accept=".xlsx" class="form-control" multiple>
+                            <span class="{{ $errors->has('arquivos_aux') ? 'text-danger' : '' }}">
+                                {{ $errors->has('arquivos_aux') ? $errors->first('arquivos_aux') : '' }}
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <div class="mb-3">

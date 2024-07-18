@@ -69,7 +69,7 @@ Route::middleware(['auth:web', 'primeiro_acesso', 'semestre_ativo'])->group(func
     Route::resource('submissao_atividade', App\Http\Controllers\SubmissaoAtividadeController::class)->except(['create']);
 });
 
-
+Route::post('download/arquivo/auxiliar/', 'App\Http\Controllers\AtividadeController@downloadArquivoAux')->name('atividade.download.arquivo.aux');
 Route::post('mudar/semestre', [App\Http\Controllers\SemestreController::class, 'mudar_semestre'])->name('semestre.mudar-semestre');
 
 // =========================================================================== ADMIN & ORIENTADOR ==========================================
@@ -115,6 +115,7 @@ Route::middleware(['auth:admin', 'semestre_ativo'])->group(function () {
 Route::middleware(['auth:admin', 'semestre_ativo', 'primeiro_acesso'])->group(function () { // rotas normal ANTES DE ATIVAR O SEMESTRE
     Route::get('admin/home', [AdminHomeController::class, 'index'])->name('admin.home');
     Route::resource('orientador', App\Http\Controllers\OrientadorController::class)->except(['create', 'store', 'index', 'destroy']);
+    
     
     Route::post('avaliar/atividade/{atividade}', 'App\Http\Controllers\AtividadeController@avaliar')->name('atividade.avaliar');
     Route::resource('atividade', App\Http\Controllers\AtividadeController::class);

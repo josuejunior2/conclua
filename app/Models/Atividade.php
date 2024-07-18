@@ -22,4 +22,10 @@ class Atividade extends Model
     {
         return $this->hasOne(SubmissaoAtividade::class, 'atividade_id');
     }
+    
+    public function arquivosAuxiliares()
+    {
+        return $this->hasMany(Arquivo::class, 'atividade_id')->where('arquivoable_type', 'App\Models\Admin');
+    }
+
 }

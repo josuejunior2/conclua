@@ -40,7 +40,13 @@ class Admin extends Authenticatable
     ];
 
 
-    public function Orientador(){
+    public function Orientador()
+    {
         return $this->hasOne(Orientador::class);
+    }
+    
+    public function arquivos()
+    {
+        return $this->morphMany(Arquivo::class, 'arquivoable');
     }
 }

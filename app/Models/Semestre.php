@@ -40,6 +40,10 @@ class Semestre extends Model
     public function isLast(){
         return true;
     }
+    
+    public function periodoAno(){
+        return '0'.$this->periodo.'.'.$this->ano;
+    }
 }
 
 

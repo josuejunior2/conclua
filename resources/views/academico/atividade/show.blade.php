@@ -44,6 +44,9 @@
                 <h3>Descrição</h3>
                 <p>{{ $atividade->descricao }}</p>
             </div>
+            @if(!empty($atividade->arquivosAuxiliares))
+                @include('arquivo.download-auxiliar')
+            @endif
         </div>
     </div>
     @if(!empty($atividade->SubmissaoAtividade))

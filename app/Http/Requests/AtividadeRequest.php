@@ -46,6 +46,7 @@ class AtividadeRequest extends FormRequest
             // 'data_entrega' => 'nullable|before:'.$data_fim_semestre,
             'orientacao_id' => 'required|exists:orientacoes,id',
             'hora' => ['nullable', 'regex:/^(?:[01]\d|2[0-3]):[0-5]\d$/'],
+            'arquivos_aux.*' => 'nullable|mimes:pdf,doc,docx,jpg,jpeg,png,bmp,gif,svg,xlsx,csv|max:2048',
         ];
     }
     

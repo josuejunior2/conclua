@@ -51,4 +51,15 @@ class Academico extends Authenticatable
     public function cadastrosAtivos(){// era bom eu mudar esse nome do metodo...
         return $this->belongsToMany(Semestre::class, 'semestre_academico', 'academico_id', 'semestre_id');
     }
+        
+    public function diretorio(){
+        $nome = trim($this->User->nome);
+        $partes = explode(' ', $nome);
+        $primeiro = $partes[0];
+        $ultimo = $partes[count($partes) - 1];
+        $diretorio = strtolower($primeiro . '.' . $ultimo);
+
+        return $diretorio;
+    }
+
 }

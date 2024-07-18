@@ -44,5 +44,15 @@ class Orientador extends Authenticatable
     public function semestresOrientador(){
         return $this->belongsToMany(Semestre::class, 'semestre_orientador', 'orientador_id', 'semestre_id');
     }
+    
+    public function diretorio(){
+        $nome = trim($this->Admin->nome);
+        $partes = explode(' ', $nome);
+        $primeiro = $partes[0];
+        $ultimo = $partes[count($partes) - 1];
+        $diretorio = strtolower($primeiro . '.' . $ultimo);
+
+        return $diretorio;
+    }
 
 }

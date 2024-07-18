@@ -52,6 +52,11 @@ class User extends Authenticatable
     public function Academico(){
         return $this->hasOne(Academico::class, 'user_id');
     }
+    
+    public function arquivos()
+    {
+        return $this->morphMany(Arquivo::class, 'arquivoable');
+    }
 
     // public function sendPasswordResetNotification($token){
     //   $this->notify(new RedefinirSenhaNotification($token, $this->email, $this->name));

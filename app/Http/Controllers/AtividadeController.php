@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Http\Requests\AtividadeRequest;
 use App\Http\Requests\AvaliarAtividadeRequest;
+use App\Http\Requests\DownloadArquivoAuxiliarRequest;
+use Illuminate\Support\Facades\Response;
 
 class AtividadeController extends Controller
 {
@@ -37,8 +39,24 @@ class AtividadeController extends Controller
      */
     public function store(AtividadeRequest $request)
     {
-        $dados = Atividade::create($request->validated());
-        // dd($request->input('data_limite'));
+        // $dados = Atividade::create($request->validated());
+
+        $dados = $request->validated();
+        $arquivos = $dados['arquivos_aux'];
+        $usuario = auth()->guard('admin')->user();
+        $atividade = Atividade::create($dados);
+
+        if ($request->hasFile('arquivos_aux')) {
+            $caminho = 'uploads/'.$atividade->Orientacao->Semestre->periodoAno() . '/' . $atividade->Orientacao->Orientador->diretorio() . '/' . $atividade->Orientacao->Academico->diretorio();
+            foreach ($arquivos as $key => $arquivo) {
+                $usuario->arquivos()->create([
+                    'nome' => $arquivo->getClientOriginalName(),
+                    'atividade_id' => $atividade->id,
+                    'caminho' => $caminho,
+                ]);
+                $arquivo->move($caminho, $arquivo->getClientOriginalName());
+            }
+        }
         return redirect()->route('atividade.index');
     }
 
@@ -66,6 +84,7 @@ class AtividadeController extends Controller
      */
     public function update(AtividadeRequest $request, Atividade $atividade)
     {
+        $this->middleware('permission:editar atividade');
         $atividade->update($request->validated());
         return redirect()->route('atividade.show', ['atividade' => $atividade]);
     }
@@ -87,5 +106,15 @@ class AtividadeController extends Controller
     {
         $atividade->update($request->validated());
         return redirect()->route('atividade.show', ['atividade' => $atividade]);
+    }
+        
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function downloadArquivoAux(DownloadArquivoAuxiliarRequest $request)
+    {
+        $caminho = $request->validated()['caminho'];
+        $filePath = public_path($caminho);
+        return Response::download($filePath);
     }
 }
