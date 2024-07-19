@@ -18,8 +18,11 @@ return new class extends Migration
             $table->string('nome')->required();
             $table->string('caminho')->required();
 
-            $table->uuid('arquivoable_id');
-            $table->string('arquivoable_type');
+            $table->uuid('academico_id')->nullable();
+            $table->foreign('academico_id')->references('id')->on('academicos');
+            $table->uuid('orientador_id')->nullable();
+            $table->foreign('orientador_id')->references('id')->on('orientadores');
+            
 
             $table->timestamps();
             $table->softDeletes();

@@ -3,7 +3,7 @@
       <div class="modal-content">
         <div class="modal-body">
             <div class="modal-title">Submeter atividade {{ $atividade->titulo }}</div>
-            <form id="form" method="post" action="{{ route('submissao_atividade.store') }}" enctype="multipart/form-data">
+            <form id="form" method="post" action="{{ route('academico.atividade.store') }}" enctype="multipart/form-data">
                 @method('POST')
                 @csrf
                 <input id="atividade_id" name="atividade_id" type="hidden" class="form-control" value="{{ $atividade->id }}">

@@ -18,7 +18,7 @@
                     @endcan
                     @can('editar atividade')
                         <div class="me-2">
-                            <a href=" {{ route('atividade.edit', ['atividade' => $atividade]) }}" class="btn btn-secondary">
+                            <a href=" {{ route('orientador.atividade.edit', ['atividade' => $atividade]) }}" class="btn btn-secondary">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="24"
                                     height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                     stroke-linecap="round" stroke-linejoin="round">
@@ -33,7 +33,7 @@
                     @can('deletar atividade')
                         <div>
                             <form id="form_destroy_{{ $atividade->id }}" method="post"
-                                action="{{ route('atividade.destroy', ['atividade' => $atividade]) }}">
+                                action="{{ route('orientador.atividade.destroy', ['atividade' => $atividade]) }}">
                                 @method('DELETE')
                                 @csrf
                                 <a href="#" class="btn btn-danger w-100" data-bs-toggle="modal"

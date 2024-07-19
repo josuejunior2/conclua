@@ -65,8 +65,8 @@ Route::middleware(['auth:web', 'primeiro_acesso', 'semestre_ativo'])->group(func
      * Esta rota /home aqui vale apenas para academico, pq o /home para admin&orientador vai direto para /admin/home, e /admin/home na linha 93 nao tem o semestre_ativo
      */
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    Route::get('/academico/atividade/{atividade}', [App\Http\Controllers\AtividadeAcademicoController::class, 'show'])->name('academico.atividade.show');
-    Route::resource('submissao_atividade', App\Http\Controllers\SubmissaoAtividadeController::class)->except(['create']);
+    Route::get('academico/atividade/{atividade}', [App\Http\Controllers\AtividadeAcademicoController::class, 'show'])->name('academico.atividade.show');
+    Route::post('academico/atividade/{atividade}', [App\Http\Controllers\AtividadeAcademicoController::class, 'store'])->name('academico.atividade.store');
 });
 
 Route::post('download/arquivo/auxiliar/', 'App\Http\Controllers\ArquivoController@downloadArquivo')->name('download.arquivo');
@@ -112,13 +112,14 @@ Route::middleware(['auth:admin', 'semestre_ativo'])->group(function () {
     Route::post('orientador/{orientador}', 'App\Http\Controllers\OrientadorController@store')->name('orientador.store');
 });
 
-Route::middleware(['auth:admin', 'semestre_ativo', 'primeiro_acesso'])->group(function () { // rotas normal ANTES DE ATIVAR O SEMESTRE
+Route::middleware(['auth:admin', 'semestre_ativo', 'primeiro_acesso'])->group(function () {
     Route::get('admin/home', [AdminHomeController::class, 'index'])->name('admin.home');
     Route::resource('orientador', App\Http\Controllers\OrientadorController::class)->except(['create', 'store', 'index', 'destroy']);
     
-    
-    Route::post('avaliar/atividade/{atividade}', 'App\Http\Controllers\AtividadeController@avaliar')->name('atividade.avaliar');
-    Route::resource('atividade', App\Http\Controllers\AtividadeController::class);
+    Route::prefix('orientador')->name('orientador.')->group(function () {
+        Route::post('atividade/avaliar/{atividade}', 'App\Http\Controllers\AtividadeOrientadorController@avaliar')->name('atividade.avaliar');
+        Route::resource('atividade', App\Http\Controllers\AtividadeOrientadorController::class);
+    }); 
 });
 
 Route::middleware(['auth:admin', 'semestre_ativo', 'primeiro_acesso'])->group(function () { // ORIENTADOR. SEMESTRE ATIVO

@@ -3,7 +3,7 @@
       <div class="modal-content">
         <div class="modal-body">
             <div class="modal-title">Avaliar atividade {{ $atividade->titulo }}</div>
-            <form id="form" method="post" action="{{ route('atividade.avaliar', ['atividade' => $atividade]) }}">
+            <form id="form" method="post" action="{{ route('orientador.atividade.avaliar', ['atividade' => $atividade]) }}">
                 @method('POST')
                 @csrf
                     {{-- <div class="form-label"></div> --}}

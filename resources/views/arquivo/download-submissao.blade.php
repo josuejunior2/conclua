@@ -1,4 +1,4 @@
-@if(count($atividade->arquivosSubmissao) > 0)
+@if($atividade->arquivosSubmissao)
 <div class="row">
     @foreach($atividade->arquivosSubmissao as $arquivo)
     <div class="col">

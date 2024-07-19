@@ -21,7 +21,7 @@
             @endif
             @can('criar atividade')
                 <div>
-                    <a href="{{ route('atividade.create') }}" class="btn btn-success w-100 mb-1">
+                    <a href="{{ route('orientador.atividade.create') }}" class="btn btn-success w-100 mb-1">
                         Adicionar nova atividade
                     </a>
                 </div>
@@ -57,18 +57,18 @@
                 <td>{{ $atividade->nota ?? '' }}</td>
                 <td class="d-flex align-items-center justify-content-center text-end">
                     <div class="col-6 col-sm-4 col-md-2 col-xl py-3 ">
-                        <a href="{{ route('atividade.show', ['atividade' => $atividade]) }}" class="btn btn-secondary w-100 ">
+                        <a href="{{ route('orientador.atividade.show', ['atividade' => $atividade]) }}" class="btn btn-secondary w-100 ">
                             <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-eye"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg>
                         </a>
                     </div>
                     <div class="col-6 col-sm-4 col-md-2 col-xl py-3 ">
-                        <a href="{{ route('atividade.edit', ['atividade' => $atividade]) }}" class="btn btn-primary w-100 ">
+                        <a href="{{ route('orientador.atividade.edit', ['atividade' => $atividade]) }}" class="btn btn-primary w-100 ">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" /><path d="M13.5 6.5l4 4" /></svg>
                         </a>
                     </div>
                     <div>
                         @include('atividade.modal.destroy')
-                        <form id="form_destroy_{{$atividade->id}}" method="post" action="{{ route('atividade.destroy', ['atividade' => $atividade]) }}">
+                        <form id="form_destroy_{{$atividade->id}}" method="post" action="{{ route('orientador.atividade.destroy', ['atividade' => $atividade]) }}">
                             @method('DELETE')
                             @csrf
                             <!-- <button type="submit">Excluir</button>  -->

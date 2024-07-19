@@ -4,7 +4,7 @@
 @section('content')
     <div class="page-body">
         <div class="container-xl">
-            @if ($orientador->disponibilidade == 0 && $orientador->orientacoes->isEmpty())
+            @if ($orientador->disponibilidade == 0 && empty($orientador->orientacoesNoSemestre()))
                 <div class="alert alert-danger m-3">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -41,7 +41,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($orientador->orientacoes as $orientacao)
+                                @foreach ($orientador->orientacoesNoSemestre() as $orientacao)
                                     <tr>
                                         <!--<td></td>  <input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"> -->
                                         <td>{{ $orientacao->academico->User->nome }}</td>

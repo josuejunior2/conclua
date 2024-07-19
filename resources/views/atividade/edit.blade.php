@@ -7,15 +7,15 @@
         </div>
 
         <div class="card-body">
-            <form method="POST" action="{{ route('atividade.update', ['atividade' => $atividade]) }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('orientador.atividade.update', ['atividade' => $atividade]) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="mb-3">
                     <div class="form-label required">Orientando</div>
-                    <select class="form-select" name="orientacao_id" id="orientacao_id">
+                    <select class="form-select" name="orientacao_id" id="orientacao_id" >
                         <option value=""> -- Selecione o orientando -- </option>
                         @foreach($orientacoes as $orientacao)
-                            <option value="{{ $orientacao->id }}" {{ old('orientacao_id') == $orientacao->id || $orientacao->id == $atividade->Orientacao->id ? 'selected' : '' }}>
+                            <option value="{{ $orientacao->id }}" {{ old('orientacao_id') == $orientacao->id || $atividade->Orientacao->id == $orientacao->id ? 'selected' : '' }}>
                                 {{ $orientacao->Academico->User->nome }} @if(!empty($orientacao->AcademicoTCC)) - TCC @elseif(!empty($orientacao->AcademicoEstagio)) - Estágio @endif
                             </option>
                         @endforeach
@@ -41,6 +41,13 @@
                                 value="{{ old('descricao', $atividade->descricao) }}" />
                             <span class="{{ $errors->has('descricao') ? 'text-danger' : '' }}">
                                 {{ $errors->has('descricao') ? $errors->first('descricao') : '' }}
+                            </span>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-label">Arquivos auxiliares</div>
+                            <input type="file" name="arquivos_aux[]" id="arquivos_aux" accept=".xlsx" class="form-control" multiple>
+                            <span class="{{ $errors->has('arquivos_aux') ? 'text-danger' : '' }}">
+                                {{ $errors->has('arquivos_aux') ? $errors->first('arquivos_aux') : '' }}
                             </span>
                         </div>
                     </div>

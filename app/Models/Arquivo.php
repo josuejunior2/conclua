@@ -11,15 +11,10 @@ class Arquivo extends Model
 {
     use HasFactory, HasUuids, SoftDeletes;
 
-    protected $fillable = ['nome', 'atividade_id', 'caminho', 'arquivoable_id', 'arquivoable_type'];
+    protected $fillable = ['nome', 'atividade_id', 'caminho', 'academico_id', 'orientador_id'];
 
     public function atividade()
     {
         return $this->belongsTo(Atividade::class);
-    }
-
-    public function arquivoable()
-    {
-        return $this->morphTo();
     }
 }

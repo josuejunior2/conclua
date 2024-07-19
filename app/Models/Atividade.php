@@ -25,12 +25,12 @@ class Atividade extends Model
     
     public function arquivosAuxiliares()
     {
-        return $this->hasMany(Arquivo::class, 'atividade_id')->where('arquivoable_type', 'App\Models\Admin');
+        return $this->hasMany(Arquivo::class, 'atividade_id')->whereNotNull('orientador_id');
     }
 
     public function arquivosSubmissao()
     {
-        return $this->hasMany(Arquivo::class, 'atividade_id')->where('arquivoable_type', 'App\Models\User');
+        return $this->hasMany(Arquivo::class, 'atividade_id')->whereNotNull('academico_id');
     }
 
     public function arquivos()

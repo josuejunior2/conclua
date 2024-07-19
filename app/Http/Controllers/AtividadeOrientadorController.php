@@ -4,22 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\Atividade;
 use App\Models\Arquivo;
-use App\Models\Orientacao;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Http\Requests\AtividadeRequest;
 use App\Http\Requests\AvaliarAtividadeRequest;
 
-class AtividadeController extends Controller
+class AtividadeOrientadorController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        // $atividades = Atividade::where('orientacao.semestre_id', session('semestre_id'))->get();
-        $atividades = Atividade::all();
+        dd("oi");
+        $atividades = Atividade::whereIn('orientacao_id', auth()->guard('admin')->user()->Orientador->orientacoesNoSemestre());
         return view('atividade.index', ['atividades' => $atividades]);
     }
 
@@ -29,7 +28,7 @@ class AtividadeController extends Controller
     public function create()
     {
         $this->middleware('permission:criar atividade');
-        $orientacoes = Orientacao::all();
+        $orientacoes = auth()->guard('admin')->user()->Orientador->orientacoesNoSemestre();
 
         return view('atividade.create', ['orientacoes' => $orientacoes]);
     }
@@ -99,4 +98,14 @@ class AtividadeController extends Controller
         $atividade->forceDelete();
         return redirect()->route('atividade.index');
     }
+    
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function avaliar(AvaliarAtividadeRequest $request, Atividade $atividade)
+    {
+        $atividade->update($request->validated());
+        return redirect()->route('atividade.show', ['atividade' => $atividade]);
+    }
+
 }
