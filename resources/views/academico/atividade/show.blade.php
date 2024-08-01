@@ -17,41 +17,7 @@
                 @endif
             </div>
         </div>
-        <div class="card-body">
-            <div class="datagrid mb-3">
-                <div class="datagrid-item">
-                    <div class="datagrid-title">Criada em</div>
-                    <div class="datagrid-content">{{ \Carbon\Carbon::parse($atividade->created_at)->format('d/m/Y H:i') }}
-                    </div>
-                </div>
-                <div class="datagrid-item">
-                    <div class="datagrid-title">Atualizada em</div>
-                    <div class="datagrid-content">{{ \Carbon\Carbon::parse($atividade->updated_at)->format('d/m/Y H:i') }}</div>
-                </div>
-                <div class="datagrid-item">
-                    <div class="datagrid-title">Data-limite para entrega</div>
-                    <div class="datagrid-content">{{ \Carbon\Carbon::parse($atividade->data_limite)->format('d/m/Y H:i') }}
-                    </div>
-                </div>
-                <div class="datagrid-item">
-                    <div class="datagrid-title">Data de entrega</div>
-                    <div class="datagrid-content">
-                        {{ $atividade->data_entrega ? \Carbon\Carbon::parse($atividade->data_limite)->format('d/m/Y H:i') : 'N/A' }}
-                    </div>
-                </div>
-                <div class="datagrid-item">
-                    <div class="datagrid-title">Nota</div>
-                    <div class="datagrid-content">
-                        <b>{{ $atividade->nota ? $atividade->nota : 'N/A' }}</b>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 markdown">
-                <h3>Descrição</h3>
-                <p>{{ $atividade->descricao }}</p>
-            </div>
-            @include('arquivo.download-auxiliar')
-        </div>
+        @include('atividade.partials.info')
     </div>
     @if(!empty($atividade->SubmissaoAtividade))
         <div class="card m-3">
@@ -61,7 +27,7 @@
             <div class="card-body">
                 <div class="col-12 markdown">
 
-                    @include('arquivo.download-submissao')
+                    @include('arquivo.download_submissao')
                     
                     <h3>Comentário</h3>
                     <p>{{ $atividade->SubmissaoAtividade->comentario }}</p>

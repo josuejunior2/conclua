@@ -13,6 +13,7 @@ class AtividadeAcademicoController extends Controller
 {
     public function show(Atividade $atividade)
     {
+        if($atividade->Orientacao->Semestre->id != session('semestre_id')) return redirect()->route('home')->withErrors(['erro' => 'Erro: Atividade não pertence a esse semestre.']);
         return view('academico.atividade.show', ['atividade' => $atividade]);
     }
     
@@ -42,6 +43,6 @@ class AtividadeAcademicoController extends Controller
             }
         }
 
-        return redirect()->route('atividade.show', ['atividade' => $submissao->Atividade]);
+        return redirect()->route('academico.atividade.show', ['atividade' => $submissao->Atividade]);
     }
 }
