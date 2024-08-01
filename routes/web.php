@@ -66,7 +66,7 @@ Route::middleware(['auth:web', 'primeiro_acesso', 'semestre_ativo'])->group(func
      */
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('academico/atividade/{atividade}', [App\Http\Controllers\AtividadeAcademicoController::class, 'show'])->name('academico.atividade.show');
-    Route::post('academico/atividade/{atividade}', [App\Http\Controllers\AtividadeAcademicoController::class, 'store'])->name('academico.atividade.store');
+    Route::post('academico/atividade/', [App\Http\Controllers\AtividadeAcademicoController::class, 'store'])->name('academico.atividade.store');
 });
 
 Route::post('download/arquivo/auxiliar/', 'App\Http\Controllers\ArquivoController@downloadArquivo')->name('download.arquivo');
@@ -103,6 +103,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::delete('academico/delete/{academico}', 'App\Http\Controllers\AcademicoAdminController@destroy')->name('academico.destroy');
         Route::get('academico', 'App\Http\Controllers\AcademicoAdminController@index')->name('academico.index');
         Route::get('academico/{academico}', 'App\Http\Controllers\AcademicoAdminController@show')->name('academico.show');
+
+        Route::resource('atividade', App\Http\Controllers\AtividadeAdminController::class)->except(['create', 'store']);
     });
 });
 
@@ -117,8 +119,10 @@ Route::middleware(['auth:admin', 'semestre_ativo', 'primeiro_acesso'])->group(fu
     Route::resource('orientador', App\Http\Controllers\OrientadorController::class)->except(['create', 'store', 'index', 'destroy']);
     
     Route::prefix('orientador')->name('orientador.')->group(function () {
-        Route::post('atividade/avaliar/{atividade}', 'App\Http\Controllers\AtividadeOrientadorController@avaliar')->name('atividade.avaliar');
+        Route::post('atividade/arquivo-aux/{atividade}', 'App\Http\Controllers\AtividadeOrientadorController@storeArquivoAux')->name('atividade.store.arquivo.aux');
+        Route::delete('atividade/destroy/arquivo-aux/{arquivo}', 'App\Http\Controllers\AtividadeOrientadorController@destroyArquivoAux')->name('atividade.destroy.arquivo.aux');
         Route::resource('atividade', App\Http\Controllers\AtividadeOrientadorController::class);
+        Route::post('atividade/avaliar/{atividade}', 'App\Http\Controllers\AtividadeOrientadorController@avaliar')->name('atividade.avaliar');
     }); 
 });
 

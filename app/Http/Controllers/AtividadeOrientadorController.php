@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Http\Requests\AtividadeRequest;
 use App\Http\Requests\AvaliarAtividadeRequest;
+use App\Http\Requests\ArquivoAuxRequest;
 
 class AtividadeOrientadorController extends Controller
 {
@@ -17,9 +18,8 @@ class AtividadeOrientadorController extends Controller
      */
     public function index()
     {
-        dd("oi");
         $atividades = Atividade::whereIn('orientacao_id', auth()->guard('admin')->user()->Orientador->orientacoesNoSemestre());
-        return view('atividade.index', ['atividades' => $atividades]);
+        return view('orientador.atividade.index', ['atividades' => $atividades]);
     }
 
     /**
@@ -57,7 +57,7 @@ class AtividadeOrientadorController extends Controller
                 $arquivo->move($caminho, $arquivo->getClientOriginalName());
             }
         }
-        return redirect()->route('atividade.show', ['atividade' => $atividade]);
+        return redirect()->route('orientador.atividade.show', ['atividade' => $atividade]);
     }
 
     /**
@@ -65,7 +65,7 @@ class AtividadeOrientadorController extends Controller
      */
     public function show(Atividade $atividade)
     {
-        return view('atividade.show', ['atividade' => $atividade]);
+        return view('orientador.atividade.show', ['atividade' => $atividade]);
     }
 
     /**
@@ -76,7 +76,7 @@ class AtividadeOrientadorController extends Controller
         $this->middleware('permission:editar atividade');
         $orientacoes = auth()->guard('admin')->user()->Orientador->orientacoesNoSemestre();
 
-        return view('atividade.edit', ['atividade' => $atividade, 'orientacoes' => $orientacoes]);
+        return view('orientador.atividade.edit', ['atividade' => $atividade, 'orientacoes' => $orientacoes]);
     }
 
     /**
@@ -85,8 +85,26 @@ class AtividadeOrientadorController extends Controller
     public function update(AtividadeRequest $request, Atividade $atividade)
     {
         $this->middleware('permission:editar atividade');
-        $atividade->update($request->validated());
-        return redirect()->route('atividade.show', ['atividade' => $atividade]);
+
+        $dados = $request->validated();
+        $arquivos = $dados['arquivos_aux'];
+        $usuario = auth()->guard('admin')->user();
+        $atividade->update($dados);
+
+        if ($request->hasFile('arquivos_aux')) {
+            $caminho = 'uploads/'.$atividade->Orientacao->Semestre->periodoAno() . '/' . $atividade->Orientacao->Orientador->diretorio() . '/' . $atividade->Orientacao->Academico->diretorio() . '/enviado';
+            foreach ($arquivos as $key => $arquivo) {
+                Arquivo::create([
+                    'nome' => $arquivo->getClientOriginalName(),
+                    'atividade_id' => $atividade->id,
+                    'orientador_id' => $atividade->Orientacao->Orientador->id,
+                    'caminho' => $caminho,
+                ]);
+                $arquivo->move($caminho, $arquivo->getClientOriginalName());
+            }
+        }
+
+        return redirect()->route('orientador.atividade.show', ['atividade' => $atividade]);
     }
 
     /**
@@ -96,7 +114,7 @@ class AtividadeOrientadorController extends Controller
     {
         if($atividade->SubmissaoAtividade) $atividade->SubmissaoAtividade->forceDelete();
         $atividade->forceDelete();
-        return redirect()->route('atividade.index');
+        return redirect()->route('orientador.atividade.index');
     }
     
     /**
@@ -105,7 +123,41 @@ class AtividadeOrientadorController extends Controller
     public function avaliar(AvaliarAtividadeRequest $request, Atividade $atividade)
     {
         $atividade->update($request->validated());
-        return redirect()->route('atividade.show', ['atividade' => $atividade]);
+        return redirect()->route('orientador.atividade.show', ['atividade' => $atividade]);
+    }
+    
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function storeArquivoAux(ArquivoAuxRequest $request, Atividade $atividade)
+    {
+        // $dados = Atividade::create($request->validated());
+
+        $dados = $request->validated();
+        $arquivos = $dados['arquivos_aux'];
+
+        if ($request->hasFile('arquivos_aux')) {
+            $caminho = 'uploads/'.$atividade->Orientacao->Semestre->periodoAno() . '/' . $atividade->Orientacao->Orientador->diretorio() . '/' . $atividade->Orientacao->Academico->diretorio() . '/enviado';
+            foreach ($arquivos as $key => $arquivo) {
+                Arquivo::create([
+                    'nome' => $arquivo->getClientOriginalName(),
+                    'atividade_id' => $atividade->id,
+                    'orientador_id' => $atividade->Orientacao->Orientador->id,
+                    'caminho' => $caminho,
+                ]);
+                $arquivo->move($caminho, $arquivo->getClientOriginalName());
+            }
+        }
+        return redirect()->back()->with(['success' => 'Arquivo auxiliar adicionado com sucesso.']);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroyArquivoAux(Arquivo $arquivo)
+    {
+        $arquivo->forceDelete();
+        return redirect()->back()->with(['success' => 'Arquivo auxiliar excluído com sucesso.']);
     }
 
 }
