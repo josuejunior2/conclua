@@ -19,13 +19,15 @@
                     {{ session('success') }}
                 </div>
             @endif
-            @can('criar atividade')
-                <div>
-                    <a href="{{ route('orientador.atividade.create') }}" class="btn btn-success w-100 mb-1">
-                        Adicionar nova atividade
-                    </a>
-                </div>
-            @endcan
+            @if ($semestreIsAtual)
+                @can('criar atividade')
+                    <div>
+                        <a href="{{ route('orientador.atividade.create') }}" class="btn btn-success w-100 mb-1">
+                            Adicionar nova atividade
+                        </a>
+                    </div>
+                @endcan
+            @endif
         </div>
       <div class="table-responsive m-4">
         <table class="display w-100" id="tabela-atividades"> {{-- table card-table table-vcenter text-nowrap datatable --}}
@@ -33,8 +35,8 @@
             <tr>
               {{--<th class="w-1"></th>  <input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select all invoices"> --}}
               <th>Acadêmico</th>
+              <th>Modalidade</th>
               <th>Título</th>
-              <th>Descrição</th>
               <th>Criada em</th>
               <th>Atualizado em</th>
               <th>Data-limite</th>
@@ -47,9 +49,9 @@
             @foreach ($atividades as $atividade)
             <tr>
                 <!--<td></td>  <input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"> -->
-                <td>{{ $atividade->Orientacao->Academico->User->nome }} - {{ $atividade->Orientacao->modalidade() }}</td>
+                <td>{{ $atividade->Orientacao->Academico->User->nome }}</td>
+                <td>{{ $atividade->Orientacao->modalidade() }}</td>
                 <td>{{ $atividade->titulo }}</td>
-                <td>{{ $atividade->descricao }}</td>
                 <td>{{ \Carbon\Carbon::parse($atividade->created_at)->format('d/m/Y H:i') }}</td>
                 <td>{{ \Carbon\Carbon::parse($atividade->updated_at)->format('d/m/Y H:i') }}</td>
                 <td>{{ \Carbon\Carbon::parse($atividade->data_limite)->format('d/m/Y H:i') }}</td>

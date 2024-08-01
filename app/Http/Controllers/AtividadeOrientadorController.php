@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use App\Http\Requests\AtividadeRequest;
 use App\Http\Requests\AvaliarAtividadeRequest;
 use App\Http\Requests\ArquivoAuxRequest;
+use Illuminate\Support\Facades\Storage;
 
 class AtividadeOrientadorController extends Controller
 {
@@ -18,7 +19,7 @@ class AtividadeOrientadorController extends Controller
      */
     public function index()
     {
-        $atividades = Atividade::whereIn('orientacao_id', auth()->guard('admin')->user()->Orientador->orientacoesNoSemestre());
+        $atividades = Atividade::whereIn('orientacao_id', auth()->guard('admin')->user()->Orientador->orientacoesNoSemestre()->pluck('id'))->get();
         return view('orientador.atividade.index', ['atividades' => $atividades]);
     }
 
@@ -156,6 +157,7 @@ class AtividadeOrientadorController extends Controller
      */
     public function destroyArquivoAux(Arquivo $arquivo)
     {
+        unlink('./'.$arquivo->caminho.'/'.$arquivo->nome);
         $arquivo->forceDelete();
         return redirect()->back()->with(['success' => 'Arquivo auxiliar excluído com sucesso.']);
     }
