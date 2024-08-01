@@ -73,6 +73,7 @@ Route::post('download/arquivo/auxiliar/', 'App\Http\Controllers\ArquivoControlle
 Route::post('mudar/semestre', [App\Http\Controllers\SemestreController::class, 'mudar_semestre'])->name('semestre.mudar-semestre');
 
 // =========================================================================== ADMIN & ORIENTADOR ==========================================
+
 Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::get('login', [AdminLoginController::class, 'showLoginForm'])->name('login.index');
@@ -109,30 +110,32 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 
 
-Route::middleware(['auth:admin', 'semestre_ativo'])->group(function () {
+Route::middleware(['auth:admin', 'semestre_ativo'])->group(function () { // ROTAS ORIENTADOR
     Route::get('orientador/create', 'App\Http\Controllers\OrientadorController@create')->name('orientador.create');
     Route::post('orientador/{orientador}', 'App\Http\Controllers\OrientadorController@store')->name('orientador.store');
 });
 
-Route::middleware(['auth:admin', 'semestre_ativo', 'primeiro_acesso'])->group(function () {
+
+
+Route::middleware(['auth:admin', 'semestre_ativo', 'primeiro_acesso'])->group(function () {          // ROTAS ORIENTADOR
     Route::get('admin/home', [AdminHomeController::class, 'index'])->name('admin.home');
+
+    Route::resource('orientador/atividade', App\Http\Controllers\AtividadeOrientadorController::class, ['as' => 'orientador']);
+
     Route::resource('orientador', App\Http\Controllers\OrientadorController::class)->except(['create', 'store', 'index', 'destroy']);
     
     Route::prefix('orientador')->name('orientador.')->group(function () {
+        Route::post('aceitar/solicitacao/{solicitacao}', [App\Http\Controllers\SolicitacaoOrientadorController::class, 'aceitar_solicitacao'])->name('solicitacao.aceitar');
+        Route::post('rejeitar/solicitacao/{solicitacao}', [App\Http\Controllers\SolicitacaoOrientadorController::class, 'rejeitar_solicitacao'])->name('orientador.solicitacao.rejeitar');
+        Route::get('solicitacao/{solicitacao}', [App\Http\Controllers\SolicitacaoOrientadorController::class, 'show'])->name('orientador.solicitacao.show');
+        
         Route::post('atividade/arquivo-aux/{atividade}', 'App\Http\Controllers\AtividadeOrientadorController@storeArquivoAux')->name('atividade.store.arquivo.aux');
         Route::delete('atividade/destroy/arquivo-aux/{arquivo}', 'App\Http\Controllers\AtividadeOrientadorController@destroyArquivoAux')->name('atividade.destroy.arquivo.aux');
-        Route::resource('atividade', App\Http\Controllers\AtividadeOrientadorController::class);
         Route::post('atividade/avaliar/{atividade}', 'App\Http\Controllers\AtividadeOrientadorController@avaliar')->name('atividade.avaliar');
     }); 
 });
 
-Route::middleware(['auth:admin', 'semestre_ativo', 'primeiro_acesso'])->group(function () { // ORIENTADOR. SEMESTRE ATIVO
 
-    Route::post('orientador/aceitar/solicitacao/{solicitacao}', [App\Http\Controllers\SolicitacaoOrientadorController::class, 'aceitar_solicitacao'])->name('solicitacao.orientador.aceitar');
-    Route::post('orientador/rejeitar/solicitacao/{solicitacao}', [App\Http\Controllers\SolicitacaoOrientadorController::class, 'rejeitar_solicitacao'])->name('solicitacao.orientador.rejeitar');
-    Route::get('orientador/solicitacao/{solicitacao}', [App\Http\Controllers\SolicitacaoOrientadorController::class, 'show'])->name('solicitacao.orientador.show');
-    // essas abaixo eu nao pensei ainda
-});
 
 // Route::middleware('auth')->group(function () {
 // });

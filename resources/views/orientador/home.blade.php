@@ -100,7 +100,7 @@
                                                         <div class="text-muted">{{ $solicitacao->created_at->format('d/m/Y') }}</div>
                                                     </div>
                                                     <div class="col-auto align-self-center">
-                                                        <a href="{{ route('solicitacao.orientador.show', ['solicitacao' => $solicitacao]) }}"
+                                                        <a href="{{ route('orientador.solicitacao.show', ['solicitacao' => $solicitacao]) }}"
                                                             class="btn btn-primary btn-pill w-100">
                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                 class="icon icon-tabler icon-tabler-eye" width="24"

@@ -7,7 +7,7 @@
         @if($solicitacao->status == null)
         <div class="d-flex justify-content-between">
             <div class="me-2">
-                <form method="POST" action="{{ route('solicitacao.orientador.rejeitar', ['solicitacao' => $solicitacao]) }}" >
+                <form method="POST" action="{{ route('orientador.solicitacao.rejeitar', ['solicitacao' => $solicitacao]) }}" >
                     @csrf
                     <button type="submit" class="btn btn-danger w-100">
                         Rejeitar
@@ -15,7 +15,7 @@
                 </form>
             </div>
             <div>
-                <form method="POST" action="{{ route('solicitacao.orientador.aceitar', ['solicitacao' => $solicitacao]) }}">
+                <form method="POST" action="{{ route('orientador.solicitacao.aceitar', ['solicitacao' => $solicitacao]) }}">
                     @csrf
                     <button type="submit" class="btn btn-success w-100">
                         Aceitar
