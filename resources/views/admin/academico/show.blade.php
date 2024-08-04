@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends(auth()->guard('admin')->user()->hasRole('Orientador') ? 'layouts.orientador' : 'layouts.admin')
 
 @section('content')
 

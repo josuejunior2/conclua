@@ -64,7 +64,7 @@
         <div class="card-header justify-content-between">
             <h3 class="card-title">Submissão {{ \Carbon\Carbon::parse($atividade->SubmissaoAtividade->created_at)->format('d/m/Y H:i') }}</h3>
             <div class="d-flex justify-content-between col-auto">
-                {{-- edição, deleção, nota aqui? --}}
+                
             </div>
         </div>
         <div class="card-body">

@@ -13,11 +13,16 @@ class SubmissaoAtividade extends Model
     
     protected $table = 'submissao_atividade';
 
-    protected $fillable = ['atividade_id', 'arquivo', 'comentario'];
+    protected $fillable = ['atividade_id', 'comentario'];
 
     public function Atividade()
     {
         return $this->belongsTo(Atividade::class, 'atividade_id');
+    }
+    
+    public function arquivos()
+    {
+        return $this->hasMany(Arquivo::class, 'submissao_atividade_id');
     }
 
 }

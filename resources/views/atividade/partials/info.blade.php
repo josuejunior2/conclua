@@ -46,9 +46,9 @@
     </div>
     @endif
 
-    @include('orientador.atividade.modal.add_arquivo_aux')
+    @include('arquivo.add_arquivo_aux')
     <div class="card-footer mt-3">
-        <div class="d-flex justify-content-between col-auto">
+        <div class="d-flex justify-content-between col-auto mb-3">
             <h3>Arquivos auxiliares</h3>
             @if($semestreIsAtual)
                 @can('criar atividade')

@@ -44,8 +44,8 @@
                 <td>{{ \Carbon\Carbon::parse($atividade->created_at)->format('d/m/Y H:i') }}</td>
                 <td>{{ \Carbon\Carbon::parse($atividade->updated_at)->format('d/m/Y H:i') }}</td>
                 <td>{{ \Carbon\Carbon::parse($atividade->data_limite)->format('d/m/Y H:i') }}</td>
-                <td>{{ $atividade->nota ? $atividade->nota : 'N/A' }}</td>
                 <td>{{ $atividade->data_entrega ? \Carbon\Carbon::parse($atividade->data_entrega)->format('d/m/Y G:h') : '' }}</td>
+                <td>{{ $atividade->nota ? $atividade->nota : 'N/A' }}</td>
                 <td class="d-flex align-items-center justify-content-center text-end">
                     <div class="col-6 col-sm-4 col-md-2 col-xl py-3 ">
                         <a href="{{ route('academico.atividade.show', ['atividade' => $atividade]) }}" class="btn btn-secondary w-100 ">

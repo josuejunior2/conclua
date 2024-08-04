@@ -30,7 +30,7 @@ class Atividade extends Model
 
     public function arquivosSubmissao()
     {
-        return $this->hasMany(Arquivo::class, 'atividade_id')->whereNotNull('academico_id');
+        return $this->hasManyThrough(Arquivo::class, SubmissaoAtividade::class)->whereNotNull('academico_id');
     }
 
     public function arquivos()

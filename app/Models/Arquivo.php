@@ -11,10 +11,15 @@ class Arquivo extends Model
 {
     use HasFactory, HasUuids, SoftDeletes;
 
-    protected $fillable = ['nome', 'atividade_id', 'caminho', 'academico_id', 'orientador_id'];
+    protected $fillable = ['nome', 'atividade_id', 'submissao_atividade_id', 'caminho', 'academico_id', 'orientador_id'];
 
-    public function atividade()
+    public function Atividade()
     {
         return $this->belongsTo(Atividade::class);
+    }
+    
+    public function SubmissaoAtividade()
+    {
+        return $this->belongsTo(SubmissaoAtividade::class);
     }
 }

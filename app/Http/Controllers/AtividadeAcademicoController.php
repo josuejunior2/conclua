@@ -8,9 +8,18 @@ use App\Models\Atividade;
 use App\Models\Arquivo;
 use App\Http\Requests\SubmissaoAtividadeRequest;
 use App\Models\SubmissaoAtividade;
+use App\Http\Controllers\ArquivoController;
+use App\Http\Requests\ArquivoSubmissaoRequest;
 
 class AtividadeAcademicoController extends Controller
 {
+    protected $arquivoController;
+
+    public function __construct(ArquivoController $arquivoController)
+    {
+        $this->arquivoController = $arquivoController;
+    }
+
     public function show(Atividade $atividade)
     {
         if($atividade->Orientacao->Semestre->id != session('semestre_id')) return redirect()->route('home')->withErrors(['erro' => 'Erro: Atividade não pertence a esse semestre.']);
@@ -20,29 +29,34 @@ class AtividadeAcademicoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(SubmissaoAtividadeRequest $request)
+    public function storeSubmissao(SubmissaoAtividadeRequest $request)
     {
-        $dados = $request->validated();
-        $arquivos = $dados['arquivos_submissao'];
-        $usuario = auth()->guard('web')->user();
         $submissao = SubmissaoAtividade::create($request->validated());
         $submissao->Atividade->update([
             'data_entrega' => $submissao->created_at
         ]);
-
+        
         if ($request->hasFile('arquivos_submissao')) {
-            $caminho = 'uploads/'.$submissao->Atividade->Orientacao->Semestre->periodoAno() . '/' . $submissao->Atividade->Orientacao->Orientador->diretorio() . '/' . $submissao->Atividade->Orientacao->Academico->diretorio() . '/recebido';
-            foreach ($arquivos as $key => $arquivo) {
-                Arquivo::create([
-                    'nome' => $arquivo->getClientOriginalName(),
-                    'atividade_id' => $submissao->Atividade->id,
-                    'academico_id' => $submissao->Atividade->Orientacao->Academico->id,
-                    'caminho' => $caminho,
-                ]);
-                $arquivo->move($caminho, $arquivo->getClientOriginalName());
-            }
+            $requestArquivos = new ArquivoSubmissaoRequest($request->only(['arquivos_submissao']));
+            $this->arquivoController->storeArquivoSubmissao($requestArquivos, $submissao);
         }
 
         return redirect()->route('academico.atividade.show', ['atividade' => $submissao->Atividade]);
+    }
+    
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroySubmissao(SubmissaoAtividade $submissao)
+    {
+        $this->middleware('permission:deletar submissao');
+
+        $atividade = $submissao->Atividade;
+        $atividade->update([
+            'data_entrega' => null
+        ]);
+        $atividade->save();
+        $submissao->forceDelete();
+        return redirect()->route('academico.atividade.show', ['atividade' => $atividade])->with(['success' => 'Submissão excluída com sucesso.']);
     }
 }

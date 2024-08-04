@@ -24,7 +24,6 @@
                     </span>
                 </div>
                 <div class="row g-3 mb-4">
-                    {{-- <input id="orientacao_id" name="orientacao_id" type="hidden" class="form-control" value="{{ $orientacao->id }}"> --}}
                     <div class="col-md">
                         <div class="mb-3">
                             <div class="form-label required">Título</div>

@@ -10,10 +10,17 @@ use Carbon\Carbon;
 use App\Http\Requests\AtividadeRequest;
 use App\Http\Requests\AvaliarAtividadeRequest;
 use App\Http\Requests\ArquivoAuxRequest;
-use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\ArquivoController;
 
 class AtividadeOrientadorController extends Controller
 {
+    protected $arquivoController;
+
+    public function __construct(ArquivoController $arquivoController)
+    {
+        $this->arquivoController = $arquivoController;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -31,7 +38,7 @@ class AtividadeOrientadorController extends Controller
         $this->middleware('permission:criar atividade');
         $orientacoes = auth()->guard('admin')->user()->Orientador->orientacoesNoSemestre();
 
-        return view('atividade.create', ['orientacoes' => $orientacoes]);
+        return view('orientador.atividade.create', ['orientacoes' => $orientacoes]);
     }
 
     /**
@@ -39,24 +46,15 @@ class AtividadeOrientadorController extends Controller
      */
     public function store(AtividadeRequest $request)
     {
-        // $dados = Atividade::create($request->validated());
-
+        $this->middleware('permission:criar atividade');
+        
         $dados = $request->validated();
         $arquivos = $dados['arquivos_aux'];
-        $usuario = auth()->guard('admin')->user();
         $atividade = Atividade::create($dados);
 
         if ($request->hasFile('arquivos_aux')) {
-            $caminho = 'uploads/'.$atividade->Orientacao->Semestre->periodoAno() . '/' . $atividade->Orientacao->Orientador->diretorio() . '/' . $atividade->Orientacao->Academico->diretorio() . '/enviado';
-            foreach ($arquivos as $key => $arquivo) {
-                Arquivo::create([
-                    'nome' => $arquivo->getClientOriginalName(),
-                    'atividade_id' => $atividade->id,
-                    'orientador_id' => $atividade->Orientacao->Orientador->id,
-                    'caminho' => $caminho,
-                ]);
-                $arquivo->move($caminho, $arquivo->getClientOriginalName());
-            }
+            $requestArquivos = new ArquivoAuxRequest($request->only(['arquivos_aux']));
+            $this->arquivoController->storeArquivoAux($requestArquivos, $atividade);
         }
         return redirect()->route('orientador.atividade.show', ['atividade' => $atividade]);
     }
@@ -93,16 +91,6 @@ class AtividadeOrientadorController extends Controller
         $atividade->update($dados);
 
         if ($request->hasFile('arquivos_aux')) {
-            $caminho = 'uploads/'.$atividade->Orientacao->Semestre->periodoAno() . '/' . $atividade->Orientacao->Orientador->diretorio() . '/' . $atividade->Orientacao->Academico->diretorio() . '/enviado';
-            foreach ($arquivos as $key => $arquivo) {
-                Arquivo::create([
-                    'nome' => $arquivo->getClientOriginalName(),
-                    'atividade_id' => $atividade->id,
-                    'orientador_id' => $atividade->Orientacao->Orientador->id,
-                    'caminho' => $caminho,
-                ]);
-                $arquivo->move($caminho, $arquivo->getClientOriginalName());
-            }
         }
 
         return redirect()->route('orientador.atividade.show', ['atividade' => $atividade]);
@@ -125,41 +113,6 @@ class AtividadeOrientadorController extends Controller
     {
         $atividade->update($request->validated());
         return redirect()->route('orientador.atividade.show', ['atividade' => $atividade]);
-    }
-    
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function storeArquivoAux(ArquivoAuxRequest $request, Atividade $atividade)
-    {
-        // $dados = Atividade::create($request->validated());
-
-        $dados = $request->validated();
-        $arquivos = $dados['arquivos_aux'];
-
-        if ($request->hasFile('arquivos_aux')) {
-            $caminho = 'uploads/'.$atividade->Orientacao->Semestre->periodoAno() . '/' . $atividade->Orientacao->Orientador->diretorio() . '/' . $atividade->Orientacao->Academico->diretorio() . '/enviado';
-            foreach ($arquivos as $key => $arquivo) {
-                Arquivo::create([
-                    'nome' => $arquivo->getClientOriginalName(),
-                    'atividade_id' => $atividade->id,
-                    'orientador_id' => $atividade->Orientacao->Orientador->id,
-                    'caminho' => $caminho,
-                ]);
-                $arquivo->move($caminho, $arquivo->getClientOriginalName());
-            }
-        }
-        return redirect()->back()->with(['success' => 'Arquivo auxiliar adicionado com sucesso.']);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroyArquivoAux(Arquivo $arquivo)
-    {
-        unlink('./'.$arquivo->caminho.'/'.$arquivo->nome);
-        $arquivo->forceDelete();
-        return redirect()->back()->with(['success' => 'Arquivo auxiliar excluído com sucesso.']);
     }
 
 }
