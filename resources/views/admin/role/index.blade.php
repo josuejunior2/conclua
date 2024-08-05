@@ -5,15 +5,6 @@
     <div class="card m-3">
         <div class="card-header justify-content-between">
             <h3 class="card-title">Lista de perfis</h3>
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
             @if (session('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}

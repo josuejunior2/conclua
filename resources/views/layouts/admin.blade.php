@@ -154,6 +154,7 @@
         </div>
       </aside>
       <div class="page-wrapper">
+		@include('layouts.modal.error')
         @yield('content')
       </div>
     <!-- Data Table core -->

@@ -28,6 +28,7 @@
 <body>
     <div id="app">
         <main class="py-4">
+            @include('layouts.modal.error')
             @yield('content')
         </main>
     </div>
