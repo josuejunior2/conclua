@@ -3,7 +3,7 @@
       <div class="modal-content">
         <div class="modal-body flex-start">
           <div class="modal-title">Você tem certeza?</div>
-          <div>Se proceder, você irá excluir a submissão.
+          <div>Se proceder, você irá excluir a submissão e os arquivos submetidos.
           </div>
         </div>
         <div class="modal-footer">

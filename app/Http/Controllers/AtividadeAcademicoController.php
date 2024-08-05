@@ -56,6 +56,12 @@ class AtividadeAcademicoController extends Controller
             'data_entrega' => null
         ]);
         $atividade->save();
+
+        foreach($atividade->arquivosSubmissao as $arquivo){
+            unlink('./'.$arquivo->caminho.'/'.$arquivo->nome);
+            $arquivo->forceDelete();
+        }
+
         $submissao->forceDelete();
         return redirect()->route('academico.atividade.show', ['atividade' => $atividade])->with(['success' => 'Submissão excluída com sucesso.']);
     }

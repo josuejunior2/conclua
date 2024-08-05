@@ -101,7 +101,15 @@ class AtividadeOrientadorController extends Controller
      */
     public function destroy(Atividade $atividade)
     {
-        if($atividade->SubmissaoAtividade) $atividade->SubmissaoAtividade->forceDelete();
+        $this->middleware('permission:deletar atividade');
+
+        $arquivos = $atividade->arquivosAuxiliares->merge($atividade->arquivosSubmissao);
+        foreach($arquivos as $arquivo){
+            unlink('./'.$arquivo->caminho.'/'.$arquivo->nome);
+            $arquivo->forceDelete();
+        }
+        
+        if(!empty($atividade->SubmissaoAtividade)) $atividade->SubmissaoAtividade->forceDelete();
         $atividade->forceDelete();
         return redirect()->route('orientador.atividade.index');
     }

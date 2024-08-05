@@ -3,7 +3,7 @@
       <div class="modal-content">
         <div class="modal-body flex-start">
           <div class="modal-title">Você tem certeza?</div>
-          <div>Se proceder, você irá excluir a atividade {{ $atividade->titulo }} do acadêmico {{ $atividade->Orientacao->Academico->User->nome }}.
+          <div>Se proceder, você irá excluir a atividade {{ $atividade->titulo }} do acadêmico {{ $atividade->Orientacao->Academico->User->nome }}, inclusive todos os arquivos relativos à atividade.
             @if($atividade->SubmissaoAtividade)
               Também excluirá a submissão da atividade em {{ \Carbon\Carbon::parse($atividade->data_entrega)->format('d/m/Y G:h') }}.
             @endif
