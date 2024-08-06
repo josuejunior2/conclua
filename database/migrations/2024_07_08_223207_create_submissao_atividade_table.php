@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('submissao_atividade', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->uuid('atividade_id')->required();
+            $table->id();
+            $table->unsignedBigInteger('atividade_id')->required();
             $table->foreign('atividade_id')->references('id')->on('atividades');
 
             $table->string('arquivo')->nullable();

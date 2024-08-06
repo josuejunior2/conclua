@@ -7,12 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Spatie\Permission\Traits\HasRoles; 
 
 class Admin extends Authenticatable
 {
-    use HasFactory, Notifiable, HasRoles, HasUuids, SoftDeletes;
+    use HasFactory, Notifiable, HasRoles,  SoftDeletes;
 
 
     protected $keyType = 'string';

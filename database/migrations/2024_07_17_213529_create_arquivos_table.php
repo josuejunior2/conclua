@@ -12,15 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('arquivos', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->uuid('atividade_id')->required();
+            $table->id();
+            $table->unsignedBigInteger('atividade_id')->required();
             $table->foreign('atividade_id')->references('id')->on('atividades');
             $table->string('nome')->required();
             $table->string('caminho')->required();
 
-            $table->uuid('academico_id')->nullable();
+            $table->unsignedBigInteger('academico_id')->nullable();
             $table->foreign('academico_id')->references('id')->on('academicos');
-            $table->uuid('orientador_id')->nullable();
+            $table->unsignedBigInteger('orientador_id')->nullable();
             $table->foreign('orientador_id')->references('id')->on('orientadores');
             
 

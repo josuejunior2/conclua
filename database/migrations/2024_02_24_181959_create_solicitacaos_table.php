@@ -12,20 +12,20 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('solicitacoes', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->uuid('academico_id')->required();
+            $table->id();
+            $table->unsignedBigInteger('academico_id')->required();
             $table->foreign('academico_id')->references('id')->on('academicos');
 
-            $table->uuid('academico_tcc_id')->nullable();
+            $table->unsignedBigInteger('academico_tcc_id')->nullable();
             $table->foreign('academico_tcc_id')->references('id')->on('academico_tcc');
 
-            $table->uuid('academico_estagio_id')->nullable();
+            $table->unsignedBigInteger('academico_estagio_id')->nullable();
             $table->foreign('academico_estagio_id')->references('id')->on('academico_estagio');
 
-            $table->uuid('orientador_id')->required();
+            $table->unsignedBigInteger('orientador_id')->required();
             $table->foreign('orientador_id')->references('id')->on('orientadores');
 
-            $table->uuid('semestre_id')->required();
+            $table->unsignedBigInteger('semestre_id')->required();
             $table->foreign('semestre_id')->references('id')->on('semestres');
 
             $table->boolean('status')->nullable()->comment('true para aceito e false para rejeitado');

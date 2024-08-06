@@ -26,75 +26,62 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        $uuid = Str::uuid()->toString();
         $user1 = User::create([
-            'id' => $uuid,
             'nome' => 'Thiago Ian Cesar',
             'email' => 'thiago@gmail.com',
             'password' => 'admin123',
         ]);
-        $uuid = Str::uuid()->toString();
         $academico1 = Academico::create([
-            'id' => $uuid,
             'user_id' => $user1->id,
             'matricula' => '100087456',
         ]);
-        $uuid = Str::uuid()->toString();
+        
         $user2 = User::create([
-            'id' => $uuid,
             'nome' => 'Ian Thiago Hadrien',
             'email' => 'ian@gmail.com',
             'password' => 'admin123',
         ]);
-        $uuid = Str::uuid()->toString();
+        
         $academico2 = Academico::create([
-            'id' => $uuid,
             'user_id' => $user2->id,
             'matricula' => '100087654',
         ]);
-        $uuid = Str::uuid()->toString();
+        
         $oriadmin1 = Admin::create([
-            'id' => $uuid,
             'nome' => 'Rene Veloso',
             'email' => 'rene@gmail.com',
             'password' => 'admin123',
         ]);
-        $uuid = Str::uuid()->toString();
+        
         $orientador1 = Orientador::create([
-            'id' => $uuid,
             'admin_id' => $oriadmin1->id,
             'masp' => '1032654',
         ]);
 
-        $uuid = Str::uuid()->toString();
+        
         $oriadmin2 = Admin::create([
-            'id' => $uuid,
             'nome' => 'Eduardo Diniz',
             'email' => 'edu@gmail.com',
             'password' => 'admin123',
         ]);
-        $uuid = Str::uuid()->toString();
+        
         $orientador2 = Orientador::create([
-            'id' => $uuid,
             'admin_id' => $oriadmin2->id,
             'masp' => '1032655',
         ]);
 
-        $uuid = Str::uuid()->toString();
+        
         $admin = Admin::create( [
-            'id' => $uuid,
             'nome' => 'admin',
             'email' => 'josuejuniorww@gmail.com',
             'password' => 'admin123',
         ]);
-        $uuid = Str::uuid()->toString();
+        
         $formacao = Formacao::create([
-            'id' => $uuid,
             'nome' => 'Administração'
         ]);
-        $uuid = Str::uuid()->toString();
+        
         $area = Area::create([
-            'id' => $uuid,
             'nome' => 'Marketing'
         ]);
 

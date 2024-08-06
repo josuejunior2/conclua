@@ -6,12 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Spatie\Permission\Traits\HasRoles; 
 
 class Orientador extends Authenticatable
 {
-    use HasFactory, HasRoles, HasUuids, SoftDeletes;
+    use HasFactory, HasRoles,  SoftDeletes;
 
     protected $guard_name = 'admin';
 

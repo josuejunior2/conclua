@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('atividades', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->uuid('orientacao_id')->required();
+            $table->id();
+            $table->unsignedBigInteger('orientacao_id')->required();
             $table->foreign('orientacao_id')->references('id')->on('orientacoes');
 
             $table->text('titulo', 256)->required();
