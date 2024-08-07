@@ -17,7 +17,6 @@
             <tr>
               {{--<th class="w-1"></th>  <input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select all invoices"> --}}
               <th>Título</th>
-              <th>Descrição</th>
               <th>Criada em</th>
               <th>Atualizada em</th>
               <th>Data-limite</th>
@@ -31,7 +30,6 @@
             <tr>
                 <!--<td></td>  <input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"> -->
                 <td>{{ $atividade->titulo }}</td>
-                <td>{{ $atividade->descricao }}</td>
                 <td>{{ \Carbon\Carbon::parse($atividade->created_at)->format('d/m/Y H:i') }}</td>
                 <td>{{ \Carbon\Carbon::parse($atividade->updated_at)->format('d/m/Y H:i') }}</td>
                 <td>{{ \Carbon\Carbon::parse($atividade->data_limite)->format('d/m/Y H:i') }}</td>

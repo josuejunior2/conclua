@@ -49,7 +49,6 @@ class AtividadeOrientadorController extends Controller
         $this->middleware('permission:criar atividade');
         
         $dados = $request->validated();
-        $arquivos = $dados['arquivos_aux'];
         $atividade = Atividade::create($dados);
 
         if ($request->hasFile('arquivos_aux')) {

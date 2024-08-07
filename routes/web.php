@@ -67,7 +67,7 @@ Route::middleware(['auth:web', 'primeiro_acesso', 'semestre_ativo'])->group(func
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     
     Route::post('arquivo-submissao/{submissao}', [App\Http\Controllers\ArquivoController::class, 'storeArquivoSubmissao'])->name('arquivo.store.arquivo.submissao');
-    Route::delete('destroy/arquivo-submissao/{arquivo}', [App\Http\Controllers\AtividadeAcademicoController::class, 'destroyArquivoSubmissao'])->name('arquivo.destroy.arquivo.submissao');
+    Route::delete('destroy/arquivo-submissao/{arquivo}', [App\Http\Controllers\ArquivoController::class, 'destroyArquivoSubmissao'])->name('arquivo.destroy.arquivo.submissao');
     Route::prefix('academico')->name('academico.')->group(function () {
         Route::get('atividade/{atividade}', [App\Http\Controllers\AtividadeAcademicoController::class, 'show'])->name('atividade.show');
         Route::post('atividade', [App\Http\Controllers\AtividadeAcademicoController::class, 'storeSubmissao'])->name('atividade.store.submissao');
