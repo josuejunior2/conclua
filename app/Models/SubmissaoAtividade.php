@@ -12,7 +12,7 @@ class SubmissaoAtividade extends Model
     
     protected $table = 'submissao_atividade';
 
-    protected $fillable = ['atividade_id', 'comentario'];
+    protected $fillable = ['atividade_id', 'descricao'];
 
     public function Atividade()
     {

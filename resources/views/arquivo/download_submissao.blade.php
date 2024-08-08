@@ -1,9 +1,6 @@
 @if ($atividade->arquivosSubmissao)
     <div class="row">
         @foreach ($atividade->arquivosSubmissao as $arquivo)
-            @can('deletar submissao')
-                @include('arquivo.destroy_arquivo_submissao')
-            @endcan
             <div class="col-4 mb-3">
                 <div class="card card-sm">
                     <div class="card-body">
@@ -30,7 +27,8 @@
                                         </button>
                                     </form>
                                 </div>
-                                @can('deletar submissao')
+                                @can('deletar arquivo submissao')
+                                    @include('arquivo.destroy_arquivo_submissao')
                                     <div class="col-auto">
                                         <form id="form_destroy_arquivo_submissao_{{ $arquivo->id }}" method="post"
                                             action="{{ route('arquivo.destroy.arquivo.submissao', ['arquivo' => $arquivo]) }}">

@@ -73,7 +73,7 @@
                 @include('arquivo.download_submissao')
                 
                 <h3>Comentário</h3>
-                <p>{{ $atividade->SubmissaoAtividade->comentario }}</p>
+                <p>{{ $atividade->SubmissaoAtividade->descricao }}</p>
             </div>
         </div>
     </div>

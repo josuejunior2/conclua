@@ -45,7 +45,8 @@ class PerfisEPermissoesSeeder extends Seeder
         $permissionsUser = collect([
             ['guard_name' => 'web', 'name' => 'pesquisar orientador',  'description' => 'Permite pesquisar e visualizar orientadores.'],
             ['guard_name' => 'web', 'name' => 'solicitar orientacao',  'description' => 'Permite criar uma solicitação de orientação.'],
-            ['guard_name' => 'web', 'name' => 'adicionar arquivo submissao',  'description' => 'Permite adicionar arquivo submissao já realizada.'],
+            ['guard_name' => 'web', 'name' => 'adicionar arquivo submissao',  'description' => 'Permite adicionar arquivo submissão já realizada.'],
+            ['guard_name' => 'web', 'name' => 'deletar arquivo submissao',  'description' => 'Permite deletar arquivo da submissão.'],
             ['guard_name' => 'web', 'name' => 'deletar submissao',  'description' => 'Permite deletar submissao.'],
         ]);
 

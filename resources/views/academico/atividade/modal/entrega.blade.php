@@ -12,11 +12,11 @@
                 <div class="row g-3 mb-4">
                     <div class="col-md">
                         <div class="mb-3">
-                            <div class="form-label">Comentário</div>
-                            <input id="comentario" name="comentario" type="text" class="form-control"
-                                value="{{ old('comentario', '') }}" />
-                            <span class="{{ $errors->has('comentario') ? 'text-danger' : '' }}">
-                                {{ $errors->has('comentario') ? $errors->first('comentario') : '' }}
+                            <div class="form-label">Descrição</div>
+                            <input id="descricao" name="descricao" type="text" class="form-control"
+                                value="{{ old('descricao', '') }}" />
+                            <span class="{{ $errors->has('descricao') ? 'text-danger' : '' }}">
+                                {{ $errors->has('descricao') ? $errors->first('descricao') : '' }}
                             </span>
                         </div>
                         <div class="mb-3">
