@@ -40,6 +40,10 @@ class PerfisEPermissoesSeeder extends Seeder
             ['guard_name' => 'admin', 'name' => 'editar atividade',  'description' => 'Permite editar atividade.'],
             ['guard_name' => 'admin', 'name' => 'deletar atividade',  'description' => 'Permite deletar atividade.'],
             ['guard_name' => 'admin', 'name' => 'avaliar atividade',  'description' => 'Permite avaliar atividade.'],
+
+            ['guard_name' => 'admin', 'name' => 'criar comentario',  'description' => 'Permite comentar na atividade.'],
+            ['guard_name' => 'admin', 'name' => 'excluir comentario',  'description' => 'Permite excluir comentário da atividade.'],
+            ['guard_name' => 'admin', 'name' => 'editar comentario',  'description' => 'Permite editar comentário da atividade.'],
         ]);// aqui as do orientador (incluindo algumas que o admin tbm terá)
 
         $permissionsUser = collect([
@@ -48,6 +52,10 @@ class PerfisEPermissoesSeeder extends Seeder
             ['guard_name' => 'web', 'name' => 'adicionar arquivo submissao',  'description' => 'Permite adicionar arquivo submissão já realizada.'],
             ['guard_name' => 'web', 'name' => 'deletar arquivo submissao',  'description' => 'Permite deletar arquivo da submissão.'],
             ['guard_name' => 'web', 'name' => 'deletar submissao',  'description' => 'Permite deletar submissao.'],
+            
+            ['guard_name' => 'web', 'name' => 'criar comentario',  'description' => 'Permite comentar na atividade.'],
+            ['guard_name' => 'web', 'name' => 'excluir comentario',  'description' => 'Permite excluir comentário da atividade.'],
+            ['guard_name' => 'web', 'name' => 'editar comentario',  'description' => 'Permite editar comentário da atividade.'],
         ]);
 
         $permissionsAdmin->each(function ($item) use ($admin) {

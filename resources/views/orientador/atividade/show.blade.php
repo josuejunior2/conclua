@@ -72,10 +72,13 @@
                 
                 @include('arquivo.download_submissao')
                 
-                <h3>Comentário</h3>
+                <h3>Descrição</h3>
                 <p>{{ $atividade->SubmissaoAtividade->descricao }}</p>
             </div>
         </div>
     </div>
     @endif
+
+    @include('atividade.partials.comentario')
+
 @endsection

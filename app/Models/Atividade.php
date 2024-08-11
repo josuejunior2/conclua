@@ -36,5 +36,10 @@ class Atividade extends Model
     {
         return $this->hasMany(Arquivo::class, 'atividade_id');
     }
+    
+    public function comentarios()
+    {
+        return $this->hasMany(Comentario::class, 'atividade_id');
+    }
 
 }

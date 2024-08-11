@@ -64,4 +64,7 @@
             </div>
         </div>
     @endif
+
+    @include('atividade.partials.comentario')
+
 @endsection

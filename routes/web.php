@@ -77,7 +77,7 @@ Route::middleware(['auth:web', 'primeiro_acesso', 'semestre_ativo'])->group(func
 
 Route::post('download/arquivo/auxiliar/', 'App\Http\Controllers\ArquivoController@downloadArquivo')->name('download.arquivo');
 Route::post('mudar/semestre', [App\Http\Controllers\SemestreController::class, 'mudar_semestre'])->name('semestre.mudar-semestre');
-
+Route::resource('comentario', App\Http\Controllers\ComentarioController::class)->only(['store', 'update', 'destroy']);
 // =========================================================================== ADMIN & ORIENTADOR ==========================================
 
 Route::prefix('admin')->name('admin.')->group(function () {
