@@ -41,11 +41,11 @@
                 <td>{{ $orientador->Admin->email }}</td>
                 <td>{{ $orientador->Formacao ? $orientador->Formacao->nome : 'N/A' }}</td>
                 <td>{{ $orientador->Area ? $orientador->Area->nome : 'N/A' }}</td>
-                <td>{{-- @if($o->disponibilidade == 0)N/A @elseif(isset($semestreSession)) {{ $o->disponibilidade - $o->orientacoes->where('semestre_id', $semestreSession->id)->count() }} de {{ $o->disponibilidade }} @endif--}}</td>
+                <td>{{-- @if($o->disponibilidade == 0)N/A @elseif(isset(session('semestre_id'))) {{ $o->disponibilidade - $o->orientacoes->where('semestre_id', session('semestre_id')->id)->count() }} de {{ $o->disponibilidade }} @endif--}}</td>
                 <td>
                     @if (isset($orientacoesSemestre) && $orientacoesSemestre->where('orientador_id', $orientador->id)->exists())
                         @foreach ($orientacoesSemestre->where('orientador_id', $orientador->id) as $orientacao)
-                            {{ $orientacao->Academico->User->nome }} - @if ($orientacao->Academico->academicosTCC->where('semestre_id', $semestreSession)->first()) TCC @elseif ($orientacao->Academico->academicosEstagio->where('semestre_id', $semestreSession)->first()) Estagio @endif
+                            {{ $orientacao->Academico->User->nome }} - @if ($orientacao->Academico->academicosTCC->where('semestre_id', session('semestre_id'))->first()) TCC @elseif ($orientacao->Academico->academicosEstagio->where('semestre_id', session('semestre_id'))->first()) Estagio @endif
                         @endforeach
                     @endif
                 </td>

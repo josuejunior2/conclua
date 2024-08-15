@@ -44,20 +44,22 @@
                                         @endif
 
                                         @can('criar comentario')
-                                            <a onclick="showResposta('{{ $comentario->Autor()->nome }}', '{{ $comentario->texto }}', {{ $comentario->id }})"
-                                                class="btn btn-pill p-1">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" width="20"
-                                                    height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-corner-down-left-double">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path d="M19 5v6a3 3 0 0 1 -3 3h-7" />
-                                                    <path d="M13 10l-4 4l4 4m-5 -8l-4 4l4 4" />
-                                                </svg>
-                                            </a>
+                                            @if(session('semestreIsAtivo'))
+                                                <a onclick="showResposta('{{ $comentario->Autor()->nome }}', '{{ $comentario->texto }}', {{ $comentario->id }})"
+                                                    class="btn btn-pill p-1">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" width="20"
+                                                        height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-corner-down-left-double">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path d="M19 5v6a3 3 0 0 1 -3 3h-7" />
+                                                        <path d="M13 10l-4 4l4 4m-5 -8l-4 4l4 4" />
+                                                    </svg>
+                                                </a>
+                                            @endif
                                         @endcan
 
-                                        @if ($comentario->comentarioDoUsuario())
+                                        @if ($comentario->comentarioDoUsuario() && session('semestreIsAtivo'))
                                             @can('editar comentario')
                                                 <a onclick="editar('{{ $comentario->id }}', '{{ $comentario->texto }}')"
                                                     class="btn btn-pill p-1">
@@ -74,27 +76,29 @@
                                             @endcan
 
                                             @can('excluir comentario')
-                                                <form id="form_destroy_comentario_{{ $comentario->id }}" method="post"
-                                                    action="{{ route('comentario.destroy', ['comentario' => $comentario]) }}"
-                                                    style="display: contents">
-                                                    @method('DELETE')
-                                                    @csrf
-                                                    <a href="#"
-                                                        onclick="document.getElementById('form_destroy_comentario_{{ $comentario->id }}').submit()"
-                                                        class="btn btn-pill p-1">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="ml-2"
-                                                            width="20" height="20" viewBox="0 0 24 24"
-                                                            stroke-width="2" stroke="currentColor" fill="none"
-                                                            stroke-linecap="round" stroke-linejoin="round">
-                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                            <path d="M4 7l16 0" />
-                                                            <path d="M10 11l0 6" />
-                                                            <path d="M14 11l0 6" />
-                                                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                                                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                                                        </svg>
-                                                    </a>
-                                                </form>
+                                                @if(session('semestreIsAtivo'))
+                                                    <form id="form_destroy_comentario_{{ $comentario->id }}" method="post"
+                                                        action="{{ route('comentario.destroy', ['comentario' => $comentario]) }}"
+                                                        style="display: contents">
+                                                        @method('DELETE')
+                                                        @csrf
+                                                        <a href="#"
+                                                            onclick="document.getElementById('form_destroy_comentario_{{ $comentario->id }}').submit()"
+                                                            class="btn btn-pill p-1">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-2"
+                                                                width="20" height="20" viewBox="0 0 24 24"
+                                                                stroke-width="2" stroke="currentColor" fill="none"
+                                                                stroke-linecap="round" stroke-linejoin="round">
+                                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                <path d="M4 7l16 0" />
+                                                                <path d="M10 11l0 6" />
+                                                                <path d="M14 11l0 6" />
+                                                                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                                                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                                            </svg>
+                                                        </a>
+                                                    </form>
+                                                @endif
                                             @endcan
                                         @endif
                                     </div>
@@ -103,31 +107,33 @@
                                     {{ $comentario->texto }}</p>
 
                                 @can('editar comentario')
-                                    <form method="POST" id="form_editar_comentario_{{ $comentario->id }}"
-                                        action="{{ route('comentario.update', ['comentario' => $comentario]) }}"
-                                        autocomplete="off" novalidate style="display: none" class="form_editar mt-1">
-                                        @csrf
-                                        @method('PUT')
-                                        <div class="row g-2">
-                                            <div class="col">
-                                                <input type="text" class="form-control" name="texto"
-                                                    id="texto_edicao_{{ $comentario->id }}" placeholder="Comente aqui...">
+                                    @if(session('semestreIsAtivo'))
+                                        <form method="POST" id="form_editar_comentario_{{ $comentario->id }}"
+                                            action="{{ route('comentario.update', ['comentario' => $comentario]) }}"
+                                            autocomplete="off" novalidate style="display: none" class="form_editar mt-1">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="row g-2">
+                                                <div class="col">
+                                                    <input type="text" class="form-control" name="texto"
+                                                        id="texto_edicao_{{ $comentario->id }}" placeholder="Comente aqui...">
+                                                </div>
+                                                <div class="col-auto">
+                                                    <button type="submit" class="btn btn-primary">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                            class="icon icon-tabler icons-tabler-outline icon-tabler-send-2">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                            <path
+                                                                d="M4.698 4.034l16.302 7.966l-16.302 7.966a.503 .503 0 0 1 -.546 -.124a.555 .555 0 0 1 -.12 -.568l2.468 -7.274l-2.468 -7.274a.555 .555 0 0 1 .12 -.568a.503 .503 0 0 1 .546 -.124z" />
+                                                            <path d="M6.5 12h14.5" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
                                             </div>
-                                            <div class="col-auto">
-                                                <button type="submit" class="btn btn-primary">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                        class="icon icon-tabler icons-tabler-outline icon-tabler-send-2">
-                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                        <path
-                                                            d="M4.698 4.034l16.302 7.966l-16.302 7.966a.503 .503 0 0 1 -.546 -.124a.555 .555 0 0 1 -.12 -.568l2.468 -7.274l-2.468 -7.274a.555 .555 0 0 1 .12 -.568a.503 .503 0 0 1 .546 -.124z" />
-                                                        <path d="M6.5 12h14.5" />
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
+                                        </form>
+                                    @endif
                                 @endcan
                             </div>
                         </div>
@@ -139,52 +145,54 @@
     <div class="card-footer">
         <div class="mb-3">
             @can('criar comentario')
-                <form method="POST" action="{{ route('comentario.store') }}" autocomplete="off" novalidate>
-                    @csrf
-                    <div class="row resposta w-100" style="display: none;">
-                        <div class="col-auto">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" width="20" height="20"
-                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round"
-                                class="icon icon-tabler icons-tabler-outline icon-tabler-corner-down-right-double">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M4 5v6a3 3 0 0 0 3 3h7" />
-                                <path d="M10 10l4 4l-4 4m5 -8l4 4l-4 4" />
-                            </svg>
-                        </div>
-                        <div class="col">
-                            <p id="texto_resposta"></p>
-                        </div>
-                    </div>
-                    <div class="row g-2">
-                        <div class="col">
-                            <input id="comentario_id" name="comentario_id" type="hidden" class="form-control">
-                            @if (auth()->guard('admin')->check())
-                                <input id="orientador_id" name="orientador_id" type="hidden" class="form-control"
-                                    value="{{ auth()->user()->Orientador->id }}">
-                            @elseif(auth()->guard('web')->check())
-                                <input id="academico_id" name="academico_id" type="hidden" class="form-control"
-                                    value="{{ auth()->user()->Academico->id }}">
-                            @endif
-                            <input id="atividade_id" name="atividade_id" type="hidden" class="form-control"
-                                value="{{ $atividade->id }}">
-                            <input type="text" class="form-control" name="texto" placeholder="Comente aqui...">
-                        </div>
-                        <div class="col-auto">
-                            <button type="submit" class="btn btn-primary">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                @if(session('semestreIsAtivo'))
+                    <form method="POST" action="{{ route('comentario.store') }}" autocomplete="off" novalidate>
+                        @csrf
+                        <div class="row resposta w-100" style="display: none;">
+                            <div class="col-auto">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="ml-2" width="20" height="20"
                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round"
-                                    class="icon icon-tabler icons-tabler-outline icon-tabler-send-2">
+                                    class="icon icon-tabler icons-tabler-outline icon-tabler-corner-down-right-double">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path
-                                        d="M4.698 4.034l16.302 7.966l-16.302 7.966a.503 .503 0 0 1 -.546 -.124a.555 .555 0 0 1 -.12 -.568l2.468 -7.274l-2.468 -7.274a.555 .555 0 0 1 .12 -.568a.503 .503 0 0 1 .546 -.124z" />
-                                    <path d="M6.5 12h14.5" />
+                                    <path d="M4 5v6a3 3 0 0 0 3 3h7" />
+                                    <path d="M10 10l4 4l-4 4m5 -8l4 4l-4 4" />
                                 </svg>
-                            </button>
+                            </div>
+                            <div class="col">
+                                <p id="texto_resposta"></p>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                        <div class="row g-2">
+                            <div class="col">
+                                <input id="comentario_id" name="comentario_id" type="hidden" class="form-control">
+                                @if (auth()->guard('admin')->check())
+                                    <input id="orientador_id" name="orientador_id" type="hidden" class="form-control"
+                                        value="{{ auth()->user()->Orientador->id }}">
+                                @elseif(auth()->guard('web')->check())
+                                    <input id="academico_id" name="academico_id" type="hidden" class="form-control"
+                                        value="{{ auth()->user()->Academico->id }}">
+                                @endif
+                                <input id="atividade_id" name="atividade_id" type="hidden" class="form-control"
+                                    value="{{ $atividade->id }}">
+                                <input type="text" class="form-control" name="texto" placeholder="Comente aqui...">
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-primary">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-send-2">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                        <path
+                                            d="M4.698 4.034l16.302 7.966l-16.302 7.966a.503 .503 0 0 1 -.546 -.124a.555 .555 0 0 1 -.12 -.568l2.468 -7.274l-2.468 -7.274a.555 .555 0 0 1 .12 -.568a.503 .503 0 0 1 .546 -.124z" />
+                                        <path d="M6.5 12h14.5" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                @endif
             @endcan
         </div>
     </div>

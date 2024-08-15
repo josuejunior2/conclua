@@ -8,7 +8,7 @@
         <div class="card-header justify-content-between">
             <h3 class="card-title">Atividade "{{ $atividade->titulo }}"</h3>
             <div class="d-flex justify-content-between col-auto">
-                @if($semestreIsAtual)
+                @if(session('semestreIsAtivo'))
                     @can('avaliar atividade')
                         <div class="me-2">
                             <a href="#" class="btn btn-primary w-100  " data-bs-toggle="modal" data-bs-target="#modal-avaliar-atividade">

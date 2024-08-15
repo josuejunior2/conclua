@@ -79,7 +79,7 @@
                         <a class="dropdown-item" href="{{ route('admin.semestre.show', ['semestre' => $s]) }}">
                             Visualizar
                         </a>
-                        @if($s->id == $semestreSession)
+                        @if($s->id == session('semestre_id'))
                         <a class="dropdown-item" href="{{ route('admin.semestre.edit', ['semestre' => $s]) }}">
                             Editar
                         </a>

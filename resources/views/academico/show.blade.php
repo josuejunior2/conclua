@@ -5,7 +5,7 @@
     <div class="card m-3">
         <div class="card-header justify-content-between">
             <h3 class="card-title">Cadastro do Academico</h3>
-            @if($semestreIsAtual)
+            @if(session('semestreIsAtivo'))
             <div class="d-flex justify-content-between col-auto">
                 <a href=" {{ route('academico.edit', ['academico' => $academico]) }}"
                     class="btn me-2 btn-secondary w-100">
@@ -47,7 +47,7 @@
         <div class="card m-3">
             <div class="card-header justify-content-between">
                 <h3 class="card-title">TCC</h3>
-            @if($semestreIsAtual)
+            @if(session('semestreIsAtivo'))
                 <div class="d-flex justify-content-between col-auto">
                     <a href=" {{ route('academicoTCC.edit', ['academicoTCC' => $tcc]) }}"
                         class="btn me-2 btn-secondary w-100">
@@ -109,7 +109,7 @@
         <div class="card m-3">
             <div class="card-header justify-content-between">
                 <h3 class="card-title">Estágio</h3>
-            @if($semestreIsAtual)
+            @if(session('semestreIsAtivo'))
                 <div class="d-flex justify-content-between col-auto">
                     <a href=" {{ route('academicoEstagio.edit', ['academicoEstagio' => $estagio]) }}"
                         class="btn me-2 btn-secondary w-100">

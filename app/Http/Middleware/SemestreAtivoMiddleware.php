@@ -28,32 +28,24 @@ class SemestreAtivoMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         // return $next($request);
-        if(auth()->user()->hasRole('Admin')){ return $next($request); }
+        // if(auth()->user()->hasRole('Admin')){ return $next($request); }
 
-        $semestreAtual = Semestre::all()->last();
+        $ultimoSemestre = Semestre::all()->last();
         if(session('semestre_id')){ $semestreEmSession = Semestre::where('id', session('semestre_id'))->first(); }
 
         if(isset($semestreEmSession)){
-            if($semestreEmSession != $semestreAtual || $semestreAtual->data_fim < now()){ // na regra do form request de semestre eu devo criar uma regra pra não criar semestre sem que a data_fim do anterior não tenha chegado
-                if(auth()->guard('web')->check()){
-                    // return redirect()->route('welcome')->with('error', 'O prazo para acesso ao semestre acabou.');
-                    return $next($request);
-                }
-                if(auth()->guard('admin')->check()){
-                    return $next($request);
-                    // return redirect()->route('welcome')->with('error', 'Sem permissão de atuar no semestre');
-                }
-            } else if($semestreEmSession == $semestreAtual && $semestreAtual->data_fim >= now()){
-
+            if($semestreEmSession != $ultimoSemestre || $ultimoSemestre->data_fim < now() || $ultimoSemestre->data_inicio > now() ){
+                return redirect()->route('welcome')->with('error', 'Ação não autorizada, o semestre já foi finalizado.');
+            } else if($semestreEmSession == $ultimoSemestre && $ultimoSemestre->data_fim >= now()){
                 return $next($request);
             }
             return abort(403, "o midd semestreativo nao prevê tudo");
-        }elseif(!isset($semestreEmSession) && isset($semestreAtual)){
-            $request->session()->put('semestre_id', $semestreAtual->id);
+        // }
+        // elseif(!isset($semestreEmSession) && isset($ultimoSemestre)){
+        //     $request->session()->put('semestre_id', $ultimoSemestre->id);
 
-            return $next($request);
+        //     return $next($request);
         } else{
-
             return redirect()->route('welcome')->with('error', 'Sem semestre cadastrado');
         }
     }

@@ -37,7 +37,7 @@ Route::middleware('auth:web')->group(function () {
 Route::get('/', function () { return view('welcome'); })->name('welcome');
 
 // Importante: os midd funcionam em cascata, uma depois a outra na ordem que foi colocado.
-Route::middleware(['auth:web', 'semestre_ativo'])->group(function () { // rotas para completar o cadastro do academico
+Route::middleware(['auth:web' ])->group(function () { // rotas para completar o cadastro do academico
     Route::get('academico/create', 'App\Http\Controllers\AcademicoController@create')->name('academico.create');
     Route::post('academico', 'App\Http\Controllers\AcademicoController@store')->name('academico.store');
     Route::get('academicoEstagio/create/{empresa}/{academico}', 'App\Http\Controllers\AcademicoEstagioController@create')->name('academicoEstagio.create');
@@ -49,7 +49,7 @@ Route::middleware(['auth:web', 'semestre_ativo'])->group(function () { // rotas 
     });
 Route::resource('academico', App\Http\Controllers\AcademicoController::class)->except(['create', 'store', 'show', 'index', 'destroy']);
 
-Route::middleware(['auth:web', 'primeiro_acesso', 'semestre_ativo'])->group(function () { //
+Route::middleware(['auth:web', 'primeiro_acesso' ])->group(function () { //
     Route::get('academico/{user}', 'App\Http\Controllers\AcademicoController@show')->name('academico.show');
 
     Route::resource('academicoEstagio', App\Http\Controllers\AcademicoEstagioController::class)->except(['create', 'store']);
@@ -60,7 +60,7 @@ Route::middleware(['auth:web', 'primeiro_acesso', 'semestre_ativo'])->group(func
 
 });
 
-Route::middleware(['auth:web', 'primeiro_acesso', 'semestre_ativo'])->group(function () {
+Route::middleware(['auth:web', 'primeiro_acesso' ])->group(function () {
     /**
      * Esta rota /home aqui vale apenas para academico, pq o /home para admin&orientador vai direto para /admin/home, e /admin/home na linha 93 nao tem o semestre_ativo
      */
@@ -118,7 +118,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 
 
-Route::middleware(['auth:admin', 'semestre_ativo', 'primeiro_acesso'])->group(function () {          // ROTAS ORIENTADOR
+Route::middleware(['auth:admin' , 'primeiro_acesso'])->group(function () {          // ROTAS ORIENTADOR
     Route::get('admin/home', [AdminHomeController::class, 'index'])->name('admin.home');
     
     
@@ -137,7 +137,7 @@ Route::middleware(['auth:admin', 'semestre_ativo', 'primeiro_acesso'])->group(fu
 });
 
 
-Route::middleware(['auth:admin', 'semestre_ativo'])->group(function () { // ROTAS ORIENTADOR
+Route::middleware(['auth:admin' ])->group(function () { // ROTAS ORIENTADOR
     Route::get('orientador/create', 'App\Http\Controllers\OrientadorController@create')->name('orientador.create');
     Route::post('orientador/{orientador}', 'App\Http\Controllers\OrientadorController@store')->name('orientador.store');
     Route::get('orientador/{orientador}', [App\Http\Controllers\OrientadorController::class, 'show'])->name('orientador.show');
