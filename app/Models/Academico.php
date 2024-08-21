@@ -61,4 +61,18 @@ class Academico extends Authenticatable
         return $diretorio;
     }
 
+    public function getTccAtual()
+    {
+        return $this->academicosTCC->where('semestre_id', session('semestre_id'))->first();
+    }
+    
+    public function getEstagioAtual()
+    {
+        return $this->academicosEstagio->where('semestre_id', session('semestre_id'))->first();
+    }
+
+    public function getSolicitacoesAtual()
+    {
+        return $this->solicitacoes->where('semestre_id', session('semestre_id'));
+    }
 }

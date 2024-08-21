@@ -39,9 +39,9 @@ class AcademicoAdminController extends Controller
     {
         return view('admin.academico.show', [
             'academico' => $academico, 
-            'estagio' => $academico->estagioAtual(), 
-            'tcc' => $academico->tccAtual(), 
-            'solicitacoes' => $academico->solicitacoesAtual()
+            'estagio' => $academico->getEstagioAtual(), 
+            'tcc' => $academico->getTccAtual(), 
+            'solicitacoes' => $academico->getSolicitacoesAtual()
         ]);
     }
 
