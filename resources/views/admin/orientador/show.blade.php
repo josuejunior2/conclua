@@ -38,10 +38,6 @@
             <div class="datagrid-content">{{ $orientador->Admin->email }}</div>
         </div>
         <div class="datagrid-item">
-            <div class="datagrid-title">Telefone</div>
-            <div class="datagrid-content">colocar depois</div>
-        </div>
-        <div class="datagrid-item">
             <div class="datagrid-title">Currículo Lattes</div>
             <div class="datagrid-content">{{$orientador->enderecoLattes}}</div>
         </div>

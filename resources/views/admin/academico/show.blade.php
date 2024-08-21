@@ -1,4 +1,4 @@
-@extends(auth()->guard('admin')->user()->hasRole('Orientador') ? 'layouts.orientador' : 'layouts.admin')
+@extends('layouts.admin')
 
 @section('content')
 
@@ -38,10 +38,6 @@
                 <div class="datagrid-content">{{ $academico->User->email }}</div>
             </div>
             <div class="datagrid-item">
-                <div class="datagrid-title">Telefone</div>
-                <div class="datagrid-content">colocar depois</div>
-            </div>
-            <div class="datagrid-item">
                 <div class="datagrid-title">Criação do usuário</div>
                 <div class="datagrid-content">{{ \Carbon\Carbon::parse($academico->created_at)->format('d/m/Y') }}</div>
             </div>
@@ -49,45 +45,44 @@
     </div>
 </div>
 
-
-@if (isset($tccs))
+@if (!empty($tcc))
     <div class="card m-3">
         <div class="card-header justify-content-between">
             <h3 class="card-title">TCC</h3>
         </div>
         <div class="card-body">
             <div class="accordion" id="accordion">
-                @foreach ($tccs->sortByDesc('created_at') as $key => $tcc) {{-- ->sortBy('nome')--}}
-                    <div class="accordion-item m-3">
-                        <div class="d-flex justify-content-between" id="heading-1">
-                            <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#accordion-collapse-{{ $tcc->id }}" aria-expanded="true">
-                                ({{ $tcc->Semestre->periodo }}/{{ $tcc->Semestre->ano }}){{ $tcc->tema }}
-                            </button>
-                        </div>
-                        <div id="accordion-collapse-{{ $tcc->id }}" class="accordion-collapse collapse" data-bs-parent="#accordion-{{ $tcc->id }}">
-                            <div class="accordion-body pt-0">
-                                <div class="datagrid">
+                <div class="accordion-item m-3">
+                    <div class="d-flex justify-content-between" id="heading-1">
+                        <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#accordion-collapse-tcc-{{ $tcc->id }}" aria-expanded="true">
+                            ({{ $tcc->Semestre->periodo }}/{{ $tcc->Semestre->ano }}){{ $tcc->tema }}
+                        </button>
+                    </div>
+                    <div id="accordion-collapse-tcc-{{ $tcc->id }}" class="accordion-collapse collapse" data-bs-parent="#accordion-{{ $tcc->id }}">
+                        <div class="accordion-body pt-0">
+                            <div class="datagrid">
+                                <div class="datagrid-item">
+                                    <div class="datagrid-title">Data do cadastro</div>
+                                    <div class="datagrid-content">{{ \Carbon\Carbon::parse($tcc->created_at)->format('d/m/Y') }}</div>
+                                </div>
+                                <div class="datagrid-item">
+                                    <div class="datagrid-title">Semestre</div>
+                                    <div class="datagrid-content">{{ $tcc->Semestre->periodo }}º de {{ $tcc->Semestre->ano }}</div>
+                                </div>
+                                @if(isset($tcc->Orientacao))
                                     <div class="datagrid-item">
-                                        <div class="datagrid-title">Data do cadastro</div>
-                                        <div class="datagrid-content">{{ \Carbon\Carbon::parse($tcc->created_at)->format('d/m/Y') }}</div>
+                                        <div class="datagrid-title">Orientador</div>
+                                        <div class="datagrid-content">{{ $tcc->Orientacao->Orientador->Admin->nome }}</div>
                                     </div>
                                     <div class="datagrid-item">
-                                        <div class="datagrid-title">Semestre</div>
-                                        <div class="datagrid-content">{{ $tcc->Semestre->periodo }}º de {{ $tcc->Semestre->ano }}</div>
+                                        <div class="datagrid-title">Data de vinculação</div>
+                                        <div class="datagrid-content">{{ \Carbon\Carbon::parse($tcc->Orientacao->created_at)->format('d/m/Y') }}</div>
                                     </div>
-                                    @if(isset($tcc->Orientacao))
-                                        <div class="datagrid-item">
-                                            <div class="datagrid-title">Orientador</div>
-                                            <div class="datagrid-content">{{ $tcc->Orientacao->Orientador->Admin->nome }}</div>
-                                        </div>
-                                        <div class="datagrid-item">
-                                            <div class="datagrid-title">Data de vinculação</div>
-                                            <div class="datagrid-content">{{ \Carbon\Carbon::parse($tcc->Orientacao->created_at)->format('d/m/Y') }}</div>
-                                        </div>
-                                        <div class="datagrid-item">
-                                            <div class="d-flex justify-content-between col-auto">
-                                                @include('admin.academico.modal.alert-desvincular-academico', ['modalidade' => $tcc])
-                                                @can('desvincular academico')
+                                    <div class="datagrid-item">
+                                        <div class="d-flex justify-content-between col-auto">
+                                            @include('admin.academico.modal.alert-desvincular-academico', ['modalidade' => $tcc])
+                                            @can('desvincular academico')
+                                                @if(session('semestreIsAtivo'))
                                                     <div>
                                                         <form id="form_desvincular_{{ $tcc->id }}" method="post" action="{{ route('admin.academico.desvincular.tcc', ['tcc' => $tcc]) }}" class="me-2">
                                                             @csrf
@@ -98,130 +93,131 @@
                                                             </a>
                                                         </form>
                                                     </div>
-                                                @endcan
-                                            </div>
+                                                @endif
+                                            @endcan
                                         </div>
-                                    @endif
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="row mt-2 g-4">
+                                <div class="col-12 markdown">
+                                    <h2>Tema</h2>
+                                    <p>{{ $tcc->tema }}</p>
                                 </div>
-                                <div class="row mt-2 g-4">
-                                    <div class="col-12 markdown">
-                                        <h2>Tema</h2>
-                                        <p>{{ $tcc->tema }}</p>
-                                    </div>
-                                    <div class="col-12 markdown">
-                                        <h2>Problema</h2>
-                                        <p>{{ $tcc->problema }}</p>
-                                    </div>
-                                    <div class="col-12 markdown">
-                                        <h2>Objetivo específico</h2>
-                                        <p>{{ $tcc->objetivo_especifico }}</p>
-                                    </div>
-                                    <div class="col-12 markdown">
-                                        <h2>Objetivo geral</h2>
-                                        <p>{{ $tcc->objetivo_geral }}</p>
-                                    </div>
-                                    <div class="col-12 markdown">
-                                        <h2>Justificativa</h2>
-                                        <p>{{ $tcc->justificativa }}</p>
-                                    </div>
-                                    <div class="col-12 markdown">
-                                        <h2>Metodologia</h2>
-                                        <p>{{ $tcc->metodologia }}</p>
-                                    </div>
+                                <div class="col-12 markdown">
+                                    <h2>Problema</h2>
+                                    <p>{{ $tcc->problema }}</p>
+                                </div>
+                                <div class="col-12 markdown">
+                                    <h2>Objetivo específico</h2>
+                                    <p>{{ $tcc->objetivo_especifico }}</p>
+                                </div>
+                                <div class="col-12 markdown">
+                                    <h2>Objetivo geral</h2>
+                                    <p>{{ $tcc->objetivo_geral }}</p>
+                                </div>
+                                <div class="col-12 markdown">
+                                    <h2>Justificativa</h2>
+                                    <p>{{ $tcc->justificativa }}</p>
+                                </div>
+                                <div class="col-12 markdown">
+                                    <h2>Metodologia</h2>
+                                    <p>{{ $tcc->metodologia }}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                @endforeach
+                </div>
             </div>
         </div>
     </div>
 @endif
-@if (isset($estagios))
+
+@if (!empty($estagio))
     <div class="card m-3">
         <div class="card-header justify-content-between">
             <h3 class="card-title">Estágio</h3>
         </div>
         <div class="card-body">
             <div class="accordion" id="accordion">
-                @foreach ($estagios->sortByDesc('created_at') as $key => $estagio) {{-- ->sortBy('nome')--}}
-                    <div class="accordion-item m-3">
-                        <div class="d-flex justify-content-between" id="heading-1">
-                            <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#accordion-collapse-{{ $estagio->id }}" aria-expanded="true">
-                                ({{ $estagio->Semestre->periodo }}/{{ $estagio->Semestre->ano }}){{ $estagio->tema }}
-                            </button>
-                            <div class="d-flex justify-content-between col-auto">
+                <div class="accordion-item m-3">
+                    <div class="d-flex justify-content-between" id="heading-1">
+                        <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#accordion-collapse-estagio-{{ $estagio->id }}" aria-expanded="true">
+                            ({{ $estagio->Semestre->periodo }}/{{ $estagio->Semestre->ano }}){{ $estagio->tema }}
+                        </button>
+                        <div class="d-flex justify-content-between col-auto">
+                            @if(isset($estagio->Orientacao))
+                                @include('admin.academico.modal.alert-desvincular-academico', ['modalidade' => $estagio])
+                                @can('desvincular academico')
+                                @if(session('semestreIsAtivo'))
+                                <div>
+                                    <form id="form_desvincular_{{ $estagio->id }}" method="post" action="{{ route('admin.academico.desvincular.estagio', ['estagio' => $estagio ]) }}" class="me-2">
+                                        @csrf
+                                        <!-- <button type="submit">Excluir</button> $orcamento->sites[$key] -->
+                                        <a href="#" class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#modal-desvincular-academico-{{ $estagio->id }}">
+                                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-link-off"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 15l3 -3m2 -2l1 -1" /><path d="M11 6l.463 -.536a5 5 0 0 1 7.071 7.072l-.534 .464" /><path d="M3 3l18 18" /><path d="M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463" /></svg>
+                                            Desvincular acadêmico do orientador
+                                        </a>
+                                    </form>
+                                </div>
+                                @endif
+                                @endcan
+                            @endif
+                        </div>
+                    </div>
+                    <div id="accordion-collapse-estagio-{{ $estagio->id }}" class="accordion-collapse collapse" data-bs-parent="#accordion-{{ $estagio->id }}">
+                        <div class="accordion-body pt-0">
+                            <div class="datagrid">
+                                <div class="datagrid-item">
+                                    <div class="datagrid-title">Data do cadastro</div>
+                                    <div class="datagrid-content">{{ \Carbon\Carbon::parse($estagio->created_at)->format('d/m/Y') }}</div>
+                                </div>
+                                <div class="datagrid-item">
+                                    <div class="datagrid-title">Semestre</div>
+                                    <div class="datagrid-content">{{ $estagio->Semestre->periodo }}º de {{ $estagio->Semestre->ano }}</div>
+                                </div>
                                 @if(isset($estagio->Orientacao))
-                                    @include('admin.academico.modal.alert-desvincular-academico', ['modalidade' => $estagio])
-                                    @can('desvincular academico')
-                                    <div>
-                                        <form id="form_desvincular_{{ $estagio->id }}" method="post" action="{{ route('admin.academico.desvincular.estagio', ['estagio' => $estagio ]) }}" class="me-2">
-                                            @csrf
-                                            <!-- <button type="submit">Excluir</button> $orcamento->sites[$key] -->
-                                            <a href="#" class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#modal-desvincular-academico-{{ $estagio->id }}">
-                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-link-off"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 15l3 -3m2 -2l1 -1" /><path d="M11 6l.463 -.536a5 5 0 0 1 7.071 7.072l-.534 .464" /><path d="M3 3l18 18" /><path d="M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463" /></svg>
-                                                Desvincular acadêmico do orientador
-                                            </a>
-                                        </form>
+                                    <div class="datagrid-item">
+                                        <div class="datagrid-title">Orientador</div>
+                                        <div class="datagrid-content">{{ $estagio->Orientacao->Orientador->Admin->nome }}</div>
                                     </div>
-                                    @endcan
+                                    <div class="datagrid-item">
+                                        <div class="datagrid-title">Data de vinculação</div>
+                                        <div class="datagrid-content">{{ \Carbon\Carbon::parse($estagio->Orientacao->created_at)->format('d/m/Y') }}</div>
+                                    </div>
                                 @endif
                             </div>
-                        </div>
-                        <div id="accordion-collapse-{{ $estagio->id }}" class="accordion-collapse collapse" data-bs-parent="#accordion-{{ $estagio->id }}">
-                            <div class="accordion-body pt-0">
-                                <div class="datagrid">
-                                    <div class="datagrid-item">
-                                        <div class="datagrid-title">Data do cadastro</div>
-                                        <div class="datagrid-content">{{ \Carbon\Carbon::parse($estagio->created_at)->format('d/m/Y') }}</div>
-                                    </div>
-                                    <div class="datagrid-item">
-                                        <div class="datagrid-title">Semestre</div>
-                                        <div class="datagrid-content">{{ $estagio->Semestre->periodo }}º de {{ $estagio->Semestre->ano }}</div>
-                                    </div>
-                                    @if(isset($estagio->Orientacao))
-                                        <div class="datagrid-item">
-                                            <div class="datagrid-title">Orientador</div>
-                                            <div class="datagrid-content">{{ $estagio->Orientacao->Orientador->Admin->nome }}</div>
-                                        </div>
-                                        <div class="datagrid-item">
-                                            <div class="datagrid-title">Data de vinculação</div>
-                                            <div class="datagrid-content">{{ \Carbon\Carbon::parse($estagio->Orientacao->created_at)->format('d/m/Y') }}</div>
-                                        </div>
-                                    @endif
+                            <div class="row mt-2 g-4">
+                                <div class="col-12 markdown">
+                                    <h2>Tema</h2>
+                                    <p>{{ $estagio->tema }}</p>
                                 </div>
-                                <div class="row mt-2 g-4">
-                                    <div class="col-12 markdown">
-                                        <h2>Tema</h2>
-                                        <p>{{ $estagio->tema }}</p>
-                                    </div>
-                                    <div class="col-12 markdown">
-                                        <h2>Função</h2>
-                                        <p>{{ $estagio->funcao }}</p>
-                                    </div>
-                                    <div class="col-12 markdown">
-                                        <h2>Empresa</h2>
-                                        <p>{{ $estagio->Empresa->nome }}</p>
-                                    </div>
+                                <div class="col-12 markdown">
+                                    <h2>Função</h2>
+                                    <p>{{ $estagio->funcao }}</p>
+                                </div>
+                                <div class="col-12 markdown">
+                                    <h2>Empresa</h2>
+                                    <p>{{ $estagio->Empresa->nome }}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                @endforeach
+                </div>
             </div>
         </div>
     </div>
 @endif
 
 
-@if ($academico->solicitacoes)
+@if ($solicitacoes)
 <div class="card m-3">
     <div class="card-header justify-content-between">
         <h3 class="card-title">Solicitações</h3>
     </div>
     <div class="card-body">
         <div class="accordion" id="accordion">
-            @foreach ($academico->solicitacoes->sortByDesc('created_at') as $key => $solicitacao) {{-- ->sortBy('nome')--}}
+            @foreach ($solicitacoes->sortByDesc('created_at') as $key => $solicitacao) {{-- ->sortBy('nome')--}}
                 <div class="accordion-item m-3">
                     <div class="d-flex justify-content-between" id="heading-1">
                         <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#accordion-collapse-{{ $solicitacao->id }}" aria-expanded="true">

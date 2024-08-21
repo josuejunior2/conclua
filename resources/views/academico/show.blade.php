@@ -35,10 +35,6 @@
                     <div class="datagrid-title">Email</div>
                     <div class="datagrid-content">{{ $academico->User->email }}</div>
                 </div>
-                <div class="datagrid-item">
-                    <div class="datagrid-title">Telefone</div>
-                    <div class="datagrid-content">colocar depois</div>
-                </div>
             </div>
         </div>
     </div>

@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Semestre;
-use App\Models\SemestreAcademico;
-use App\Models\SemestreOrientador;
+use App\Models\Orientacao;
 use App\Models\Academico;
 use App\Models\User;
 use App\Models\AcademicoTCC;
@@ -30,7 +28,7 @@ class AcademicoAdminController extends Controller
             $tccSemestre = AcademicoTCC::where('semestre_id', session('semestre_id'));
             return view('admin.academico.index', ['academicos' => $todosAcademicos, 'estagioSemestre' => $estagioSemestre, 'tccSemestre' => $tccSemestre]);
         }
-        // dd($academicosAtivos);
+        
         return view('admin.academico.index', ['academicos' => $todosAcademicos]);
     }
 
@@ -39,13 +37,12 @@ class AcademicoAdminController extends Controller
      */
     public function show(Academico $academico)
     {
-        if(AcademicoTCC::where('academico_id', $academico->id)->exists()){
-            $tccs = AcademicoTCC::where('academico_id', $academico->id)->get();
-        } else { $tccs = null; }
-        if(AcademicoEstagio::where('academico_id', $academico->id)->exists()){
-            $estagios = AcademicoEstagio::with('Empresa')->where('academico_id', $academico->id)->get();
-        } else{ $estagios = null; }
-        return view('admin.academico.show', ['academico' => $academico, 'estagios' => $estagios, 'tccs' => $tccs]);
+        return view('admin.academico.show', [
+            'academico' => $academico, 
+            'estagio' => $academico->estagioAtual(), 
+            'tcc' => $academico->tccAtual(), 
+            'solicitacoes' => $academico->solicitacoesAtual()
+        ]);
     }
 
     /**
