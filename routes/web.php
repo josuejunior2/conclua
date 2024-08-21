@@ -121,7 +121,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 Route::middleware(['auth:admin' , 'primeiro_acesso'])->group(function () {          // ROTAS ORIENTADOR
     Route::get('admin/home', [AdminHomeController::class, 'index'])->name('admin.home');
     
-    
+    Route::get('orientador/academico/{academico}', [App\Http\Controllers\OrientadorController::class, 'showAcademico'])->name('orientador.academico.show');
     Route::resource('orientador/atividade', App\Http\Controllers\AtividadeOrientadorController::class, ['as' => 'orientador']);
     
     Route::delete('destroy/arquivo-aux/{arquivo}', 'App\Http\Controllers\AtividadeOrientadorController@destroyArquivoAux')->name('arquivo.destroy.arquivo.aux');

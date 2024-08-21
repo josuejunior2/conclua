@@ -136,10 +136,19 @@ class SemestreController extends Controller
         $request->session()->put('semestre_id', $request->validated()['semestre_id']);
 
         $ultimoSemestre = Semestre::all()->last();
-        $verificaSemestre = $ultimoSemestre->id == session('semestre_id');
-        $verificaDataInicio = now() >= $ultimoSemestre->data_inicio;
-        $verificaDataFinal = now() < $ultimoSemestre->data_final;
-        $validacao = $verificaSemestre && $verificaDataInicio && $verificaDataFinal ? true : false;
+        $semestreSession = Semestre::find(session('semestre_id'));
+
+        $verificaSemestre = $ultimoSemestre == $semestreSession;
+        $verificaDataInicio = (boolean) now() >= $semestreSession->data_inicio;
+        $verificaDataFinal = (boolean) now() < $semestreSession->data_final;
+
+        if($verificaSemestre && $verificaDataInicio && $verificaDataFinal){
+            $validacao = true;
+        } else if(!$verificaSemestre && $verificaDataInicio && $verificaDataFinal){
+            $validacao = true;
+        } else {
+            $validacao = false;
+        }
 
         $request->session()->put('semestreIsAtivo', $validacao);
 

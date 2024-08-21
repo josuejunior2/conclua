@@ -23,6 +23,7 @@
           <thead>
             <tr>
               {{--<th class="w-1"></th>  <input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select all invoices"> --}}
+              <th>Orientador</th>
               <th>Acadêmico</th>
               <th>Título</th>
               <th>Criada em</th>
@@ -37,6 +38,7 @@
             @foreach ($atividades as $atividade)
             <tr>
                 <!--<td></td>  <input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"> -->
+                <td>{{ $atividade->Orientacao->Orientador->Admin->nome }}</td>
                 <td>{{ $atividade->Orientacao->Academico->User->nome }} - {{ $atividade->Orientacao->modalidade() }}</td>
                 <td>{{ $atividade->titulo }}</td>
                 <td>{{ \Carbon\Carbon::parse($atividade->created_at)->format('d/m/Y H:i') }}</td>

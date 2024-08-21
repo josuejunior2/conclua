@@ -60,7 +60,7 @@
                         </td> --}}
                                         <td class="text-end">
                                             <a class="btn justify-content-center"
-                                                href="{{ route('admin.academico.show', ['academico' => $orientacao->academico]) }}">
+                                                href="{{ route('orientador.academico.show', ['academico' => $orientacao->academico, 'orientacao' => $orientacao]) }}">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -80,7 +80,7 @@
                     </div>
                 </div>
             </div>
-            @if(session('semestreIsAtivo'))
+            {{-- @if(session('semestreIsAtivo')) --}}
                 <div class="row row-deck row-cards">
                     <div class="col-sm-6 col-lg-3">
                         <div class="row row-cards">
@@ -126,7 +126,7 @@
                         </div>
                     </div>
                 </div>
-            @endif
+            {{-- @endif --}}
         </div>
     </div>
 @endsection
