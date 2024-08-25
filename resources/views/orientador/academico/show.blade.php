@@ -184,32 +184,32 @@
         <div class="accordion" id="accordion">
             <div class="table-responsive">
                 <table class="table table-vcenter card-table">
-                  <thead>
-                    <tr>
-                      <th>Título</th>
-                      <th>Criada em</th>
-                      <th>Data-limite</th>
-                      <th>Entregue em</th>
-                      <th>Nota</th>
-                      <th class="w-1"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach ($orientacao->atividades->sortByDesc('created_at') as $key => $atividade) {{-- ->sortBy('nome')--}}
+                    <thead>
                         <tr>
-                            <td>{{ $atividade->titulo }}</td>
-                            <td>{{ \Carbon\Carbon::parse($atividade->created_at)->format('d/m/Y H:i') }}</td>
-                            <td>{{ \Carbon\Carbon::parse($atividade->data_limite)->format('d/m/Y H:i') }}</td>
-                            <td>{{ $atividade->data_entrega ? \Carbon\Carbon::parse($atividade->data_entrega)->format('d/m/Y H:i') : 'N/A' }}</td>
-                            <td><b>{{ $atividade->nota ? $atividade->nota : 'N/A' }}</b></td>
-                            <td class="d-flex align-items-center justify-content-center text-end">
-                                <a href="{{ route('orientador.atividade.show', ['atividade' => $atividade]) }}" class="btn btn-secondary w-100 ">
-                                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-eye"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg>
-                                </a>
-                            </td>
+                        <th>Título</th>
+                        <th>Criada em</th>
+                        <th>Data-limite</th>
+                        <th>Entregue em</th>
+                        <th>Nota</th>
+                        <th class="w-1"></th>
                         </tr>
-                    @endforeach
-                  </tbody>
+                    </thead>
+                    <tbody>
+                        @foreach ($orientacao->atividades->sortByDesc('created_at') as $key => $atividade) {{-- ->sortBy('nome')--}}
+                            <tr>
+                                <td>{{ $atividade->titulo }}</td>
+                                <td>{{ \Carbon\Carbon::parse($atividade->created_at)->format('d/m/Y H:i') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($atividade->data_limite)->format('d/m/Y H:i') }}</td>
+                                <td>{{ $atividade->data_entrega ? \Carbon\Carbon::parse($atividade->data_entrega)->format('d/m/Y H:i') : 'N/A' }}</td>
+                                <td><b>{{ $atividade->nota ? $atividade->nota : 'N/A' }}</b></td>
+                                <td class="d-flex align-items-center justify-content-center text-end">
+                                    <a href="{{ route('orientador.atividade.show', ['atividade' => $atividade]) }}" class="btn btn-secondary w-100 ">
+                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-eye"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
                 </table>
             </div>
         </div>

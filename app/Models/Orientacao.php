@@ -59,4 +59,12 @@ class Orientacao extends Model
         }
         return $notaTotal;
     }
+    
+    public function tema(){
+        if(!empty($this->AcademicoTCC)){
+            return $this->AcademicoTCC->tema;
+        } elseif (!empty($this->AcademicoEstagio)){
+            return $this->AcademicoEstagio->tema;
+        }
+    }
 }

@@ -110,8 +110,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::delete('academico/delete/{academico}', 'App\Http\Controllers\AcademicoAdminController@destroy')->name('academico.destroy');
         Route::get('academico', 'App\Http\Controllers\AcademicoAdminController@index')->name('academico.index');
         Route::get('academico/{academico}', 'App\Http\Controllers\AcademicoAdminController@show')->name('academico.show');
-
+        
         Route::resource('atividade', App\Http\Controllers\AtividadeAdminController::class)->except(['create', 'store', 'edit', 'update']);
+        
+        Route::get('orientacao', 'App\Http\Controllers\OrientacaoAdminController@index')->name('orientacao.index');
+        Route::post('orientacao/pdf', 'App\Http\Controllers\OrientacaoAdminController@exportPdf')->name('orientacao.exportPdf');
     });
 });
 
