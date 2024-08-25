@@ -64,11 +64,21 @@ class LoginController extends Controller
 
         if($ultimoSemestre){ $request->session()->put('semestre_id', $ultimoSemestre->id); }
 
-        $verificaSemestre = $ultimoSemestre->id == session('semestre_id');
-        $verificaDataInicio = now() >= $ultimoSemestre->data_inicio;
-        $verificaDataFinal = now() < $ultimoSemestre->data_final;
-        $validacao = $verificaSemestre && $verificaDataInicio && $verificaDataFinal ? true : false;
+        $ultimoSemestre = Semestre::all()->last();
+        $semestreSession = Semestre::find(session('semestre_id'));
+        $verificaSemestre = $ultimoSemestre == $semestreSession;
+        $verificaDataInicio = now() >= $semestreSession->data_inicio;
+        $verificaDataFinal = now() < $semestreSession->data_fim;
 
+        if($verificaSemestre && $verificaDataInicio && $verificaDataFinal){
+            $validacao = true;
+        } else if(!$verificaSemestre && $verificaDataInicio && $verificaDataFinal){
+            $validacao = true;
+        } else {
+            $validacao = false;
+        }
+        
         $request->session()->put('semestreIsAtivo', $validacao);
+
     }
 }

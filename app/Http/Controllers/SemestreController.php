@@ -139,8 +139,8 @@ class SemestreController extends Controller
         $semestreSession = Semestre::find(session('semestre_id'));
 
         $verificaSemestre = $ultimoSemestre == $semestreSession;
-        $verificaDataInicio = (boolean) now() >= $semestreSession->data_inicio;
-        $verificaDataFinal = (boolean) now() < $semestreSession->data_final;
+        $verificaDataInicio = now() >= $semestreSession->data_inicio;
+        $verificaDataFinal = now() < $semestreSession->data_fim;
 
         if($verificaSemestre && $verificaDataInicio && $verificaDataFinal){
             $validacao = true;
@@ -149,7 +149,7 @@ class SemestreController extends Controller
         } else {
             $validacao = false;
         }
-
+        
         $request->session()->put('semestreIsAtivo', $validacao);
 
 
