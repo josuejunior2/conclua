@@ -12,6 +12,7 @@ use App\Models\Atividade;
 use App\Http\Requests\ArquivoSubmissaoRequest;
 use App\Models\SubmissaoAtividade;
 use App\Http\Requests\ArquivoAuxRequest;
+use Illuminate\Support\Facades\Storage;
 
 class ArquivoController extends Controller
 { 
@@ -51,7 +52,7 @@ class ArquivoController extends Controller
         $caminho = 'uploads/'.$submissao->Atividade->Orientacao->Semestre->periodoAno() . '/' . $submissao->Atividade->Orientacao->Orientador->diretorio() . '/' . $submissao->Atividade->Orientacao->Academico->diretorio() . '/recebido';
         
         foreach ($request['arquivos_submissao'] as $key => $arquivo) {
-            $nome =  $this->setNomeArquivo($arquivo, $caminho);
+            $nome = $this->setNomeArquivo($arquivo, $caminho);
             
             Arquivo::create([
                 'nome' => $nome,
@@ -59,7 +60,7 @@ class ArquivoController extends Controller
                 'academico_id' => $submissao->Atividade->Orientacao->Academico->id,
                 'caminho' => $caminho,
             ]);
-            $arquivo->move($caminho, $nome);
+            Storage::disk('public')->putFileAs($caminho, $arquivo, $nome);
         }
 
         return redirect()->back()->with(['success' => 'Arquivo adicionado na submissão com sucesso.']);
@@ -81,7 +82,7 @@ class ArquivoController extends Controller
                 'orientador_id' => $atividade->Orientacao->Orientador->id,
                 'caminho' => $caminho,
             ]);
-            $arquivo->move($caminho, $nome);
+            Storage::disk('public')->putFileAs($caminho, $arquivo, $nome);
         }
         
         return redirect()->back()->with(['success' => 'Arquivo auxiliar adicionado com sucesso.']);
@@ -92,7 +93,7 @@ class ArquivoController extends Controller
      */
     public function destroyArquivoSubmissao(Arquivo $arquivo)
     {
-        unlink('./'.$arquivo->caminho.'/'.$arquivo->nome);
+        Storage::disk('public')->delete($arquivo->caminho . '/' . $arquivo->nome);
         $arquivo->forceDelete();
         return redirect()->back()->with(['success' => 'Arquivo auxiliar excluído com sucesso.']);
     }
