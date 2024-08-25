@@ -14,7 +14,7 @@ class Orientacao extends Model
 
     protected $table = 'orientacoes';
 
-    protected $fillable = ['academico_id', 'academico_tcc_id', 'academico_estagio_id', 'orientador_id', 'semestre_id', 'solicitacao_id'];//, 'modalidade'];
+    protected $fillable = ['academico_id', 'academico_tcc_id', 'academico_estagio_id', 'orientador_id', 'semestre_id', 'solicitacao_id', 'avaliacao_final'];
 
     public function Orientador(){
         return $this->belongsTo(Orientador::class, 'orientador_id');

@@ -15,6 +15,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\OrientadorRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\AvaliacaoFinalRequest;
 use Illuminate\Support\Facades\Hash;
 
 class OrientadorController extends Controller
@@ -96,5 +97,15 @@ class OrientadorController extends Controller
 
         $solicitacoes = $academico->solicitacoes->where('semestre_id', session('semestre_id'))->where('orientador_id', auth()->guard('admin')->user()->Orientador->id);
         return view('orientador.academico.show', ['academico' => $academico, 'orientacao' => $orientacao, 'solicitacoes' => $solicitacoes]);
+    }
+    
+
+    /**
+     * Display the specified resource. FOR GUARD ADMIN
+     */
+    public function avaliar(AvaliacaoFinalRequest $request, Orientacao $orientacao)
+    {
+        $orientacao->update($request->validated());
+        return redirect()->back()->with(['success' => 'Avaliação final registrada com sucesso!']);
     }
 }

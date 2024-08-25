@@ -22,7 +22,7 @@
                     <div class="card-body">
                         <form method="POST" action="{{ route('academico.update', ['academico' => $academico]) }}" autocomplete="off" novalidate>
                             @csrf
-                            @method('PUT    ')
+                            @method('PUT')
                             <div class="row g-3 mb-4">
                                <div class="mb-3">
                                    <label class="form-label required">Atualize sua senha</label>

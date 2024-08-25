@@ -127,6 +127,7 @@ Route::middleware(['auth:admin' , 'primeiro_acesso'])->group(function () {      
     Route::delete('destroy/arquivo-aux/{arquivo}', 'App\Http\Controllers\AtividadeOrientadorController@destroyArquivoAux')->name('arquivo.destroy.arquivo.aux');
     
     Route::prefix('orientador')->name('orientador.')->group(function () {
+        Route::put('avaliacao/final/{orientacao}', [App\Http\Controllers\OrientadorController::class, 'avaliar'])->name('avaliacao.store');
         Route::post('aceitar/solicitacao/{solicitacao}', [App\Http\Controllers\SolicitacaoOrientadorController::class, 'aceitar_solicitacao'])->name('solicitacao.aceitar');
         Route::post('rejeitar/solicitacao/{solicitacao}', [App\Http\Controllers\SolicitacaoOrientadorController::class, 'rejeitar_solicitacao'])->name('solicitacao.rejeitar');
         Route::get('solicitacao/{solicitacao}', [App\Http\Controllers\SolicitacaoOrientadorController::class, 'show'])->name('solicitacao.show');

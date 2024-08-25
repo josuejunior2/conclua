@@ -168,10 +168,10 @@
                                 <input id="comentario_id" name="comentario_id" type="hidden" class="form-control">
                                 @if (auth()->guard('admin')->check())
                                     <input id="orientador_id" name="orientador_id" type="hidden" class="form-control"
-                                        value="{{ auth()->user()->Orientador->id }}">
+                                        value="{{ auth()->guard('admin')->user()->Orientador->id }}">
                                 @elseif(auth()->guard('web')->check())
                                     <input id="academico_id" name="academico_id" type="hidden" class="form-control"
-                                        value="{{ auth()->user()->Academico->id }}">
+                                        value="{{ auth()->guard('web')->user()->Academico->id }}">
                                 @endif
                                 <input id="atividade_id" name="atividade_id" type="hidden" class="form-control"
                                     value="{{ $atividade->id }}">
