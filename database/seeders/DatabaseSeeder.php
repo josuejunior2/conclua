@@ -19,82 +19,82 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        \App\Models\User::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'nome' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        \App\Models\User::factory()->create([
+            'nome' => 'Test User',
+            'email' => 'test@example.com',
+        ]);
 
-        // $user1 = User::create([
-        //     'nome' => 'Thiago Ian Cesar',
-        //     'email' => 'thiago@gmail.com',
-        //     'password' => 'admin123',
-        // ]);
-        // $academico1 = Academico::create([
-        //     'user_id' => $user1->id,
-        //     'matricula' => '100087456',
-        // ]);
+        $user1 = User::create([
+            'nome' => 'Thiago Ian Cesar',
+            'email' => 'thiago@gmail.com',
+            'password' => 'admin123',
+        ]);
+        $academico1 = Academico::create([
+            'user_id' => $user1->id,
+            'matricula' => '100087456',
+        ]);
         
-        // $user2 = User::create([
-        //     'nome' => 'Ian Thiago Hadrien',
-        //     'email' => 'ian@gmail.com',
-        //     'password' => 'admin123',
-        // ]);
+        $user2 = User::create([
+            'nome' => 'Ian Thiago Hadrien',
+            'email' => 'ian@gmail.com',
+            'password' => 'admin123',
+        ]);
         
-        // $academico2 = Academico::create([
-        //     'user_id' => $user2->id,
-        //     'matricula' => '100087654',
-        // ]);
+        $academico2 = Academico::create([
+            'user_id' => $user2->id,
+            'matricula' => '100087654',
+        ]);
         
-        // $oriadmin1 = Admin::create([
-        //     'nome' => 'Rene Veloso',
-        //     'email' => 'rene@gmail.com',
-        //     'password' => 'admin123',
-        // ]);
+        $oriadmin1 = Admin::create([
+            'nome' => 'Rene Veloso',
+            'email' => 'rene@gmail.com',
+            'password' => 'admin123',
+        ]);
         
-        // $orientador1 = Orientador::create([
-        //     'admin_id' => $oriadmin1->id,
-        //     'masp' => '1032654',
-        // ]);
-
-        
-        // $oriadmin2 = Admin::create([
-        //     'nome' => 'Eduardo Diniz',
-        //     'email' => 'edu@gmail.com',
-        //     'password' => 'admin123',
-        // ]);
-        
-        // $orientador2 = Orientador::create([
-        //     'admin_id' => $oriadmin2->id,
-        //     'masp' => '1032655',
-        // ]);
+        $orientador1 = Orientador::create([
+            'admin_id' => $oriadmin1->id,
+            'masp' => '1032654',
+        ]);
 
         
-        // $admin = Admin::create( [
-        //     'nome' => 'admin',
-        //     'email' => 'josuejuniorww@gmail.com',
-        //     'password' => 'admin123',
-        // ]);
+        $oriadmin2 = Admin::create([
+            'nome' => 'Eduardo Diniz',
+            'email' => 'edu@gmail.com',
+            'password' => 'admin123',
+        ]);
         
-        // $formacao = Formacao::create([
-        //     'nome' => 'Administração'
-        // ]);
+        $orientador2 = Orientador::create([
+            'admin_id' => $oriadmin2->id,
+            'masp' => '1032655',
+        ]);
+
         
-        // $area = Area::create([
-        //     'nome' => 'Marketing'
-        // ]);
+        $admin = Admin::create( [
+            'nome' => 'admin',
+            'email' => 'josuejuniorww@gmail.com',
+            'password' => 'admin123',
+        ]);
+        
+        $formacao = Formacao::create([
+            'nome' => 'Administração'
+        ]);
+        
+        $area = Area::create([
+            'nome' => 'Marketing'
+        ]);
 
 
         $this->call(
             PerfisEPermissoesSeeder::class,
         );
 
-        // $admin->assignRole('Admin', 'admin');
-        // $user1->assignRole('Academico');
-        // $user2->assignRole('Academico');
-        // $oriadmin1->assignRole('Orientador');
-        // $oriadmin2->assignRole('Orientador');
+        $admin->assignRole('Admin', 'admin');
+        $user1->assignRole('Academico');
+        $user2->assignRole('Academico');
+        $oriadmin1->assignRole('Orientador');
+        $oriadmin2->assignRole('Orientador');
 
     }
 }
