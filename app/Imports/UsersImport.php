@@ -8,6 +8,7 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Illuminate\Support\Facades\DB;
 
 class UsersImport implements ToModel, WithValidation, WithHeadingRow
 {
@@ -18,22 +19,24 @@ class UsersImport implements ToModel, WithValidation, WithHeadingRow
     */
     public function model(array $row)
     {
-        $user = User::updateOrCreate(
-            ['nome'     => $row['nome']],
-            [
-            'nome'     => $row['nome'],
-            'email'    => $row['email'],
-            'password' => Hash::make('admin123'),
-            ]
-        );
-        $academico = Academico::updateOrCreate(
-            ['matricula'    => $row['matricula']], // Condições para procurar o acadêmico existente
-            [
-                'user_id'   => $user->id,
-                'matricula' => $row['matricula'],
-            ]
-        );
-        return array($user, $academico);
+        DB::transaction(function() use($row){       
+            $user = User::updateOrCreate(
+                ['nome'     => $row['nome']],
+                [
+                'nome'     => $row['nome'],
+                'email'    => $row['email'],
+                'password' => Hash::make($row['matricula']),
+                ]
+            );
+            $academico = Academico::updateOrCreate(
+                ['matricula'    => $row['matricula']], // Condições para procurar o acadêmico existente
+                [
+                    'user_id'   => $user->id,
+                    'matricula' => $row['matricula'],
+                ]
+            ); 
+            return array($user, $academico);
+        });
     }
     
     public function rules(): array

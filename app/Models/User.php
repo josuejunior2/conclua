@@ -9,6 +9,7 @@ use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable; 
+use App\Notifications\RedefinirSenhaNotification;
 
 class User extends Authenticatable
 {
@@ -57,12 +58,8 @@ class User extends Authenticatable
         return $this->morphMany(Arquivo::class, 'arquivoable');
     }
 
-    // public function sendPasswordResetNotification($token){
-    //   $this->notify(new RedefinirSenhaNotification($token, $this->email, $this->name));
-    // }
-
-    // public function sendEmailVerificationNotification() {
-    //     $this->notify(new VerificarEmailNotification($this->name));
-    // }
+    public function sendPasswordResetNotification($token) {
+        $this->notify(new RedefinirSenhaNotification($token, $this->email, $this->name));
+    }
 }
 

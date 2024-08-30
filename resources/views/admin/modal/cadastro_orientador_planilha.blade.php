@@ -1,4 +1,4 @@
-<div class="modal modal-blur fade" id="modal-cadastro-orientador" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal modal-blur fade" id="modal-cadastro-orientador-planilha" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -29,7 +29,7 @@
                         Baixe aqui a planilha de modelo
                     </button>
                 </form>
-                <form method="POST" action="{{ route('admin.cadastro-orientador') }}" enctype="multipart/form-data"
+                <form method="POST" action="{{ route('admin.cadastro.planilha.orientador') }}" enctype="multipart/form-data"
                     class="row g-3 align-items-center">
                     @csrf
                     <label for="tabela_orientadores" class="visually-hidden">Escolha um arquivo</label>

@@ -37,7 +37,7 @@ class PrimeiroAcessoMiddleware // Aqui é o primeiroAcesso NO SEMESTRE
             }
         } elseif (auth()->guard('web')->check()) {
             $academico = Academico::where('user_id', auth()->guard('web')->user()->id)->first();
-
+    
             if ($academico) {
                 $tcc = AcademicoTCC::where('academico_id', $academico->id)->where('semestre_id', session('semestre_id'))->exists();
                 $estagio = AcademicoEstagio::where('academico_id', $academico->id)->where('semestre_id', session('semestre_id'))->exists();

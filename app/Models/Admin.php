@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles; 
+use App\Notifications\RedefinirSenhaNotification;
 
 class Admin extends Authenticatable
 {
@@ -47,5 +48,9 @@ class Admin extends Authenticatable
     public function arquivos()
     {
         return $this->morphMany(Arquivo::class, 'arquivoable');
+    }
+    
+    public function sendPasswordResetNotification($token) {
+        $this->notify(new RedefinirSenhaNotification($token, $this->email, $this->name));
     }
 }

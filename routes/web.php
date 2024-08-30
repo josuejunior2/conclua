@@ -2,12 +2,17 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\AdminController;
 
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
 
 use App\Http\Controllers\AuthAdmin\LoginController as AdminLoginController;
+
+use App\Http\Controllers\AuthAdmin\ForgotPasswordController as AdminForgotPasswordController;
+
+use App\Http\Controllers\AuthAdmin\ResetPasswordController as AdminResetPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +34,10 @@ use App\Http\Controllers\AuthAdmin\LoginController as AdminLoginController;
 // Route::post('/register', [RegisterController::class, 'register'])->name('register.post');
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.post');
+Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
 
 Route::middleware('auth:web')->group(function () {
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
@@ -46,8 +55,8 @@ Route::middleware(['auth:web' ])->group(function () { // rotas para completar o 
     Route::post('empresa', 'App\Http\Controllers\EmpresaController@store')->name('empresa.store');
     Route::get('academicoTCC/create/{academico}', 'App\Http\Controllers\AcademicoTCCController@create')->name('academicoTCC.create');
     Route::post('academicoTCC', 'App\Http\Controllers\AcademicoTCCController@store')->name('academicoTCC.store');
-    });
-Route::resource('academico', App\Http\Controllers\AcademicoController::class)->except(['create', 'store', 'show', 'index', 'destroy']);
+    Route::resource('academico', App\Http\Controllers\AcademicoController::class)->except(['create', 'store', 'show', 'index', 'destroy']);
+});
 
 Route::middleware(['auth:web', 'primeiro_acesso' ])->group(function () { //
     Route::get('academico/{user}', 'App\Http\Controllers\AcademicoController@show')->name('academico.show');
@@ -85,6 +94,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('login', [AdminLoginController::class, 'showLoginForm'])->name('login.index');
     Route::post('login', [AdminLoginController::class, 'login'])->name('login');
     Route::post('logout', [AdminLoginController::class, 'logout'])->name('logout');
+    Route::get('password/reset', [AdminForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+    Route::post('password/email', [AdminForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+    Route::get('password/reset/{token}', [AdminResetPasswordController::class, 'showResetForm'])->name('password.reset');
+    Route::post('password/reset', [AdminResetPasswordController::class, 'reset'])->name('password.update');
 
     Route::middleware(['auth:admin'])->group(function () {                                 // rotas ADMIN c prefixo ANTES DE ATIVAR O SEMESTRE
         Route::get('/', function () { return redirect()->route('admin.home'); });
@@ -98,18 +111,17 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Route::post('desativar/semestre/{semestre}', [App\Http\Controllers\SemestreController::class, 'desativar'])->name('semestre.desativar');
 
         Route::post('orientador/download/modelo/planilha', 'App\Http\Controllers\OrientadorAdminController@downloadModeloPlanilha')->name('orientador.download.modelo.planilha');
-        Route::get('orientador/{orientador}', 'App\Http\Controllers\OrientadorAdminController@show')->name('orientador.show');
-        Route::delete('orientador/{orientador}', 'App\Http\Controllers\OrientadorAdminController@destroy')->name('orientador.destroy');
-        Route::get('orientador', 'App\Http\Controllers\OrientadorAdminController@index')->name('orientador.index');
-        Route::post('cadastro/orientador', 'App\Http\Controllers\OrientadorAdminController@import_orientadores')->name('cadastro-orientador');
+        Route::post('cadastro/orientador/planilha', 'App\Http\Controllers\OrientadorAdminController@import_orientadores')->name('cadastro.planilha.orientador');
+        Route::resource('orientador', App\Http\Controllers\OrientadorAdminController::class);
+        // Route::get('orientador/{orientador}', 'App\Http\Controllers\OrientadorAdminController@show')->name('orientador.show');
+        // Route::delete('orientador/{orientador}', 'App\Http\Controllers\OrientadorAdminController@destroy')->name('orientador.destroy');
+        // Route::get('orientador', 'App\Http\Controllers\OrientadorAdminController@index')->name('orientador.index');
         
+        Route::resource('academico', App\Http\Controllers\AcademicoAdminController::class);
+        Route::post('desvincular/academico/tcc/{tcc}', 'App\Http\Controllers\AcademicoAdminController@desvincular_academico_tcc')->name('academico.desvincular.tcc');
         Route::post('academico/download/modelo/planilha', 'App\Http\Controllers\AcademicoAdminController@downloadModeloPlanilha')->name('academico.download.modelo.planilha');
         Route::post('desvincular/academico/estagio/{estagio}', 'App\Http\Controllers\AcademicoAdminController@desvincular_academico_estagio')->name('academico.desvincular.estagio');
-        Route::post('desvincular/academico/tcc/{tcc}', 'App\Http\Controllers\AcademicoAdminController@desvincular_academico_tcc')->name('academico.desvincular.tcc');
-        Route::post('cadastro/academico', 'App\Http\Controllers\AcademicoAdminController@import_academicos')->name('cadastro-academico');
-        Route::delete('academico/delete/{academico}', 'App\Http\Controllers\AcademicoAdminController@destroy')->name('academico.destroy');
-        Route::get('academico', 'App\Http\Controllers\AcademicoAdminController@index')->name('academico.index');
-        Route::get('academico/{academico}', 'App\Http\Controllers\AcademicoAdminController@show')->name('academico.show');
+        Route::post('cadastro/academico/planilha', 'App\Http\Controllers\AcademicoAdminController@import_academicos')->name('cadastro.planilha.academico');
         
         Route::resource('atividade', App\Http\Controllers\AtividadeAdminController::class)->except(['create', 'store', 'edit', 'update']);
         
