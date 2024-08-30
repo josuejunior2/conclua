@@ -2,16 +2,28 @@
 
 @section('content')
 
+@include('admin.modal.cadastro_orientador_planilha')
 
 <div class="col-12">
     <div class="card m-3">
         <div class="card-header justify-content-between">
             <h3 class="card-title">Lista de orientadores</h3>
-            <div>
-                <a href="#" class="btn btn-success w-100 mb-1" data-bs-toggle="modal" data-bs-target="#modal-cadastro-orientador">
-                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-table-import"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 21h-7a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v8" /><path d="M3 10h18" /><path d="M10 3v18" /><path d="M19 22v-6" /><path d="M22 19l-3 -3l-3 3" /></svg>
-                    Adicionar orientadores via planilha
-                </a>
+                @can('CRUD usuarios')
+                    <div class="d-flex justify-content-between col-auto">
+                        <div class=" me-2">
+                            <a href="#" class="btn btn-success w-100 mb-1" data-bs-toggle="modal" data-bs-target="#modal-cadastro-orientador-planilha">
+                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-table-import"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 21h-7a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v8" /><path d="M3 10h18" /><path d="M10 3v18" /><path d="M19 22v-6" /><path d="M22 19l-3 -3l-3 3" /></svg>
+                                Adicionar orientadores via planilha
+                            </a>
+                        </div>
+                        <div>
+                            <a href="{{ route('admin.orientador.create') }}" class="btn btn-primary w-100 mb-1">
+                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-user-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M16 19h6" /><path d="M19 16v6" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4" /></svg>
+                                Adicionar orientador
+                            </a>
+                        </div>
+                    </div>
+                @endcan
                 @if (session('success'))
                     <div class="alert alert-success">
                         {{ session('success') }}
@@ -97,4 +109,3 @@
 </script>
 @endsection
 
-@include('admin.modal.cadastro-orientador')

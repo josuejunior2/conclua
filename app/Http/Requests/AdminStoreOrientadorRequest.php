@@ -3,17 +3,16 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\Academico;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Orientador;
 
-class AcademicoUpdateRequest extends FormRequest
+class AdminStoreOrientadorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        if(Academico::where('user_id', auth()->user()->id)->exists()){
+        if(!Orientador::where('admin_id', auth()->guard('admin')->user()->id)->exists() && auth()->guard('admin')->check()){
             return true;
         }
         return false;
@@ -27,8 +26,9 @@ class AcademicoUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'nome' => 'required|min:7',
             'email' => 'required|email',
-            'password' => 'required',//['required', Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised()],
+            'masp' => 'required|digits:7|unique:orientadores,masp',
         ];
     }
         /**
@@ -37,10 +37,13 @@ class AcademicoUpdateRequest extends FormRequest
      */
     public function messages(): array
     {
+        $orientadorExistente = Orientador::where('masp', request()->input('masp'))->exists() ? Orientador::where('masp', request()->input('masp'))->first()->User->nome : null;
         return [
             'required' => 'O campo :attribute deve ser preenchido.',
-            'password.required' => 'O campo senha deve ser preenchido',
+            'nome.min' => 'O campo nome deve ter no mínimo 7 caracteres.',
             'email.email' => 'O campo email deve ser preenchido com um endereço de email.',
+            'masp.digits' => 'O número de matrícula deve ter 9 caracteres numéricos.',
+            'masp.unique' => 'O número de matrícula já está cadastrado no acadêmico: ' . $orientadorExistente,
         ];
     }
 }

@@ -70,4 +70,3 @@
 </script>
 @endsection
 
-@include('admin.modal.cadastro-academico')

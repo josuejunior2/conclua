@@ -45,30 +45,28 @@
                   @endif
               <h3 class="card-title">Instruções</h3>
               <div class="markdown">
-                  <p></p>
+                  <h3>Olá, bem-vindo ao CONCLUA - Sistema para controle dos processos de Estágio e TCC do curso de Administração - UNIMONTES! </h3>
+                  <p>Para ter uma conta, entre em contato com o coordenador do curso ou responsável pelo sistema, para que possa cadastrá-lo.</p>
+                  <p>Assim que cadastrado, poderá completar seu cadastro com seu Estágio ou TCC. Após isso, poderá solicitar um professor para que possa orientá-lo. Uma vez vinculado a um Orientador, poderá receber atividades, submetê-las, trocar comentários e arquivos!</p>
+                  <p>Atenção: atente-se às datas-limite do semestre.</p>
                   @auth
                       <a href="{{ route('home') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Home</a>
                   @elseif (auth()->guard('admin')->check())
                       <a href="{{ route('admin.home') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Home</a>
                   @else
-                      <a href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log in</a>
+                      <div class="row">
+                        <div class="col">
+                            <a href="{{ route('login') }}" class="btn btn-outline-primary w-100">
+                              Login - Acadêmico
+                            </a>
+                        </div>
+                          <div class="col">
+                              <a href="{{ route('admin.login') }}" class="btn btn-outline-secondary w-100">
+                                Login - Admin
+                              </a>
+                          </div>
+                      </div>
                   @endauth
-
-                  @if(auth()->guard('admin')->check())
-                      <form method="POST" action="{{ route('admin.logout') }}">
-                  @else
-                      <form method="POST" action="{{ route('logout') }}">
-                  @endif
-                      @csrf
-                      <button class="nav-link" type="submit" >
-                      <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                          <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-logout-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" /><path d="M15 12h-12l3 -3" /><path d="M6 15l-3 -3" /></svg>
-                      </span>
-                      <span class="nav-link-title">
-                          Logout
-                      </span>
-                      </button>
-                  </form>
               </div>
             </div>
           </div>

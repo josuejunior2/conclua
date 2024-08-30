@@ -72,5 +72,6 @@ class LoginController extends Controller
             
             $request->session()->put('semestreIsAtivo', $validacao);
         }
+
     }
 }

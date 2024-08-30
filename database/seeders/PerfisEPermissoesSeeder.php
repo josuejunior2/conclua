@@ -27,6 +27,16 @@ class PerfisEPermissoesSeeder extends Seeder
             ['guard_name' => 'admin', 'name' => 'configurar semestre',  'description' => 'Permite configurar um semestre.'],
             ['guard_name' => 'admin', 'name' => 'configurar perfil',  'description' => 'Permite configurar perfis e permissoes dos usuários.'],
             ['guard_name' => 'admin', 'name' => 'desvincular academico',  'description' => 'Permite desvincular um academico de seu orientador.'],
+            
+            ['guard_name' => 'admin', 'name' => 'criar academico',  'description' => 'Permite criar academico.'],
+            ['guard_name' => 'admin', 'name' => 'editar academico',  'description' => 'Permite editar academico.'],
+            ['guard_name' => 'admin', 'name' => 'deletar academico',  'description' => 'Permite deletar academico.'],
+            ['guard_name' => 'admin', 'name' => 'avaliar academico',  'description' => 'Permite avaliar academico.'],
+            
+            ['guard_name' => 'admin', 'name' => 'criar orientador',  'description' => 'Permite criar orientador.'],
+            ['guard_name' => 'admin', 'name' => 'editar orientador',  'description' => 'Permite editar orientador.'],
+            ['guard_name' => 'admin', 'name' => 'deletar orientador',  'description' => 'Permite deletar orientador.'],
+            ['guard_name' => 'admin', 'name' => 'avaliar orientador',  'description' => 'Permite avaliar orientador.'],
         ]);
 
 
