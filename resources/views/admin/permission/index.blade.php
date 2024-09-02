@@ -5,15 +5,6 @@
     <div class="card m-3">
         <div class="card-header justify-content-between">
             <h3 class="card-title">Lista de permissões</h3>
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
             @if (session('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}
@@ -26,6 +17,7 @@
             <tr>
               {{--<th class="w-1"></th>  <input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select all invoices"> --}}
               <th>Nome</th>
+              <th>Tipo de perfil</th>
               <th>Criado em</th>
               <th>Atualizado em</th>
             </tr>
@@ -35,6 +27,7 @@
             <tr>
                 <!--<td></td>  <input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"> -->
                 <td>{{ $permission->name }}</td>
+                <td>{{ $permission->getTipoPerfil() }}</td>
                 <td>{{ \Carbon\Carbon::parse($permission->created_at)->format('d/m/Y G:h') }}</td>
                 <td>{{ \Carbon\Carbon::parse($permission->updated_at)->format('d/m/Y G:h') }}</td>
               </tr>

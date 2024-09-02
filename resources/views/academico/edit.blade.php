@@ -22,7 +22,38 @@
                     <div class="card-body">
                         <form method="POST" action="{{ route('academico.update', ['academico' => $academico]) }}" autocomplete="off" novalidate>
                             @csrf
-                            @method('PUT    ')
+                            @method('PUT')
+                            <div class="row g-3 mb-4">
+                                <div class="col-md">
+                                    <div class="mb-3">
+                                        <div class="form-label required">Nome do acadêmico</div>
+                                        <div><input id="nome" name="nome"  type="text" class="form-control" value="{{ old('nome', $academico->User->nome) }}" disabled/></div>
+                                        <span class="{{ $errors->has('nome') ? 'text-danger' : '' }}">
+                                            {{ $errors->has('nome') ? $errors->first('nome') : '' }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row g-3 mb-4">
+                                <div class="col-md">
+                                    <div class="mb-3">
+                                        <div class="form-label required">Endereço email</div>
+                                        <div><input id="email" name="email"  type="text" class="form-control" value="{{ old('email', $academico->User->email) }}"/></div>
+                                        <span class="{{ $errors->has('email') ? 'text-danger' : '' }}">
+                                            {{ $errors->has('email') ? $errors->first('email') : '' }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md">
+                                    <div class="mb-3">
+                                        <div class="form-label required">Matrícula</div>
+                                        <input id="matricula" name="matricula"  type="text" class="form-control" value="{{ old('matricula', $academico->matricula) }}" disabled/>
+                                        <span class="{{ $errors->has('matricula') ? 'text-danger' : '' }}">
+                                            {{ $errors->has('matricula') ? $errors->first('matricula') : '' }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row g-3 mb-4">
                                <div class="mb-3">
                                    <label class="form-label required">Atualize sua senha</label>

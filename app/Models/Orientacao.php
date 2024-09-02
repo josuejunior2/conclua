@@ -4,18 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\SoftDeletes; 
 
 class Orientacao extends Model
 {
-    use HasFactory, HasUuids, SoftDeletes;
+    use HasFactory,  SoftDeletes;
 
     protected $keyType = 'string';
 
     protected $table = 'orientacoes';
 
-    protected $fillable = ['academico_id', 'academico_tcc_id', 'academico_estagio_id', 'orientador_id', 'semestre_id', 'solicitacao_id'];//, 'modalidade'];
+    protected $fillable = ['academico_id', 'academico_tcc_id', 'academico_estagio_id', 'orientador_id', 'semestre_id', 'solicitacao_id', 'avaliacao_final'];
 
     public function Orientador(){
         return $this->belongsTo(Orientador::class, 'orientador_id');
@@ -37,7 +36,35 @@ class Orientacao extends Model
         return $this->belongsTo(AcademicoEstagio::class, 'academico_estagio_id');
     }
 
+    public function modalidade(){
+        if(!empty($this->AcademicoTCC)){
+            return 'TCC';
+        } elseif (!empty($this->AcademicoEstagio)){
+            return 'Estágio';
+        }
+    }
+
     public function Semestre(){
         return $this->belongsTo(Semestre::class, 'semestre_id');
+    }
+    
+    public function atividades(){
+        return $this->hasMany(Atividade::class, 'orientacao_id');
+    }
+        
+    public function notaTotal(){
+        $notaTotal = 0;
+        foreach ($this->atividades as $atividade) {
+            $notaTotal += $atividade->nota;
+        }
+        return $notaTotal;
+    }
+    
+    public function tema(){
+        if(!empty($this->AcademicoTCC)){
+            return $this->AcademicoTCC->tema;
+        } elseif (!empty($this->AcademicoEstagio)){
+            return $this->AcademicoEstagio->tema;
+        }
     }
 }

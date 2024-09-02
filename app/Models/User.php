@@ -8,12 +8,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Notifications\Notifiable; 
+use App\Notifications\RedefinirSenhaNotification;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, HasUuids, SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles,  SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -52,13 +52,14 @@ class User extends Authenticatable
     public function Academico(){
         return $this->hasOne(Academico::class, 'user_id');
     }
+    
+    public function arquivos()
+    {
+        return $this->morphMany(Arquivo::class, 'arquivoable');
+    }
 
-    // public function sendPasswordResetNotification($token){
-    //   $this->notify(new RedefinirSenhaNotification($token, $this->email, $this->name));
-    // }
-
-    // public function sendEmailVerificationNotification() {
-    //     $this->notify(new VerificarEmailNotification($this->name));
-    // }
+    public function sendPasswordResetNotification($token) {
+        $this->notify(new RedefinirSenhaNotification($token, $this->email, $this->name));
+    }
 }
 

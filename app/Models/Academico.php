@@ -6,12 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Spatie\Permission\Traits\HasRoles; 
 
 class Academico extends Authenticatable
 {
-    use HasFactory, HasRoles, HasUuids, SoftDeletes;
+    use HasFactory, HasRoles,  SoftDeletes;
 
     protected $guard_name = 'web';
 
@@ -50,5 +49,30 @@ class Academico extends Authenticatable
 
     public function cadastrosAtivos(){// era bom eu mudar esse nome do metodo...
         return $this->belongsToMany(Semestre::class, 'semestre_academico', 'academico_id', 'semestre_id');
+    }
+        
+    public function diretorio(){
+        $nome = trim($this->User->nome);
+        $partes = explode(' ', $nome);
+        $primeiro = $partes[0];
+        $ultimo = $partes[count($partes) - 1];
+        $diretorio = strtolower($primeiro . '.' . $ultimo);
+
+        return $diretorio;
+    }
+
+    public function getTccAtual()
+    {
+        return $this->academicosTCC->where('semestre_id', session('semestre_id'))->first();
+    }
+    
+    public function getEstagioAtual()
+    {
+        return $this->academicosEstagio->where('semestre_id', session('semestre_id'))->first();
+    }
+
+    public function getSolicitacoesAtual()
+    {
+        return $this->solicitacoes->where('semestre_id', session('semestre_id'));
     }
 }

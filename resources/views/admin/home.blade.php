@@ -11,7 +11,6 @@
             </div>
         @endif
         Home - Admin
-         {{-- @dd($semestreAtual) --}}
     </div>
 </div>
 @endsection

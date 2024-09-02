@@ -12,14 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('formacoes', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
             $table->string('nome', 40);
             $table->timestamps();
             $table->softDeletes();
         });
 
         Schema::table('orientadores', function(BLueprint $table) {
-            $table->uuid('formacao_id')->nullable()->after('area_id');
+            $table->unsignedBigInteger('formacao_id')->nullable()->after('area_id');
             $table->foreign('formacao_id')->references('id')->on('formacoes');
         });
     }

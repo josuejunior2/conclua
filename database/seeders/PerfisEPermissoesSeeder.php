@@ -27,6 +27,16 @@ class PerfisEPermissoesSeeder extends Seeder
             ['guard_name' => 'admin', 'name' => 'configurar semestre',  'description' => 'Permite configurar um semestre.'],
             ['guard_name' => 'admin', 'name' => 'configurar perfil',  'description' => 'Permite configurar perfis e permissoes dos usuários.'],
             ['guard_name' => 'admin', 'name' => 'desvincular academico',  'description' => 'Permite desvincular um academico de seu orientador.'],
+            
+            ['guard_name' => 'admin', 'name' => 'criar academico',  'description' => 'Permite criar academico.'],
+            ['guard_name' => 'admin', 'name' => 'editar academico',  'description' => 'Permite editar academico.'],
+            ['guard_name' => 'admin', 'name' => 'deletar academico',  'description' => 'Permite deletar academico.'],
+            ['guard_name' => 'admin', 'name' => 'avaliar academico',  'description' => 'Permite avaliar academico.'],
+            
+            ['guard_name' => 'admin', 'name' => 'criar orientador',  'description' => 'Permite criar orientador.'],
+            ['guard_name' => 'admin', 'name' => 'editar orientador',  'description' => 'Permite editar orientador.'],
+            ['guard_name' => 'admin', 'name' => 'deletar orientador',  'description' => 'Permite deletar orientador.'],
+            ['guard_name' => 'admin', 'name' => 'avaliar orientador',  'description' => 'Permite avaliar orientador.'],
         ]);
 
 
@@ -39,11 +49,23 @@ class PerfisEPermissoesSeeder extends Seeder
             ['guard_name' => 'admin', 'name' => 'criar atividade',  'description' => 'Permite criar atividade.'],
             ['guard_name' => 'admin', 'name' => 'editar atividade',  'description' => 'Permite editar atividade.'],
             ['guard_name' => 'admin', 'name' => 'deletar atividade',  'description' => 'Permite deletar atividade.'],
+            ['guard_name' => 'admin', 'name' => 'avaliar atividade',  'description' => 'Permite avaliar atividade.'],
+
+            ['guard_name' => 'admin', 'name' => 'criar comentario',  'description' => 'Permite comentar na atividade.'],
+            ['guard_name' => 'admin', 'name' => 'excluir comentario',  'description' => 'Permite excluir comentário da atividade.'],
+            ['guard_name' => 'admin', 'name' => 'editar comentario',  'description' => 'Permite editar comentário da atividade.'],
         ]);// aqui as do orientador (incluindo algumas que o admin tbm terá)
 
         $permissionsUser = collect([
             ['guard_name' => 'web', 'name' => 'pesquisar orientador',  'description' => 'Permite pesquisar e visualizar orientadores.'],
             ['guard_name' => 'web', 'name' => 'solicitar orientacao',  'description' => 'Permite criar uma solicitação de orientação.'],
+            ['guard_name' => 'web', 'name' => 'adicionar arquivo submissao',  'description' => 'Permite adicionar arquivo submissão já realizada.'],
+            ['guard_name' => 'web', 'name' => 'deletar arquivo submissao',  'description' => 'Permite deletar arquivo da submissão.'],
+            ['guard_name' => 'web', 'name' => 'deletar submissao',  'description' => 'Permite deletar submissao.'],
+            
+            ['guard_name' => 'web', 'name' => 'criar comentario',  'description' => 'Permite comentar na atividade.'],
+            ['guard_name' => 'web', 'name' => 'excluir comentario',  'description' => 'Permite excluir comentário da atividade.'],
+            ['guard_name' => 'web', 'name' => 'editar comentario',  'description' => 'Permite editar comentário da atividade.'],
         ]);
 
         $permissionsAdmin->each(function ($item) use ($admin) {

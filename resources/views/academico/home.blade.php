@@ -15,15 +15,6 @@
         <div class="card-header justify-content-between">
             <h3 class="card-title">Lista de orientadores</h3>
         </div>
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
     <div class="table-responsive m-4">
         <table class="display w-100" id="tabela-orientadores-web">
         <thead>

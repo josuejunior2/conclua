@@ -7,7 +7,7 @@
         </div>
 
         <div class="card-body">
-            <form method="POST" action="{{ route('atividade.store') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('orientador.atividade.store') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
                     <div class="form-label required">Orientando</div>
@@ -24,7 +24,6 @@
                     </span>
                 </div>
                 <div class="row g-3 mb-4">
-                    {{-- <input id="orientacao_id" name="orientacao_id" type="hidden" class="form-control" value="{{ $orientacao->id }}"> --}}
                     <div class="col-md">
                         <div class="mb-3">
                             <div class="form-label required">Título</div>
@@ -42,16 +41,35 @@
                                 {{ $errors->has('descricao') ? $errors->first('descricao') : '' }}
                             </span>
                         </div>
+                        <div class="mb-3">
+                            <div class="form-label">Arquivos auxiliares</div>
+                            <input type="file" name="arquivos_aux[]" id="arquivos_aux" accept=".xlsx" class="form-control" multiple>
+                            <span class="{{ $errors->has('arquivos_aux') ? 'text-danger' : '' }}">
+                                {{ $errors->has('arquivos_aux') ? $errors->first('arquivos_aux') : '' }}
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <div class="form-label">Data limite para entrega</div>
-                    <div class="datagrid-content">
-                        <input type="hidden" id="data_limite" name="data_limite" value="{{ old('data_limite', '') }}"
-                            autocomplete="off" />
-                        <span class="{{ $errors->has('data_limite') ? 'text-danger' : '' }}">
-                            {{ $errors->has('data_limite') ? $errors->first('data_limite') : '' }}
-                        </span>
+                    <div class="row d-flex justify-content-start">
+                        <div class="col flex-column">
+                            <div class="form-label required">Data limite para entrega</div>
+                            <div>
+                                <input type="hidden" id="data_limite" name="data_limite" value="{{ old('data_limite', '') }}" autocomplete="off" />
+                            </div>
+                            <div>
+                                <span class="{{ $errors->has('data_limite') ? 'text-danger' : '' }}">
+                                    {{ $errors->has('data_limite') ? $errors->first('data_limite') : '' }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Hora</label>
+                            <input type="time" name="hora" id="hora" class="form-control w-auto" autocomplete="off" value="{{ old('hora', '') }}"/>
+                            <span class="{{ $errors->has('hora') ? 'text-danger' : '' }}">
+                                {{ $errors->has('hora') ? $errors->first('hora') : '' }}
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <div class="card-footer bg-transparent mt-auto">

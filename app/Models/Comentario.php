@@ -1,0 +1,65 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class Comentario extends Model
+{
+    use HasFactory,  SoftDeletes;
+
+    protected $fillable = ['texto', 'atividade_id', 'comentario_id', 'academico_id', 'orientador_id'];
+
+    public function Atividade()
+    {
+        return $this->belongsTo(Atividade::class, 'atividade_id');
+    }
+    
+    public function Respondido()
+    {
+        return $this->belongsTo(Comentario::class, 'comentario_id');
+    }
+
+    public function respondidoWithTrashed()
+    {
+        return $this->belongsTo(Comentario::class, 'comentario_id')->withTrashed();
+    }
+
+    public function Orientador()
+    {
+        return $this->belongsTo(Orientador::class, 'orientador_id');
+    }
+    
+    public function Academico()
+    {
+        return $this->belongsTo(Academico::class, 'academico_id');
+    }
+
+    public function Autor()
+    {
+        if($this->Orientador) return $this->Orientador->Admin;
+        if($this->Academico) return $this->Academico->User;
+    }
+    
+    public function Resposta()
+    {
+        return $this->hasOne(Comentario::class, 'comentario_id');
+    }
+    
+    public function respostaWithTrashed()
+    {
+        return $this->hasOne(Comentario::class, 'comentario_id')->withTrashed();
+    }
+
+    public function comentarioDoUsuario()
+    {
+        if(auth()->guard('web')->check()){
+            if(auth()->guard('web')->user()->id == $this->academico_id) return true;
+        } else if (auth()->guard('admin')->check()) {
+            if(auth()->guard('admin')->user()->id == $this->orientador_id) return true;
+        }
+        return false;
+    }
+}

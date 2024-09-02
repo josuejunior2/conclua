@@ -1,8 +1,8 @@
-<div class="modal modal-blur fade" id="modal-cadastro-academico" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal modal-blur fade" id="modal-cadastro-academico-planilha" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Cadastrar novos orientadores</h5>
+          <h5 class="modal-title">Cadastrar novos acadêmicos via planilha</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -28,7 +28,7 @@
                     Baixe aqui a planilha de modelo
                 </button>
             </form>
-            <form method="POST" action="{{ route('admin.cadastro-academico') }}" enctype="multipart/form-data" class="row g-3 align-items-center">
+            <form method="POST" action="{{ route('admin.cadastro.planilha.academico') }}" enctype="multipart/form-data" class="row g-3 align-items-center">
                 @csrf
                 <label for="tabela_orientadores" class="visually-hidden">Escolha um arquivo</label>
                 <input type="file" name="tabela_academicos" id="tabela_academicos" accept=".xlsx" class="form-control">

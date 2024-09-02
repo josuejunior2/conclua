@@ -15,15 +15,6 @@
                 <a href="{{ route('admin.semestre.create') }}" class="btn btn-success w-100">
                     Iniciar novo semestre
                 </a>
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
                 @if (session('success'))
                     <div class="alert alert-success">
                         {{ session('success') }}
@@ -88,7 +79,7 @@
                         <a class="dropdown-item" href="{{ route('admin.semestre.show', ['semestre' => $s]) }}">
                             Visualizar
                         </a>
-                        @if($s->id == $semestreSession)
+                        @if($s->id == session('semestre_id'))
                         <a class="dropdown-item" href="{{ route('admin.semestre.edit', ['semestre' => $s]) }}">
                             Editar
                         </a>

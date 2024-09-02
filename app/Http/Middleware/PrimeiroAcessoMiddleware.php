@@ -25,33 +25,30 @@ class PrimeiroAcessoMiddleware // Aqui é o primeiroAcesso NO SEMESTRE
 
         $semestreEmSession = Semestre::find(session('semestre_id'));
         // dd(auth()->guard('admin')->check());
-        if(auth()->guard('admin')->check()){
+        if (auth()->guard('admin')->check()) {
             $orientador = Orientador::where('admin_id', auth()->guard('admin')->user()->id)->first();
             if (is_null($orientador)) {
                 return $next($request); // se não tiver orientador é que é admin, então pode passar
-            } elseif(!is_null($orientador->disponibilidade)){ // se tá ativado o cadastro...
-                return $next($request); // se disp. tá 0 ou qq coisa == completou o cadastro, entao pode passar
-            } else{
+            } elseif (!is_null($orientador->disponibilidade)) { // se tá ativado o cadastro...
+                return $next($request);
+            } else {
                 // dd("oi");
                 return redirect()->route('orientador.create'); // se disp. tá nula, não completou o cadastro, vai completar
             }
-        } elseif(auth()->guard('web')->check()){
-            $academico = Academico::where('user_id', auth()->user()->id)->first();
-
+        } elseif (auth()->guard('web')->check()) {
+            $academico = Academico::where('user_id', auth()->guard('web')->user()->id)->first();
+    
             if ($academico) {
                 $tcc = AcademicoTCC::where('academico_id', $academico->id)->where('semestre_id', session('semestre_id'))->exists();
                 $estagio = AcademicoEstagio::where('academico_id', $academico->id)->where('semestre_id', session('semestre_id'))->exists();
 
                 if ($tcc || $estagio) {
                     return $next($request);
-                }
-                else{
-                        return redirect()->route('academico.create');
-                    }
+                } else {
+                    return redirect()->route('academico.create');
                 }
             }
-            return redirect()->route('welcome')->with('error', 'Seu cadastro no semestre está inativo. Entre em contato com o responsável pelo sistema.');
-
+        }
+        return redirect()->route('welcome')->with('error', 'Seu cadastro no semestre está inativo. Entre em contato com o responsável pelo sistema.');
     }
-
 }

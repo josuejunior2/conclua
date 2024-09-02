@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('orientadores', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
             $table->string('masp', 7)->unique();
-            $table->uuid('admin_id')->required();
+            $table->unsignedBigInteger('admin_id')->required();
             $table->foreign('admin_id')->references('id')->on('admins');
 
             $table->unsignedTinyInteger('disponibilidade')->nullable();

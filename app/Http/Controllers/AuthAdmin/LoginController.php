@@ -61,8 +61,24 @@ class LoginController extends Controller
     public function authenticated(Request $request, $user)
     {
         $ultimoSemestre = Semestre::all()->last();
+        if($ultimoSemestre){ 
+            $request->session()->put('semestre_id', $ultimoSemestre->id); 
+            
+            $semestreSession = Semestre::find(session('semestre_id'));
+            $verificaSemestre = $ultimoSemestre == $semestreSession;
+            $verificaDataInicio = now() >= $semestreSession->data_inicio;
+            $verificaDataFinal = now() < $semestreSession->data_fim;
+    
+            if($verificaSemestre && $verificaDataInicio && $verificaDataFinal){
+                $validacao = true;
+            } else if(!$verificaSemestre && $verificaDataInicio && $verificaDataFinal){
+                $validacao = true;
+            } else {
+                $validacao = false;
+            }
+            
+            $request->session()->put('semestreIsAtivo', $validacao);
+        }
 
-        if($ultimoSemestre){ $request->session()->put('semestre_id', $ultimoSemestre->id); }
-        // dd(session('semestre_id'));
     }
 }

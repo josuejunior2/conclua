@@ -14,7 +14,7 @@
                     <div class="form-selectgroup">
                         @foreach ($permissions->where('guard_name', $role->guard_name) as $permission)
                             <label class="form-selectgroup-item">
-                                <input type="checkbox" name="permissions[]" value="{{ $permission->uuid }}" class="form-selectgroup-input" {{ $role->permissions->contains($permission) ? 'checked' : '' }}>
+                                <input type="checkbox" name="permissions[]" value="{{ $permission->id }}" class="form-selectgroup-input" {{ $role->permissions->contains($permission) ? 'checked' : '' }}>
                                 <span class="form-selectgroup-label">{{ $permission->name }}</span>
                             </label>
                         @endforeach

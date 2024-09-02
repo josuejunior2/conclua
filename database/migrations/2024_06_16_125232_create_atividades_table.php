@@ -12,15 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('atividades', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->uuid('orientacao_id')->required();
+            $table->id();
+            $table->unsignedBigInteger('orientacao_id')->required();
             $table->foreign('orientacao_id')->references('id')->on('orientacoes');
 
             $table->text('titulo', 256)->required();
             $table->text('descricao', 10000)->nullable();
 
-            $table->date('data_limite')->required();
-            $table->date('data_entrega')->nullable();
+            $table->dateTime('data_limite')->required();
+            $table->dateTime('data_entrega')->nullable();
+
+            $table->decimal('nota', 5, 2)->nullable();
+
             $table->timestamps();
             $table->softDeletes();
         });

@@ -13,6 +13,10 @@ use App\Imports\AdminsImport;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Response;
+use App\Http\Requests\AdminStoreOrientadorRequest;
+use App\Http\Requests\AdminUpdateOrientadorRequest;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class OrientadorAdminController extends Controller
 {
@@ -29,6 +33,76 @@ class OrientadorAdminController extends Controller
         }
         return view('admin.orientador.index', ['orientadores' => $todosOrientadores]);
 
+    }
+
+   
+    /**
+     * Display the specified resource.
+     */
+    public function create()
+    {
+        $this->middleware('permission:criar orientador');
+        return view('admin.orientador.create');
+    }
+
+    /**
+     * Utilizado para completar o cadastro do academico: atualizar senha e redirecionar para o create de AcademicoTCC ou AcademicoEstagio
+     */
+    public function store(AdminStoreOrientadorRequest $request)
+    {
+        $this->middleware('permission:criar orientador');
+        $dados = $request->validated();
+        
+        DB::transaction(function() use($dados, &$orientador){       
+            $user = Admin::create(
+                [
+                'nome'     => $dados['nome'],
+                'email'    => $dados['email'],
+                'password' => Hash::make($dados['masp']),
+                ]
+            );
+            $orientador = Orientador::create(
+                [
+                    'admin_id'   => $user->id,
+                    'masp' => $dados['masp'],
+                ]
+            );
+            $user->assignRole('Orientador');
+        });
+        return redirect()->route('admin.orientador.show', ['orientador' => $orientador]);
+    }
+    
+    /**
+     * Display the specified resource.
+     */
+    public function edit(Orientador $orientador)
+    {
+        $this->middleware('permission:editar orientador');
+        return view('admin.orientador.edit', ['orientador' => $orientador]);
+    }
+
+    /**
+     * Utilizado para completar o cadastro do academico: atualizar senha e redirecionar para o create de AcademicoTCC ou AcademicoEstagio
+     */
+    public function update(AdminUpdateOrientadorRequest $request, Orientador $orientador)
+    {
+        $this->middleware('permission:editar orientador');
+        $dados = $request->validated();
+        
+        DB::transaction(function() use($dados, &$orientador){       
+            $orientador->Admin->update(
+                [
+                'nome'     => $dados['nome'],
+                'email'    => $dados['email'],
+                ]
+            );
+            $orientador->update(
+                [
+                    'masp' => $dados['masp'],
+                ]
+            );
+        });
+        return redirect()->route('admin.academico.show', ['academico' => $orientador]);
     }
 
     /**

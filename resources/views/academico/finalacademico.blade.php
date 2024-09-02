@@ -22,10 +22,10 @@
                 <div class="card-body">
                     <ul class="steps steps-green steps-counter my-4">
                     <li class="step-item">Informações gerais</li>
-                    @if ($academico->academicosEstagio->where('semestre_id', $semestreSession)->first())
+                    @if ($academico->academicosEstagio->where('semestre_id', session('semestre_id'))->first())
                     <li class="step-item">Dados da empresa</li>
                     <li class="step-item">Dados do estágio</li>
-                    @elseif ($academico->academicosTCC->where('semestre_id', $semestreSession)->first())
+                    @elseif ($academico->academicosTCC->where('semestre_id', session('semestre_id'))->first())
                     <li class="step-item">Especificações</li>
                     @endif
                     <li class="step-item active">Confirmação</li>

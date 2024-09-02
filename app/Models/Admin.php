@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Spatie\Permission\Traits\HasRoles; 
+use App\Notifications\RedefinirSenhaNotification;
 
 class Admin extends Authenticatable
 {
-    use HasFactory, Notifiable, HasRoles, HasUuids, SoftDeletes;
+    use HasFactory, Notifiable, HasRoles,  SoftDeletes;
 
 
     protected $keyType = 'string';
@@ -40,7 +40,17 @@ class Admin extends Authenticatable
     ];
 
 
-    public function Orientador(){
+    public function Orientador()
+    {
         return $this->hasOne(Orientador::class);
+    }
+    
+    public function arquivos()
+    {
+        return $this->morphMany(Arquivo::class, 'arquivoable');
+    }
+    
+    public function sendPasswordResetNotification($token) {
+        $this->notify(new RedefinirSenhaNotification($token, $this->email, $this->name));
     }
 }

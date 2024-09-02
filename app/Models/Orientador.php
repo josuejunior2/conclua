@@ -6,12 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Spatie\Permission\Traits\HasRoles; 
 
 class Orientador extends Authenticatable
 {
-    use HasFactory, HasRoles, HasUuids, SoftDeletes;
+    use HasFactory, HasRoles,  SoftDeletes;
 
     protected $guard_name = 'admin';
 
@@ -21,28 +20,50 @@ class Orientador extends Authenticatable
 
     protected $fillable = ['masp', 'admin_id', 'formacao_id', 'area_id', 'disponibilidade',  'subArea1', 'subArea2', 'subArea3', 'areaPesquisa1', 'areaPesquisa2', 'areaPesquisa3', 'areaPesquisa4', 'areaPesquisa5', 'enderecoLattes', 'enderecoOrcid'];
 
-    public function Admin(){
+    public function Admin()
+    {
         return $this->belongsTo(Admin::class, 'admin_id'); // orientador tem 1 Formacao, ele olha a FK
     }
 
-    public function Formacao(){
+    public function Formacao()
+    {
         return $this->belongsTo(Formacao::class); // orientador tem 1 Formacao, ele olha a FK
     }
 
-    public function Area(){
+    public function Area()
+    {
         return $this->belongsTo(Area::class); // orientador tem 1 Area, ele olha a FK
     }
 
-    public function solicitacoes(){
+    public function solicitacoes()
+    {
         return $this->hasMany(Solicitacao::class);
     }
 
-    public function orientacoes(){
+    public function orientacoes()
+    {
         return $this->hasMany(Orientacao::class, 'orientador_id');
     }
 
-    public function semestresOrientador(){
+    public function orientacoesNoSemestre()
+    {
+        return $this->orientacoes->where('semestre_id', session('semestre_id'));
+    }
+
+    public function semestresOrientador()
+    {
         return $this->belongsToMany(Semestre::class, 'semestre_orientador', 'orientador_id', 'semestre_id');
+    }
+    
+    public function diretorio()
+    {
+        $nome = trim($this->Admin->nome);
+        $partes = explode(' ', $nome);
+        $primeiro = $partes[0];
+        $ultimo = $partes[count($partes) - 1];
+        $diretorio = strtolower($primeiro . '.' . $ultimo);
+
+        return $diretorio;
     }
 
 }

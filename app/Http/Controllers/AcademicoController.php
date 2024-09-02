@@ -17,25 +17,15 @@ use Illuminate\Support\Facades\Hash;
 
 class AcademicoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        $academicos = Academico::all();
-
-        return view('admin.academico.index', ['academicos' => $academicos]);
-    }
-
+        //if(!$semestre->isAtual()){  // EXEMPLO DE THIAGO
+        //    return back()->with('');
+        //}
     /**
      * Utilizado para completar o cadastro do academico: atualizar senha e redirecionar para o create de AcademicoTCC ou AcademicoEstagio
      */
     public function create()
     {
         $user = auth()->user();
-        //if(!$semestre->isAtual()){  // EXEMPLO DE THIAGO
-        //    return back()->with('');
-        //}
         return view('academico.create', ['user' => $user]);
     }
 
@@ -93,7 +83,8 @@ class AcademicoController extends Controller
     public function update(AcademicoUpdateRequest $request, Academico $academico)
     {
         $dados = $request->validated();
-        $academico->User->update(['password' => Hash::make($dados['password'])]);
+        $dados['password'] = Hash::make($dados['password']);
+        $academico->User->update($dados);
         return redirect()->route('academico.show', ['user' => $academico->User]);
     }
 

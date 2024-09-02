@@ -5,7 +5,7 @@
     <div class="card m-3">
         <div class="card-header justify-content-between">
             <h3 class="card-title">Cadastro do Academico</h3>
-            @if($semestreAtual->id == $semestreSession)
+            @if(session('semestreIsAtivo'))
             <div class="d-flex justify-content-between col-auto">
                 <a href=" {{ route('academico.edit', ['academico' => $academico]) }}"
                     class="btn me-2 btn-secondary w-100">
@@ -35,10 +35,6 @@
                     <div class="datagrid-title">Email</div>
                     <div class="datagrid-content">{{ $academico->User->email }}</div>
                 </div>
-                <div class="datagrid-item">
-                    <div class="datagrid-title">Telefone</div>
-                    <div class="datagrid-content">colocar depois</div>
-                </div>
             </div>
         </div>
     </div>
@@ -47,7 +43,7 @@
         <div class="card m-3">
             <div class="card-header justify-content-between">
                 <h3 class="card-title">TCC</h3>
-            @if($semestreAtual->id == $semestreSession)
+            @if(session('semestreIsAtivo'))
                 <div class="d-flex justify-content-between col-auto">
                     <a href=" {{ route('academicoTCC.edit', ['academicoTCC' => $tcc]) }}"
                         class="btn me-2 btn-secondary w-100">
@@ -109,7 +105,7 @@
         <div class="card m-3">
             <div class="card-header justify-content-between">
                 <h3 class="card-title">Estágio</h3>
-            @if($semestreAtual->id == $semestreSession)
+            @if(session('semestreIsAtivo'))
                 <div class="d-flex justify-content-between col-auto">
                     <a href=" {{ route('academicoEstagio.edit', ['academicoEstagio' => $estagio]) }}"
                         class="btn me-2 btn-secondary w-100">

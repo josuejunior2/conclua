@@ -35,7 +35,7 @@
                     <div class="col-md">
                     <div class="mb-3">
                         <div class="form-label required">Cadastro Nacional de Pessoa Jurídica (CNPJ)</div>
-                        <input id="cnpj" name="cnpj" type="text" class="form-control" value="{{ old('cnpj', '') }}" data-mask="00.000.000/0000-00" data-mask-visible="true" placeholder="00.000.000/0000-00"autocomplete="off" />
+                        <input id="cnpj" name="cnpj" type="text" class="form-control" value="{{ old('cnpj', '') }}" data-mask="00.000.000/0000-00" data-mask-visible="true" placeholder="00.000.000/0000-00" data-mask-selectonfocus="true" autocomplete="off" />
                         <span class="{{ $errors->has('cnpj') ? 'text-danger' : '' }}">
                             {{ $errors->has('cnpj') ? $errors->first('cnpj') : '' }}
                         </span>
@@ -63,4 +63,12 @@
     </div>
     </div>
 </div>
+@endsection
+
+@section('js')
+<script>
+    $(document).ready(function(){
+        $('#cnpj').mask('00.000.000/0000-00');
+    });
+</script>
 @endsection

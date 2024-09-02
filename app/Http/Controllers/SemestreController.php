@@ -94,7 +94,7 @@ class SemestreController extends Controller
     public function destroy(Semestre $semestre)
     {
         foreach($semestre->academicosEstagio as $academicoEstagio){
-            $academicosEstagio->delete();
+            $academicoEstagio->delete();
         }
         foreach($semestre->academicosTCC as $academicoTCC){
             $academicoTCC->delete();
@@ -134,6 +134,24 @@ class SemestreController extends Controller
     public function mudar_semestre(MudarSemestreRequest $request)
     {
         $request->session()->put('semestre_id', $request->validated()['semestre_id']);
+
+        $ultimoSemestre = Semestre::all()->last();
+        $semestreSession = Semestre::find(session('semestre_id'));
+
+        $verificaSemestre = $ultimoSemestre == $semestreSession;
+        $verificaDataInicio = now() >= $semestreSession->data_inicio;
+        $verificaDataFinal = now() < $semestreSession->data_fim;
+
+        if($verificaSemestre && $verificaDataInicio && $verificaDataFinal){
+            $validacao = true;
+        } else if(!$verificaSemestre && $verificaDataInicio && $verificaDataFinal){
+            $validacao = true;
+        } else {
+            $validacao = false;
+        }
+        
+        $request->session()->put('semestreIsAtivo', $validacao);
+
 
         return redirect()->back()->with(['success' => 'mudou o semestre']);
     }

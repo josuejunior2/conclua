@@ -10,10 +10,12 @@ use App\Models\User;
 use App\Models\Area;
 use App\Models\Formacao;
 use App\Models\Admin;
+use App\Models\Orientacao;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\OrientadorRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\AvaliacaoFinalRequest;
 use Illuminate\Support\Facades\Hash;
 
 class OrientadorController extends Controller
@@ -83,4 +85,27 @@ class OrientadorController extends Controller
     }
 
 
+    /**
+     * Display the specified resource. FOR GUARD ADMIN
+     */
+    public function showAcademico(Academico $academico)
+    {
+        $orientacao = Orientacao::where('semestre_id', session('semestre_id'))
+            ->where('orientador_id', auth()->guard('admin')->user()->Orientador->id)
+            ->where('academico_id', $academico->id)->first();
+            // dd($orientacao);
+
+        $solicitacoes = $academico->solicitacoes->where('semestre_id', session('semestre_id'))->where('orientador_id', auth()->guard('admin')->user()->Orientador->id);
+        return view('orientador.academico.show', ['academico' => $academico, 'orientacao' => $orientacao, 'solicitacoes' => $solicitacoes]);
+    }
+    
+
+    /**
+     * Display the specified resource. FOR GUARD ADMIN
+     */
+    public function avaliar(AvaliacaoFinalRequest $request, Orientacao $orientacao)
+    {
+        $orientacao->update($request->validated());
+        return redirect()->back()->with(['success' => 'Avaliação final registrada com sucesso!']);
+    }
 }

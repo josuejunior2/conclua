@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('academicos', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
             $table->string('matricula', 9)->unique();
 
-            $table->uuid('user_id')->required();
+            $table->unsignedBigInteger('user_id')->required();
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
             $table->softDeletes();

@@ -30,7 +30,7 @@ class AdminsImport implements ToCollection, WithValidation, WithHeadingRow
                         [
                             'nome'      => $row['nome'],
                             'email'     => $row['email'],
-                            'password'  => Hash::make('admin123'),
+                            'password'  => Hash::make($row['masp']),
                         ]
                     );
 

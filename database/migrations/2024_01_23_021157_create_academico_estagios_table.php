@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('semestres', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
             $table->unsignedSmallInteger('ano');
             $table->tinyInteger('periodo')->comment('1 para 1º semestre, 2 para 2º semestre');
             $table->date('data_inicio');
@@ -25,10 +25,10 @@ return new class extends Migration
         });
 
         Schema::create('academico_TCC', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->uuid('academico_id');
+            $table->id();
+            $table->unsignedBigInteger('academico_id')->required();
             $table->foreign('academico_id')->references('id')->on('academicos');
-            $table->uuid('semestre_id')->required();
+            $table->unsignedBigInteger('semestre_id')->required();
             $table->foreign('semestre_id')->references('id')->on('semestres');
 
             $table->text('tema', 10000);
@@ -42,7 +42,7 @@ return new class extends Migration
         });
 
         Schema::create('empresas', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
             $table->string('cnpj', 18)->unique();
             $table->string('nome', 60);
             $table->string('supervisor', 60);
@@ -52,14 +52,14 @@ return new class extends Migration
         });
 
         Schema::create('academico_estagio', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->uuid('academico_id');
+            $table->id();
+            $table->unsignedBigInteger('academico_id');
             $table->foreign('academico_id')->references('id')->on('academicos');
-            $table->uuid('semestre_id')->required();
+            $table->unsignedBigInteger('semestre_id')->required();
             $table->foreign('semestre_id')->references('id')->on('semestres');
             $table->string('tema', 60);
             $table->string('funcao', 40);
-            $table->uuid('empresa_id');
+            $table->unsignedBigInteger('empresa_id');
             $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->timestamps();
             $table->softDeletes();
