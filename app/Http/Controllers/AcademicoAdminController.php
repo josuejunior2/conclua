@@ -139,7 +139,7 @@ class AcademicoAdminController extends Controller
         } else {
             $user = $academico->User;
             $academico->delete();
-            $user->forceDelete();
+            $user->delete();
         }
         return redirect()->route('admin.academico.index');
     }
