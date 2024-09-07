@@ -3,7 +3,7 @@
       <div class="modal-content">
         <div class="modal-body flex-start">
           <div class="modal-title">Você tem certeza?</div>
-          <div>Se proceder, você o acesso do Acadêmico ficará bloqueado.
+          <div>Se proceder, o acesso do acadêmico {{ $academico->User->nome }} ficará bloqueado.
           </div>
         </div>
         <div class="modal-footer">
