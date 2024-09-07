@@ -21,7 +21,7 @@
                         </a>
                     </div>
                 @endcan
-                @can('deletar atividade')
+                @can('excluir atividade')
                     <div>
                         <form id="form_destroy_{{ $atividade->id }}" method="post"
                             action="{{ route('orientador.atividade.destroy', ['atividade' => $atividade]) }}">

@@ -35,7 +35,7 @@
                                 </a>
                             </div>
                         @endcan
-                        @can('deletar submissao')
+                        @can('excluir submissao')
                             <div>
                                 <form id="form_destroy_submissao{{$atividade->SubmissaoAtividade->id}}" method="post" action="{{ route('academico.atividade.destroy.submissao', ['submissao' => $atividade->SubmissaoAtividade]) }}">
                                     @method('DELETE')

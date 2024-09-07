@@ -15,7 +15,7 @@
                     </a>
                 </div>
             @endcan
-            @can('deletar orientador')
+            @can('excluir orientador')
                 <form id="form_destroy_{{$orientador->id}}" method="post" action="{{ route('admin.orientador.destroy', ['orientador' => $orientador]) }}">
                     @method('DELETE')
                     @csrf

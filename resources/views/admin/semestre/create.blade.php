@@ -71,18 +71,13 @@
 
 @section('js')
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var input = document.getElementById('ano');
-        input.value = new Date().getFullYear(); // Define o valor do campo para o ano atual
-    });
-</script>
-<script>
     // @formatter:off
     document.addEventListener("DOMContentLoaded", function () {
         const today = new Date();
         const year = today.getFullYear();
+        const nextYear = today.getFullYear() + 1;
         const startDate = new Date(year, 0, 1); // Primeiro dia do ano atual
-        const endDate = new Date(year, 11, 31); // Último dia do ano atual
+        const endDate = new Date(nextYear, 11, 31); // Último dia do ano atual
 
     	window.Litepicker && (new Litepicker({
     		element: document.getElementById('data_inicio'),
@@ -114,8 +109,9 @@
     document.addEventListener("DOMContentLoaded", function () {
         const today = new Date();
         const year = today.getFullYear();
+        const nextYear = today.getFullYear() + 1;
         const startDate = new Date(year, 0, 1); // Primeiro dia do ano atual
-        const endDate = new Date(year, 11, 31); // Último dia do ano atual
+        const endDate = new Date(nextYear, 11, 31); // Último dia do ano atual
 
         window.Litepicker && (new Litepicker({
             element: document.getElementById('data_fim'),
@@ -144,8 +140,9 @@
     document.addEventListener("DOMContentLoaded", function () {
     const today = new Date();
     const year = today.getFullYear();
+    const nextYear = today.getFullYear() + 1;
     const startDate = new Date(year, 0, 1); // Primeiro dia do ano atual
-    const endDate = new Date(year, 11, 31); // Último dia do ano atual
+    const endDate = new Date(nextYear, 11, 31); // Último dia do ano atual
 
     window.Litepicker && (new Litepicker({
         element: document.getElementById('limite_doc_estagio'),
@@ -174,8 +171,9 @@
     document.addEventListener("DOMContentLoaded", function () {
         const today = new Date();
         const year = today.getFullYear();
+        const nextYear = today.getFullYear() + 1;
         const startDate = new Date(year, 0, 1); // Primeiro dia do ano atual
-        const endDate = new Date(year, 11, 31); // Último dia do ano atual
+        const endDate = new Date(nextYear, 11, 31); // Último dia do ano atual
 
         window.Litepicker && (new Litepicker({
             element: document.getElementById('limite_orientacao'),

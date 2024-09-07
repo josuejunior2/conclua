@@ -49,7 +49,7 @@ class AtividadeAcademicoController extends Controller
      */
     public function destroySubmissao(SubmissaoAtividade $submissao)
     {
-        $this->middleware('permission:deletar submissao');
+        $this->middleware('permission:excluir submissao');
 
         $atividade = $submissao->Atividade;
         $atividade->update([

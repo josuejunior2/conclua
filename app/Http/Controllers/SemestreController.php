@@ -52,9 +52,9 @@ class SemestreController extends Controller
         $semestre = Semestre::create($request->validated());
         session()->put('semestre_id', $semestre->id);
 
-        Orientador::all()->each(function ($orientador){
-            $orientador->update(['disponibilidade' => null]);
-        });
+        // Orientador::all()->each(function ($orientador){
+        //     $orientador->update(['disponibilidade' => null]);
+        // });
 
         return redirect()->route('admin.semestre.index');
     }

@@ -27,7 +27,7 @@
                                         </button>
                                     </form>
                                 </div>
-                                @can('deletar arquivo submissao')
+                                @can('excluir arquivo submissao')
                                     @include('arquivo.destroy_arquivo_submissao')
                                     <div class="col-auto">
                                         <form id="form_destroy_arquivo_submissao_{{ $arquivo->id }}" method="post"

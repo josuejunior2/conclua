@@ -100,7 +100,7 @@ class AtividadeOrientadorController extends Controller
      */
     public function destroy(Atividade $atividade)
     {
-        $this->middleware('permission:deletar atividade');
+        $this->middleware('permission:excluir atividade');
 
         $arquivos = $atividade->arquivosAuxiliares->merge($atividade->arquivosSubmissao);
         foreach($arquivos as $arquivo){

@@ -1,6 +1,6 @@
 <div class="row">
     @foreach($atividade->arquivosAuxiliares as $arquivo)
-    @can('deletar atividade')
+    @can('excluir atividade')
         @include('arquivo.destroy_arquivo_aux')
     @endcan
     <div class="col-4 mb-3">
@@ -26,7 +26,7 @@
                         </button>
                     </form>
                 </div>
-                @can('deletar atividade')
+                @can('excluir atividade')
                     @if(session('semestreIsAtivo'))
                         <div class="col-auto">
                             <form id="form_destroy_arquivo_aux_{{ $arquivo->id }}" method="post" action="{{ route('arquivo.destroy.arquivo.aux', ['arquivo' => $arquivo]) }}">
