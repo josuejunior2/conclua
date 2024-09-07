@@ -127,18 +127,18 @@ class AcademicoAdminController extends Controller
 
             $user = $academico->User;
             $academico->academicosTCC->forceDelete();
-            $academico->forceDelete();
-            $user->forceDelete();
+            $academico->delete();
+            $user->delete();
 
         } else if(AcademicoEstagio::where('academico_id', $academico->id)->exists()){
 
             $user = $academico->User;
             $academico->academicosEstagio->forceDelete();
-            $academico->forceDelete();
-            $user->forceDelete();
+            $academico->delete();
+            $user->delete();
         } else {
             $user = $academico->User;
-            $academico->forceDelete();
+            $academico->delete();
             $user->forceDelete();
         }
         return redirect()->route('admin.academico.index');
