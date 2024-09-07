@@ -47,8 +47,8 @@ class AdminUpdateOrientadorRequest extends FormRequest
             'required' => 'O campo :attribute deve ser preenchido.',
             'nome.min' => 'O campo nome deve ter no mínimo 7 caracteres.',
             'email.email' => 'O campo email deve ser preenchido com um endereço de email.',
-            'masp.digits' => 'O número de matrícula deve ter 9 caracteres numéricos.',
-            'masp.unique' => 'O número de matrícula já está cadastrado no acadêmico: ' . $orientadorExistente,
+            'masp.digits' => 'O MASP deve ter 7 caracteres numéricos.',
+            'masp.unique' => 'O MASP já está cadastrado no orientador: ' . $orientadorExistente,
         ];
     }
 }

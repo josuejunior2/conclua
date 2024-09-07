@@ -121,14 +121,14 @@ class OrientadorAdminController extends Controller
     public function destroy(Orientador $orientador)
     {
         $admin = $orientador->Admin;
-        $orientador->forceDelete();
-        $admin->forceDelete();
+        $orientador->delete();
+        $admin->delete();
 
         return redirect()->route('admin.orientador.index');
     }
 
     /**
-     * Cadastra os dados basicos de orientadores por tabela excel E oferece opção para ativar junto de importar.
+     * Cadastra os dados basicos de orientadores por tabela excel.
      */
     public function import_orientadores(Request $request)
     {
