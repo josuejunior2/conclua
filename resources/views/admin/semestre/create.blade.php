@@ -3,7 +3,7 @@
 @section('content')
 <div class="card m-3">
     <div class="card-header flex-column align-items-start">
-        <h3 class="card-title">Cadastro de semestre: @if($tem1periodo) 2/{{ now()->format('Y') }} @elseif($tem2periodo || (!$tem1periodo && !$tem2periodo)) 1/{{ now()->format('Y') }} @endif</h3>
+        <h3 class="card-title">Cadastro de semestre: {{ $ano }} / {{ $periodo }}</h3>
         <div>
             <span class="{{ $errors->has('periodo') ? 'text-danger' : '' }}">
                 {{ $errors->has('periodo') ? $errors->first('periodo') : '' }}
@@ -14,15 +14,8 @@
     <div class="card-body">
     <form method="POST" action="{{ route('admin.semestre.store') }}" enctype="multipart/form-data">
         @csrf
-        <input type="hidden" name="ano" id="ano" value="{{ now()->format('Y') }}">
-        <span class="{{ $errors->has('ano') ? 'text-danger' : '' }}">
-            {{ $errors->has('ano') ? $errors->first('ano') : '' }}
-        </span>
-        @if($tem1periodo)
-            <input type="hidden" name="periodo" id="periodo" value="2">
-        @elseif($tem2periodo || (!$tem1periodo && !$tem2periodo))
-            <input type="hidden" name="periodo" id="periodo" value="1">
-        @endif
+        <input type="hidden" name="ano" id="ano" value="{{ $ano }}">
+        <input type="hidden" name="periodo" id="periodo" value="{{ $periodo }}">
 
         <div class="datagrid">
             <div class="datagrid-item">
