@@ -3,7 +3,7 @@
 @section('content')
 <div class="card m-3">
     <div class="card-header">
-       <h3 class="card-title">Cadastro de semestre: {{ $semestre->periodo }}/{{ now()->format('Y') }}</h3>
+       <h3 class="card-title">Editar semestre: {{ $semestre->periodo }}/{{ now()->format('Y') }}</h3>
     </div>
 
     <div class="card-body">

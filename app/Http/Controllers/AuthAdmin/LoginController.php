@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\SemestreOrientador;
 use App\Models\Semestre;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -81,4 +82,9 @@ class LoginController extends Controller
         }
 
     }
+    // protected function sendFailedLoginResponse(Request $request) {
+    //     throw ValidationException::withMessages([
+    //         'email' => ['Credenciais de acesso inválidas, verifique-as e tente novamente!']
+    //     ]);
+    // }
 }

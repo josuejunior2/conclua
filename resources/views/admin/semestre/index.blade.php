@@ -89,7 +89,7 @@
                             @csrf
                             <!-- <button type="submit">Excluir</button>  -->
                             <a href="#" onclick="document.getElementById('form_destroy_{{$s->id}}').submit()" class="dropdown-item">
-                                Excluir cadastro
+                                Excluir
                             </a>
                         </form>
                     </div>

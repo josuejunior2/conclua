@@ -9,6 +9,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles; 
 use App\Notifications\RedefinirSenhaNotification;
+use App\Notifications\VerificarEmailNotification;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 class Admin extends Authenticatable
 {
@@ -51,6 +53,10 @@ class Admin extends Authenticatable
     }
     
     public function sendPasswordResetNotification($token) {
-        $this->notify(new RedefinirSenhaNotification($token, $this->email, $this->name));
+        $this->notify(new RedefinirSenhaNotification($token, $this->email, $this->nome));
+    }
+
+    public function sendEmailVerificationNotification() {
+        $this->notify(new VerificarEmailNotification($this->nome));
     }
 }

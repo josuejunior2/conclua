@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Cadastrar novos orientadores</h5>
+                <h5 class="modal-title">Cadastro de orientadores via planilha</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -17,7 +17,7 @@
                 <form id="form" method="post"
                     action="{{ route('admin.orientador.download.modelo.planilha') }}">
                     @csrf
-                    <button type="submit" class="btn btn-outline-secondary w-100">
+                    <button type="submit" class="btn btn-outline-secondary w-100 mb-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-download">
