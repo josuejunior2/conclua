@@ -82,9 +82,9 @@ class LoginController extends Controller
         }
 
     }
-    // protected function sendFailedLoginResponse(Request $request) {
-    //     throw ValidationException::withMessages([
-    //         'email' => ['Credenciais de acesso inválidas, verifique-as e tente novamente!']
-    //     ]);
-    // }
+    protected function sendFailedLoginResponse(Request $request) {
+        throw ValidationException::withMessages([
+            'email' => ['Credenciais de acesso inválidas, verifique-as e tente novamente!']
+        ]);
+    }
 }
