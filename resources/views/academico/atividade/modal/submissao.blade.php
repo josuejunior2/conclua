@@ -21,7 +21,7 @@
                         </div>
                         <div class="mb-3">
                             <div class="form-label">Arquivo(s)</div>
-                            <input type="file" name="arquivos_submissao[]" id="arquivos_submissao" accept=".xlsx" class="form-control" multiple>
+                            <input type="file" name="arquivos_submissao[]" id="arquivos_submissao" accept=".pdf,.odf,.jpg,.jpeg,.png,.bmp,.gif,.svg" class="form-control" multiple>
                             <span class="{{ $errors->has('arquivos_submissao') ? 'text-danger' : '' }}">
                                 {{ $errors->has('arquivos_submissao') ? $errors->first('arquivos_submissao') : '' }}
                             </span>

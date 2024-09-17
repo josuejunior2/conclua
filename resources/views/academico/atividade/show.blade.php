@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@include('academico.atividade.modal.entrega')
+@include('academico.atividade.modal.submissao')
 
 @section('content')
     <div class="card m-3">
