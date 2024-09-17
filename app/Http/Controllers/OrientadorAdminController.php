@@ -102,7 +102,7 @@ class OrientadorAdminController extends Controller
                 ]
             );
         });
-        return redirect()->route('admin.academico.show', ['academico' => $orientador]);
+        return redirect()->route('admin.orientador.show', ['orientador' => $orientador]);
     }
 
     /**

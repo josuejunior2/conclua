@@ -16,7 +16,7 @@
                 </div>
             @endcan
             @can('excluir academico')
-                <form id="form_{{$academico->id}}" method="post" action="{{ route('admin.academico.destroy', ['academico' => $academico]) }}">
+                <form id="form_destroy_{{$academico->id}}" method="post" action="{{ route('admin.academico.destroy', ['academico' => $academico]) }}">
                     @method('DELETE')
                     @csrf
                     <a href="#" data-bs-toggle="modal" data-bs-target="#modal-destroy-academico" class="btn btn-danger w-100">

@@ -44,6 +44,8 @@ class PerfisEPermissoesSeeder extends Seeder
             ['guard_name' => 'admin', 'name' => 'criar semestre',  'description' => 'Permite criar semestre.'],
             ['guard_name' => 'admin', 'name' => 'editar semestre',  'description' => 'Permite editar semestre.'],
             ['guard_name' => 'admin', 'name' => 'excluir semestre',  'description' => 'Permite excluir semestre.'],
+            
+            ['guard_name' => 'admin', 'name' => 'visualizar atividades',  'description' => 'Permite a visualização de atividades.'],
         ]);
 
 
