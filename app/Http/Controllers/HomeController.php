@@ -59,8 +59,7 @@ class HomeController extends Controller
                     $OrientadoresEmSolicitacoesNulas[] = $solicitacao->getAttribute('orientador_id');
                 }
             }
-            $orientadores = Orientador::where('disponibilidade', '>', 0)
-                        ->whereNotIn('id', $OrientadoresEmSolicitacoesNulas)
+            $orientadores = Orientador::whereNotIn('id', $OrientadoresEmSolicitacoesNulas) // where('disponibilidade', '>', 0)
                         ->get();
 
             $solicitacoesNoSemestre = Solicitacao::where('semestre_id', session('semestre_id'))->where('academico_id', $academico->id)->get();
