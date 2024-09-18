@@ -60,11 +60,16 @@
                               Login - Acadêmico
                             </a>
                         </div>
-                          <div class="col">
-                              <a href="{{ route('admin.login') }}" class="btn btn-outline-secondary w-100">
-                                Login - Admin
-                              </a>
-                          </div>
+                        <div class="col">
+                            <a href="{{ route('admin.login.index', ['tipo' => 'Orientador']) }}" class="btn btn-outline-success w-100">
+                              Login - Orientador
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a href="{{ route('admin.login.index', ['tipo' => 'Administrador']) }}" class="btn btn-outline-secondary w-100">
+                              Login - Administrador
+                            </a>
+                        </div>
                       </div>
                   @endauth
               </div>

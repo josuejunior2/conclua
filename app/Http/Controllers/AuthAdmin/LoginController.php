@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\SemestreOrientador;
 use App\Models\Semestre;
 use Illuminate\Validation\ValidationException;
+use PhpOffice\PhpSpreadsheet\Calculation\Logical\Boolean;
 
 class LoginController extends Controller
 {
@@ -44,9 +45,9 @@ class LoginController extends Controller
         $this->middleware('guest:admin')->except('logout');
     }
 
-    public function showLoginForm()
+    public function showLoginForm(string $tipo = '')
     {
-        return view('admin.auth.login');
+        return view('admin.auth.login', ['tipo' => $tipo]);
     }
 
     protected function guard()

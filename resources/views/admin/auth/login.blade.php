@@ -13,7 +13,7 @@
                 {{ session('success') }}
             </div>
         @endif
-        <h2 class="h2 text-center mb-4">Entre na sua conta - Admin</h2>
+        <h2 class="h2 text-center mb-4">Entre na sua conta - @if($tipo) {{ $tipo }} @else Administração @endif</h2>
         <form method="POST" action="{{ route('admin.login') }}">            {{-- é... depois o login tem que ser por masp/matricula--}}
             @csrf
 

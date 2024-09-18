@@ -104,7 +104,7 @@ Route::resource('comentario', App\Http\Controllers\ComentarioController::class)-
 
 Route::prefix('admin')->name('admin.')->group(function () {
 
-    Route::get('login', [AdminLoginController::class, 'showLoginForm'])->name('login.index');
+    Route::get('login/{tipo?}', [AdminLoginController::class, 'showLoginForm'])->name('login.index');
     Route::post('login', [AdminLoginController::class, 'login'])->name('login');
     Route::post('logout', [AdminLoginController::class, 'logout'])->name('logout');
     Route::get('password/reset', [AdminForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
