@@ -38,31 +38,9 @@
             @yield('content')
         </main>
     </div>
-
 </body>
-<script>
-    @if (Session::has('success'))
-        toastr.options = {
-            "closeButton": true,
-            "progressBar": true,
-            "extendedTimeOut ": 1000,
-        }
-        toastr.success("{{ session('success') }}");
-    @endif
-
-    @if (Session::has('error'))
-        toastr.options = {
-            "closeButton": true,
-            "progressBar": true,
-            "extendedTimeOut ": 1000,
-        }
-        toastr.error("{{ session('error') }}");
-    @endif
-</script>
 
 
-{{-- <script>
-    @yield('js')
-</script> --}}
+@yield('js')
 
 </html>
