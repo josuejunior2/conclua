@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class AcademicoTCC extends Model
 {
     use HasFactory,  SoftDeletes;
-    protected $table = 'academico_tcc';
+    protected $table = 'academico_TCC';
 
     protected $keyType = 'string';
 
