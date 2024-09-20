@@ -33,15 +33,7 @@ class SemestreController extends Controller
      */
     public function create()
     {
-        $ano = now()->format('Y');
-        $periodo = 1;
-        foreach(Semestre::all() as $semestre){
-            if($semestre->periodo == $periodo && $semestre->ano == $ano){
-                $ano = $periodo == 2 ? now()->addYear()->format('Y') : $ano;
-                $periodo = $periodo == 1 ? 2 : 1;
-            } 
-        }
-        return view('admin.semestre.create', ['periodo' => $periodo, 'ano' => $ano]);
+        return view('admin.semestre.create');
     }
 
     /**
@@ -74,14 +66,7 @@ class SemestreController extends Controller
      */
     public function edit(Semestre $semestre)
     {
-        $tem1periodo = Semestre::where('ano', now())->where('periodo', 1)->exists();
-        $tem2periodo = Semestre::where('ano', now())->where('periodo', 2)->exists();
-
-        if($semestre->id == session('semestre_id')){
-            return view('admin.semestre.edit', ['semestre' => $semestre, 'tem1periodo' => $tem1periodo, 'tem2periodo' => $tem2periodo]);
-        } else{
-            return redirect()->back();
-        }
+        return view('admin.semestre.edit', ['semestre' => $semestre]);
     }
 
     /**

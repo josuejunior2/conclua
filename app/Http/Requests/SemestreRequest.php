@@ -27,9 +27,11 @@ class SemestreRequest extends FormRequest
      */
     private function afterDataFimAnterior($data_inicio, $ano, $periodo)
     {
-        $semestreAnterior = Semestre::where('ano', $ano)->where('data_fim', '>=', $data_inicio)->whereNot('periodo', $periodo)->first();
-        if(isset($semestreAnterior)){
-            return 'after:'.$semestreAnterior->data_fim;
+        if(!empty($data_inicio) && !empty($ano) && !empty($periodo)){
+            $semestreAnterior = Semestre::where('ano', $ano)->where('data_fim', '>=', $data_inicio)->whereNot('periodo', $periodo)->first();
+            if(isset($semestreAnterior) && $semestreAnterior->id != request()->input('id')){
+                return 'after:'.$semestreAnterior->data_fim;
+            }
         }
     }
 
@@ -38,11 +40,12 @@ class SemestreRequest extends FormRequest
      */
     private function gapMinimo($data_inicio, $meses)
     {
-        Carbon::setLocale('pt_BR');
-        $gap = Carbon::parse($data_inicio)->addMonths($meses);
-        // $gap = Carbon::createFromFormat('D/MM/YYYY', $data_inicio);
-        // dd($gap);
-        return 'after:'.$gap;
+        if(!empty($data_inicio) && !empty($meses)){
+            Carbon::setLocale('pt_BR');
+            $gap = Carbon::parse($data_inicio)->addMonths($meses);
+
+            return 'after:'.$gap;
+        }
     }
 
     /**
@@ -66,24 +69,22 @@ class SemestreRequest extends FormRequest
             case 'POST':
                 return [
                     'ano' => 'required|integer|min:' . $anoAtual . '|max:' . $anoSeguinte,
-                    'periodo' => [ //periodo
+                    'periodo' => [
                         'required',
                         'integer',
                         'min:1',
-                        'max:2',
+                        'max:3',
                         Rule::unique('semestres')->withoutTrashed()->where(fn (Builder $query) => $query->where('ano', $ano))
                     ],
                     'data_inicio' => [
                         'required',
                         'before:data_fim',
                         $this->afterDataFimAnterior($dataInicio, $ano, $periodo),
-                        Rule::unique('semestres')->withoutTrashed()->where(fn (Builder $query) => $query->where('ano', $ano)->where('data_inicio', $dataInicio))
                     ],
                     'data_fim' => [
                         'required',
-                        $this->gapMinimo($dataInicio, 0),
-                        Rule::unique('semestres')->withoutTrashed()->where(fn (Builder $query) => $query->where('ano', $ano)->where('data_fim', $dataFim)),
-                    ], //, 4)],
+                        $this->gapMinimo($dataInicio, 2),
+                    ],
                     'limite_doc_estagio' => 'required|before:data_fim', //. $data_fim,
                     'limite_orientacao' => 'required|before:data_fim', //. $data_fim,
                 ];
@@ -95,7 +96,7 @@ class SemestreRequest extends FormRequest
                             'required',
                             'integer',
                             'min:1',
-                            'max:2',
+                            'max:3',
                         ],
                         'data_inicio' => [
                             'required',
@@ -118,8 +119,11 @@ class SemestreRequest extends FormRequest
      */
     public function messages(): array
     {
-        $semestreAnterior = Semestre::where('ano', request()->input('ano'))->where('data_fim', '>=', request()->input('data_inicio'))->whereNot('periodo', request()->input('periodo'))->first();
-        if(isset($semestreAnterior)){ $dataFimSemestreAnterior = $semestreAnterior->data_fim->format('d/m/Y'); } else { $dataFimSemestreAnterior = ''; }
+        $dataFimSemestreAnterior = '';
+        if(!empty(request()->input('ano')) && !empty(request()->input('data_inicio')) && !empty(request()->input('periodo'))){
+            $semestreAnterior = Semestre::where('ano', request()->input('ano'))->where('data_fim', '>=', request()->input('data_inicio'))->whereNot('periodo', request()->input('periodo'))->first();
+            if(isset($semestreAnterior)){ $dataFimSemestreAnterior = $semestreAnterior->data_fim->format('d/m/Y'); } else { $dataFimSemestreAnterior = ''; }
+        }
         return [
             'required' => 'O campo :attribute deve ser preenchido.',
             'ano.integer' => 'O campo ano deve ser um número inteiro.',
@@ -133,7 +137,7 @@ class SemestreRequest extends FormRequest
             'data_inicio.unique' => 'Essa data de início já foi cadastrada.',
             'data_fim.unique' => 'Essa data de fim já foi cadastrada.',
             'data_fim.date' => 'O campo data de término deve ser uma data válida.',
-            'data_fim.after' => 'A data de término deve ser igual ou posterior no mínimo 5 meses após a data de início.',
+            'data_fim.after' => 'A data de término deve ser igual ou posterior no mínimo 2 meses após a data de início.',
             'limite_doc_estagio.date' => 'O campo de data-limite para entrega da documentação de estágio deve ser uma data válida.',
             'limite_doc_estagio.before' => 'A data-limite para entrega da documentação de estágio deve ser uma data anterior à data de finalização do semestre.',
             'limite_orientacao.date' => 'O campo de data-limite para entrega da documentação de orientação deve ser uma data válida.',

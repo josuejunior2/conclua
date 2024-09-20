@@ -3,23 +3,42 @@
 @section('content')
 <div class="card m-3">
     <div class="card-header flex-column align-items-start">
-        <h3 class="card-title">Cadastro de semestre: {{ $ano }} / {{ $periodo }}</h3>
-        <div>
-            <span class="{{ $errors->has('periodo') ? 'text-danger' : '' }}">
-                {{ $errors->has('periodo') ? $errors->first('periodo') : '' }}
-            </span>
-        </div>
+        <h3 class="card-title">Cadastro de semestre</h3>
     </div>
 
     <div class="card-body">
     <form method="POST" action="{{ route('admin.semestre.store') }}" enctype="multipart/form-data">
         @csrf
-        <input type="hidden" name="ano" id="ano" value="{{ $ano }}">
-        <input type="hidden" name="periodo" id="periodo" value="{{ $periodo }}">
 
+        <div class="row mb-3">
+            <div class="input-group d-flex justify-content-center">
+                <div class="col-sm-2">
+                    <input type="number" min="1" max="3" name="periodo" id="periodo" class="form-control" autocomplete="off" value="{{ old('periodo', '') }}" placeholder="Período"/>
+                    <span class="{{ $errors->has('periodo') ? 'text-danger' : '' }}">
+                        {{ $errors->has('periodo') ? $errors->first('periodo') : '' }}
+                    </span>
+                </div>
+                <div>
+                    <span class="input-group-text">
+                      /
+                    </span>
+                </div>
+                <div class="col-sm-2">
+                    <select class="form-select" name="ano" id="ano" value="{{ old('ano', '') }}">
+                        <option value="">Ano</option>
+                        <option value="{{ now()->format('Y') }}" {{ old('ano') == now()->format('Y') ? 'selected' : '' }}>{{ now()->format('Y') }}</option>
+                        <option value="{{ now()->addYear()->format('Y') }}" {{ old('ano') == now()->addYear()->format('Y') ? 'selected' : '' }}>{{ now()->addYear()->format('Y') }}</option>
+                    </select>
+                    <span class="{{ $errors->has('ano') ? 'text-danger' : '' }}">
+                        {{ $errors->has('ano') ? $errors->first('ano') : '' }}
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="card-title">Datas limite do semestre</div>
         <div class="datagrid">
             <div class="datagrid-item">
-                <div class="form-label">Data de início</div>
+                <div class="form-label">Início</div>
                 <div class="datagrid-content">
                     <input type="hidden" id="data_inicio" name="data_inicio" value="{{ old('data_inicio', '') }}" autocomplete="off"/>
                     <span class="{{ $errors->has('data_inicio') ? 'text-danger' : '' }}">
@@ -28,7 +47,7 @@
                 </div>
             </div>
             <div class="datagrid-item">
-                <div class="form-label">Data de finalização</div>
+                <div class="form-label">Finalização</div>
                 <div class="datagrid-content">
                     <input type="hidden" id="data_fim" name="data_fim" value="{{ old('data_fim', '') }}" autocomplete="off"/>
                     <span class="{{ $errors->has('data_fim') ? 'text-danger' : '' }}">
@@ -37,7 +56,7 @@
                 </div>
             </div>
             <div class="datagrid-item">
-                <div class="form-label">Data-limite de entrega de documentos de estágio</div>
+                <div class="form-label">Entrega de documentos de estágio</div>
                 <div class="datagrid-content">
                     <input type="hidden" id="limite_doc_estagio" name="limite_doc_estagio" value="{{ old('limite_doc_estagio', '') }}" autocomplete="off"/>
                     <span class="{{ $errors->has('limite_doc_estagio') ? 'text-danger' : '' }}">
@@ -46,7 +65,7 @@
                 </div>
             </div>
             <div class="datagrid-item">
-                <div class="form-label">Data-limite de entrega de documentos de orientação</div>
+                <div class="form-label">Entrega de documentos de orientação</div>
                 <div class="datagrid-content">
                     <input type="hidden" id="limite_orientacao" name="limite_orientacao" value="{{ old('limite_orientacao', '') }}" autocomplete="off"/>
                     <span class="{{ $errors->has('limite_orientacao') ? 'text-danger' : '' }}">

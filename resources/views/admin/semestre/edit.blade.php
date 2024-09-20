@@ -10,47 +10,67 @@
     <form method="POST" action="{{ route('admin.semestre.update', ['semestre' => $semestre]) }}" enctype="multipart/form-data">
         @csrf
         @method('PUT')
-       <input type="hidden" name="ano" id="ano" value="{{ now()->format('Y') }}">
-        <span class="{{ $errors->has('ano') ? 'text-danger' : '' }}">
-            {{ $errors->has('ano') ? $errors->first('ano') : '' }}
-        </span>
 
-        <input type="hidden" name="periodo" id="periodo" value="{{ $semestre->periodo }}">
-        <span class="{{ $errors->has('periodo') ? 'text-danger' : '' }}">
-            {{ $errors->has('periodo') ? $errors->first('periodo') : '' }}
-        </span>
+        <input id="id" name="id" type="hidden" class="form-control" value="{{ $semestre->id }}">
+        
+        <div class="row mb-3">
+            <div class="input-group d-flex justify-content-center">
+                <div class="col-sm-2">
+                    <input type="number" min="1" max="3" name="periodo" id="periodo" class="form-control" autocomplete="off" value="{{ old('periodo', $semestre->periodo) }}" placeholder="Período"/>
+                    <span class="{{ $errors->has('periodo') ? 'text-danger' : '' }}">
+                        {{ $errors->has('periodo') ? $errors->first('periodo') : '' }}
+                    </span>
+                </div>
+                <div>
+                    <span class="input-group-text">
+                      /
+                    </span>
+                </div>
+                <div class="col-sm-2">
+                    <select class="form-select" name="ano" id="ano" value="{{ old('ano', $semestre->ano) }}">
+                        <option value="">Ano</option>
+                        <option value="{{ now()->format('Y') }}" {{ old('ano') || $semestre->ano ? 'selected' : '' }}>{{ now()->format('Y') }}</option>
+                        <option value="{{ now()->addYear()->format('Y') }}" {{ old('ano') || $semestre->ano ? 'selected' : '' }}>{{ now()->addYear()->format('Y') }}</option>
+                    </select>
+                    <span class="{{ $errors->has('ano') ? 'text-danger' : '' }}">
+                        {{ $errors->has('ano') ? $errors->first('ano') : '' }}
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="card-title">Datas limite do semestre</div>
         <div class="datagrid">
             <div class="datagrid-item">
-                <div class="form-label">Data de início</div>
+                <div class="form-label">Início</div>
                 <div class="datagrid-content">
-                    <input type="hidden" id="data_inicio" name="data_inicio" value="{{ old('data_inicio') ?? $semestre->data_inicio }}" autocomplete="off" readonly/>
+                    <input type="hidden" id="data_inicio" name="data_inicio" value="{{ old('data_inicio', $semestre->data_inicio) }}" autocomplete="off"/>
                     <span class="{{ $errors->has('data_inicio') ? 'text-danger' : '' }}">
                         {{ $errors->has('data_inicio') ? $errors->first('data_inicio') : '' }}
                     </span>
                 </div>
             </div>
             <div class="datagrid-item">
-                <div class="form-label">Data de finalização</div>
+                <div class="form-label">Finalização</div>
                 <div class="datagrid-content">
-                    <input type="hidden" id="data_fim" name="data_fim" value="{{ old('data_fim') ?? $semestre->data_fim }}" autocomplete="off"/>
+                    <input type="hidden" id="data_fim" name="data_fim" value="{{ old('data_fim', $semestre->data_fim) }}" autocomplete="off"/>
                     <span class="{{ $errors->has('data_fim') ? 'text-danger' : '' }}">
                         {{ $errors->has('data_fim') ? $errors->first('data_fim') : '' }}
                     </span>
                 </div>
             </div>
             <div class="datagrid-item">
-                <div class="form-label">Data-limite de entrega de documentos de estágio</div>
+                <div class="form-label">Entrega de documentos de estágio</div>
                 <div class="datagrid-content">
-                    <input type="hidden" id="limite_doc_estagio" name="limite_doc_estagio" value="{{ old('limite_doc_estagio') ?? $semestre->limite_doc_estagio }}" autocomplete="off"/>
+                    <input type="hidden" id="limite_doc_estagio" name="limite_doc_estagio" value="{{ old('limite_doc_estagio', $semestre->limite_doc_estagio) }}" autocomplete="off"/>
                     <span class="{{ $errors->has('limite_doc_estagio') ? 'text-danger' : '' }}">
                         {{ $errors->has('limite_doc_estagio') ? $errors->first('limite_doc_estagio') : '' }}
                     </span>
                 </div>
             </div>
             <div class="datagrid-item">
-                <div class="form-label">Data-limite de entrega de documentos de orientação</div>
+                <div class="form-label">Entrega de documentos de orientação</div>
                 <div class="datagrid-content">
-                    <input type="hidden" id="limite_orientacao" name="limite_orientacao" value="{{ old('limite_orientacao') ?? $semestre->limite_orientacao }}" autocomplete="off"/>
+                    <input type="hidden" id="limite_orientacao" name="limite_orientacao" value="{{ old('limite_orientacao', $semestre->limite_orientacao) }}" autocomplete="off"/>
                     <span class="{{ $errors->has('limite_orientacao') ? 'text-danger' : '' }}">
                         {{ $errors->has('limite_orientacao') ? $errors->first('limite_orientacao') : '' }}
                     </span>
@@ -73,18 +93,13 @@
 
 @section('js')
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var input = document.getElementById('ano');
-        input.value = new Date().getFullYear(); // Define o valor do campo para o ano atual
-    });
-</script>
-<script>
     // @formatter:off
     document.addEventListener("DOMContentLoaded", function () {
         const today = new Date();
         const year = today.getFullYear();
+        const nextYear = today.getFullYear() + 1;
         const startDate = new Date(year, 0, 1); // Primeiro dia do ano atual
-        const endDate = new Date(year, 11, 31); // Último dia do ano atual
+        const endDate = new Date(nextYear, 11, 31); // Último dia do ano atual
 
     	window.Litepicker && (new Litepicker({
     		element: document.getElementById('data_inicio'),
@@ -116,8 +131,9 @@
     document.addEventListener("DOMContentLoaded", function () {
         const today = new Date();
         const year = today.getFullYear();
+        const nextYear = today.getFullYear() + 1;
         const startDate = new Date(year, 0, 1); // Primeiro dia do ano atual
-        const endDate = new Date(year, 11, 31); // Último dia do ano atual
+        const endDate = new Date(nextYear, 11, 31); // Último dia do ano atual
 
         window.Litepicker && (new Litepicker({
             element: document.getElementById('data_fim'),
@@ -146,8 +162,9 @@
     document.addEventListener("DOMContentLoaded", function () {
     const today = new Date();
     const year = today.getFullYear();
+    const nextYear = today.getFullYear() + 1;
     const startDate = new Date(year, 0, 1); // Primeiro dia do ano atual
-    const endDate = new Date(year, 11, 31); // Último dia do ano atual
+    const endDate = new Date(nextYear, 11, 31); // Último dia do ano atual
 
     window.Litepicker && (new Litepicker({
         element: document.getElementById('limite_doc_estagio'),
@@ -176,8 +193,9 @@
     document.addEventListener("DOMContentLoaded", function () {
         const today = new Date();
         const year = today.getFullYear();
+        const nextYear = today.getFullYear() + 1;
         const startDate = new Date(year, 0, 1); // Primeiro dia do ano atual
-        const endDate = new Date(year, 11, 31); // Último dia do ano atual
+        const endDate = new Date(nextYear, 11, 31); // Último dia do ano atual
 
         window.Litepicker && (new Litepicker({
             element: document.getElementById('limite_orientacao'),
