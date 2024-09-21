@@ -42,7 +42,7 @@ class OrientadorController extends Controller
     {
         $orientador->update($request->validated());
 
-        $orientador->update([
+        $orientador->Admin->update([
             'password' => Hash::make($request->input('password')),
         ]);
         return redirect()->route('admin.home');
