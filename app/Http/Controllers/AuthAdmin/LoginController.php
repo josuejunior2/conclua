@@ -57,7 +57,7 @@ class LoginController extends Controller
 
     protected function loggedOut(Request $request)
     {
-        return redirect()->route('admin.login');
+        return redirect()->route('welcome');
     }
 
     public function authenticated(Request $request, $user)
