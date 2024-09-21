@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use App\Models\Admin;
 
 class RedefinirSenhaNotification extends Notification
 {
@@ -38,7 +39,8 @@ class RedefinirSenhaNotification extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
-        $url = env('APP_URL').'password/reset/'.$this->token.'?email='.$this->email;
+        $rota = Admin::where('email', $this->email)->exists() ? 'admin/password/reset/' : 'password/reset/';
+        $url = env('APP_URL').$rota.$this->token.'?email='.$this->email;
         $minutos = config('auth.passwords.'.config('auth.defaults.passwords').'.expire');
         $saudacao = 'Olá '.$this->name;
         return (new MailMessage)
