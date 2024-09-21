@@ -126,14 +126,14 @@ class AcademicoAdminController extends Controller
         if(AcademicoTCC::where('academico_id', $academico->id)->exists()){
 
             $user = $academico->User;
-            $academico->academicosTCC->forceDelete();
+            $academico->academicosTCC->delete();
             $academico->delete();
             $user->delete();
 
         } else if(AcademicoEstagio::where('academico_id', $academico->id)->exists()){
 
             $user = $academico->User;
-            $academico->academicosEstagio->forceDelete();
+            $academico->academicosEstagio->delete();
             $academico->delete();
             $user->delete();
         } else {

@@ -105,11 +105,11 @@ class AtividadeOrientadorController extends Controller
         $arquivos = $atividade->arquivosAuxiliares->merge($atividade->arquivosSubmissao);
         foreach($arquivos as $arquivo){
             unlink('./'.$arquivo->caminho.'/'.$arquivo->nome);
-            $arquivo->forceDelete();
+            $arquivo->delete();
         }
         
-        if(!empty($atividade->SubmissaoAtividade)) $atividade->SubmissaoAtividade->forceDelete();
-        $atividade->forceDelete();
+        if(!empty($atividade->SubmissaoAtividade)) $atividade->SubmissaoAtividade->delete();
+        $atividade->delete();
         return redirect()->route('orientador.atividade.index');
     }
     

@@ -59,10 +59,10 @@ class AtividadeAcademicoController extends Controller
 
         foreach($atividade->arquivosSubmissao as $arquivo){
             unlink('./'.$arquivo->caminho.'/'.$arquivo->nome);
-            $arquivo->forceDelete();
+            $arquivo->delete();
         }
 
-        $submissao->forceDelete();
+        $submissao->delete();
         return redirect()->route('academico.atividade.show', ['atividade' => $atividade])->with(['success' => 'Submissão excluída com sucesso.']);
     }
 }

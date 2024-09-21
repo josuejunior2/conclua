@@ -40,8 +40,8 @@ class AtividadeAdminController extends Controller
      */
     public function destroy(Atividade $atividade)
     {
-        if($atividade->SubmissaoAtividade) $atividade->SubmissaoAtividade->forceDelete();
-        $atividade->forceDelete();
+        if($atividade->SubmissaoAtividade) $atividade->SubmissaoAtividade->delete();
+        $atividade->delete();
         return redirect()->route('admin.atividade.index');
     }
 }
