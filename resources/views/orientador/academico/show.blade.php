@@ -129,14 +129,14 @@
 @endif
 
 
-@if (!empty($solicitacoes))
+{{-- @if (!empty($solicitacoes))
     <div class="card m-3">
         <div class="card-header justify-content-between">
             <h3 class="card-title">Solicitações</h3>
         </div>
         <div class="card-body">
             <div class="accordion" id="accordion">
-                @foreach ($solicitacoes->sortByDesc('created_at') as $key => $solicitacao) {{-- ->sortBy('nome')--}}
+                @foreach ($solicitacoes->sortByDesc('created_at') as $key => $solicitacao)
                     <div class="accordion-item m-3">
                         <div class="d-flex justify-content-between" id="heading-1">
                             <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#accordion-collapse-{{ $solicitacao->id }}" aria-expanded="true">
@@ -174,7 +174,7 @@
             </div>
         </div>
     </div>
-@endif
+@endif --}}
 
 <div class="card m-3">
     <div class="card-header justify-content-between">
