@@ -150,7 +150,7 @@ Route::middleware(['auth:admin' , 'primeiro_acesso'])->group(function () {      
     Route::get('orientador/academico/{academico}', [App\Http\Controllers\OrientadorController::class, 'showAcademico'])->name('orientador.academico.show');
     Route::resource('orientador/atividade', App\Http\Controllers\AtividadeOrientadorController::class, ['as' => 'orientador']);
     
-    Route::delete('destroy/arquivo-aux/{arquivo}', 'App\Http\Controllers\AtividadeOrientadorController@destroyArquivoAux')->name('arquivo.destroy.arquivo.aux');
+    Route::delete('destroy/arquivo-aux/{arquivo}', 'App\Http\Controllers\ArquivoController@destroyArquivoAux')->name('arquivo.destroy.arquivo.aux');
     
     Route::prefix('orientador')->name('orientador.')->group(function () {
         Route::put('avaliacao/final/{orientacao}', [App\Http\Controllers\OrientadorController::class, 'avaliar'])->name('avaliacao.store');

@@ -95,7 +95,7 @@ class ArquivoController extends Controller
     {
         Storage::disk('public')->delete($arquivo->caminho . '/' . $arquivo->nome);
         $arquivo->forceDelete();
-        return redirect()->back()->with(['success' => 'Arquivo auxiliar excluído com sucesso.']);
+        return redirect()->back()->with(['success' => 'Arquivo da submissão excluído com sucesso.']);
     }
 
     /**
@@ -103,7 +103,7 @@ class ArquivoController extends Controller
      */
     public function destroyArquivoAux(Arquivo $arquivo)
     {
-        unlink('./'.$arquivo->caminho.'/'.$arquivo->nome);
+        Storage::disk('public')->delete($arquivo->caminho . '/' . $arquivo->nome);
         $arquivo->forceDelete();
         return redirect()->back()->with(['success' => 'Arquivo auxiliar excluído com sucesso.']);
     }

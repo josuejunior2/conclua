@@ -11,7 +11,7 @@
                     enctype="multipart/form-data" class="row g-3 align-items-center">
                     @csrf
                     <div class="form-label">Arquivos auxiliares</div>
-                    <input type="file" name="arquivos_aux[]" id="arquivos_aux" accept=".xlsx" class="form-control"
+                    <input type="file" name="arquivos_aux[]" id="arquivos_aux" class="form-control" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.bmp,.gif,.svg,.xlsx,.csv"
                         multiple>
                     <span class="{{ $errors->has('arquivos_aux') ? 'text-danger' : '' }}">
                         {{ $errors->has('arquivos_aux') ? $errors->first('arquivos_aux') : '' }}
