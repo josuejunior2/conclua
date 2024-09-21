@@ -29,10 +29,10 @@
                                </span>
                            </div>
                            <div class="mb-3">
-                               <div class="form-label required">Função exercida na empresa</div>
-                               <input id="funcao" name="funcao"  type="text" class="form-control" value="{{ old('funcao', '') }}" />
-                               <span class="{{ $errors->has('funcao') ? 'text-danger' : '' }}">
-                                   {{ $errors->has('funcao') ? $errors->first('funcao') : '' }}
+                               <div class="form-label required">Setor de atuação</div>
+                               <input id="setor_atuacao" name="setor_atuacao"  type="text" class="form-control" value="{{ old('setor_atuacao', '') }}" />
+                               <span class="{{ $errors->has('setor_atuacao') ? 'text-danger' : '' }}">
+                                   {{ $errors->has('setor_atuacao') ? $errors->first('setor_atuacao') : '' }}
                                </span>
                            </div>
                         </div>

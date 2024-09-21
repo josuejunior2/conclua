@@ -15,11 +15,11 @@
                 </div>
                 <div class="datagrid-item">
                     <div class="datagrid-title">Formação</div>
-                    <div class="datagrid-content">{{ $orientador->Formacao->nome }}</div>
+                    <div class="datagrid-content">{{ $orientador->Formacao->nome ?? 'N/A'  }}</div>
                 </div>
                 <div class="datagrid-item">
                     <div class="datagrid-title">Área de atuação</div>
-                    <div class="datagrid-content">{{ $orientador->Area->nome }}</div>
+                    <div class="datagrid-content">{{ $orientador->Area->nome ?? 'N/A'  }}</div>
                 </div>
                 <div class="datagrid-item">
                     <div class="datagrid-title">Currículo Lattes</div>
@@ -176,8 +176,8 @@
                         <div class="datagrid-content">{{ $estagio->tema }}</div>
                     </div>
                     <div class="datagrid-item">
-                        <div class="datagrid-title">Função</div>
-                        <div class="datagrid-content">{{ $estagio->funcao }}</div>
+                        <div class="datagrid-title">Setor de atuação</div>
+                        <div class="datagrid-content">{{ $estagio->setor_atuacao }}</div>
                     </div>
                     <div class="datagrid-item">
                         <div class="datagrid-title">Nome da Empresa</div>

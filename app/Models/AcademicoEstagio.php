@@ -13,7 +13,7 @@ class AcademicoEstagio extends Model
 
     protected $keyType = 'string';
 
-    protected $fillable = ['academico_id', 'semestre_id', 'orientacao_id', 'tema', 'funcao', 'empresa_id'];
+    protected $fillable = ['academico_id', 'semestre_id', 'orientacao_id', 'tema', 'setor_atuacao', 'empresa_id'];
 
     public function Empresa(){
         return $this->belongsTo(Empresa::class, 'empresa_id'); // academicoEstagio tem 1 empresa, ele olha a FK

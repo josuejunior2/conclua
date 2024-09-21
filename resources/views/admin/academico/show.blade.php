@@ -190,19 +190,29 @@
                                         <div class="datagrid-content">{{ \Carbon\Carbon::parse($estagio->Orientacao->created_at)->format('d/m/Y') }}</div>
                                     </div>
                                 @endif
-                            </div>
-                            <div class="row mt-2 g-4">
-                                <div class="col-12 markdown">
-                                    <h2>Tema</h2>
-                                    <p>{{ $estagio->tema }}</p>
+                                <div class="datagrid-item">
+                                    <div class="datagrid-title">Tema</div>
+                                    <div class="datagrid-content">{{ $estagio->tema }}</div>
                                 </div>
-                                <div class="col-12 markdown">
-                                    <h2>Função</h2>
-                                    <p>{{ $estagio->funcao }}</p>
+                                <div class="datagrid-item">
+                                    <div class="datagrid-title">Setor de atuação</div>
+                                    <div class="datagrid-content">{{ $estagio->setor_atuacao }}</div>
                                 </div>
-                                <div class="col-12 markdown">
-                                    <h2>Empresa</h2>
-                                    <p>{{ $estagio->Empresa->nome }}</p>
+                                <div class="datagrid-item">
+                                    <div class="datagrid-title">Nome da Empresa</div>
+                                    <div class="datagrid-content">{{ $estagio->Empresa->nome }}</div>
+                                </div>
+                                <div class="datagrid-item">
+                                    <div class="datagrid-title">CNPJ da Empresa</div>
+                                    <div class="datagrid-content">{{ $estagio->Empresa->cnpj }}</div>
+                                </div>
+                                <div class="datagrid-item">
+                                    <div class="datagrid-title">Supervisor</div>
+                                    <div class="datagrid-content">{{ $estagio->Empresa->supervisor }}</div>
+                                </div>
+                                <div class="datagrid-item">
+                                    <div class="datagrid-title">Email da Empresa/Supervisor</div>
+                                    <div class="datagrid-content">{{ $estagio->Empresa->email }}</div>
                                 </div>
                             </div>
                         </div>
@@ -255,65 +265,6 @@
                                     <div class="datagrid-title">Orientador</div>
                                     <div class="datagrid-content"><a href="{{ route('admin.orientador.show', ['orientador' => $solicitacao->Orientador]) }}">{{ $solicitacao->Orientador->Admin->nome }}</a></div>
                                 </div>
-                                @if (isset($solicitacao->AcademicoTCC))
-                                <div class="datagrid-item">
-                                    <div class="datagrid-title">Modalidade</div>
-                                    <div class="datagrid-content">TCC</div>
-                                </div>
-                                <div class="datagrid-item">
-                                    <div class="datagrid-title">Tema</div>
-                                    <div class="datagrid-content">{{ $solicitacao->AcademicoTCC->tema }}</div>
-                                </div>
-                                <div class="datagrid-item">
-                                    <div class="datagrid-title">Problema</div>
-                                    <div class="datagrid-content">{{ $solicitacao->AcademicoTCC->problema }}</div>
-                                </div>
-                                <div class="datagrid-item">
-                                    <div class="datagrid-title">Objetivo Geral</div>
-                                    <div class="datagrid-content">{{ $solicitacao->AcademicoTCC->objetivo_geral }}</div>
-                                </div>
-                                <div class="datagrid-item">
-                                    <div class="datagrid-title">Objetivo Específico</div>
-                                    <div class="datagrid-content">{{ $solicitacao->AcademicoTCC->objetivo_especifico }}</div>
-                                </div>
-                                <div class="datagrid-item">
-                                    <div class="datagrid-title">Justificativa</div>
-                                    <div class="datagrid-content">{{ $solicitacao->AcademicoTCC->justificativa }}</div>
-                                </div>
-                                <div class="datagrid-item">
-                                    <div class="datagrid-title">Metodologia</div>
-                                    <div class="datagrid-content">{{ $solicitacao->AcademicoTCC->metodologia }}</div>
-                                </div>
-                                @elseif (isset($solicitacao->AcademicoEstagio))
-                                <div class="datagrid-item">
-                                    <div class="datagrid-title">Modalidade</div>
-                                    <div class="datagrid-content">Estágio</div>
-                                </div>
-                                <div class="datagrid-item">
-                                    <div class="datagrid-title">Tema</div>
-                                    <div class="datagrid-content">{{ $solicitacao->AcademicoEstagio->tema }}</div>
-                                </div>
-                                <div class="datagrid-item">
-                                    <div class="datagrid-title">Função</div>
-                                    <div class="datagrid-content">{{ $solicitacao->AcademicoEstagio->funcao }}</div>
-                                </div>
-                                <div class="datagrid-item">
-                                    <div class="datagrid-title">Nome da Empresa</div>
-                                    <div class="datagrid-content">{{ $solicitacao->AcademicoEstagio->Empresa->nome }}</div>
-                                </div>
-                                <div class="datagrid-item">
-                                    <div class="datagrid-title">CNPJ da Empresa</div>
-                                    <div class="datagrid-content">{{ $solicitacao->AcademicoEstagio->Empresa->cnpj }}</div>
-                                </div>
-                                <div class="datagrid-item">
-                                    <div class="datagrid-title">Supervisor</div>
-                                    <div class="datagrid-content">{{ $solicitacao->AcademicoEstagio->Empresa->supervisor }}</div>
-                                </div>
-                                <div class="datagrid-item">
-                                    <div class="datagrid-title">Email da Empresa/Supervisor</div>
-                                    <div class="datagrid-content">{{ $solicitacao->AcademicoEstagio->Empresa->email }}</div>
-                                </div>
-                                @endif
                             </div>
                         </div>
                     </div>

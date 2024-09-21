@@ -30,8 +30,8 @@ class AcademicoEstagioRequest extends FormRequest
             'academico_id' => 'required',
             'semestre_id' => 'required',
             'empresa_id' => 'required',
-            'tema' => 'required|min:15|max:60',
-            'funcao' => 'required|min:5|max:40',
+            'tema' => 'required|min:7',
+            'setor_atuacao' => 'required',
         ];
     }
          /**
@@ -42,10 +42,7 @@ class AcademicoEstagioRequest extends FormRequest
     {
         return [
             'required' => 'O campo :attribute deve ser preenchido.',
-            'tema.min' => 'O campo tema deve ter no mínimo 15 caracteres.',
-            'tema.max' => 'O campo tema deve ter no máximo 60 caracteres.',
-            'funcao.min' => 'O campo função deve ter no mínimo 5 caracteres.',
-            'funcao.max' => 'O campo função deve ter no máximo 40 caracteres.',
+            'tema.min' => 'O campo tema deve ter no mínimo 7 caracteres.',
         ];
     }
     // public function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)

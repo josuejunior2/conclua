@@ -15,11 +15,11 @@
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Formação</div>
-                <div class="datagrid-content">{{ $solicitacao->Orientador->Formacao->nome }}</div>
+                <div class="datagrid-content">{{ $solicitacao->Orientador->Formacao->nome ?? 'N/A'  }}</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Área de atuação</div>
-                <div class="datagrid-content">{{ $solicitacao->Orientador->Area->nome }}</div>
+                <div class="datagrid-content">{{ $solicitacao->Orientador->Area->nome ?? 'N/A'  }}</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Currículo Lattes</div>
