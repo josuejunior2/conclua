@@ -13,9 +13,9 @@
                     @method('PUT')
                     <div class="row g-3 mb-4">
                         <div class="mb-3">
-                            <label class="form-label required">Atualize sua senha</label>
+                            <label class="form-label">Atualize sua senha</label>
                             <div>
-                                <input name="password" type="password" class="form-control" placeholder="Password"
+                                <input name="password" type="password" class="form-control" placeholder="Senha"
                                     value="">
                                 <small class="form-hint">
                                     A senha deve ter no mínimo 8 caracteres, deve conter pelo menos uma letra maiúscula e
