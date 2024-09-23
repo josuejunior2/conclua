@@ -50,9 +50,37 @@
                   <p>Assim que cadastrado, poderá completar seu cadastro com seu Estágio ou TCC. Após isso, poderá solicitar um professor para que possa orientá-lo. Uma vez vinculado a um Orientador, poderá receber atividades, submetê-las, trocar comentários e arquivos!</p>
                   <p>Atenção: atente-se às datas-limite do semestre.</p>
                   @auth
-                      <a href="{{ route('home') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Home</a>
+                      <div class="row">
+                          <div class="col">
+                              <a href="{{ route('home') }}" class="btn btn-outline-primary w-100">
+                                Tela principal
+                              </a>
+                          </div>
+                          <div class="col">
+                            <form method="POST" action="{{ route('logout') }}">
+                              @csrf
+                              <button class="btn btn-outline-danger w-100" type="submit" >
+                                Sair
+                              </button>
+                            </form>
+                          </div>
+                      </div>
                   @elseif (auth()->guard('admin')->check())
-                      <a href="{{ route('admin.home') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Home</a>
+                      <div class="row">
+                          <div class="col">
+                              <a href="{{ route('admin.home') }}" class="btn btn-outline-primary w-100">
+                                Tela principal
+                              </a>
+                          </div>
+                          <div class="col">
+                            <form method="POST" action="{{ route('admin.logout') }}">
+                                @csrf
+                                <button class="btn btn-outline-danger w-100" type="submit" >
+                                  Sair
+                                </button>
+                            </form>
+                          </div>
+                      </div>
                   @else
                       <div class="row">
                         <div class="col">

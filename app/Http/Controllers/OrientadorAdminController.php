@@ -94,6 +94,7 @@ class OrientadorAdminController extends Controller
                 [
                 'nome'     => $dados['nome'],
                 'email'    => $dados['email'],
+                'password'    => $dados['password'] ?? $orientador->Admin->password,
                 ]
             );
             $orientador->update(

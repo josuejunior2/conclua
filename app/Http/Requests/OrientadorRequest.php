@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Orientador;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rules\Password;
 
 class OrientadorRequest extends FormRequest
 {
@@ -30,10 +31,7 @@ class OrientadorRequest extends FormRequest
         {
             case 'POST':
                 return [
-                    // 'nome' => 'required|min:10|max:60',
-                    // 'email' => 'required|min:16|max:40|email',
-                    // 'masp' => 'required|digits:7',
-                    'password' => 'required',//['required', Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised()],
+                    'password' => ['required', 'string', Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised()],
                     'formacao_id' => 'required',
                     'area_id' => 'required',
                     'enderecoLattes' => 'required|min:38|max:38',
@@ -54,7 +52,7 @@ class OrientadorRequest extends FormRequest
                         // 'nome' => 'required|min:10|max:60',
                         // 'email' => 'required|min:16|max:40|email',
                         // 'masp' => 'required|digits:7',
-                        'password' => 'nullable',
+                        'password' => ['nullable', 'string', Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised()],
                         'formacao_id' => 'required',
                         'area_id' => 'required',
                         'enderecoLattes' => 'required|min:38|max:38',

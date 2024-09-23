@@ -6,6 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Orientador;
 use App\Models\Academico;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 
 class AdminUpdateAcademicoRequest extends FormRequest
 {
@@ -34,7 +35,8 @@ class AdminUpdateAcademicoRequest extends FormRequest
                 'required',
                 'digits:9',
                 Rule::unique('academicos', 'matricula')->ignore(request()->academico_id)
-            ]
+            ],
+            'password' => ['nullable', 'string', Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised()],
         ];
     }
         /**

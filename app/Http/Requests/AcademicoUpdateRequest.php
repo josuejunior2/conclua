@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Academico;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rules\Password;
 
 class AcademicoUpdateRequest extends FormRequest
 {
@@ -28,7 +29,7 @@ class AcademicoUpdateRequest extends FormRequest
     {
         return [
             'email' => 'required|email',
-            'password' => 'required',//['required', Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised()],
+            'password' => ['nullable', 'string', Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised()],
         ];
     }
         /**

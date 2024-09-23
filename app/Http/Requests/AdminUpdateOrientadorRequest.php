@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Orientador;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 
 class AdminUpdateOrientadorRequest extends FormRequest
 {
@@ -33,7 +34,8 @@ class AdminUpdateOrientadorRequest extends FormRequest
                 'required',
                 'digits:7',
                 Rule::unique('orientadores', 'masp')->ignore(request()->orientador_id)
-            ]
+            ],
+            'password' => ['nullable', 'string', Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised()],
         ];
     }
         /**

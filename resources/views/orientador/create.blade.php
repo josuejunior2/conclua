@@ -28,7 +28,7 @@
                                 <div>
                                     <input name="password" type="password" class="form-control" placeholder="Senha">
                                     <small class="form-hint">
-                                    A senha deve ter no mínimo 8 caracteres, deve conter pelo menos uma letra maiúscula e minúscula, número e símbolo. (colocar regra no Request depois)
+                                        A senha deve ter no mínimo 8 caracteres, incluir letras maiúsculas e minúsculas, conter pelo menos um número, um símbolo (como !, @, #, $) e não deve ter sido comprometida em violações de dados conhecidas.
                                     </small>
                                     <span class="{{ $errors->has('password') ? 'text-danger' : '' }}">
                                     {{ $errors->has('password') ? $errors->first('password') : '' }}

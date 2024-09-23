@@ -94,6 +94,7 @@ class AcademicoAdminController extends Controller
                 [
                 'nome'     => $dados['nome'],
                 'email'    => $dados['email'],
+                'password'    => $dados['password'] ?? $academico->User->password,
                 ]
             );
             $academico->update(

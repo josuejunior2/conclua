@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Academico;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rules\Password;
 
 class AcademicoRequest extends FormRequest
 {
@@ -29,7 +30,7 @@ class AcademicoRequest extends FormRequest
         return [
             // 'name' => 'required|min:10|max:60',
             // 'email' => 'required|min:16|max:40|email',
-            'password' => 'required',//['required', Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised()],
+            'password' => ['required', 'string', Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised()],
             // 'matricula' => 'required|digits:9',
             'modalidade' => 'required',
         ];
@@ -43,6 +44,7 @@ class AcademicoRequest extends FormRequest
         return [
             'required' => 'O campo :attribute deve ser preenchido.',
             'password.required' => 'O campo senha deve ser preenchido',
+            'password.password' => 'aeae',
             // 'name.min' => 'O campo nome deve ter no mínimo 10 caracteres.',
             // 'name.max' => 'O campo nome deve ter no máximo 60 caracteres.',
             // 'email.min' => 'O campo email deve ter no mínimo 16 caracteres.',

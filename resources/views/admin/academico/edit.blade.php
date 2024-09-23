@@ -42,6 +42,21 @@
                 </div>
             </div>
         </div>
+        <div class="row g-3 mb-4">
+            <div class="mb-3">
+                <label class="form-label">Atualize a senha</label>
+                <div>
+                    <input name="password" type="password" class="form-control" placeholder="Senha"
+                        value="">
+                    <small class="form-hint">
+                        A senha deve ter no mínimo 8 caracteres, incluir letras maiúsculas e minúsculas, conter pelo menos um número, um símbolo (como !, @, #, $) e não deve ter sido comprometida em violações de dados conhecidas.
+                    </small>
+                    <span class="{{ $errors->has('password') ? 'text-danger' : '' }}">
+                        {{ $errors->has('password') ? $errors->first('password') : '' }}
+                    </span>
+                </div>
+            </div>
+        </div>
         <div class="card-footer bg-transparent mt-auto">
             <div class="btn-list justify-content-end">
                 <button type="submit" class="btn btn-primary">
