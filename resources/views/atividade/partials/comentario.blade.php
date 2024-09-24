@@ -77,13 +77,13 @@
 
                                             @can('excluir comentario')
                                                 @if(session('semestreIsAtivo'))
+                                                    @include('atividade.modal.destroy-comentario')
                                                     <form id="form_destroy_comentario_{{ $comentario->id }}" method="post"
                                                         action="{{ route('comentario.destroy', ['comentario' => $comentario]) }}"
                                                         style="display: contents">
                                                         @method('DELETE')
                                                         @csrf
-                                                        <a href="#"
-                                                            onclick="document.getElementById('form_destroy_comentario_{{ $comentario->id }}').submit()"
+                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#modal-destroy-comentario"
                                                             class="btn btn-pill p-1">
                                                             <svg xmlns="http://www.w3.org/2000/svg" class="ml-2"
                                                                 width="20" height="20" viewBox="0 0 24 24"
