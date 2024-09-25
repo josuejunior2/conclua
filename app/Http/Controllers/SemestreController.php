@@ -41,8 +41,10 @@ class SemestreController extends Controller
      */
     public function store(SemestreRequest $request)
     {
-        $semestre = Semestre::create($request->validated());
-        session()->put('semestre_id', $semestre->id);
+        DB::transaction(function() use($request){  
+            $semestre = Semestre::create($request->validated());
+        });
+        // session()->put('semestre_id', $semestre->id);
 
         // Orientador::all()->each(function ($orientador){
         //     $orientador->update(['disponibilidade' => null]);
@@ -74,7 +76,9 @@ class SemestreController extends Controller
      */
     public function update(SemestreRequest $request, Semestre $semestre)
     {
-        $semestre->update($request->validated());
+        DB::transaction(function() use($request, $semestre){  
+            $semestre->update($request->validated());
+        });
 
         return redirect()->route('admin.semestre.index');
     }
@@ -84,41 +88,18 @@ class SemestreController extends Controller
      */
     public function destroy(Semestre $semestre)
     {
-        foreach($semestre->academicosEstagio as $academicoEstagio){
-            $academicoEstagio->delete();
-        }
-        foreach($semestre->academicosTCC as $academicoTCC){
-            $academicoTCC->delete();
-        }
-        $semestre->delete();
+        DB::transaction(function() use($semestre){  
+            foreach($semestre->academicosEstagio as $academicoEstagio){
+                $academicoEstagio->delete();
+            }
+            foreach($semestre->academicosTCC as $academicoTCC){
+                $academicoTCC->delete();
+            }
+            $semestre->delete();
+        });
         return redirect()->route('admin.semestre.index');
     }
-
-    // /**
-    //  * Ativa o semestre
-    //  */
-    // public function ativar(Semestre $semestre)
-    // {
-    //     if(app('semestreAtivo')){
-    //         return redirect()->route('admin.semestre.index')->withErrors('Para ativar outro semestre, desative o semestre em ativo');
-    //     } else{
-    //         $semestre->update(['status' => 1]);
-    //     }
-
-    //     return redirect()->route('admin.semestre.index');
-    // }
-
-    // /**
-    //  * Desativa o semestre e o cadastro de academicos e orientadores
-    //  */
-    // public function desativar(Semestre $semestre)
-    // {
-    //     $semestre->update(['status' => 0]);
-
-
-    //     return redirect()->route('admin.semestre.index');
-    // }
-
+    
     /**
      * Muda de semestre
      */
@@ -126,20 +107,12 @@ class SemestreController extends Controller
     {
         $request->session()->put('semestre_id', $request->validated()['semestre_id']);
 
-        $ultimoSemestre = Semestre::all()->last();
         $semestreSession = Semestre::find(session('semestre_id'));
 
-        $verificaSemestre = $ultimoSemestre == $semestreSession;
         $verificaDataInicio = now() >= $semestreSession->data_inicio;
         $verificaDataFinal = now() < $semestreSession->data_fim;
 
-        if($verificaSemestre && $verificaDataInicio && $verificaDataFinal){
-            $validacao = true;
-        } else if(!$verificaSemestre && $verificaDataInicio && $verificaDataFinal){
-            $validacao = true;
-        } else {
-            $validacao = false;
-        }
+        $validacao = $verificaDataInicio && $verificaDataFinal ? true : false;
         
         $request->session()->put('semestreIsAtivo', $validacao);
 

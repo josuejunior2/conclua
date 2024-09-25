@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Empresa;
 use App\Models\Academico;
+use App\Models\AcademicoEstagio;
 use App\Models\Semestre;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\EmpresaRequest;
+use Illuminate\Support\Facades\DB;
 
 class EmpresaController extends Controller
 {
@@ -24,7 +26,7 @@ class EmpresaController extends Controller
      */
     public function create()
     {
-        return view('empresa.create');
+        return view('empresa.create', ['empresas' => Empresa::all()]);
     }
 
     /**
@@ -32,9 +34,10 @@ class EmpresaController extends Controller
      */
     public function store(EmpresaRequest $request)
     {
-        $empresa = Empresa::create($request->validated());
+        DB::transaction(function() use($request, &$empresa){    
+            $empresa = Empresa::where('cnpj', $request->validated()['cnpj'])->exists() ? Empresa::where('cnpj', $request->validated()['cnpj'])->first() : Empresa::create($request->validated());
+        });
         $academico = Academico::where('user_id', auth()->user()->id)->first();
-        // dd($academico);
 
         return redirect()->route('academicoEstagio.create', ['empresa' => $empresa, 'academico' => $academico]);
     }
@@ -50,18 +53,21 @@ class EmpresaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Empresa $empresa)
+    public function alteraEmpresa(Empresa $empresa, AcademicoEstagio $estagio)
     {
-        // dd($empresa);
-        return view('empresa.edit', ['empresa' => $empresa]);
+        return view('empresa.altera', ['empresa' => $empresa, 'empresas' => Empresa::all(), 'estagio' => $estagio]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(EmpresaRequest $request, Empresa $empresa)
+    public function alteraEmpresaPost(EmpresaRequest $request, Empresa $empresa, AcademicoEstagio $estagio)
     {
-        $empresa->update($request->validated());
+        DB::transaction(function() use($request, $estagio, $empresa){
+            $novaEmpresa = Empresa::where('cnpj', $request->validated()['cnpj'])->exists() ? Empresa::where('cnpj', $request->validated()['cnpj'])->first() : Empresa::create($request->validated());
+            $estagio->update(['empresa_id' => $novaEmpresa->id]);
+            $estagio->save();
+        });
         return redirect()->route('home'); // o redirecionamento aqui ta paia, n sei se ta mudando na solicitacao, ou se vai ser em outro lugar...
     }
 

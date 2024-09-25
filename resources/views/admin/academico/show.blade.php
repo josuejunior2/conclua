@@ -207,12 +207,16 @@
                                     <div class="datagrid-content">{{ $estagio->Empresa->cnpj }}</div>
                                 </div>
                                 <div class="datagrid-item">
-                                    <div class="datagrid-title">Supervisor</div>
-                                    <div class="datagrid-content">{{ $estagio->Empresa->supervisor }}</div>
+                                    <div class="datagrid-title">Email da empresa</div>
+                                    <div class="datagrid-content">{{ $estagio->Empresa->email }}</div>
                                 </div>
                                 <div class="datagrid-item">
-                                    <div class="datagrid-title">Email da Empresa/Supervisor</div>
-                                    <div class="datagrid-content">{{ $estagio->Empresa->email }}</div>
+                                    <div class="datagrid-title">Supervisor</div>
+                                    <div class="datagrid-content">{{ $estagio->supervisor }}</div>
+                                </div>
+                                <div class="datagrid-item">
+                                    <div class="datagrid-title">Email do supervisor</div>
+                                    <div class="datagrid-content">{{ $estagio->email_supervisor }}</div>
                                 </div>
                             </div>
                         </div>

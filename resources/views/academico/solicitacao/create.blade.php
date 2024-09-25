@@ -97,7 +97,7 @@
                         Editar
                     </a>
                 @elseif (isset($estagio))
-                    <a href=" {{ route('empresa.edit', ['empresa' => $estagio->Empresa]) }}"
+                    <a href=" {{ route('empresa.alteraEmpresa', ['empresa' => $estagio->Empresa, 'estagio' => $estagio]) }}"
                         class="btn me-2 btn-secondary w-100">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="24"
                             height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
@@ -106,7 +106,7 @@
                             <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
                             <path d="M13.5 6.5l4 4" />
                         </svg>
-                        Editar Empresa
+                        Altera empresa
                     </a>
                     <a href=" {{ route('academicoEstagio.edit', ['academicoEstagio' => $estagio]) }}"
                         class="btn me-2 btn-secondary w-100">
@@ -188,13 +188,18 @@
                         <div class="datagrid-content">{{ $estagio->Empresa->cnpj }}</div>
                     </div>
                     <div class="datagrid-item">
-                        <div class="datagrid-title">Supervisor</div>
-                        <div class="datagrid-content">{{ $estagio->Empresa->supervisor }}</div>
-                    </div>
-                    <div class="datagrid-item">
-                        <div class="datagrid-title">Email da Empresa/Supervisor</div>
+                        <div class="datagrid-title">Email da empresa</div>
                         <div class="datagrid-content">{{ $estagio->Empresa->email }}</div>
                     </div>
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">Supervisor</div>
+                        <div class="datagrid-content">{{ $estagio->supervisor }}</div>
+                    </div>
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">Email do supervisor</div>
+                        <div class="datagrid-content">{{ $estagio->email_supervisor }}</div>
+                    </div>
+                </div>
             @endif
         </div>
     </div>

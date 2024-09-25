@@ -32,6 +32,8 @@ class AcademicoEstagioRequest extends FormRequest
             'empresa_id' => 'required',
             'tema' => 'required|min:7',
             'setor_atuacao' => 'required',
+            'supervisor' => 'required',
+            'email_supervisor' => 'required|email',
         ];
     }
          /**
@@ -43,6 +45,8 @@ class AcademicoEstagioRequest extends FormRequest
         return [
             'required' => 'O campo :attribute deve ser preenchido.',
             'tema.min' => 'O campo tema deve ter no mínimo 7 caracteres.',
+            'tema.min' => 'O campo tema deve ter no mínimo 7 caracteres.',
+            'email_supervisor.email' => 'O campo email do supervisor deve ser preenchido com um endereço email.',
         ];
     }
     // public function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)

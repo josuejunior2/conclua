@@ -34,6 +34,7 @@
 
 <body>
     <div id="app">
+    <script src="https://cdn.jsdelivr.net/npm/@tabler/core/dist/js/demo-theme.min.js?1684106062"></script>
         <main class="py-4">
             @yield('content')
         </main>

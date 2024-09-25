@@ -179,12 +179,16 @@
                                         <div class="datagrid-content">{{ $orientacao->AcademicoEstagio->Empresa->cnpj }}</div>
                                     </div>
                                     <div class="datagrid-item">
-                                        <div class="datagrid-title">Supervisor</div>
-                                        <div class="datagrid-content">{{ $orientacao->AcademicoEstagio->Empresa->supervisor }}</div>
+                                        <div class="datagrid-title">Email da empresa</div>
+                                        <div class="datagrid-content">{{ $orientacao->AcademicoEstagio->Empresa->email }}</div>
                                     </div>
                                     <div class="datagrid-item">
-                                        <div class="datagrid-title">Email da Empresa/Supervisor</div>
-                                        <div class="datagrid-content">{{ $orientacao->AcademicoEstagio->Empresa->email }}</div>
+                                        <div class="datagrid-title">Supervisor</div>
+                                        <div class="datagrid-content">{{ $orientacao->AcademicoEstagio->supervisor }}</div>
+                                    </div>
+                                    <div class="datagrid-item">
+                                        <div class="datagrid-title">Email do supervisor</div>
+                                        <div class="datagrid-content">{{ $orientacao->AcademicoEstagio->email_supervisor }}</div>
                                     </div>
                                 @endif
                             </div>

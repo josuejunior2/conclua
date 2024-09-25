@@ -12,5 +12,5 @@ class Empresa extends Model
 
     protected $keyType = 'string';
 
-    protected $fillable = ['nome', 'email', 'cnpj', 'supervisor'];
+    protected $fillable = ['nome', 'email', 'cnpj'];
 }
