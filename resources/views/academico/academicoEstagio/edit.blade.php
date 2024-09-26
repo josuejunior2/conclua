@@ -1,4 +1,4 @@
-@extends('layouts.guest')
+@extends('layouts.app')
 
 @section('content')
 
@@ -22,18 +22,39 @@
                         <div class="col-md">
                            <div class="mb-3">
                                <div class="form-label required">Tema do Estágio</div>
-                               <div><input id="tema" name="tema"  type="text" class="form-control" value="{{ $academicoEstagio->tema }}" /></div>
+                               <div><input id="tema" name="tema"  type="text" class="form-control" value="{{ old('tema', $academicoEstagio->tema) }}" /></div>
                                <span class="{{ $errors->has('tema') ? 'text-danger' : '' }}">
                                    {{ $errors->has('tema') ? $errors->first('tema') : '' }}
                                </span>
                            </div>
                            <div class="mb-3">
                                <div class="form-label required">Setor de atuação</div>
-                               <input id="setor_atuacao" name="setor_atuacao"  type="text" class="form-control" value="{{ $academicoEstagio->setor_atuacao }}" />
+                               <input id="setor_atuacao" name="setor_atuacao"  type="text" class="form-control" value="{{ old('setor_atuacao', $academicoEstagio->setor_atuacao) }}" />
                                <span class="{{ $errors->has('setor_atuacao') ? 'text-danger' : '' }}">
                                    {{ $errors->has('setor_atuacao') ? $errors->first('setor_atuacao') : '' }}
                                </span>
                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row g-3 mb-4">
+                        <div class="col-md">
+                            <div class="mb-3">
+                                <div class="form-label required">Nome do Supervisor</div>
+                                <input id="supervisor" name="supervisor"  type="text" class="form-control" value="{{ old('supervisor', $academicoEstagio->supervisor) }}" />
+                                <span class="{{ $errors->has('supervisor') ? 'text-danger' : '' }}">
+                                    {{ $errors->has('supervisor') ? $errors->first('supervisor') : '' }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="mb-3">
+                                <div class="form-label required">Email do Supervisor</div>
+                                <input id="email_supervisor" name="email_supervisor"  type="text" class="form-control" value="{{ old('email_supervisor', $academicoEstagio->email_supervisor) }}" />
+                                <span class="{{ $errors->has('email_supervisor') ? 'text-danger' : '' }}">
+                                    {{ $errors->has('email_supervisor') ? $errors->first('email_supervisor') : '' }}
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="card-footer bg-transparent mt-auto">

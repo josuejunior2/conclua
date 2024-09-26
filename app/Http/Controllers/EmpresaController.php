@@ -13,16 +13,9 @@ use Illuminate\Support\Facades\DB;
 
 class EmpresaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
 
     /**
-     * Show the form for creating a new resource.
+     * Rota em que o academico vai ver a view para cadastrar a empresa no primeiro acesso do semestre.
      */
     public function create()
     {
@@ -30,7 +23,7 @@ class EmpresaController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Rota em que o academico vai cadastrar a empresa no primeiro acesso do semestre.
      */
     public function store(EmpresaRequest $request)
     {
@@ -40,14 +33,6 @@ class EmpresaController extends Controller
         $academico = Academico::where('user_id', auth()->user()->id)->first();
 
         return redirect()->route('academicoEstagio.create', ['empresa' => $empresa, 'academico' => $academico]);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Empresa $empresa)
-    {
-        //
     }
 
     /**
@@ -63,19 +48,12 @@ class EmpresaController extends Controller
      */
     public function alteraEmpresaPost(EmpresaRequest $request, Empresa $empresa, AcademicoEstagio $estagio)
     {
-        DB::transaction(function() use($request, $estagio, $empresa){
+        DB::transaction(function() use($request, $estagio, &$novaEmpresa){
             $novaEmpresa = Empresa::where('cnpj', $request->validated()['cnpj'])->exists() ? Empresa::where('cnpj', $request->validated()['cnpj'])->first() : Empresa::create($request->validated());
             $estagio->update(['empresa_id' => $novaEmpresa->id]);
             $estagio->save();
         });
-        return redirect()->route('home'); // o redirecionamento aqui ta paia, n sei se ta mudando na solicitacao, ou se vai ser em outro lugar...
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Empresa $empresa)
-    {
-        //
+        if($empresa->id != $novaEmpresa) return redirect()->route('academicoEstagio.edit', ['academicoEstagio' => $estagio]);
+        return redirect()->back(); // o redirecionamento aqui ta paia, n sei se ta mudando na solicitacao, ou se vai ser em outro lugar...
     }
 }
