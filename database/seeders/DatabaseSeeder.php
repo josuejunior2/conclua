@@ -89,18 +89,18 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'samuelAdm@email.com',
         //     'password' => 'admin123',
         // ]);
-        $admin4 = Admin::create( [
-            'nome' => 'Leo admin',
-            'email' => 'leoAdm@email.com',
-            'password' => 'admin123',
-        ]);
+        // $admin4 = Admin::create( [
+        //     'nome' => 'Leo admin',
+        //     'email' => 'leoAdm@email.com',
+        //     'password' => 'admin123',
+        // ]);
         
         $this->call(
             PerfisEPermissoesSeeder::class,
         );
         // $admin2->assignRole('Admin', 'admin');
         // $admin3->assignRole('Admin', 'admin');
-        $admin4->assignRole('Admin', 'admin');
+        // $admin4->assignRole('Admin', 'admin');
 
         // $admin->assignRole('Admin', 'admin');
         // $user1->assignRole('Academico');

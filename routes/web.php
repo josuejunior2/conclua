@@ -66,7 +66,6 @@ Route::middleware(['auth:web', 'primeiro_acesso' ])->group(function () { //
 
     Route::resource('academicoEstagio', App\Http\Controllers\AcademicoEstagioController::class)->except(['create', 'store']);
 
-    Route::resource('empresa', App\Http\Controllers\EmpresaController::class)->except(['create', 'store']);
     Route::get('empresa/{empresa}/{estagio}', 'App\Http\Controllers\EmpresaController@alteraEmpresa')->name('empresa.alteraEmpresa');
     Route::put('empresa/{empresa}/{estagio}', 'App\Http\Controllers\EmpresaController@alteraEmpresaPost')->name('empresa.alteraEmpresa.post');
 
@@ -100,6 +99,7 @@ Route::middleware(['auth:web', 'primeiro_acesso' ])->group(function () {
 
 Route::post('download/arquivo/auxiliar/', 'App\Http\Controllers\ArquivoController@downloadArquivo')->name('download.arquivo');
 Route::post('mudar/semestre', [App\Http\Controllers\SemestreController::class, 'mudar_semestre'])->name('semestre.mudar-semestre');
+Route::post('verifica-cnpj', [App\Http\Controllers\EmpresaController::class, 'verificaCnpj'])->name('ajax.verifica.cnpj');
 Route::resource('comentario', App\Http\Controllers\ComentarioController::class)->only(['store', 'update', 'destroy']);
 
 
@@ -142,6 +142,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         
         Route::get('orientacao', 'App\Http\Controllers\OrientacaoAdminController@index')->name('orientacao.index');
         Route::post('orientacao/pdf', 'App\Http\Controllers\OrientacaoAdminController@exportPdf')->name('orientacao.exportPdf');
+        
+        Route::resource('empresa', App\Http\Controllers\EmpresaAdminController::class);
     });
 });
 

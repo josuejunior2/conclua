@@ -13,4 +13,9 @@ class Empresa extends Model
     protected $keyType = 'string';
 
     protected $fillable = ['nome', 'email', 'cnpj'];
+
+    public function academicosEstagio()
+    {
+        return $this->hasMany(AcademicoEstagio::class, 'empresa_id');
+    }
 }

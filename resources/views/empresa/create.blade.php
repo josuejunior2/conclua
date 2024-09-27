@@ -55,9 +55,8 @@
                                 <span class="{{ $errors->has('cnpj') ? 'text-danger' : '' }}">
                                     {{ $errors->has('cnpj') ? $errors->first('cnpj') : '' }}
                                 </span>
-                                <span class="text-danger" id="erro-cnpj" style="display: none;">
-                                    Já existe uma empresa com esse cpnj.
-                                </span>
+                                <div id="cnpjStatus">
+                                </div>
                             </div>
                         </div>
                         <div class="col-md">
@@ -105,24 +104,30 @@
             },
         });
         
-        let empresas = {!! json_encode($empresas) !!};
-
         $('#cnpj').on('input', function() {
             let novoCnpj = $(this).val();
-            let cnpjExiste = false; 
-
-            empresas.forEach(function(empresa) {
-                if (empresa.cnpj === novoCnpj) {
-                    cnpjExiste = true;
-                }
-            });
-
-            if (cnpjExiste) {
-                $("#erro-cnpj").show();
-                $("#btn").attr('disabled', true);
-            } else {
-                $("#erro-cnpj").hide();
-                $("#btn").attr('disabled', false);
+            
+            if(novoCnpj.length == 18){
+                $.ajax({
+                    url: '/verifica-cnpj',
+                    type: 'POST', 
+                    data: {
+                        cnpj: cnpj,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        if (response.exists) {
+                            $('#cnpjStatus').html('<span class="text-danger">CNPJ já cadastrado!</span>');
+                            $("#btn").attr("disabled", true);
+                        } else {
+                            $('#cnpjStatus').html('<span class="text-success">CNPJ disponível!</span>');
+                            $("#btn").attr("disabled", false);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Erro na requisição: ', error);
+                    }
+                });
             }
         });
     });

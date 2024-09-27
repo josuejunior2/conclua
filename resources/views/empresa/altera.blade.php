@@ -52,9 +52,8 @@
                                 <span class="{{ $errors->has('cnpj') ? 'text-danger' : '' }}">
                                     {{ $errors->has('cnpj') ? $errors->first('cnpj') : '' }}
                                 </span>
-                                <span class="text-danger" id="erro-cnpj" style="display: none;">
-                                    Já existe uma empresa com esse cpnj.
-                                </span>
+                                <div id="cnpjStatus">
+                                </div>
                             </div>
                         </div>
                         <div class="col-md">
@@ -85,6 +84,10 @@
 @endsection
 
 @section('js')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap5.min.js"></script>
 <script>
     $(document).ready( function () {
         $('#cnpj').mask('00.000.000/0000-00');
@@ -98,24 +101,31 @@
                 url: '//cdn.datatables.net/plug-ins/2.0.3/i18n/pt-BR.json',
             },
         });
-        let empresas = {!! json_encode($empresas) !!};
 
         $('#cnpj').on('input', function() {
             let novoCnpj = $(this).val();
-            let cnpjExiste = false; 
-
-            empresas.forEach(function(empresa) {
-                if (empresa.cnpj === novoCnpj) {
-                    cnpjExiste = true;
-                }
-            });
-
-            if (cnpjExiste) {
-                $("#erro-cnpj").show();
-                $("#btn").attr('disabled', true);
-            } else {
-                $("#erro-cnpj").hide();
-                $("#btn").attr('disabled', false);
+            
+            if(novoCnpj.length == 18){
+                $.ajax({
+                    url: '/verifica-cnpj',
+                    type: 'POST', 
+                    data: {
+                        cnpj: novoCnpj,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        if (response.exists) {
+                            $('#cnpjStatus').html('<span class="text-danger">CNPJ já cadastrado!</span>');
+                            $("#btn").attr("disabled", true);
+                        } else {
+                            $('#cnpjStatus').html('<span class="text-success">CNPJ disponível!</span>');
+                            $("#btn").attr("disabled", false);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Erro na requisição: ', error);
+                    }
+                });
             }
         });
     });

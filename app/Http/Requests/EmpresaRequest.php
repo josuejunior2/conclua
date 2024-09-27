@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Academico;
+use App\Models\Admin;
 
 class EmpresaRequest extends FormRequest
 {
@@ -12,7 +13,7 @@ class EmpresaRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        if(Academico::where('user_id', auth()->user()->id)->exists()){
+        if(Academico::where('user_id', auth()->user()->id)->exists() || Admin::where('id', auth()->user()->id)->exists()){
             return true;
         }
         return false;

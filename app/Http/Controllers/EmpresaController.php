@@ -56,4 +56,20 @@ class EmpresaController extends Controller
         if($empresa->id != $novaEmpresa) return redirect()->route('academicoEstagio.edit', ['academicoEstagio' => $estagio]);
         return redirect()->back(); // o redirecionamento aqui ta paia, n sei se ta mudando na solicitacao, ou se vai ser em outro lugar...
     }
+
+    
+    /**
+     * Update the specified resource in storage.
+     */
+    public function verificaCnpj(Request $request)
+    {
+        $pesquisa = Empresa::where('cnpj', $request->cnpj)->first();
+        $exists = false;
+        if(!empty($pesquisa)){
+            $exists = $pesquisa->cnpj != $request->cnpjAtual ? true : false;
+        }
+        return response()->json([
+            'exists' => $exists
+        ]);
+    }
 }
