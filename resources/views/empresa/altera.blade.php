@@ -52,7 +52,7 @@
                                 <span class="{{ $errors->has('cnpj') ? 'text-danger' : '' }}">
                                     {{ $errors->has('cnpj') ? $errors->first('cnpj') : '' }}
                                 </span>
-                                <div id="cnpjStatus">
+                                <div id="cnpjStatus" class="position-fixed">
                                 </div>
                             </div>
                         </div>
@@ -105,6 +105,11 @@
         $('#cnpj').on('input', function() {
             let novoCnpj = $(this).val();
             
+            if(novoCnpj.length != 18){
+                $('#cnpjStatus').html('');
+                $("#btn").attr("disabled", true);
+            } 
+
             if(novoCnpj.length == 18){
                 $.ajax({
                     url: '/verifica-cnpj',
