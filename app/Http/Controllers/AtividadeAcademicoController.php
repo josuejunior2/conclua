@@ -58,8 +58,7 @@ class AtividadeAcademicoController extends Controller
         $atividade->save();
 
         foreach($atividade->arquivosSubmissao as $arquivo){
-            unlink('./'.$arquivo->caminho.'/'.$arquivo->nome);
-            $arquivo->delete();
+            $this->arquivoController->destroyArquivoSubmissao($arquivo);
         }
 
         $submissao->delete();

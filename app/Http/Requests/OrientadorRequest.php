@@ -6,6 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Orientador;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Validation\Rule;
 
 class OrientadorRequest extends FormRequest
 {
@@ -34,8 +35,8 @@ class OrientadorRequest extends FormRequest
                     'password' => ['required', 'string', Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised()],
                     'formacao_id' => 'required',
                     'area_id' => 'required',
-                    'enderecoLattes' => 'required|min:38|max:38',
-                    'enderecoOrcid' => 'required|min:37|max:37',
+                    'enderecoLattes' => 'nullable|min:38|max:38',
+                    'enderecoOrcid' => 'nullable|min:37|max:37',
                     'disponibilidade' => 'required',
                     'areaPesquisa1' => 'nullable',
                     'areaPesquisa2' => 'nullable',
@@ -55,8 +56,16 @@ class OrientadorRequest extends FormRequest
                         'password' => ['nullable', 'string', Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised()],
                         'formacao_id' => 'required',
                         'area_id' => 'required',
-                        'enderecoLattes' => 'required|min:38|max:38',
-                        'enderecoOrcid' => 'required|min:37|max:37',
+                        'enderecoLattes' => [
+                            'nullable', 
+                            'min:38', 
+                            'max:38',
+                        ],
+                        'enderecoOrcid' => [
+                            'nullable',
+                            'min:37',
+                            'max:37',
+                        ],
                         'disponibilidade' => 'required',
                         'areaPesquisa1' => 'nullable',
                         'areaPesquisa2' => 'nullable',

@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-body">
-            <div class="modal-title">Submeter atividade {{ $atividade->titulo }}</div>
+            <div class="modal-title">Submeter atividade</div>
             <form id="form" method="post" action="{{ route('academico.atividade.store.submissao') }}" enctype="multipart/form-data">
                 @method('POST')
                 @csrf

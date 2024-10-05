@@ -90,6 +90,8 @@ class AtividadeOrientadorController extends Controller
         $atividade->update($dados);
 
         if ($request->hasFile('arquivos_aux')) {
+            $requestArquivos = new ArquivoAuxRequest($request->only(['arquivos_aux']));
+            $this->arquivoController->storeArquivoAux($requestArquivos, $atividade);
         }
 
         return redirect()->route('orientador.atividade.show', ['atividade' => $atividade]);

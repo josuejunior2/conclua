@@ -69,7 +69,7 @@
                         </div>
                         <div class="row g-3 mb-4">
                             <div class="col-md">
-                                <div class="form-label required">Link do Currículo Lattes</div>
+                                <div class="form-label">Link do Currículo Lattes</div>
                                 <input id="enderecoLattes" name="enderecoLattes"  type="text" class="form-control" value="{{ isset($orientador) && $orientador->enderecoLattes ? $orientador->enderecoLattes : old('enderecoLattes', '') }}">
                                 <small class="form-hint mb-3">
                                     O link do curriculo Lattes deve estar no modelo: http://lattes.cnpq.br/0000000000000000
@@ -104,7 +104,7 @@
                                 </span>
                             </div>
                             <div class="col-md">
-                                <div class="form-label required">Link do Currículo Orcid</div>
+                                <div class="form-label">Link do Currículo Orcid</div>
                                 <input id="enderecoOrcid" name="enderecoOrcid" type="text" class="form-control" value="{{ isset($orientador) && $orientador->enderecoOrcid ? $orientador->enderecoOrcid : old('enderecoOrcid', '') }}">
                                 <small class="form-hint mb-3">
                                     O link do curriculo Orcid deve estar no modelo: https://orcid.org/0000-0000-0000-0000
