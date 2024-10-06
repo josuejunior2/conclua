@@ -29,8 +29,8 @@
                 <div class="col-sm-2">
                     <select class="form-select" name="ano" id="ano" value="{{ old('ano', $semestre->ano) }}">
                         <option value="">Ano</option>
-                        <option value="{{ now()->format('Y') }}" {{ old('ano') || $semestre->ano ? 'selected' : '' }}>{{ now()->format('Y') }}</option>
-                        <option value="{{ now()->addYear()->format('Y') }}" {{ old('ano') || $semestre->ano ? 'selected' : '' }}>{{ now()->addYear()->format('Y') }}</option>
+                        <option value="{{ now()->format('Y') }}" {{ old('ano', $semestre->ano) == now()->format('Y') ? 'selected' : '' }}>{{ now()->format('Y') }}</option>
+                        <option value="{{ now()->addYear()->format('Y') }}" {{ old('ano', $semestre->ano) == now()->addYear()->format('Y') ? 'selected' : '' }}>{{ now()->addYear()->format('Y') }}</option>
                     </select>
                     <span class="{{ $errors->has('ano') ? 'text-danger' : '' }}">
                         {{ $errors->has('ano') ? $errors->first('ano') : '' }}
