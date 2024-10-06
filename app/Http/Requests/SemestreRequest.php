@@ -85,8 +85,6 @@ class SemestreRequest extends FormRequest
                         'required',
                         $this->gapMinimo($dataInicio, 2),
                     ],
-                    'limite_doc_estagio' => 'required|before:data_fim', //. $data_fim,
-                    'limite_orientacao' => 'required|before:data_fim', //. $data_fim,
                 ];
                 break;
             case 'PUT':
@@ -107,8 +105,6 @@ class SemestreRequest extends FormRequest
                             'required',
                             $this->gapMinimo($dataInicio, 0),
                         ], //, 4)],
-                        'limite_doc_estagio' => 'required|before:data_fim', //. $data_fim,
-                        'limite_orientacao' => 'required|before:data_fim', //. $data_fim,
                     ];
                     break;
         }
@@ -138,8 +134,6 @@ class SemestreRequest extends FormRequest
             'data_fim.unique' => 'Essa data de fim já foi cadastrada.',
             'data_fim.date' => 'O campo data de término deve ser uma data válida.',
             'data_fim.after' => 'A data de término deve ser igual ou posterior no mínimo 2 meses após a data de início.',
-            'limite_doc_estagio.date' => 'O campo de data-limite para entrega da documentação de estágio deve ser uma data válida.',
-            'limite_doc_estagio.before' => 'A data-limite para entrega da documentação de estágio deve ser uma data anterior à data de finalização do semestre.',
             'limite_orientacao.date' => 'O campo de data-limite para entrega da documentação de orientação deve ser uma data válida.',
             'limite_orientacao.before' => 'A data-limite para entrega da documentação de orientação deve ser uma data anterior à data de finalização do semestre.',
         ];

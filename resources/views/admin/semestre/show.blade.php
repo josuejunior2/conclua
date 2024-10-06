@@ -47,14 +47,6 @@
             <div class="datagrid-title">Data final</div>
             <div class="datagrid-content">{{ \Carbon\Carbon::parse($semestre->data_fim)->format('d/m/Y') }}</div>
         </div>
-        <div class="datagrid-item">
-            <div class="datagrid-title">Data-limite de envio da documentação de estágio</div>
-            <div class="datagrid-content">{{ \Carbon\Carbon::parse($semestre->limite_doc_estagio)->format('d/m/Y') }}</div>
-        </div>
-        <div class="datagrid-item">
-            <div class="datagrid-title">Data-limite de envio da documentação de orientação</div>
-            <div class="datagrid-content">{{ \Carbon\Carbon::parse($semestre->limite_orientacao)->format('d/m/Y') }}</div>
-        </div>
     </div>
 </div>
 @endsection

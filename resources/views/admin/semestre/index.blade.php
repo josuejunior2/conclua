@@ -30,8 +30,6 @@
               <th>Ano</th>
               <th>Nº</th>
               <th>Data de início</th>
-              <th>Data-limite doc. estágio</th>
-              <th>Data-limite doc. orientação</th>
               <th>Data de fim</th>
               <th></th>
             </tr>
@@ -45,8 +43,6 @@
                 <td>{{ $s->ano }}</td>
                 <td>{{ $s->periodo }}</td>
                 <td>{{ \Carbon\Carbon::parse($s->data_inicio)->format('d/m/Y') }}</td>
-                <td>{{ \Carbon\Carbon::parse($s->limite_doc_estagio)->format('d/m/Y') }}</td>
-                <td>{{ \Carbon\Carbon::parse($s->limite_orientacao)->format('d/m/Y') }}</td>
                 <td>{{ \Carbon\Carbon::parse($s->data_fim)->format('d/m/Y') }}</td>
                 <td class="d-flex align-items-center justify-content-center text-end">
                     @can('visualizar semestre')

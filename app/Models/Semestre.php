@@ -19,14 +19,11 @@ class Semestre extends Model
         'id' => 'string',
         'data_inicio' => 'datetime',
         'data_fim' => 'datetime',
-        'limite_doc_estagio' => 'datetime',
-        'limite_orientacao' => 'datetime',
-        // 'status' => 'boolean',
     ];
 
     protected $keyType = 'string';
 
-    protected $fillable = ['ano', 'periodo', 'data_inicio', 'data_fim', 'limite_doc_estagio', 'limite_orientacao'];
+    protected $fillable = ['ano', 'periodo', 'data_inicio', 'data_fim'];
 
     public function academicosEstagio(){
         return $this->hasMany(AcademicoEstagio::class);

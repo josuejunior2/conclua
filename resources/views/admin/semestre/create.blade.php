@@ -55,24 +55,6 @@
                     </span>
                 </div>
             </div>
-            <div class="datagrid-item">
-                <div class="form-label">Entrega de documentos de estágio</div>
-                <div class="datagrid-content">
-                    <input type="hidden" id="limite_doc_estagio" name="limite_doc_estagio" value="{{ old('limite_doc_estagio', '') }}" autocomplete="off"/>
-                    <span class="{{ $errors->has('limite_doc_estagio') ? 'text-danger' : '' }}">
-                        {{ $errors->has('limite_doc_estagio') ? $errors->first('limite_doc_estagio') : '' }}
-                    </span>
-                </div>
-            </div>
-            <div class="datagrid-item">
-                <div class="form-label">Entrega de documentos de orientação</div>
-                <div class="datagrid-content">
-                    <input type="hidden" id="limite_orientacao" name="limite_orientacao" value="{{ old('limite_orientacao', '') }}" autocomplete="off"/>
-                    <span class="{{ $errors->has('limite_orientacao') ? 'text-danger' : '' }}">
-                        {{ $errors->has('limite_orientacao') ? $errors->first('limite_orientacao') : '' }}
-                    </span>
-                </div>
-            </div>
         </div>
     </div>
     <div class="card-footer text-end">
@@ -150,68 +132,6 @@
             autoApply: true,
             //autoApply: false
             inlineMode: true,
-        }));
-    });
-    // @formatter:on
-</script>
-<script>
-    // @formatter:off
-    document.addEventListener("DOMContentLoaded", function () {
-    const today = new Date();
-    const year = today.getFullYear();
-    const nextYear = today.getFullYear() + 1;
-    const startDate = new Date(year, 0, 1); // Primeiro dia do ano atual
-    const endDate = new Date(nextYear, 11, 31); // Último dia do ano atual
-
-    window.Litepicker && (new Litepicker({
-        element: document.getElementById('limite_doc_estagio'),
-        buttonText: {
-            previousMonth: `<!-- Download SVG icon from http://tabler-icons.io/i/chevron-left -->
-<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>`,
-            nextMonth: `<!-- Download SVG icon from http://tabler-icons.io/i/chevron-right -->
-<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>`,
-            apply: 'Aplicar',
-            cancel: 'Cancelar',
-            reset: 'Resetar'
-        },
-        minDate: startDate,
-        maxDate: endDate,
-        // format: 'D/MM/YYYY',
-        lang: 'pt-BR',
-        autoApply: true,
-        //autoApply: false // Desativar aplicação automática
-        inlineMode: true,
-    }));
-});
-    // @formatter:on
-</script>
-<script>
-    // @formatter:off
-    document.addEventListener("DOMContentLoaded", function () {
-        const today = new Date();
-        const year = today.getFullYear();
-        const nextYear = today.getFullYear() + 1;
-        const startDate = new Date(year, 0, 1); // Primeiro dia do ano atual
-        const endDate = new Date(nextYear, 11, 31); // Último dia do ano atual
-
-        window.Litepicker && (new Litepicker({
-            element: document.getElementById('limite_orientacao'),
-            buttonText: {
-                previousMonth: `<!-- Download SVG icon from http://tabler-icons.io/i/chevron-left -->
-    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>`,
-                nextMonth: `<!-- Download SVG icon from http://tabler-icons.io/i/chevron-right -->
-    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>`,
-            apply: 'Aplicar',
-            cancel: 'Cancelar',
-            reset: 'Resetar'
-        },
-        minDate: startDate,
-        maxDate: endDate,
-        // format: 'D/MM/YYYY',
-        lang: 'pt-BR',
-        autoApply: true,
-        //autoApply: false // Desativar aplicação automática
-        inlineMode: true,
         }));
     });
     // @formatter:on
