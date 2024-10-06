@@ -103,7 +103,7 @@ class SemestreRequest extends FormRequest
                         ],
                         'data_fim' => [
                             'required',
-                            $this->gapMinimo($dataInicio, 0),
+                            $this->gapMinimo($dataInicio, 2),
                         ], //, 4)],
                     ];
                     break;
