@@ -57,8 +57,8 @@ return new class extends Migration
             $table->foreign('academico_id')->references('id')->on('academicos');
             $table->unsignedBigInteger('semestre_id')->required();
             $table->foreign('semestre_id')->references('id')->on('semestres');
-            $table->string('tema', 60);
-            $table->string('funcao', 40);
+            $table->string('tema');
+            $table->string('funcao');
             $table->unsignedBigInteger('empresa_id');
             $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->timestamps();
