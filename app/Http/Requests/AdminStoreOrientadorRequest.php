@@ -12,10 +12,10 @@ class AdminStoreOrientadorRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        if(!Orientador::where('admin_id', auth()->guard('admin')->user()->id)->exists() && auth()->guard('admin')->check()){
-            return true;
-        }
-        return false;
+        // if(!Orientador::where('admin_id', auth()->guard('admin')->user()->id)->exists() && auth()->guard('admin')->check()){
+        //     return true;
+        // }
+        return true;
     }
 
     /**
