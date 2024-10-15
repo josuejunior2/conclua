@@ -13,6 +13,7 @@ use App\Http\Requests\ArquivoSubmissaoRequest;
 use App\Models\SubmissaoAtividade;
 use App\Http\Requests\ArquivoAuxRequest;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class ArquivoController extends Controller
 { 
@@ -45,23 +46,21 @@ class ArquivoController extends Controller
      */
     public function storeArquivoSubmissao(ArquivoSubmissaoRequest $request, SubmissaoAtividade $submissao)
     {
-        // $dados = Atividade::create($request->validated());
-        // $dados = $request->validated();
-        // $arquivos = $request['arquivos_submissao'];
-
         $caminho = 'uploads/'.$submissao->Atividade->Orientacao->Semestre->periodoAno() . '/' . $submissao->Atividade->Orientacao->Orientador->diretorio() . '/' . $submissao->Atividade->Orientacao->Academico->diretorio() . '/recebido';
         
-        foreach ($request['arquivos_submissao'] as $key => $arquivo) {
-            $nome = $this->setNomeArquivo($arquivo, $caminho);
-            
-            Arquivo::create([
-                'nome' => $nome,
-                'submissao_atividade_id' => $submissao->id,
-                'academico_id' => $submissao->Atividade->Orientacao->Academico->id,
-                'caminho' => $caminho,
-            ]);
-            Storage::disk('public')->putFileAs($caminho, $arquivo, $nome);
-        }
+        DB::transaction(function() use($caminho, $request, $submissao){   
+            foreach ($request['arquivos_submissao'] as $key => $arquivo) {
+                $nome = $this->setNomeArquivo($arquivo, $caminho);
+                
+                Arquivo::create([
+                    'nome' => $nome,
+                    'submissao_atividade_id' => $submissao->id,
+                    'academico_id' => $submissao->Atividade->Orientacao->Academico->id,
+                    'caminho' => $caminho,
+                ]);
+                Storage::disk('public')->putFileAs($caminho, $arquivo, $nome);
+            }
+        });
 
         return redirect()->back()->with(['success' => 'Arquivo adicionado na submissão com sucesso.']);
     }
@@ -73,17 +72,20 @@ class ArquivoController extends Controller
     {
         
         $caminho = 'uploads/'.$atividade->Orientacao->Semestre->periodoAno() . '/' . $atividade->Orientacao->Orientador->diretorio() . '/' . $atividade->Orientacao->Academico->diretorio() . '/enviado';
-        foreach ($request['arquivos_aux'] as $key => $arquivo) {
-            $nome =  $this->setNomeArquivo($arquivo, $caminho);
+        
+        DB::transaction(function() use($request, $caminho, $atividade){   
+            foreach ($request['arquivos_aux'] as $key => $arquivo) {
+                $nome =  $this->setNomeArquivo($arquivo, $caminho);
 
-            Arquivo::create([
-                'nome' => $nome,
-                'atividade_id' => $atividade->id,
-                'orientador_id' => $atividade->Orientacao->Orientador->id,
-                'caminho' => $caminho,
-            ]);
-            Storage::disk('public')->putFileAs($caminho, $arquivo, $nome);
-        }
+                Arquivo::create([
+                    'nome' => $nome,
+                    'atividade_id' => $atividade->id,
+                    'orientador_id' => $atividade->Orientacao->Orientador->id,
+                    'caminho' => $caminho,
+                ]);
+                Storage::disk('public')->putFileAs($caminho, $arquivo, $nome);
+            }        
+        });
         
         return redirect()->back()->with(['success' => 'Arquivo auxiliar adicionado com sucesso.']);
     }
@@ -92,9 +94,11 @@ class ArquivoController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroyArquivoSubmissao(Arquivo $arquivo)
-    {
-        Storage::disk('public')->delete($arquivo->caminho . '/' . $arquivo->nome);
-        $arquivo->delete();
+    {        
+        DB::transaction(function() use($arquivo){   
+            Storage::disk('public')->delete($arquivo->caminho . '/' . $arquivo->nome);
+            $arquivo->delete();        
+        });
         return redirect()->back()->with(['success' => 'Arquivo da submissão excluído com sucesso.']);
     }
 
@@ -103,8 +107,10 @@ class ArquivoController extends Controller
      */
     public function destroyArquivoAux(Arquivo $arquivo)
     {
-        Storage::disk('public')->delete($arquivo->caminho . '/' . $arquivo->nome);
-        $arquivo->delete();
+        DB::transaction(function() use($arquivo){ 
+            Storage::disk('public')->delete($arquivo->caminho . '/' . $arquivo->nome);
+            $arquivo->delete();  
+        });
         return redirect()->back()->with(['success' => 'Arquivo auxiliar excluído com sucesso.']);
     }
 }

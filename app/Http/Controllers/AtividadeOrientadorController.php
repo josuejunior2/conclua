@@ -11,6 +11,8 @@ use App\Http\Requests\AtividadeRequest;
 use App\Http\Requests\AvaliarAtividadeRequest;
 use App\Http\Requests\ArquivoAuxRequest;
 use App\Http\Controllers\ArquivoController;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class AtividadeOrientadorController extends Controller
 {
@@ -48,13 +50,15 @@ class AtividadeOrientadorController extends Controller
     {
         $this->middleware('permission:criar atividade');
         
-        $dados = $request->validated();
-        $atividade = Atividade::create($dados);
+        DB::transaction(function() use($request, &$atividade){   
+            $dados = $request->validated();
+            $atividade = Atividade::create($dados);
 
-        if ($request->hasFile('arquivos_aux')) {
-            $requestArquivos = new ArquivoAuxRequest($request->only(['arquivos_aux']));
-            $this->arquivoController->storeArquivoAux($requestArquivos, $atividade);
-        }
+            if ($request->hasFile('arquivos_aux')) {
+                $requestArquivos = new ArquivoAuxRequest($request->only(['arquivos_aux']));
+                $this->arquivoController->storeArquivoAux($requestArquivos, $atividade);
+            }
+        });
         return redirect()->route('orientador.atividade.show', ['atividade' => $atividade]);
     }
 
@@ -84,15 +88,15 @@ class AtividadeOrientadorController extends Controller
     {
         $this->middleware('permission:editar atividade');
 
-        $dados = $request->validated();
-        $arquivos = $dados['arquivos_aux'];
-        $usuario = auth()->guard('admin')->user();
-        $atividade->update($dados);
+        DB::transaction(function() use($request, &$atividade){ 
+            $dados = $request->validated();
+            $atividade->update($dados);
 
-        if ($request->hasFile('arquivos_aux')) {
-            $requestArquivos = new ArquivoAuxRequest($request->only(['arquivos_aux']));
-            $this->arquivoController->storeArquivoAux($requestArquivos, $atividade);
-        }
+            if ($request->hasFile('arquivos_aux')) {
+                $requestArquivos = new ArquivoAuxRequest($request->only(['arquivos_aux']));
+                $this->arquivoController->storeArquivoAux($requestArquivos, $atividade);
+            }
+        });
 
         return redirect()->route('orientador.atividade.show', ['atividade' => $atividade]);
     }
@@ -104,14 +108,16 @@ class AtividadeOrientadorController extends Controller
     {
         $this->middleware('permission:excluir atividade');
 
-        $arquivos = $atividade->arquivosAuxiliares->merge($atividade->arquivosSubmissao);
-        foreach($arquivos as $arquivo){
-            unlink('./'.$arquivo->caminho.'/'.$arquivo->nome);
-            $arquivo->delete();
-        }
-        
-        if(!empty($atividade->SubmissaoAtividade)) $atividade->SubmissaoAtividade->delete();
-        $atividade->delete();
+        DB::transaction(function() use($atividade){   
+            $arquivos = $atividade->arquivosAuxiliares->merge($atividade->arquivosSubmissao);
+
+            foreach($arquivos as $arquivo){
+                $this->arquivoController->destroyArquivoAux($arquivo);
+            }
+            
+            if(!empty($atividade->SubmissaoAtividade)) $atividade->SubmissaoAtividade->delete();
+            $atividade->delete();
+        });
         return redirect()->route('orientador.atividade.index');
     }
     
@@ -120,7 +126,11 @@ class AtividadeOrientadorController extends Controller
      */
     public function avaliar(AvaliarAtividadeRequest $request, Atividade $atividade)
     {
-        $atividade->update($request->validated());
+        $this->middleware('permission:avaliar atividade');
+
+        DB::transaction(function() use($request, &$atividade){   
+            $atividade->update($request->validated());
+        });
         return redirect()->route('orientador.atividade.show', ['atividade' => $atividade]);
     }
 
