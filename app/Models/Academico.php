@@ -75,4 +75,9 @@ class Academico extends Authenticatable
     {
         return session('semestre_id') ? $this->solicitacoes->where('semestre_id', session('semestre_id')) : null;
     }
+
+    public function OrientacaoAtual()
+    {
+        return session('semestre_id') ? $this->orientacoes->where('semestre_id', session('semestre_id'))->first() : null;
+    }
 }

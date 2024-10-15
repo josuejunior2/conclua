@@ -67,4 +67,14 @@ class Orientacao extends Model
             return $this->AcademicoEstagio->tema;
         }
     }
+
+    public function mensagemAvaliacaoFinal(){
+        if($this->avaliacao_final == 'APTO'){
+            return 'Avaliação final: APTO. Parabéns por concluir seu '.$this->modalidade().'!';
+        } else if($this->avaliacao_final == 'APTO COM RESTRICOES'){
+            return 'Avaliação final: APTO COM RESTRIÇÕES. Procure seu orientador e faça os ajustes necessários. Fique firme e encerre esta etapa.';
+        } else if($this->avaliacao_final == 'INAPTO'){
+            return 'Avaliação final: INAPTO. Converse com seu orientador. Retome suas atividades e refaça esta etapa, ela é muito importante em sua formação.';
+        }
+    }
 }
