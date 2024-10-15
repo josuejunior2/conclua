@@ -38,7 +38,7 @@ class AtividadeOrientadorController extends Controller
     public function create()
     {
         $this->middleware('permission:criar atividade');
-        $orientacoes = auth()->guard('admin')->user()->Orientador->orientacoesNoSemestre();
+        $orientacoes = auth()->guard('admin')->user()->Orientador->orientacoesEmAndamento();
 
         return view('orientador.atividade.create', ['orientacoes' => $orientacoes]);
     }

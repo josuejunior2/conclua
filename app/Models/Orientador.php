@@ -66,4 +66,9 @@ class Orientador extends Authenticatable
         return $diretorio;
     }
 
+    public function orientacoesEmAndamento()
+    {
+        return $this->orientacoes()->where('semestre_id', session('semestre_id'))->whereNull('avaliacao_final')->orWhere('avaliacao_final', 'APTO COM RESTRICOES')->get();
+    }
+
 }

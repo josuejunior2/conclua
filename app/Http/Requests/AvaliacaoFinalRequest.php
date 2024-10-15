@@ -26,7 +26,7 @@ class AvaliacaoFinalRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'avaliacao_final' => 'required',
+            'avaliacao_final' => 'nullable',
         ];
     }
 }
