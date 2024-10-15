@@ -139,6 +139,8 @@
             $("#nome").val(empresa.nome);
             $("#cnpj").val(empresa.cnpj);
             $("#email").val(empresa.email);
+            $("#btn").attr("disabled", false);
+            $('#cnpjStatus').html('');
         }else{
             $("#nome").val('').attr('readonly', false);
             $("#cnpj").val('').attr('readonly', false);

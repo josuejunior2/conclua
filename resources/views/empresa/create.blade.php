@@ -126,7 +126,7 @@
                         }
                     },
                     error: function(xhr, status, error) {
-                        console.error('Erro na requisição: ', error);
+                        console.log('Erro na requisição: ', error);
                     }
                 });
             }
@@ -145,6 +145,8 @@
             $("#cnpj").attr('readonly', true);
             $("#email").val(empresa.email);
             $("#email").attr('readonly', true);
+            $("#btn").attr("disabled", false);
+            $('#cnpjStatus').html('');
         }else{
             $("#nome").val('').attr('readonly', false);
             $("#cnpj").val('').attr('readonly', false);
