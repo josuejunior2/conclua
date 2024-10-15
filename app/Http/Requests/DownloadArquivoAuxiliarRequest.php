@@ -22,7 +22,7 @@ class DownloadArquivoAuxiliarRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'caminho'   =>  'required'
+            'caminho'   =>  'required',
         ];
     }
 }

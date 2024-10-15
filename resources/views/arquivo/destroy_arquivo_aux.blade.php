@@ -1,4 +1,4 @@
-<div class="modal modal-blur fade" id="modal-destroy-arquivo-aux" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal modal-blur fade" id="modal-destroy-arquivo-aux-{{ $arquivo->id }}" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-body flex-start">

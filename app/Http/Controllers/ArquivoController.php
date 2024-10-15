@@ -22,9 +22,7 @@ class ArquivoController extends Controller
      */
     public function downloadArquivo(DownloadArquivoAuxiliarRequest $request)
     {
-        $caminho = $request->validated()['caminho'];
-        $filePath = public_path($caminho);
-        return Response::download($filePath);
+        return Storage::disk('public')->download($request->validated()['caminho']);
     }
     
     public function setNomeArquivo(UploadedFile $arquivo, string $caminho)
@@ -70,9 +68,8 @@ class ArquivoController extends Controller
      */
     public function storeArquivoAux(ArquivoAuxRequest $request, Atividade $atividade)
     {
-        
         $caminho = 'uploads/'.$atividade->Orientacao->Semestre->periodoAno() . '/' . $atividade->Orientacao->Orientador->diretorio() . '/' . $atividade->Orientacao->Academico->diretorio() . '/enviado';
-        
+           
         DB::transaction(function() use($request, $caminho, $atividade){   
             foreach ($request['arquivos_aux'] as $key => $arquivo) {
                 $nome =  $this->setNomeArquivo($arquivo, $caminho);
