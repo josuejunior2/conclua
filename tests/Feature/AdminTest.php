@@ -19,7 +19,6 @@ class AdminTest extends TestCase
         parent::setUp();
         Artisan::call('db:seed', ['--class' => 'PerfisEPermissoesSeeder']);
 
-        // Criar e autenticar um usuário antes de cada teste
         $this->admin = Admin::create([
             'nome' => 'Testildo',
             'email' => 'test@email.com',

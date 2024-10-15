@@ -44,7 +44,7 @@
         <div class="card-footer bg-transparent mt-auto">
             <div class="btn-list justify-content-end">
                 <button type="submit" id="btn" class="btn btn-primary">
-                    Cadastrar
+                    Enviar
                 </button>
             </div>
         </div>
