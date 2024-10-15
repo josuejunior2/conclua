@@ -6,30 +6,17 @@
             <form id="form" method="post" action="{{ route('orientador.atividade.avaliar', ['atividade' => $atividade]) }}">
                 @method('POST')
                 @csrf
-                    {{-- <div class="form-label"></div> --}}
-                    {{-- <input type="file" name="arquivo" id="arquivo" class="form-control" /> --}}
                 <div class="row g-3 mb-4">
                     <div class="col-md">
                         <div class="mb-3">
                             <div class="form-label required">Nota</div>
-                            <input id="nota" name="nota" type="number" class="form-control" step="0.01" max="100" min="0" value="{{ old('nota', '') }}" />
+                            <input id="nota" name="nota" type="number" class="form-control" step="0.01" max="100" min="0" value="{{ !empty($atividade->nota) ? $atividade->nota : 0 }}" />
                             <span class="{{ $errors->has('nota') ? 'text-danger' : '' }}">
                                 {{ $errors->has('nota') ? $errors->first('nota') : '' }}
                             </span>
                         </div>
                     </div>
                 </div>
-                {{-- <div class="row g-3 mb-4">
-                    <div class="mb-3">
-                        <label class="form-label required">Senha do orientador</label>
-                        <div>
-                            <input name="password" type="password" class="form-control" placeholder="Senha">
-                            <span class="{{ $errors->has('password') ? 'text-danger' : '' }}">
-                            {{ $errors->has('password') ? $errors->first('password') : '' }}
-                        </span>
-                        </div>
-                    </div>
-                </div> --}}
             </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancelar</button>
