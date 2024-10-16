@@ -90,7 +90,6 @@
                                 <th>Acadêmico</th>
                                 <th>Modalidade</th>
                                 <th>Tema</th>
-                                <th>Nota</th>
                                 <th>Conceito</th>
                             </tr>
                         </thead>
@@ -101,7 +100,6 @@
                                     <td>{{ $orientacao['academico']['user']['nome'] }}</td>
                                     <td>{{ $orientacao['modalidade'] }}</td>
                                     <td>{{ $orientacao['tema'] }}</td>
-                                    <td>{{ $orientacao['nota'] }}</td>
                                     <td>{{ $orientacao['avaliacao_final'] }}</td>
                                 </tr>
                             @endforeach
