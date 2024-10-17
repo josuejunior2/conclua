@@ -15,9 +15,6 @@ use Illuminate\Support\Facades\DB;
 
 class SemestreController extends Controller
 {
-    public function __construct(){
-        // $this->middleware('permission:configurar semestre');
-    }
     /**
      * Display a listing of the resource.
      */
