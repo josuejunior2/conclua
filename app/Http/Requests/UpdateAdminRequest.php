@@ -28,7 +28,7 @@ class UpdateAdminRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => 'required|min:5',
+            'nome' => 'required|min:7',
             'email' => 'required|email',
             'password' => ['nullable', 'string', Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised()],
             'perfil' => 'required',
@@ -43,7 +43,7 @@ class UpdateAdminRequest extends FormRequest
     {
         return [
             'required' => 'O campo :attribute deve ser preenchido.',
-            'nome.min' => 'O campo nome deve ter no mínimo 5 caracteres.',
+            'nome.min' => 'O campo nome deve ter no mínimo 7 caracteres.',
             'email.email' => 'O campo email deve ser preenchido com um endereço de email.',
         ];
     }
