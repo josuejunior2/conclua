@@ -144,6 +144,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('orientacao/pdf', 'App\Http\Controllers\OrientacaoAdminController@exportPdf')->name('orientacao.exportPdf');
         
         Route::resource('empresa', App\Http\Controllers\EmpresaAdminController::class);
+
+        Route::resource('admin', App\Http\Controllers\AdminController::class);
     });
 });
 

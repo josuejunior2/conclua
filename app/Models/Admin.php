@@ -47,11 +47,6 @@ class Admin extends Authenticatable
         return $this->hasOne(Orientador::class);
     }
     
-    public function arquivos()
-    {
-        return $this->morphMany(Arquivo::class, 'arquivoable');
-    }
-    
     public function sendPasswordResetNotification($token) {
         $this->notify(new RedefinirSenhaNotification($token, $this->email, $this->nome));
     }

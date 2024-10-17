@@ -51,6 +51,12 @@ class PerfisEPermissoesSeeder extends Seeder
             ['guard_name' => 'admin', 'name' => 'criar empresa',  'description' => 'Permite criar empresa.'],
             ['guard_name' => 'admin', 'name' => 'editar empresa',  'description' => 'Permite editar empresa.'],
             ['guard_name' => 'admin', 'name' => 'excluir empresa',  'description' => 'Permite excluir empresa.'],
+            
+            ['guard_name' => 'admin', 'name' => 'criar admin',  'description' => 'Permite criar admin.'],
+            ['guard_name' => 'admin', 'name' => 'editar admin',  'description' => 'Permite editar admin.'],
+            ['guard_name' => 'admin', 'name' => 'excluir admin',  'description' => 'Permite excluir admin.'],
+            ['guard_name' => 'admin', 'name' => 'avaliar admin',  'description' => 'Permite avaliar admin.'],
+            ['guard_name' => 'admin', 'name' => 'assinala perfil admin',  'description' => 'Permite assinalar perfil a admin.'],
         ]);
 
 

@@ -5,7 +5,7 @@
 
 <div class="card m-3">
     <div class="card-header justify-content-between">
-        <h3 class="card-title">Cadastro do Perfil</h3>
+        <h3 class="card-title">Cadastro da empresa</h3>
         <div class="d-flex justify-content-between col-auto">
             @can('editar empresa')
             <div class="me-2">
