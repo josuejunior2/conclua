@@ -54,6 +54,10 @@
                             @endforeach
                         </select>
                     </form>
+					<div class="row">
+						<div class="col d-flex justify-content-center inicio"></div>
+						<div class="col d-flex justify-content-center fim"></div>
+					</div>
                 </div>
                 @endif
                 <li class="nav-item">
@@ -723,11 +727,22 @@
       // @formatter:on
     </script>
     <script>
-        (function() {
-          $('#semestre_id').change(function() {
-            $('#form_mudar_semestre').submit();
-          });
-        })();
+		$(document).ready( function () {
+			let semestres = {!! $semestres !!};
+
+			$('#semestre_id').change(function() {
+				$('#form_mudar_semestre').submit();
+			});
+	
+			semestres.forEach(function( index ) {
+				if(index.id == $('#semestre_id').val()){
+					let data_inicio = new Date(index.data_inicio);
+					let data_fim = new Date(index.data_fim);
+					$('.inicio').html(`Início: ${data_inicio.getDate().toString().padStart(2, '0')}/${(data_inicio.getMonth() + 1).toString().padStart(2, '0')}`);
+					$('.fim').html(`Fim: ${data_fim.getDate().toString().padStart(2, '0')}/${(data_fim.getMonth() + 1).toString().padStart(2, '0')}`);
+				}
+			});
+		});
     </script>
   </body>
 </html>
