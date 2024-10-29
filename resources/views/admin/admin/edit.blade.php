@@ -32,7 +32,7 @@
         <div class="row g-3 mb-4">
             <div class="col-md">
                 <div class="mb-3">
-                    <div class="form-label required">Senha</div>
+                    <div class="form-label">Senha</div>
                     <input id="password" name="password"  type="password" class="form-control" />
                     <small class="form-hint">
                         A senha deve ter no mínimo 8 caracteres, incluir letras maiúsculas e minúsculas, conter pelo menos um número, um símbolo (como !, @, #, $) e não deve ter sido comprometida em violações de dados conhecidas.
