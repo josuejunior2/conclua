@@ -23,7 +23,7 @@
                         {{ $errors->has('orientacao_id') ? $errors->first('orientacao_id') : '' }}
                     </span>
                 </div>
-                <div class="row g-3 mb-4">
+                <div class="row g-3 mb-2">
                     <div class="col-md">
                         <div class="mb-3">
                             <div class="form-label required">Título</div>

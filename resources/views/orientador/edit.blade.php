@@ -11,7 +11,7 @@
                     autocomplete="off" novalidate>
                     @csrf
                     @method('PUT')
-                    <div class="row g-3 mb-4">
+                    <div class="row g-3 mb-2">
                         <div class="mb-3">
                             <label class="form-label">Atualize sua senha</label>
                             <div>
@@ -26,7 +26,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row g-3 mb-4">
+                    <div class="row g-3 mb-2">
                         <div class="col-md">
                             <div class="form-label required">Selecione sua formação</div>
                             <select class="form-select" name="formacao_id" id="formacao_id">
@@ -59,7 +59,7 @@
                             {{-- {{ $errors->has('area_id') ? $errors->first('area_id') : '' }} --}}
                         </div>
                     </div>
-                    <div class="row g-3 mb-4">
+                    <div class="row g-3 mb-2">
                         <div class="col-md">
                             <div class="form-label">Link do Currículo Lattes</div>
                             <input id="enderecoLattes" name="enderecoLattes" type="text" class="form-control"

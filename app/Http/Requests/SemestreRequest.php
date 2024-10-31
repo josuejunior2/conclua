@@ -28,7 +28,7 @@ class SemestreRequest extends FormRequest
     private function afterDataFimAnterior($data_inicio, $ano, $periodo)
     {
         if(!empty($data_inicio) && !empty($ano) && !empty($periodo)){
-            $semestreAnterior = Semestre::where('ano', $ano)->where('data_fim', '>=', $data_inicio)->whereNot('periodo', $periodo)->first();
+            $semestreAnterior = Semestre::where('ano', $ano)->where('data_fim', '>=', $data_inicio)->where('periodo', '<', $periodo)->first();
             if(isset($semestreAnterior) && $semestreAnterior->id != request()->input('id')){
                 return 'after:'.$semestreAnterior->data_fim;
             }

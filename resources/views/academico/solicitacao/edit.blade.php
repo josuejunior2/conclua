@@ -3,9 +3,7 @@
 @section('content')
 <div class="card m-3">
     <div class="card-header justify-content-between">
-        <h3 class="card-title">Cadastro do(a) Professor(a) {{ $solicitacao->Orientador->Admin->nome }}</h3>
-        {{-- <div class="d-flex justify-content-between col-auto">
-        </div> --}}
+        <h3 class="card-title">Solicitação de vinculação a {{ $solicitacao->Orientador->Admin->nome }}</h3>
     </div>
     <div class="card-body">
         <div class="datagrid mb-4">

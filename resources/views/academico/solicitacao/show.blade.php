@@ -3,7 +3,7 @@
 @section('content')
 <div class="card m-3">
     <div class="card-header justify-content-between">
-        <h3 class="card-title">Solicitação de vinculação ao(à) {{ $solicitacao->Orientador->Admin->nome }}</h3>
+        <h3 class="card-title">Solicitação de vinculação a {{ $solicitacao->Orientador->Admin->nome }}</h3>
         <div class="d-flex justify-content-between col-auto">
         @if (is_null($solicitacao->status))
             <a href=" {{ route('solicitacao.edit', ['solicitacao' => $solicitacao ]) }}" class="btn me-2 btn-secondary w-100">
