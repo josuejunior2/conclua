@@ -107,13 +107,12 @@ class SemestreController extends Controller
         $semestreSession = Semestre::find(session('semestre_id'));
 
         $verificaDataInicio = now() >= $semestreSession->data_inicio;
-        $verificaDataFinal = now() < $semestreSession->data_fim;
+        $verificaDataFinal = now() <= $semestreSession->data_fim;
 
         $validacao = $verificaDataInicio && $verificaDataFinal ? true : false;
         
         $request->session()->put('semestreIsAtivo', $validacao);
 
-
-        return redirect()->back()->with(['success' => 'mudou o semestre']);
+        return auth()->guard('web') ? redirect()->route('home') : redirect()->route('admin.home');
     }
 }

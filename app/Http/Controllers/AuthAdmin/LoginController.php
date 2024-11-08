@@ -69,7 +69,7 @@ class LoginController extends Controller
             $semestreSession = Semestre::find(session('semestre_id'));
 
             $verificaDataInicio = now() >= $semestreSession->data_inicio;
-            $verificaDataFinal = now() < $semestreSession->data_fim;
+            $verificaDataFinal = now() <= $semestreSession->data_fim;
 
             $validacao = $verificaDataInicio && $verificaDataFinal ? true : false;
             
