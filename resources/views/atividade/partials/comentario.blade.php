@@ -83,7 +83,7 @@
                                                         style="display: contents">
                                                         @method('DELETE')
                                                         @csrf
-                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#modal-destroy-comentario"
+                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#modal-destroy-comentario_{{ $comentario->id }}"
                                                             class="btn btn-pill p-1">
                                                             <svg xmlns="http://www.w3.org/2000/svg" class="ml-2"
                                                                 width="20" height="20" viewBox="0 0 24 24"
