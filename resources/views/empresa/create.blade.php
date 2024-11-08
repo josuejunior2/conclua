@@ -40,7 +40,7 @@
                     @csrf
                     <div class="row g-3 mb-4">
                         <div class="col-md">
-                            <div class="mb-3">
+                            <div class="mb-1">
                                 <div class="form-label required">Nome da empresa</div>
                                 <div><input id="nome" name="nome"  type="text" class="form-control" value="{{ old('nome', '') }}" /></div>
                                 <span class="{{ $errors->has('nome') ? 'text-danger' : '' }}">
@@ -49,18 +49,18 @@
                             </div>                    
                         </div>
                         <div class="col-md">
-                            <div class="mb-3">
+                            <div class="mb-1">
                                 <div class="form-label required">Cadastro Nacional de Pessoa Jurídica (CNPJ)</div>
                                 <input id="cnpj" name="cnpj" type="text" class="form-control" value="{{ old('cnpj', '') }}" data-mask="00.000.000/0000-00" data-mask-visible="true" placeholder="00.000.000/0000-00" data-mask-selectonfocus="true" autocomplete="off" />
                                 <span class="{{ $errors->has('cnpj') ? 'text-danger' : '' }}">
                                     {{ $errors->has('cnpj') ? $errors->first('cnpj') : '' }}
                                 </span>
-                                <div id="cnpjStatus" class="position-fixed">
+                                <div id="cnpjStatus" style="position: absolute">
                                 </div>
                             </div>
                         </div>
                         <div class="col-md">
-                            <div class="mb-3">
+                            <div class="mb-1">
                                 <div class="form-label required">Email da empresa</div>
                                 <input id="email" name="email"  type="text" class="form-control" value="{{ old('email', '') }}" />
                                 <span class="{{ $errors->has('email') ? 'text-danger' : '' }}">
