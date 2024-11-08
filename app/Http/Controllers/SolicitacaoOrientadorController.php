@@ -63,7 +63,7 @@ class SolicitacaoOrientadorController extends Controller
         $solicitacao->status = 1; // status de aprovada
         $solicitacao->save();
 
-        $solicitacao->Orientador->disponibilidade -= 1;
+        if($solicitacao->Orientador->disponibilidade > 0) $solicitacao->Orientador->disponibilidade -= 1;
         $solicitacao->Orientador->save();
 
         $outras = Solicitacao::where('academico_id', $solicitacao->Academico->id)->whereNot('id', $solicitacao->id);
