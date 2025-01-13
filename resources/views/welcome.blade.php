@@ -82,19 +82,19 @@
                           </div>
                       </div>
                   @else
-                      <div class="row">
-                        <div class="col">
-                            <a href="{{ route('login') }}" class="btn btn-outline-primary w-100">
+                      <div class="row text-center">
+                        <div class="col-md mb-2">
+                            <a href="{{ route('login') }}" class="btn btn-outline-primary">
                               Login - Acadêmico
                             </a>
                         </div>
-                        <div class="col">
-                            <a href="{{ route('admin.login.index', ['tipo' => 'Orientador']) }}" class="btn btn-outline-success w-100">
+                        <div class="col-md mb-2">
+                            <a href="{{ route('admin.login.index', ['tipo' => 'Orientador']) }}" class="btn btn-outline-success">
                               Login - Orientador
                             </a>
                         </div>
-                        <div class="col">
-                            <a href="{{ route('admin.login.index', ['tipo' => 'Administrador']) }}" class="btn btn-outline-secondary w-100">
+                        <div class="col-md mb-2">
+                            <a href="{{ route('admin.login.index', ['tipo' => 'Administrador']) }}" class="btn btn-outline-secondary">
                               Login - Administrador
                             </a>
                         </div>
