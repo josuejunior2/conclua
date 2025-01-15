@@ -32,7 +32,7 @@ class AdminUpdateOrientadorRequest extends FormRequest
             'email' => 'required|email',
             'masp' => [
                 'required',
-                'digits:7',
+                'regex:/^\d{7,8}$|^\d{7}-\d$/',
                 Rule::unique('orientadores', 'masp')->ignore(request()->orientador_id)
             ],
             'password' => ['nullable', 'string', Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised()],
@@ -49,7 +49,7 @@ class AdminUpdateOrientadorRequest extends FormRequest
             'required' => 'O campo :attribute deve ser preenchido.',
             'nome.min' => 'O campo nome deve ter no mínimo 7 caracteres.',
             'email.email' => 'O campo email deve ser preenchido com um endereço de email.',
-            'masp.digits' => 'O MASP deve ter 7 caracteres numéricos.',
+            'masp.regex' => 'O MASP deve ter um destes formatos: 1234567, 12345678 ou 1234567-8.',
             'masp.unique' => 'O MASP já está cadastrado no orientador: ' . $orientadorExistente,
         ];
     }

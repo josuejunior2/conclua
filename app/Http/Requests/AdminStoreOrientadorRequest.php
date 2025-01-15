@@ -28,7 +28,7 @@ class AdminStoreOrientadorRequest extends FormRequest
         return [
             'nome' => 'required|min:7',
             'email' => 'required|email',
-            'masp' => 'required|digits:7|unique:orientadores,masp',
+            'masp' => ['required', 'regex:/^\d{7,8}$|^\d{7}-\d$/', 'unique:orientadores,masp'],
         ];
     }
         /**
@@ -42,8 +42,8 @@ class AdminStoreOrientadorRequest extends FormRequest
             'required' => 'O campo :attribute deve ser preenchido.',
             'nome.min' => 'O campo nome deve ter no mínimo 7 caracteres.',
             'email.email' => 'O campo email deve ser preenchido com um endereço de email.',
-            'masp.digits' => 'O MASP deve ter 7 caracteres numéricos.',
             'masp.unique' => 'O MASP já está cadastrado no orientador: ' . $orientadorExistente,
+            'masp.regex' => 'O MASP deve ter um destes formatos: 1234567, 12345678 ou 1234567-8.',
         ];
     }
 }

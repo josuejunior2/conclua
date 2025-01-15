@@ -51,7 +51,7 @@ class AdminsImport implements ToCollection, WithValidation, WithHeadingRow
         return [
             'nome'  => 'required|string',
             'email' => 'required|email',
-            'masp'  => 'required|digits:7',
+            'masp'  => ['required', 'regex:/^\d{7,8}$|^\d{7}-\d$/', 'unique:orientadores,masp'],
         ];
     }
     /**
@@ -60,12 +60,14 @@ class AdminsImport implements ToCollection, WithValidation, WithHeadingRow
      */
     public function customValidationMessages(): array
     {
+        $orientadorExistente = Orientador::where('masp', request()->input('masp'))->exists() ? Orientador::where('masp', request()->input('masp'))->first()->User->nome : null;
         return [
             'nome.required' => 'O campo nome deve ser preenchido.',
             'email.required' => 'O campo email deve ser preenchido.',
             'masp.required' => 'O campo masp deve ser preenchido.',
             'email.email' => 'O email do orientador deve ser um email válido.',
-            'masp.digits' => 'O MASP deve ter 7 dígitos numéricos.',
+            'masp.regex' => 'O MASP deve ter um destes formatos: 1234567, 12345678 ou 1234567-8.',
+            'masp.unique' => 'O MASP já está cadastrado no orientador: ' . $orientadorExistente,
         ];
     }
 }

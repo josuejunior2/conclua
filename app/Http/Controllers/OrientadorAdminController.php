@@ -150,7 +150,7 @@ class OrientadorAdminController extends Controller
         try {
             Excel::import(new AdminsImport, $arquivo);
         } catch (\Exception $e) {
-            return redirect()->back()->withErrors(['erro' => 'Erro: '.$e->getMessage()]);
+            return redirect()->back()->withErrors($e->getMessage());
         }
 
         // pega cada orientador que acabou de ser cadastrado da tabela admins
