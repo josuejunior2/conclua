@@ -128,6 +128,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('role/update/permissoes/{role}', 'App\Http\Controllers\Admin\RoleController@update_permissions')->name('role.update-permissions');
         Route::resource('semestre', App\Http\Controllers\SemestreController::class);
 
+        Route::resource('area', App\Http\Controllers\AreaController::class)->except(['show']);
+        Route::resource('formacao', App\Http\Controllers\FormacaoController::class)->except(['show']);
+
         Route::post('orientador/download/modelo/planilha', 'App\Http\Controllers\OrientadorAdminController@downloadModeloPlanilha')->name('orientador.download.modelo.planilha');
         Route::post('cadastro/orientador/planilha', 'App\Http\Controllers\OrientadorAdminController@import_orientadores')->name('cadastro.planilha.orientador');
         Route::resource('orientador', App\Http\Controllers\OrientadorAdminController::class);
