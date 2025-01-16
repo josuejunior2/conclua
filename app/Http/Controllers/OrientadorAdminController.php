@@ -26,7 +26,7 @@ class OrientadorAdminController extends Controller
      */
     public function index()
     {
-        $todosOrientadores = Orientador::all();
+        $todosOrientadores = Orientador::withTrashed()->get();
         if(session('semestre_id')){
             $orientacoesSemestre = Orientacao::where('semestre_id', session('semestre_id'));
             return view('admin.orientador.index', ['orientadores' => $todosOrientadores, 'orientacoesSemestre' => $orientacoesSemestre]);
@@ -119,11 +119,21 @@ class OrientadorAdminController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Orientador $orientador)
+    public function destroy(string $id)
     {
-        $admin = $orientador->Admin;
-        $orientador->delete();
-        $admin->delete();
+        $this->middleware('permission:excluir orientador');
+        
+        DB::transaction(function() use($id){
+            $orientador = Orientador::withTrashed()->findOrFail($id);
+            if($orientador->trashed()){
+                $orientador->restore();
+                $orientador->AdminTrashed->restore();
+            }
+            else {
+                $orientador->delete();
+                $orientador->AdminTrashed->delete();
+            }
+        });
 
         return redirect()->route('admin.orientador.index');
     }

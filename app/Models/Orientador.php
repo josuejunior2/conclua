@@ -25,6 +25,11 @@ class Orientador extends Authenticatable
         return $this->belongsTo(Admin::class, 'admin_id'); // orientador tem 1 Formacao, ele olha a FK
     }
 
+    public function AdminTrashed()
+    {
+        return $this->belongsTo(Admin::class, 'admin_id')->withTrashed(); // orientador tem 1 Formacao, ele olha a FK
+    }
+
     public function Formacao()
     {
         return $this->belongsTo(Formacao::class); // orientador tem 1 Formacao, ele olha a FK

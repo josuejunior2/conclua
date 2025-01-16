@@ -58,9 +58,10 @@
                     </thead>
                     <tbody>
                         @foreach ($orientadores as $orientador)
+                        @include('admin.orientador.modal.destroy')
                             <tr>
-                                <td>{{ $orientador->Admin->nome }}</td>
-                                <td>{{ $orientador->Admin->email }}</td>
+                                <td>{{ $orientador->AdminTrashed->nome }}</td>
+                                <td>{{ $orientador->AdminTrashed->email }}</td>
                                 <td>{{ $orientador->Formacao ? $orientador->Formacao->nome : 'N/A' }}</td>
                                 <td>{{ $orientador->Area ? $orientador->Area->nome : 'N/A' }}</td>
                                 <td>{{-- @if ($o->disponibilidade == 0)N/A @elseif(isset(session('semestre_id'))) {{ $o->disponibilidade - $o->orientacoes->where('semestre_id', session('semestre_id')->id)->count() }} de {{ $o->disponibilidade }} @endif --}}</td>
@@ -76,37 +77,36 @@
                                     @endif
                                 </td>
                                 <td class="text-end">
-                                    @can('visualizar orientador')
-                                        <a class="btn justify-content-center"
-                                            href="{{ route('admin.orientador.show', ['orientador' => $orientador]) }}">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round"
-                                                class="icon icon-tabler icons-tabler-outline icon-tabler-eye">
-                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-                                                <path
-                                                    d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
-                                            </svg>
-                                            Visualizar
-                                        </a>
-                                    @endcan
-                                    {{-- <span class="dropdown">
-                    <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Ações</button>
-                    <div class="dropdown-menu dropdown-menu-end">
-                        <a class="dropdown-item" href="{{ route('orientador.show.admin', ['orientador' => $orientador]) }}">
-                            Visualizar
-                        </a>
-                        <form id="form_{{$orientador->id}}" method="post" action="{{ route('admin.orientador.destroy', ['orientador' => $orientador->id]) }}">
-                            @method('DELETE')
-                            @csrf
-                            <!-- <button type="submit">Excluir</button>  -->
-                            <a href="#" onclick="document.getElementById('form_{{$orientador->id}}').submit()" class="dropdown-item">
-                                Excluir
-                            </a>
-                        </form>
-                    </div>
-                  </span> --}}
+                                    @if(!$orientador->trashed())
+                                        @can('visualizar orientador')
+                                            <a class="btn justify-content-center"
+                                                href="{{ route('admin.orientador.show', ['orientador' => $orientador]) }}">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                    class="icon icon-tabler icons-tabler-outline icon-tabler-eye">
+                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                    <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                                                    <path
+                                                        d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+                                                </svg>
+                                                Visualizar
+                                            </a>
+                                        @endcan
+                                    @else
+                                    <div>
+                                        <form id="form_destroy_{{$orientador->id}}" method="post" action="{{ route('admin.orientador.destroy', ['orientador' => $orientador]) }}">
+                                            @method('DELETE')
+                                            @csrf
+                                            <!-- <button type="submit">Excluir</button>  -->
+                                            <a href="#" data-bs-toggle="modal"
+                                            data-bs-target="#modal-destroy-orientador-{{$orientador->id}}" class="btn btn-outline-danger" @can('excluir orientador') @else disabled @endcan>
+                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-lock-open"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 11m0 2a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2z" /><path d="M12 16m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M8 11v-5a4 4 0 0 1 8 0" /></svg>
+                                                Desbloquear
+                                            </a>
+                                        </form>
+                                    </div>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

@@ -82,7 +82,7 @@ class AdminController extends Controller
      */
     public function destroy(string $id)
     {
-        $this->middleware('permission:excluir academico');
+        $this->middleware('permission:excluir admin');
         $admin = Admin::withTrashed()->findOrFail($id);
         DB::transaction(function() use($admin){
             if($admin->trashed()) $admin->restore();
