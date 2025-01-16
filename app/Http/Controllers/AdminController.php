@@ -17,7 +17,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('admin.admin.index', ['admins' => Admin::role('Admin')->get()]);
+        return view('admin.admin.index', ['admins' => Admin::withoutRole('Orientador')->withTrashed()->get()]);
     }
 
     /**
@@ -80,12 +80,13 @@ class AdminController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Admin $admin)
+    public function destroy(string $id)
     {
         $this->middleware('permission:excluir academico');
-
-        DB::transaction(function() use($admin){   
-            $admin->delete();
+        $admin = Admin::withTrashed()->findOrFail($id);
+        DB::transaction(function() use($admin){
+            if($admin->trashed()) $admin->restore();
+            else $admin->delete();
         });
 
         return redirect()->route('admin.admin.index');
