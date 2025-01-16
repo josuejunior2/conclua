@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAdminRequest;
 use App\Http\Requests\UpdateAdminRequest;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -70,11 +70,7 @@ class AdminController extends Controller
 
         DB::transaction(function() use($request, $admin){   
             $dados = $request->validated();
-            $admin->update([
-                'nome' => $dados['nome'],
-                'email' => $dados['email'],
-                'password' => $dados['email'] ?? $admin->password,
-            ]);
+            $admin->update($dados);
             $admin->assignRole($request->validated()['perfil']);
         });
 
