@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class UsersImport implements ToModel, WithValidation, WithHeadingRow
 {
+    public $insertedIds = [];
     /**
     * @param array $row
     *
@@ -27,7 +28,8 @@ class UsersImport implements ToModel, WithValidation, WithHeadingRow
                 'email'    => $row['email'],
                 'password' => Hash::make($row['matricula']),
                 ]
-            );
+            );            
+            $this->insertedIds[] = $user->id;
             $academico = Academico::updateOrCreate(
                 ['matricula'    => $row['matricula']], // Condições para procurar o acadêmico existente
                 [

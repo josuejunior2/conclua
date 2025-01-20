@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Semestre;
+use App\Models\Role;
 use App\Models\SemestreOrientador;
 use App\Models\Orientador;
 use App\Models\Orientacao;
@@ -78,7 +79,7 @@ class OrientadorAdminController extends Controller
     public function edit(Orientador $orientador)
     {
         $this->middleware('permission:editar orientador');
-        return view('admin.orientador.edit', ['orientador' => $orientador]);
+        return view('admin.orientador.edit', ['orientador' => $orientador, 'roles' => Role::where('guard_name', 'admin')->whereNot('name', 'Admin')->get()]);
     }
 
     /**
@@ -102,6 +103,7 @@ class OrientadorAdminController extends Controller
                     'masp' => $dados['masp'],
                 ]
             );
+            $orientador->Admin->syncRoles($dados['perfil']);
         });
         return redirect()->route('admin.orientador.show', ['orientador' => $orientador]);
     }
@@ -158,13 +160,14 @@ class OrientadorAdminController extends Controller
         $arquivo = $request->file('tabela_orientadores');
 
         try {
-            Excel::import(new AdminsImport, $arquivo);
+            $import = new AdminsImport;
+            Excel::import($import, $arquivo);
         } catch (\Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
         }
 
         // pega cada orientador que acabou de ser cadastrado da tabela admins
-        $orientadores = Admin::where('created_at', '>=', now()->subSeconds(3))->get();
+        $orientadores = Admin::whereIn('id', $import->insertedIds)->get();
 
         foreach ($orientadores as $orientador) {
             $orientador->assignRole('Orientador');//, 'admin' // assign role em cada orientador que acabou de ser cadastrado na tabela admins

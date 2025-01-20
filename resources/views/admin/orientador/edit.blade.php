@@ -21,6 +21,20 @@
                     </span>
                 </div>
             </div>
+            <div class="col-md">
+                <div class="form-label required">Perfil</div>
+                <select class="form-select" name="perfil" id="perfil">
+                    <option value=""> -- Selecione o perfil -- </option>
+                    @foreach($roles as $role)
+                        <option value="{{ $role->name }}" {{ old('perfil') || $orientador->Admin->getRoleNames()->first() == $role->name ? 'selected' : '' }}>
+                            {{ $role->name }}
+                        </option>
+                    @endforeach
+                </select>
+                <span class="{{ $errors->has('perfil') ? 'text-danger' : '' }}">
+                    {{ $errors->has('perfil') ? $errors->first('perfil') : '' }}
+                </span>
+            </div>
         </div>
         <div class="row g-3 mb-4">
             <div class="col-md">

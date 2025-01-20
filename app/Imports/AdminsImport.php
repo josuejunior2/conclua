@@ -14,7 +14,7 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class AdminsImport implements ToCollection, WithValidation, WithHeadingRow
 {
-   
+    public $insertedIds = [];
     /**
     * @param Collection $collection
     */
@@ -33,6 +33,7 @@ class AdminsImport implements ToCollection, WithValidation, WithHeadingRow
                             'password'  => Hash::make($row['masp']),
                         ]
                     );
+                    $this->insertedIds[] = $admin->id;
 
                     $orientador = Orientador::updateOrCreate(
                         ['masp'         => $row['masp']], // Condições para procurar o orientador existente

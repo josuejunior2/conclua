@@ -165,13 +165,13 @@ class AcademicoAdminController extends Controller
         $arquivo = $request->file('tabela_academicos');
 
         try {
-            // Excel::import(new AcademicosImport(), $arquivo);
-            $users = Excel::import(new UsersImport(), $arquivo);
+            $import = new UsersImport();
+            $users = Excel::import($import, $arquivo);
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['erro' => 'Erro: Planilha vazia ou dados repetidos. ']);
         }
 
-        $usuarios = User::where('created_at', '>=', now()->subSeconds(3))->get();
+        $usuarios = User::whereIn('id', $import->insertedIds)->get();
 
 
         foreach ($usuarios as $usuario) {

@@ -38,7 +38,7 @@ class AdminController extends Controller
 
         DB::transaction(function() use($request){   
             $admin = Admin::create($request->validated());
-            $admin->assignRole($request->validated()['perfil']);
+            $admin->syncRoles($request->validated()['perfil']);
         });
 
         return redirect()->route('admin.admin.index');
@@ -70,8 +70,14 @@ class AdminController extends Controller
 
         DB::transaction(function() use($request, $admin){   
             $dados = $request->validated();
-            $admin->update($dados);
-            $admin->assignRole($request->validated()['perfil']);
+            $admin->update(
+                [
+                'nome'     => $dados['nome'],
+                'email'    => $dados['email'],
+                'password'    => $dados['password'] ?? $admin->password,
+                ]
+            );
+            $admin->syncRoles($dados['perfil']);
         });
 
         return redirect()->route('admin.admin.index');

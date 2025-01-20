@@ -31,7 +31,7 @@ class UpdateAdminRequest extends FormRequest
             'nome' => 'required|min:7',
             'email' => 'required|email',
             'password' => ['nullable', 'string', Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised()],
-            'perfil' => 'required',
+            'perfil' => 'required|exists:roles,name',
         ];
     }
     

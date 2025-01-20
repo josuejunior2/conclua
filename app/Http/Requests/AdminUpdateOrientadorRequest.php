@@ -36,6 +36,7 @@ class AdminUpdateOrientadorRequest extends FormRequest
                 Rule::unique('orientadores', 'masp')->ignore(request()->orientador_id)
             ],
             'password' => ['nullable', 'string', Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised()],
+            'perfil' => 'nullable|exists:roles,name'
         ];
     }
         /**
