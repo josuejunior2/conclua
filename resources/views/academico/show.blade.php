@@ -64,7 +64,7 @@
                     <div class="datagrid">
                         <div class="datagrid-item">
                             <div class="datagrid-title">Orientador</div>
-                            <div class="datagrid-content">{{ $tcc->Orientacao->Orientador->Admin->nome }}</div>
+                            <div class="datagrid-content">{{ $tcc->Orientacao->OrientadorTrashed->AdminTrashed->nome }}</div>
                         </div>
                         <div class="datagrid-item">
                             <div class="datagrid-title">Data de vinculação</div>
@@ -137,7 +137,7 @@
                 <div class="datagrid">
                     <div class="datagrid-item">
                         <div class="datagrid-title">Orientador</div>
-                        <div class="datagrid-content">{{ $estagio->Orientacao->Orientador->Admin->nome }}</div>
+                        <div class="datagrid-content">{{ $estagio->Orientacao->OrientadorTrashed->AdminTrashed->nome }}</div>
                     </div>
                     <div class="datagrid-item">
                         <div class="datagrid-title">Data de vinculação</div>

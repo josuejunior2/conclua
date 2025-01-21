@@ -40,7 +40,7 @@
             @foreach ($atividades as $atividade)
             <tr>
                 <!--<td></td>  <input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"> -->
-                <td>{{ $atividade->Orientacao->Academico->User->nome }}</td>
+                <td>{{ $atividade->Orientacao->AcademicoTrashed->UserTrashed->nome }}</td>
                 <td>{{ $atividade->Orientacao->modalidade() }}</td>
                 <td>{{ $atividade->titulo }}</td>
                 <td>{{ \Carbon\Carbon::parse($atividade->created_at)->format('d/m/Y H:i') }}</td>

@@ -37,7 +37,7 @@ class AdminStoreOrientadorRequest extends FormRequest
      */
     public function messages(): array
     {
-        $orientadorExistente = Orientador::where('masp', request()->input('masp'))->exists() ? Orientador::where('masp', request()->input('masp'))->first()->User->nome : null;
+        $orientadorExistente = Orientador::where('masp', request()->input('masp'))->exists() ? Orientador::where('masp', request()->input('masp'))->first()->AdminTrashed->nome : null;
         return [
             'required' => 'O campo :attribute deve ser preenchido.',
             'nome.min' => 'O campo nome deve ter no mínimo 7 caracteres.',

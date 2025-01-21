@@ -31,16 +31,25 @@ class Comentario extends Model
     {
         return $this->belongsTo(Orientador::class, 'orientador_id');
     }
+
+    public function OrientadorTrashed()
+    {
+        return $this->belongsTo(Orientador::class, 'orientador_id')->withTrashed();
+    }
     
     public function Academico()
     {
         return $this->belongsTo(Academico::class, 'academico_id');
     }
 
+    public function AcademicoTrashed(){
+        return $this->belongsTo(Academico::class, 'academico_id')->withTrashed();
+    }
+
     public function Autor()
     {
-        if($this->Orientador) return $this->Orientador->Admin;
-        if($this->Academico) return $this->Academico->User;
+        if($this->OrientadorTrashed) return $this->OrientadorTrashed->AdminTrashed;
+        if($this->AcademicoTrashed) return $this->AcademicoTrashed->UserTrashed;
     }
     
     public function Resposta()

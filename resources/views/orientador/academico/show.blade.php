@@ -10,7 +10,7 @@
         <div class="datagrid">
             <div class="datagrid-item">
                 <div class="datagrid-title">Nome</div>
-                <div class="datagrid-content">{{ $academico->User->nome }}</div>
+                <div class="datagrid-content">{{ $academico->UserTrashed->nome }}</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Matrícula</div>
@@ -18,7 +18,7 @@
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Email</div>
-                <div class="datagrid-content">{{ $academico->User->email }}</div>
+                <div class="datagrid-content">{{ $academico->UserTrashed->email }}</div>
             </div>
             <div class="datagrid-item">
                 <div class="datagrid-title">Criação do usuário</div>
@@ -150,7 +150,7 @@
                     <div class="accordion-item m-3">
                         <div class="d-flex justify-content-between" id="heading-1">
                             <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#accordion-collapse-{{ $solicitacao->id }}" aria-expanded="true">
-                                ({{ $solicitacao->Semestre->periodo }}/{{ $solicitacao->Semestre->ano }}) {{ $solicitacao->Orientador->Admin->nome }} - {{ \Carbon\Carbon::parse($solicitacao->created_at)->format('d/m/Y') }}
+                                ({{ $solicitacao->Semestre->periodo }}/{{ $solicitacao->Semestre->ano }}) {{ $solicitacao->OrientadorTrashed->AdminTrashed->nome }} - {{ \Carbon\Carbon::parse($solicitacao->created_at)->format('d/m/Y') }}
                             </button>
                         </div>
                         <div id="accordion-collapse-{{ $solicitacao->id }}" class="accordion-collapse collapse" data-bs-parent="#accordion-{{ $solicitacao->id }}">

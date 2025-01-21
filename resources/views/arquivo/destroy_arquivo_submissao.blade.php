@@ -5,7 +5,7 @@
           <div class="modal-title">Você tem certeza?</div>
           <div>Se proceder, você irá excluir o arquivo da submissão {{ $arquivo->nome }}. 
             <br>
-            Assim o orientador {{ $atividade->Orientacao->Orientador->Admin->nome }} não terá acesso.
+            Assim o orientador {{ $atividade->Orientacao->OrientadorTrashed->AdminTrashed->nome }} não terá acesso.
           </div>
         </div>
         <div class="modal-footer">

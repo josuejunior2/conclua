@@ -19,9 +19,9 @@
                 <form id="form_destroy_{{$academico->id}}" method="post" action="{{ route('admin.academico.destroy', ['academico' => $academico]) }}">
                     @method('DELETE')
                     @csrf
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#modal-destroy-academico" class="btn btn-danger w-100">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
-                        Excluir
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#modal-destroy-academico-{{$academico->id}}" class="btn btn-danger w-100">
+                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-lock"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6z" /><path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" /><path d="M8 11v-4a4 4 0 1 1 8 0v4" /></svg>
+                        Bloquear acesso
                     </a>
                 </form>
             @endcan
@@ -76,7 +76,7 @@
                                 @if(isset($tcc->Orientacao))
                                     <div class="datagrid-item">
                                         <div class="datagrid-title">Orientador</div>
-                                        <div class="datagrid-content">{{ $tcc->Orientacao->Orientador->Admin->nome }}</div>
+                                        <div class="datagrid-content">{{ $tcc->Orientacao->OrientadorTrashed->AdminTrashed->nome }}</div>
                                     </div>
                                     <div class="datagrid-item">
                                         <div class="datagrid-title">Data de vinculação</div>
@@ -183,7 +183,7 @@
                                 @if(isset($estagio->Orientacao))
                                     <div class="datagrid-item">
                                         <div class="datagrid-title">Orientador</div>
-                                        <div class="datagrid-content">{{ $estagio->Orientacao->Orientador->Admin->nome }}</div>
+                                        <div class="datagrid-content">{{ $estagio->Orientacao->OrientadorTrashed->AdminTrashed->nome }}</div>
                                     </div>
                                     <div class="datagrid-item">
                                         <div class="datagrid-title">Data de vinculação</div>
@@ -239,7 +239,7 @@
                 <div class="accordion-item m-3">
                     <div class="d-flex justify-content-between" id="heading-1">
                         <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#accordion-collapse-{{ $solicitacao->id }}" aria-expanded="true">
-                            ({{ $solicitacao->Semestre->periodo }}/{{ $solicitacao->Semestre->ano }}) {{ $solicitacao->Orientador->Admin->nome }} - {{ \Carbon\Carbon::parse($solicitacao->created_at)->format('d/m/Y') }}
+                            ({{ $solicitacao->Semestre->periodo }}/{{ $solicitacao->Semestre->ano }}) {{ $solicitacao->OrientadorTrashed->AdminTrashed->nome }} - {{ \Carbon\Carbon::parse($solicitacao->created_at)->format('d/m/Y') }}
                         </button>
                     </div>
                     <div id="accordion-collapse-{{ $solicitacao->id }}" class="accordion-collapse collapse" data-bs-parent="#accordion-{{ $solicitacao->id }}">
@@ -267,7 +267,7 @@
                                 </div>
                                 <div class="datagrid-item">
                                     <div class="datagrid-title">Orientador</div>
-                                    <div class="datagrid-content"><a href="{{ route('admin.orientador.show', ['orientador' => $solicitacao->Orientador]) }}">{{ $solicitacao->Orientador->Admin->nome }}</a></div>
+                                    <div class="datagrid-content"><a href="{{ route('admin.orientador.show', ['orientador' => $solicitacao->OrientadorTrashed]) }}">{{ $solicitacao->OrientadorTrashed->AdminTrashed->nome }}</a></div>
                                 </div>
                             </div>
                         </div>

@@ -25,8 +25,7 @@ class AcademicoAdminController extends Controller
      */
     public function index()
     {
-        // dd(session('semestre_id'));
-        $todosAcademicos = Academico::all();
+        $todosAcademicos = Academico::withTrashed()->get();
         if(session('semestre_id')){
             $estagioSemestre = AcademicoEstagio::where('semestre_id', session('semestre_id'));
             $tccSemestre = AcademicoTCC::where('semestre_id', session('semestre_id'));
@@ -111,6 +110,7 @@ class AcademicoAdminController extends Controller
      */
     public function show(Academico $academico)
     {
+        $this->middleware('permission:visualizar academico');
         return view('admin.academico.show', [
             'academico' => $academico, 
             'estagio' => $academico->getEstagioAtual(), 
@@ -122,26 +122,39 @@ class AcademicoAdminController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Academico $academico)
+    public function destroy(string $id)
     {
-        if(AcademicoTCC::where('academico_id', $academico->id)->exists()){
+        $this->middleware('permission:excluir academico');
 
-            $user = $academico->User;
-            $academico->academicosTCC()->delete();
-            $academico->delete();
-            $user->delete();
+        DB::transaction(function() use($id){
+            $academico = Academico::withTrashed()->findOrFail($id);
+            if($academico->trashed()){
+                $academico->restore();
+                $academico->UserTrashed->restore();
+            }
+            else {
+                $academico->delete();
+                $academico->UserTrashed->delete();
+            }
+        });
+        // if(AcademicoTCC::where('academico_id', $academico->id)->exists()){
 
-        } else if(AcademicoEstagio::where('academico_id', $academico->id)->exists()){
+        //     $user = $academico->User;
+        //     $academico->academicosTCC()->delete();
+        //     $academico->delete();
+        //     $user->delete();
 
-            $user = $academico->User;
-            $academico->academicosEstagio()->delete();
-            $academico->delete();
-            $user->delete();
-        } else {
-            $user = $academico->User;
-            $academico->delete();
-            $user->delete();
-        }
+        // } else if(AcademicoEstagio::where('academico_id', $academico->id)->exists()){
+
+        //     $user = $academico->User;
+        //     $academico->academicosEstagio()->delete();
+        //     $academico->delete();
+        //     $user->delete();
+        // } else {
+        //     $user = $academico->User;
+        //     $academico->delete();
+        //     $user->delete();
+        // }
         return redirect()->route('admin.academico.index');
     }
 

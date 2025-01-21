@@ -3,13 +3,13 @@
         @if (! auth()->user()->hasRole('Academico'))
             <div class="datagrid-item">
                 <div class="datagrid-title">Acadêmico</div>
-                <div class="datagrid-content">{{ $atividade->Orientacao->Academico->User->nome }}</div>
+                <div class="datagrid-content">{{ $atividade->Orientacao->AcademicoTrashed->UserTrashed->nome }}</div>
             </div>
         @endif
         @if (auth()->user()->hasRole('Admin'))
             <div class="datagrid-item">
                 <div class="datagrid-title">Orientador</div>
-                <div class="datagrid-content">{{ $atividade->Orientacao->Orientador->Admin->nome }}</div>
+                <div class="datagrid-content">{{ $atividade->Orientacao->OrientadorTrashed->AdminTrashed->nome }}</div>
             </div>
         @endif
         <div class="datagrid-item">

@@ -31,4 +31,8 @@ class AcademicoEstagio extends Model
         return $this->belongsTo(Academico::class, 'academico_id');
     }
 
+    public function AcademicoTrashed(){
+        return $this->belongsTo(Academico::class, 'academico_id')->withTrashed();
+    }
+
 }

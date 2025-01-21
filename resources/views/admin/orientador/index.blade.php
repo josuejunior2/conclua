@@ -68,7 +68,7 @@
                                 <td>
                                     @if (isset($orientacoesSemestre) && $orientacoesSemestre->where('orientador_id', $orientador->id)->exists())
                                         @foreach ($orientacoesSemestre->where('orientador_id', $orientador->id) as $orientacao)
-                                            {{ $orientacao->Academico->User->nome }} - @if ($orientacao->Academico->academicosTCC->where('semestre_id', session('semestre_id'))->first())
+                                            {{ $orientacao->AcademicoTrashed->UserTrashed->nome }} - @if ($orientacao->Academico->academicosTCC->where('semestre_id', session('semestre_id'))->first())
                                                 TCC
                                             @elseif ($orientacao->Academico->academicosEstagio->where('semestre_id', session('semestre_id'))->first())
                                                 Estagio

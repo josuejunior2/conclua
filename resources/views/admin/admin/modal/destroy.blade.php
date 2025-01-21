@@ -3,11 +3,11 @@
       <div class="modal-content">
         <div class="modal-body flex-start">
           <div class="modal-title">Você tem certeza?</div>
-          <div>Se proceder, você irá bloquear o acesso do admin {{ $admin->nome }}.</div>
+          <div>Se proceder, o acesso do admin {{ $admin->nome }} @if($admin->trashed()) será desbloqueado. @else será bloqueado. @endif </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-danger" onclick="document.getElementById('form_destroy_{{$admin->id}}').submit()">Sim, bloquear</button>
+          <button type="button" class="btn btn-danger" onclick="document.getElementById('form_destroy_{{$admin->id}}').submit()">Sim</button>
         </div>
       </div>
     </div>

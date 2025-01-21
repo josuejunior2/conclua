@@ -20,8 +20,16 @@ class Orientacao extends Model
         return $this->belongsTo(Orientador::class, 'orientador_id');
     }
 
+    public function OrientadorTrashed(){
+        return $this->belongsTo(Orientador::class, 'orientador_id')->withTrashed();
+    }
+
     public function Academico(){
         return $this->belongsTo(Academico::class, 'academico_id');
+    }
+
+    public function AcademicoTrashed(){
+        return $this->belongsTo(Academico::class, 'academico_id')->withTrashed();
     }
 
     public function Solicitacao(){

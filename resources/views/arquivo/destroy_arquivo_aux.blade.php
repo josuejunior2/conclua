@@ -5,7 +5,7 @@
           <div class="modal-title">Você tem certeza?</div>
           <div>Se proceder, você irá excluir o arquivo auxiliar {{ $arquivo->nome }}. 
             <br>
-            Assim o acadêmico {{ $atividade->Orientacao->Academico->User->nome }} não terá acesso.
+            Assim o acadêmico {{ $atividade->Orientacao->AcademicoTrashed->UserTrashed->nome }} não terá acesso.
           </div>
         </div>
         <div class="modal-footer">

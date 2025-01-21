@@ -61,7 +61,7 @@ class AdminsImport implements ToCollection, WithValidation, WithHeadingRow
      */
     public function customValidationMessages(): array
     {
-        $orientadorExistente = Orientador::where('masp', request()->input('masp'))->exists() ? Orientador::where('masp', request()->input('masp'))->first()->User->nome : null;
+        $orientadorExistente = Orientador::where('masp', request()->input('masp'))->exists() ? Orientador::where('masp', request()->input('masp'))->first()->AdminTrashed->nome : null;
         return [
             'nome.required' => 'O campo nome deve ser preenchido.',
             'email.required' => 'O campo email deve ser preenchido.',

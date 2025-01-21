@@ -33,7 +33,7 @@
         <div class="datagrid">
         <div class="datagrid-item">
             <div class="datagrid-title">Nome</div>
-            <div class="datagrid-content">{{ $orientador->Admin->nome }}</div>
+            <div class="datagrid-content">{{ $orientador->AdminTrashed->nome }}</div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">MASP</div>
@@ -41,7 +41,7 @@
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Email</div>
-            <div class="datagrid-content">{{ $orientador->Admin->email }}</div>
+            <div class="datagrid-content">{{ $orientador->AdminTrashed->email }}</div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Currículo Lattes</div>
@@ -112,7 +112,7 @@
                 <div class="accordion-item m-3">
                     <div class="d-flex justify-content-between" id="heading-1">
                         <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#accordion-collapse-{{ $orientacao->id }}" aria-expanded="true">
-                            ({{ $orientacao->Semestre->periodo }}/{{ $orientacao->Semestre->ano }}) @if(isset($orientacao->AcademicoTCC)) TCC - @elseif(isset($orientacao->AcademicoEstagio)) Estágio - @endif {{ $orientacao->Academico->User->nome }}
+                            ({{ $orientacao->Semestre->periodo }}/{{ $orientacao->Semestre->ano }}) @if(isset($orientacao->AcademicoTCC)) TCC - @elseif(isset($orientacao->AcademicoEstagio)) Estágio - @endif {{ $orientacao->AcademicoTrashed->UserTrashed->nome }}
                         </button>
                         <div class="d-flex justify-content-between col-auto">
                             @if(isset($orientacao->AcademicoTCC))
@@ -151,7 +151,7 @@
                             <div class="datagrid">
                                 <div class="datagrid-item">
                                     <div class="datagrid-title">Nome</div>
-                                    <div class="datagrid-content"><a href="{{ route('admin.academico.show', ['academico' => $orientacao->Academico]) }}">{{ $orientacao->Academico->User->nome }}</a></div>
+                                    <div class="datagrid-content"><a href="{{ route('admin.academico.show', ['academico' => $orientacao->Academico]) }}">{{ $orientacao->AcademicoTrashed->UserTrashed->nome }}</a></div>
                                 </div>
                                 <div class="datagrid-item">
                                     <div class="datagrid-title">Data de vinculação</div>

@@ -129,7 +129,7 @@
                                                     <a href="{{ route('admin.orientador.show', ['orientador' => $orientador]) }}"
                                                         class="card card-link card-link-pop">
                                                         <div class="card-body">
-                                                            {{ $orientador->Admin->nome }} completou o cadastro no sistema.
+                                                            {{ $orientador->AdminTrashed->nome }} completou o cadastro no sistema.
                                                             <div class="text-muted">{{ $orientador->updated_at->format('d/m/Y H:i') }}</div>
                                                         </div>
                                                     </a>
@@ -159,7 +159,7 @@
                                                     <a href="{{ route('admin.academico.show', ['academico' => $solicitacao->Academico]) }}"
                                                         class="card card-link card-link-pop">
                                                         <div class="card-body">
-                                                            {{ $solicitacao->Academico->User->nome }} solicitou vinculação a {{ $solicitacao->Orientador->Admin->nome }}.
+                                                            {{ $solicitacao->AcademicoTrashed->UserTrashed->nome }} solicitou vinculação a {{ $solicitacao->OrientadorTrashed->AdminTrashed->nome }}.
                                                             <div class="text-muted">{{ $solicitacao->created_at->format('d/m/Y H:i') }}</div>
                                                         </div>
                                                     </a>
@@ -189,7 +189,7 @@
                                                     <a href="{{ route('admin.academico.show', ['academico' => $orientacao->Academico]) }}"
                                                         class="card card-link card-link-pop">
                                                         <div class="card-body">
-                                                            {{ $orientacao->Orientador->Admin->nome }} está orientando {{ $orientacao->Academico->User->nome }}.
+                                                            {{ $orientacao->OrientadorTrashed->AdminTrashed->nome }} está orientando {{ $orientacao->AcademicoTrashed->UserTrashed->nome }}.
                                                             <div class="text-muted">{{ $orientacao->created_at->format('d/m/Y H:i') }}</div>
                                                         </div>
                                                     </a>

@@ -23,6 +23,10 @@ class AcademicoTCC extends Model
         return $this->belongsTo(Academico::class, 'academico_id');
     }
 
+    public function AcademicoTrashed(){
+        return $this->belongsTo(Academico::class, 'academico_id')->withTrashed();
+    }
+
     public function Semestre(){
         return $this->belongsTo(Semestre::class, 'semestre_id');
     }

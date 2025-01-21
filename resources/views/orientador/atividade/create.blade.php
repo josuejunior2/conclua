@@ -15,7 +15,7 @@
                         <option value=""> -- Selecione o orientando -- </option>
                         @foreach($orientacoes as $orientacao)
                             <option value="{{ $orientacao->id }}" {{ old('orientacao_id') == $orientacao->id ? 'selected' : '' }}>
-                                {{ $orientacao->Academico->User->nome }} @if(!empty($orientacao->AcademicoTCC)) - TCC @elseif(!empty($orientacao->AcademicoEstagio)) - Estágio @endif
+                                {{ $orientacao->AcademicoTrashed->UserTrashed->nome }} @if(!empty($orientacao->AcademicoTCC)) - TCC @elseif(!empty($orientacao->AcademicoEstagio)) - Estágio @endif
                             </option>
                         @endforeach
                     </select>

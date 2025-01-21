@@ -65,8 +65,8 @@
             <tbody>
             @foreach ($empresa->academicosEstagio as $estagio)
             <tr>
-                <td>{{ $estagio->Academico->User->nome }}</td>
-                <td>{{ $estagio->Orientacao ? $estagio->Orientacao->Orientador->Admin->nome : 'N/A' }}</td>
+                <td>{{ $estagio->AcademicoTrashed->UserTrashed->nome }}</td>
+                <td>{{ $estagio->Orientacao ? $estagio->Orientacao->OrientadorTrashed->AdminTrashed->nome : 'N/A' }}</td>
                 <td>{{ $estagio->setor_atuacao }}</td>
                 <td>{{ $estagio->supervisor }}</td>
                 <td>{{ $estagio->email_supervisor }}</td>

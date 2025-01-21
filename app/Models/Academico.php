@@ -10,7 +10,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class Academico extends Authenticatable
 {
-    use HasFactory, HasRoles,  SoftDeletes;
+    use HasFactory, HasRoles, SoftDeletes;
 
     protected $guard_name = 'web';
 
@@ -29,6 +29,10 @@ class Academico extends Authenticatable
 
     public function User(){
         return $this->belongsTo(User::class);
+    }
+
+    public function UserTrashed(){
+        return $this->belongsTo(User::class, 'user_id')->withTrashed();
     }
 
     public function academicosTCC(){
@@ -52,7 +56,7 @@ class Academico extends Authenticatable
     }
         
     public function diretorio(){
-        $nome = trim($this->User->nome);
+        $nome = trim($this->UserTrashed->nome);
         $partes = explode(' ', $nome);
         $primeiro = $partes[0];
         $ultimo = $partes[count($partes) - 1];

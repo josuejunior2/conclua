@@ -45,7 +45,7 @@ class AdminUpdateAcademicoRequest extends FormRequest
      */
     public function messages(): array
     {
-        $academicoExistente = Academico::where('matricula', request()->input('matricula'))->exists() ? Academico::where('matricula', request()->input('matricula'))->first()->User->nome : null;
+        $academicoExistente = Academico::where('matricula', request()->input('matricula'))->exists() ? Academico::where('matricula', request()->input('matricula'))->first()->UserTrashed->nome : null;
         return [
             'required' => 'O campo :attribute deve ser preenchido.',
             'nome.min' => 'O campo nome deve ter no mínimo 7 caracteres.',

@@ -44,8 +44,8 @@
                                 @foreach ($orientador->orientacoesNoSemestre() as $orientacao)
                                     <tr>
                                         <!--<td></td>  <input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"> -->
-                                        <td>{{ $orientacao->academico->User->nome }}</td>
-                                        <td>{{ $orientacao->academico->User->email }}</td>
+                                        <td>{{ $orientacao->AcademicoTrashed->UserTrashed->nome }}</td>
+                                        <td>{{ $orientacao->AcademicoTrashed->UserTrashed->email }}</td>
                                         <td>{{ $orientacao->modalidade() }}</td>
                                         <td>{{ $orientacao->created_at->format('d/m/Y') }}</td>
                                         <td>{{ $orientacao->notaTotal() }}</td>
@@ -96,7 +96,7 @@
                                                     <div class="row">
                                                         <div class="col">
                                                             <div class="text-truncate">
-                                                                {{ $solicitacao->Academico->User->nome }}
+                                                                {{ $solicitacao->AcademicoTrashed->UserTrashed->nome }}
                                                             </div>
                                                             <div class="text-muted">{{ $solicitacao->created_at->format('d/m/Y') }}</div>
                                                         </div>

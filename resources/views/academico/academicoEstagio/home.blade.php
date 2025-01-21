@@ -5,7 +5,7 @@
         <div class="card m-3">
             <div class="card-header justify-content-between">
                 <h3 class="card-title">Lista de atividades</h3>
-                <h3 class="card-title">{{$academico->OrientacaoAtual()->Orientador->Admin->nome}} ({{$academico->OrientacaoAtual()->Orientador->Admin->email}})</h3>
+                <h3 class="card-title">{{$academico->OrientacaoAtual()->OrientadorTrashed->AdminTrashed->nome}} ({{$academico->OrientacaoAtual()->OrientadorTrashed->AdminTrashed->email}})</h3>
                 @if (session('success'))
                     <div class="alert alert-success">
                         {{ session('success') }}

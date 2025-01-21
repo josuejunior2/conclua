@@ -62,7 +62,7 @@ class Orientador extends Authenticatable
     
     public function diretorio()
     {
-        $nome = trim($this->Admin->nome);
+        $nome = trim($this->AdminTrashed->nome);
         $partes = explode(' ', $nome);
         $primeiro = $partes[0];
         $ultimo = $partes[count($partes) - 1];

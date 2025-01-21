@@ -32,8 +32,8 @@
           <tbody>
             @foreach ($orientacoes as $orientacao)
             <tr>
-                <td>{{ $orientacao->Orientador->Admin->nome }}</td>
-                <td>{{ $orientacao->Academico->User->nome }}</td>
+                <td>{{ $orientacao->OrientadorTrashed->AdminTrashed->nome }}</td>
+                <td>{{ $orientacao->AcademicoTrashed->UserTrashed->nome }}</td>
                 <td>{{ $orientacao->modalidade() }}</td>
                 <td>{{ $orientacao->tema() }}</td>
                 <td>{{ $orientacao->notaTotal() }}</td>
