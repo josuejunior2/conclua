@@ -42,15 +42,24 @@
                                 <td>{{ $log['date'] }}</td>
                                 <td>{{ $log['type'] }}</td>
                                 <td>{{ $log['message'] }} <br>
-                                    @if (is_array($log['data']) && count($log['data']) > 0)
+                                    @if (is_array($log['data']) && !empty($log['data']))
                                         @foreach ($log['data'] as $model)
-                                            @foreach ($model as $key => $value)
-                                                <strong>{{ $key }}</strong> {
-                                                @foreach ($value as $key => $attr)
-                                                    <strong>{{ $key }}:</strong> {{ $attr }}
+                                            @if (is_array($model))
+                                                @foreach ($model as $key => $value)
+                                                    @if (is_array($value))
+                                                        <strong>{{ $key }}</strong> {
+                                                        @foreach ($value as $key => $attr)
+                                                            <strong>{{ $key }}:</strong> {{ is_array($attr) ? implode($attr) : $attr }}
+                                                        @endforeach
+                                                        }
+                                                    @else
+                                                        {{$value}}
+                                                    @endif
                                                 @endforeach
-                                                }
-                                            @endforeach
+                                            @else
+                                                {{$model}}
+                                            @endif
+                                                
                                         @endforeach
                                     @endif
                                 </td>
