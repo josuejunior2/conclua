@@ -13,6 +13,7 @@ use App\Http\Requests\ArquivoAuxRequest;
 use App\Http\Controllers\ArquivoController;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class AtividadeOrientadorController extends Controller
 {
@@ -58,6 +59,7 @@ class AtividadeOrientadorController extends Controller
                 $requestArquivos = new ArquivoAuxRequest($request->only(['arquivos_aux']));
                 $this->arquivoController->storeArquivoAux($requestArquivos, $atividade);
             }
+            Log::channel('main')->info('Atividade cadastrada.', ['data' => [$atividade], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
         });
         return redirect()->route('orientador.atividade.show', ['atividade' => $atividade]);
     }
@@ -96,6 +98,7 @@ class AtividadeOrientadorController extends Controller
                 $requestArquivos = new ArquivoAuxRequest($request->only(['arquivos_aux']));
                 $this->arquivoController->storeArquivoAux($requestArquivos, $atividade);
             }
+            Log::channel('main')->info('Atividade editada.', ['data' => [$atividade], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
         });
 
         return redirect()->route('orientador.atividade.show', ['atividade' => $atividade]);
@@ -117,6 +120,7 @@ class AtividadeOrientadorController extends Controller
             
             if(!empty($atividade->SubmissaoAtividade)) $atividade->SubmissaoAtividade->delete();
             $atividade->delete();
+            Log::channel('main')->info('Atividade excluída.', ['data' => [$atividade], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
         });
         return redirect()->route('orientador.atividade.index');
     }
@@ -130,6 +134,7 @@ class AtividadeOrientadorController extends Controller
 
         DB::transaction(function() use($request, &$atividade){   
             $atividade->update($request->validated());
+            Log::channel('main')->info('Atividade avaliada.', ['data' => [$atividade], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
         });
         return redirect()->route('orientador.atividade.show', ['atividade' => $atividade]);
     }

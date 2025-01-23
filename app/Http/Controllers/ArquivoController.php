@@ -14,6 +14,7 @@ use App\Models\SubmissaoAtividade;
 use App\Http\Requests\ArquivoAuxRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ArquivoController extends Controller
 { 
@@ -57,6 +58,7 @@ class ArquivoController extends Controller
                     'caminho' => $caminho,
                 ]);
                 Storage::disk('public')->putFileAs($caminho, $arquivo, $nome);
+                Log::channel('main')->info('Arquivo submissão armazenado.', ['data' => [$caminho, $arquivo, $nome], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
             }
         });
 
@@ -81,6 +83,7 @@ class ArquivoController extends Controller
                     'caminho' => $caminho,
                 ]);
                 Storage::disk('public')->putFileAs($caminho, $arquivo, $nome);
+                Log::channel('main')->info('Arquivo auxiliar armazenado.', ['data' => [$caminho, $arquivo, $nome], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
             }        
         });
         
@@ -94,7 +97,8 @@ class ArquivoController extends Controller
     {        
         DB::transaction(function() use($arquivo){   
             Storage::disk('public')->delete($arquivo->caminho . '/' . $arquivo->nome);
-            $arquivo->delete();        
+            $arquivo->delete();      
+            Log::channel('main')->info('Arquivo submissão excluído.', ['data' => [$arquivo->caminho, $arquivo], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);  
         });
         return redirect()->back()->with(['success' => 'Arquivo da submissão excluído com sucesso.']);
     }
@@ -107,6 +111,7 @@ class ArquivoController extends Controller
         DB::transaction(function() use($arquivo){ 
             Storage::disk('public')->delete($arquivo->caminho . '/' . $arquivo->nome);
             $arquivo->delete();  
+            Log::channel('main')->info('Arquivo auxiliar excluído.', ['data' => [$arquivo->caminho, $arquivo], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]); 
         });
         return redirect()->back()->with(['success' => 'Arquivo auxiliar excluído com sucesso.']);
     }

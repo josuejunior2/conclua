@@ -9,18 +9,11 @@ use App\Models\Empresa;
 use App\Models\Semestre;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 
 class AcademicoEstagioController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -37,6 +30,7 @@ class AcademicoEstagioController extends Controller
         $academico = Academico::where('user_id', auth()->user()->id)->first();
         // dd($request->all());
         $academicoEstagio = AcademicoEstagio::create($request->validated());
+        Log::channel('main')->info('Estágio cadastrado.', ['data' => [$academicoEstagio], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
 
         return view('academico.finalacademico', ['academico' => $academico]);
     }
@@ -63,15 +57,8 @@ class AcademicoEstagioController extends Controller
     public function update(AcademicoEstagioRequest $request, AcademicoEstagio $academicoEstagio)
     {
         $academicoEstagio->update($request->validated());
+        Log::channel('main')->info('Estágio atualizado.', ['data' => [$academicoEstagio], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
 
         return redirect()->route('home');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(AcademicoEstagio $academicoEstagio)
-    {
-        //
     }
 }

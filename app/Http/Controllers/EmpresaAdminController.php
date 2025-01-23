@@ -9,6 +9,7 @@ use App\Http\Requests\EmpresaRequest;
 use App\Models\Academico;
 use App\Models\AcademicoEstagio;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class EmpresaAdminController extends Controller
 {
@@ -37,6 +38,7 @@ class EmpresaAdminController extends Controller
         $this->middleware('permission:criar empresa');
         DB::transaction(function() use($request, &$empresa){    
             $empresa = Empresa::create($request->validated());
+            Log::channel('main')->info('Empresa cadastrada.', ['data' => [$empresa], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
         });
 
         return redirect()->route('admin.empresa.index');
@@ -68,6 +70,7 @@ class EmpresaAdminController extends Controller
         $this->middleware('permission:editar empresa');
         DB::transaction(function() use($request, &$empresa){    
             $empresa->update($request->validated());
+            Log::channel('main')->info('Empresa editada.', ['data' => [$empresa], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
         });
 
         return redirect()->route('admin.empresa.index');
@@ -81,6 +84,7 @@ class EmpresaAdminController extends Controller
         $this->middleware('permission:excluir empresa');
         DB::transaction(function() use($empresa){    
             $empresa->delete();
+            Log::channel('main')->info('Empresa excluída.', ['data' => [$empresa], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
         });
 
         return redirect()->route('admin.empresa.index');

@@ -149,6 +149,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('empresa', App\Http\Controllers\EmpresaAdminController::class);
 
         Route::resource('admin', App\Http\Controllers\AdminController::class);
+
+        Route::get('log', [App\Http\Controllers\LogController::class, 'index'])->name('log.index');
     });
 });
 

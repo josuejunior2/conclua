@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use App\Http\Requests\AtividadeRequest;
 use App\Http\Requests\AvaliarAtividadeRequest;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Log;
 
 class AtividadeAdminController extends Controller
 {
@@ -42,6 +43,7 @@ class AtividadeAdminController extends Controller
     {
         if($atividade->SubmissaoAtividade) $atividade->SubmissaoAtividade()->delete();
         $atividade->delete();
+        Log::channel('main')->info('Atividade excluída.', ['data' => [$atividade], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
         return redirect()->route('admin.atividade.index');
     }
 }

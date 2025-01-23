@@ -18,6 +18,7 @@ use App\Http\Requests\AdminStoreOrientadorRequest;
 use App\Http\Requests\AdminUpdateOrientadorRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class OrientadorAdminController extends Controller
 {
@@ -69,6 +70,7 @@ class OrientadorAdminController extends Controller
                 ]
             );
             $user->assignRole('Orientador');
+            Log::channel('main')->info('Orientador cadastrado.', ['data' => [$orientador, $user], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
         });
         return redirect()->route('admin.orientador.show', ['orientador' => $orientador]);
     }
@@ -79,7 +81,7 @@ class OrientadorAdminController extends Controller
     public function edit(Orientador $orientador)
     {
         $this->middleware('permission:editar orientador');
-        return view('admin.orientador.edit', ['orientador' => $orientador, 'roles' => Role::where('guard_name', 'admin')->whereNot('name', 'Admin')->get()]);
+        return view('admin.orientador.edit', ['orientador' => $orientador, 'roles' => Role::where('guard_name', 'admin')->where('name', 'Orientador')->get()]);
     }
 
     /**
@@ -104,6 +106,7 @@ class OrientadorAdminController extends Controller
                 ]
             );
             $orientador->Admin->syncRoles($dados['perfil']);
+            Log::channel('main')->info('Orientador editado.', ['data' => [$orientador, $dados['perfil']], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
         });
         return redirect()->route('admin.orientador.show', ['orientador' => $orientador]);
     }
@@ -130,10 +133,12 @@ class OrientadorAdminController extends Controller
             if($orientador->trashed()){
                 $orientador->restore();
                 $orientador->AdminTrashed->restore();
+                Log::channel('main')->info('Orientador desbloqueado.', ['data' => [$orientador], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
             }
             else {
                 $orientador->delete();
                 $orientador->AdminTrashed->delete();
+                Log::channel('main')->info('Orientador bloqueado.', ['data' => [$orientador], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
             }
         });
 
@@ -165,17 +170,20 @@ class OrientadorAdminController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->withErrors($e->getMessage());
         }
+        
+        DB::transaction(function() use($arquivo, $import){
+            // pega cada orientador que acabou de ser cadastrado da tabela admins
+            $orientadores = Admin::whereIn('id', $import->insertedIds)->get();
 
-        // pega cada orientador que acabou de ser cadastrado da tabela admins
-        $orientadores = Admin::whereIn('id', $import->insertedIds)->get();
+            foreach ($orientadores as $orientador) {
+                $orientador->assignRole('Orientador');//, 'admin' // assign role em cada orientador que acabou de ser cadastrado na tabela admins
+            }
 
-        foreach ($orientadores as $orientador) {
-            $orientador->assignRole('Orientador');//, 'admin' // assign role em cada orientador que acabou de ser cadastrado na tabela admins
-        }
+            $nomeOriginal = $arquivo->getClientOriginalName();
 
-        $nomeOriginal = $arquivo->getClientOriginalName();
-
-        $arquivo->move('uploads', $nomeOriginal);//ta dando errado
+            $arquivo->move('uploads', $nomeOriginal);//ta dando errado
+            Log::channel('main')->info('Importação de orientadores feita.', ['data' => [$arquivo], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
+        });
 
         return redirect()->route('admin.orientador.index')->with('success', 'Operação realizada com sucesso!');
     }

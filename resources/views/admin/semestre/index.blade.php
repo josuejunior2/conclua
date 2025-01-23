@@ -12,9 +12,11 @@
             </div>
             @endif
             <div>
-                <a href="{{ route('admin.semestre.create') }}" class="btn btn-success w-100">
-                    Iniciar novo semestre
-                </a>
+                @can('criar semestre')
+                    <a href="{{ route('admin.semestre.create') }}" class="btn btn-success w-100">
+                        Iniciar novo semestre
+                    </a>
+                @endcan
                 @if (session('success'))
                     <div class="alert alert-success">
                         {{ session('success') }}

@@ -17,6 +17,7 @@ use App\Http\Requests\AdminStoreAcademicoRequest;
 use App\Http\Requests\AdminUpdateAcademicoRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class AcademicoAdminController extends Controller
 {
@@ -67,6 +68,7 @@ class AcademicoAdminController extends Controller
                 ]
             );
             $user->assignRole('Academico');
+            Log::channel('main')->info('Acadêmico cadastrado.', ['data' => [$academico], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
         });
         return redirect()->route('admin.academico.show', ['academico' => $academico]);
     }
@@ -101,6 +103,7 @@ class AcademicoAdminController extends Controller
                     'matricula' => $dados['matricula'],
                 ]
             );
+            Log::channel('main')->info('Acadêmico editado.', ['data' => [$academico], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
         });
         return redirect()->route('admin.academico.show', ['academico' => $academico]);
     }
@@ -131,10 +134,12 @@ class AcademicoAdminController extends Controller
             if($academico->trashed()){
                 $academico->restore();
                 $academico->UserTrashed->restore();
+                Log::channel('main')->info('Acadêmico desbloqueado.', ['data' => [$academico], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
             }
             else {
                 $academico->delete();
                 $academico->UserTrashed->delete();
+                Log::channel('main')->info('Acadêmico bloqueado.', ['data' => [$academico], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
             }
         });
         // if(AcademicoTCC::where('academico_id', $academico->id)->exists()){
@@ -181,19 +186,21 @@ class AcademicoAdminController extends Controller
             $import = new UsersImport();
             $users = Excel::import($import, $arquivo);
         } catch (\Exception $e) {
-            return redirect()->back()->withErrors(['erro' => 'Erro: Planilha vazia ou dados repetidos. ']);
+            return redirect()->back()->withErrors($e->getMessage());
         }
 
-        $usuarios = User::whereIn('id', $import->insertedIds)->get();
+        DB::transaction(function() use($arquivo, $import){
+            $usuarios = User::whereIn('id', $import->insertedIds)->get();
 
+            foreach ($usuarios as $usuario) {
+                $usuario->assignRole('Academico');
+            }
 
-        foreach ($usuarios as $usuario) {
-            $usuario->assignRole('Academico');
-        }
+            $nomeOriginal = $arquivo->getClientOriginalName();
 
-        $nomeOriginal = $arquivo->getClientOriginalName();
-
-        $arquivo->move('uploads', $nomeOriginal);// ta dando errado, ver depois
+            $arquivo->move('uploads', $nomeOriginal);// ta dando errado, ver depois
+            Log::channel('main')->info('Importação de acadêmicos feita.', ['data' => [$arquivo], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
+        });
 
         return redirect()->route('admin.academico.index')->with('success', 'Operação realizada com sucesso!');
     }
@@ -203,16 +210,20 @@ class AcademicoAdminController extends Controller
      */
     public function desvincular_academico_tcc(AcademicoTCC $tcc)
     {
-        $orientacao = $tcc->Orientacao;
-        $orientacao->Solicitacao->status = 0;
-        $orientacao->Solicitacao->save();
+        DB::transaction(function() use(&$tcc){
+            $orientacao = $tcc->Orientacao;
+            $orientacao->Solicitacao->status = 0;
+            $orientacao->Solicitacao->save();
 
-        $tcc->orientacao_id = null;
-        $tcc->save();
+            $tcc->orientacao_id = null;
+            $tcc->save();
 
-        $orientacao->Orientador->disponibilidade += 1;
-        $orientacao->Orientador->save();
-        $orientacao->delete();
+            $orientacao->Orientador->disponibilidade += 1;
+            $orientacao->Orientador->save();
+            $orientacao->delete();
+            Log::channel('main')->info('Acadêmico desvinculado do orientador.', ['data' => [$orientacao, $tcc, $tcc->Academico], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
+        });
+
         return redirect()->route('admin.academico.show', ['academico' => $tcc->Academico]);
     }
     /**
@@ -220,16 +231,18 @@ class AcademicoAdminController extends Controller
      */
     public function desvincular_academico_estagio(AcademicoEstagio $estagio)
     {
-        // dd("oi");
-        $orientacao = $estagio->Orientacao;
-        $orientacao->Solicitacao->status = 0;
-        $orientacao->Solicitacao->save();
-        $estagio->orientacao_id = null;
-        $estagio->save();
+        DB::transaction(function() use($estagio){
+            $orientacao = $estagio->Orientacao;
+            $orientacao->Solicitacao->status = 0;
+            $orientacao->Solicitacao->save();
+            $estagio->orientacao_id = null;
+            $estagio->save();
 
-        $orientacao->Orientador->disponibilidade += 1;
-        $orientacao->Orientador->save();
-        $orientacao->delete();
+            $orientacao->Orientador->disponibilidade += 1;
+            $orientacao->Orientador->save();
+            $orientacao->delete();
+            Log::channel('main')->info('Acadêmico desvinculado do orientador.', ['data' => [$orientacao, $estagio, $estagio->Academico], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
+        });
 
         return redirect()->route('admin.academico.show', ['academico' => $estagio->Academico]);
     }

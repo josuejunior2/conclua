@@ -19,32 +19,32 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $admin = Admin::create( [
-            'nome' => 'admin',
-            'email' => 'josuejuniorww@gmail.com',
-            'password' => 'admin123',
-        ]);
+        // $admin = Admin::create( [
+        //     'nome' => 'admin',
+        //     'email' => 'josuejuniorww@gmail.com',
+        //     'password' => 'admin123',
+        // ]);
         
-        $formacao = Formacao::create([
-            'nome' => 'Administração'
-        ]);
+        // $formacao = Formacao::create([
+        //     'nome' => 'Administração'
+        // ]);
         
-        $area = Area::create([
-            'nome' => 'Marketing'
-        ]);
+        // $area = Area::create([
+        //     'nome' => 'Marketing'
+        // ]);
 
         
-        $admin2 = Admin::create( [
-            'nome' => 'june admin',
-            'email' => 'juneAdm@email.com',
-            'password' => 'admin123',
-        ]);
+        // $admin2 = Admin::create( [
+        //     'nome' => 'june admin',
+        //     'email' => 'juneAdm@email.com',
+        //     'password' => 'admin123',
+        // ]);
         
         $this->call(
             PerfisEPermissoesSeeder::class,
         );
-        $admin2->assignRole('Admin', 'admin');
+        // $admin2->assignRole('Admin', 'admin');
 
-        $admin->assignRole('Admin', 'admin');
+        // $admin->assignRole('Admin', 'admin');
     }
 }

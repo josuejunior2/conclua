@@ -14,6 +14,7 @@ use Illuminate\Http\Request\Request;
 use App\Http\Requests\AcademicoRequest;
 use App\Http\Requests\AcademicoUpdateRequest;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class AcademicoController extends Controller
 {
@@ -37,9 +38,10 @@ class AcademicoController extends Controller
         $academico = Academico::where('user_id', auth()->user()->id)->first(); // recupera o Academico
 
         if ($academico) {
-            auth()->user()->update([
+            $academico->User->update([
                 'password' => Hash::make($request->input('password')), // atualiza a senha
             ]);
+            Log::channel('main')->info('Acadêmico alterou a senha, primeiro acesso.', ['data' => [$academico], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
 
             if($request->input('modalidade') == 0){
                 return redirect()->route('empresa.create');
@@ -85,11 +87,12 @@ class AcademicoController extends Controller
         $dados = $request->validated();
         $dados['password'] = Hash::make($dados['password']);
         $academico->User->update($dados);
+        Log::channel('main')->info('Acadêmico editado, editou seus dados.', ['data' => [$academico], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
         return redirect()->route('academico.show', ['user' => $academico->User]);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified resource from storage. // NAO TA SENDO USADO ////////////////////////////////////
      */
     public function destroy(Academico $academico)
     {

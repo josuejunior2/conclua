@@ -24,7 +24,6 @@ class PerfisEPermissoesSeeder extends Seeder
 
         $permissionsAdmin = collect([
             ['guard_name' => 'admin', 'name' => 'CRUD usuarios',  'description' => 'Permite fazer CRUD de todos usuários.'],
-            ['guard_name' => 'admin', 'name' => 'configurar semestre',  'description' => 'Permite configurar um semestre.'],
             ['guard_name' => 'admin', 'name' => 'configurar perfil',  'description' => 'Permite configurar perfis e permissoes dos usuários.'],
             ['guard_name' => 'admin', 'name' => 'desvincular academico',  'description' => 'Permite desvincular um academico de seu orientador.'],
             
@@ -57,6 +56,16 @@ class PerfisEPermissoesSeeder extends Seeder
             ['guard_name' => 'admin', 'name' => 'excluir admin',  'description' => 'Permite excluir admin.'],
             ['guard_name' => 'admin', 'name' => 'avaliar admin',  'description' => 'Permite avaliar admin.'],
             ['guard_name' => 'admin', 'name' => 'assinala perfil admin',  'description' => 'Permite assinalar perfil a admin.'],
+
+            ['guard_name' => 'admin', 'name' => 'ver logs',  'description' => 'Permite visualizar os logs.'],
+
+            ['guard_name' => 'admin', 'name' => 'criar area',  'description' => 'Permite criar area.'],
+            ['guard_name' => 'admin', 'name' => 'editar area',  'description' => 'Permite editar area.'],
+            ['guard_name' => 'admin', 'name' => 'excluir area',  'description' => 'Permite excluir area.'],
+
+            ['guard_name' => 'admin', 'name' => 'criar formacao',  'description' => 'Permite criar formacao.'],
+            ['guard_name' => 'admin', 'name' => 'editar formacao',  'description' => 'Permite editar formacao.'],
+            ['guard_name' => 'admin', 'name' => 'excluir formacao',  'description' => 'Permite excluir formacao.'],
         ]);
 
 
@@ -86,6 +95,11 @@ class PerfisEPermissoesSeeder extends Seeder
             ['guard_name' => 'web', 'name' => 'criar comentario',  'description' => 'Permite comentar na atividade.'],
             ['guard_name' => 'web', 'name' => 'excluir comentario',  'description' => 'Permite excluir comentário da atividade.'],
             ['guard_name' => 'web', 'name' => 'editar comentario',  'description' => 'Permite editar comentário da atividade.'],
+            
+            ['guard_name' => 'web', 'name' => 'visualizar solicitacao',  'description' => 'Permite criar solicitacao.'],
+            ['guard_name' => 'web', 'name' => 'criar solicitacao',  'description' => 'Permite editar solicitacao.'],
+            ['guard_name' => 'web', 'name' => 'excluir solicitacao',  'description' => 'Permite excluir solicitacao.'],
+            ['guard_name' => 'web', 'name' => 'editar solicitacao',  'description' => 'Permite avaliar solicitacao.'],
         ]);
 
         $permissionsAdmin->each(function ($item) use ($admin) {

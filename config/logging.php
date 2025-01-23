@@ -52,6 +52,13 @@ return [
     */
 
     'channels' => [
+        'main' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/main.log'),
+            'level' => 'debug',
+            'replace_placeholders' => true,
+        ],
+        
         'stack' => [
             'driver' => 'stack',
             'channels' => ['single'],

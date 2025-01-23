@@ -12,6 +12,7 @@ use App\Http\Requests\MudarSemestreRequest;
 use App\Models\Role;
 use App\Models\Permission;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class SemestreController extends Controller
 {
@@ -20,7 +21,7 @@ class SemestreController extends Controller
      */
     public function index()
     {
-        // dd(app('semestreAtivo'));
+        $this->middleware('permission:visualizar semestre');
         $semestres = Semestre::all();
         return view('admin.semestre.index', ['semestres' => $semestres]);
     }
@@ -30,6 +31,7 @@ class SemestreController extends Controller
      */
     public function create()
     {
+        $this->middleware('permission:criar semestre');
         return view('admin.semestre.create');
     }
 
@@ -38,8 +40,10 @@ class SemestreController extends Controller
      */
     public function store(SemestreRequest $request)
     {
+        $this->middleware('permission:criar semestre');
         DB::transaction(function() use($request){  
             $semestre = Semestre::create($request->validated());
+            Log::channel('main')->info('Semestre cadastrado.', ['data' => [$semestre], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
         });
         // session()->put('semestre_id', $semestre->id);
 
@@ -73,8 +77,10 @@ class SemestreController extends Controller
      */
     public function update(SemestreRequest $request, Semestre $semestre)
     {
+        $this->middleware('permission:editar semestre');
         DB::transaction(function() use($request, $semestre){  
             $semestre->update($request->validated());
+            Log::channel('main')->info('Semestre editado.', ['data' => [$semestre], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
         });
 
         return redirect()->route('admin.semestre.index');
@@ -85,6 +91,7 @@ class SemestreController extends Controller
      */
     public function destroy(Semestre $semestre)
     {
+        $this->middleware('permission:excluir semestre');
         DB::transaction(function() use($semestre){  
             foreach($semestre->academicosEstagio as $academicoEstagio){
                 $academicoEstagio->delete();
@@ -93,6 +100,7 @@ class SemestreController extends Controller
                 $academicoTCC->delete();
             }
             $semestre->delete();
+            Log::channel('main')->info('Semestre excluído.', ['data' => [$semestre], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
         });
         return redirect()->route('admin.semestre.index');
     }

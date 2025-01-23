@@ -80,6 +80,7 @@
                     </div>
                 </div>
             </div>
+            @can('visualizar solicitacoes de orientacao')
             {{-- @if(session('semestreIsAtivo')) --}}
                 <div class="row row-deck row-cards">
                     <div class="col-sm-6 col-lg-3">
@@ -127,6 +128,7 @@
                     </div>
                 </div>
             {{-- @endif --}}
+            @endcan
         </div>
     </div>
 @endsection

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Solicitacao;
 use App\Models\Orientacao;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class SolicitacaoOrientadorController extends Controller
 {
@@ -15,6 +17,7 @@ class SolicitacaoOrientadorController extends Controller
      */
     public function show(Solicitacao $solicitacao)
     {
+        $this->middleware('permission:visualizar solicitacoes de orientacao');
         $tcc = $estagio = null;
         if($solicitacao->AcademicoTCC) { $tcc = $solicitacao->AcademicoTCC; }
         if($solicitacao->AcademicoEstagio) { $estagio = $solicitacao->AcademicoEstagio; }
@@ -32,45 +35,52 @@ class SolicitacaoOrientadorController extends Controller
      */
     public function aceitar_solicitacao(Solicitacao $solicitacao)
     { //acho que tem que colocar aqui a verificação se já tá orientado
-        if($solicitacao->AcademicoTCC){
-            if($solicitacao->AcademicoTCC->where('semestre_id', session('semestre_id'))->first()){
-                $tcc = $solicitacao->AcademicoTCC->where('semestre_id', session('semestre_id'))->first();
+        $this->middleware('permission:responder solicitacoes de orientacao');
+        
+        if(!empty($solicitacao->Academico->OrientacaoAtual)) return redirect()->back()->withErrors(['error' => 'Acadêmico já está vinculado a um orientador!']);
 
-                $orientacao = Orientacao::create([
-                    'academico_id' => $solicitacao->Academico->id,
-                    'orientador_id' => $solicitacao->Orientador->id,
-                    'semestre_id' => $solicitacao->Semestre->id,
-                    'solicitacao_id' => $solicitacao->id,
-                    'academico_tcc_id' => $tcc->id
-                ]);
-                $tcc->update(['orientacao_id' => $orientacao->id]);
+        DB::transaction(function() use($solicitacao){
+            if($solicitacao->AcademicoTCC){
+                if($solicitacao->AcademicoTCC->where('semestre_id', session('semestre_id'))->first()){
+                    $tcc = $solicitacao->AcademicoTCC->where('semestre_id', session('semestre_id'))->first();
+
+                    $orientacao = Orientacao::create([
+                        'academico_id' => $solicitacao->Academico->id,
+                        'orientador_id' => $solicitacao->Orientador->id,
+                        'semestre_id' => $solicitacao->Semestre->id,
+                        'solicitacao_id' => $solicitacao->id,
+                        'academico_tcc_id' => $tcc->id
+                    ]);
+                    $tcc->update(['orientacao_id' => $orientacao->id]);
+                }
             }
-        }
-        if($solicitacao->AcademicoEstagio){
-            if($solicitacao->AcademicoEstagio->where('semestre_id', session('semestre_id'))->first()){
-                $estagio = $solicitacao->AcademicoEstagio->where('semestre_id', session('semestre_id'))->first();
+            if($solicitacao->AcademicoEstagio){
+                if($solicitacao->AcademicoEstagio->where('semestre_id', session('semestre_id'))->first()){
+                    $estagio = $solicitacao->AcademicoEstagio->where('semestre_id', session('semestre_id'))->first();
 
-                $orientacao = Orientacao::create([
-                    'academico_id' => $solicitacao->Academico->id,
-                    'orientador_id' => $solicitacao->Orientador->id,
-                    'semestre_id' => $solicitacao->Semestre->id,
-                    'solicitacao_id' => $solicitacao->id,
-                    'academico_estagio_id' => $estagio->id
-                ]);
-                $estagio->update(['orientacao_id' => $orientacao->id]);
+                    $orientacao = Orientacao::create([
+                        'academico_id' => $solicitacao->Academico->id,
+                        'orientador_id' => $solicitacao->Orientador->id,
+                        'semestre_id' => $solicitacao->Semestre->id,
+                        'solicitacao_id' => $solicitacao->id,
+                        'academico_estagio_id' => $estagio->id
+                    ]);
+                    $estagio->update(['orientacao_id' => $orientacao->id]);
+                }
             }
-        }
-        $solicitacao->status = 1; // status de aprovada
-        $solicitacao->save();
+            $solicitacao->status = 1; // status de aprovada
+            $solicitacao->save();
 
-        if($solicitacao->Orientador->disponibilidade > 0) $solicitacao->Orientador->disponibilidade -= 1;
-        $solicitacao->Orientador->save();
+            if($solicitacao->Orientador->disponibilidade > 0) $solicitacao->Orientador->disponibilidade -= 1;
+            $solicitacao->Orientador->save();
 
-        $outras = Solicitacao::where('academico_id', $solicitacao->Academico->id)->whereNot('id', $solicitacao->id);
-        foreach($outras as $outra){
-            $outra->status = 0;
-            $outra->save();
-        }
+            $outras = Solicitacao::where('academico_id', $solicitacao->Academico->id)->whereNot('id', $solicitacao->id);
+            foreach($outras as $outra){
+                $outra->status = 0;
+                $outra->save();
+            }
+            Log::channel('main')->info('Solicitacao aceita pelo orientador.', ['data' => [$solicitacao], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
+        });
 
         return redirect()->route('admin.home');
     }
@@ -79,9 +89,11 @@ class SolicitacaoOrientadorController extends Controller
      * metodo post para o orientador rejeitar a solicitação
      */
     public function rejeitar_solicitacao(Solicitacao $solicitacao)
-        {
-            $solicitacao->status = 0;
-            $solicitacao->save();
+    {
+        $this->middleware('permission:responder solicitacoes de orientacao');
+        $solicitacao->status = 0;
+        $solicitacao->save();
+        Log::channel('main')->info('Solicitacao rejeitada pelo orientador.', ['data' => [$solicitacao], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
 
         return redirect()->route('admin.home');
 

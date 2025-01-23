@@ -8,17 +8,10 @@ use App\Models\Academico;
 use App\Models\Semestre;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class AcademicoTCCController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -32,8 +25,9 @@ class AcademicoTCCController extends Controller
      */
     public function store(AcademicoTCCRequest $request)
     {
-        AcademicoTCC::create($request->validated());
+        $tcc = AcademicoTCC::create($request->validated());
         $academico = Academico::where('user_id', auth()->user()->id)->first();
+        Log::channel('main')->info('TCC cadastrado.', ['data' => [$tcc], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
 
         return view('academico.finalacademico', ['academico' => $academico]);
     }
@@ -60,6 +54,7 @@ class AcademicoTCCController extends Controller
     public function update(AcademicoTCCRequest $request, AcademicoTCC $academicoTCC)
     {
         $academicoTCC->update($request->validated());
+        Log::channel('main')->info('TCC atualizado.', ['data' => [$academicoTCC], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
 
         return redirect()->route('home')->with('success', 'Cadastro atualizado com sucesso!');
     }

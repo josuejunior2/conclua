@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\EmpresaRequest;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class EmpresaController extends Controller
 {
@@ -27,8 +28,14 @@ class EmpresaController extends Controller
      */
     public function store(EmpresaRequest $request)
     {
-        DB::transaction(function() use($request, &$empresa){    
-            $empresa = Empresa::where('cnpj', $request->validated()['cnpj'])->exists() ? Empresa::where('cnpj', $request->validated()['cnpj'])->first() : Empresa::create($request->validated());
+        DB::transaction(function() use($request, &$empresa){ 
+            if(Empresa::where('cnpj', $request->validated()['cnpj'])->exists()){
+                $empresa = Empresa::where('cnpj', $request->validated()['cnpj'])->first();
+                Log::channel('main')->info('Empresa selecionada, primeiro acesso.', ['data' => [$empresa], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
+            }else{
+                $empresa = Empresa::create($request->validated());
+                Log::channel('main')->info('Empresa cadastrada, primeiro acesso.', ['data' => [$empresa], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
+            } 
         });
         $academico = Academico::where('user_id', auth()->user()->id)->first();
 
@@ -52,6 +59,7 @@ class EmpresaController extends Controller
             $novaEmpresa = Empresa::where('cnpj', $request->validated()['cnpj'])->exists() ? Empresa::where('cnpj', $request->validated()['cnpj'])->first() : Empresa::create($request->validated());
             $estagio->update(['empresa_id' => $novaEmpresa->id]);
             $estagio->save();
+            Log::channel('main')->info('Empresa alterada.', ['data' => [$estagio, $novaEmpresa], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
         });
         if($empresa->id != $novaEmpresa) return redirect()->route('academicoEstagio.edit', ['academicoEstagio' => $estagio]);
         return redirect()->back(); // o redirecionamento aqui ta paia, n sei se ta mudando na solicitacao, ou se vai ser em outro lugar...

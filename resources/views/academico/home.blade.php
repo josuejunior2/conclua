@@ -34,10 +34,10 @@
                 <td>{{ $o->Formacao ? $o->Formacao->nome : 'N/A' }}</td>
                 <td>{{ $o->Area ? $o->Area->nome : 'N/A' }}</td>
                 <td class="text-end">
-                    @can('solicitar orientacao')
-                    <a class="btn btn-outline-success" href="{{ route('solicitacao.create', ['orientador' => $o, 'academico' => $academico]) }}">
-                        Solicitar vinculação
-                    </a>
+                    @can('criar solicitacao')
+                        <a class="btn btn-outline-success" href="{{ route('solicitacao.create', ['orientador' => $o, 'academico' => $academico]) }}">
+                            Solicitar vinculação
+                        </a>
                     @endcan
                 </td>
             </tr>
@@ -75,10 +75,12 @@
                                         @endif
                                     </div>
                                     <div class="col-auto align-self-center">
-                                        <a href="{{ route('solicitacao.show.web', ['solicitacao' => $as]) }}" class="btn btn-primary btn-pill w-100">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg>
-                                            Visualizar
-                                        </a>
+                                        @can('visualizar solicitacao')
+                                            <a href="{{ route('solicitacao.show.web', ['solicitacao' => $as]) }}" class="btn btn-primary btn-pill w-100">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg>
+                                                Visualizar
+                                            </a>
+                                        @endcan
                                     </div>
                                 </div>
                                 </div>

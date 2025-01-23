@@ -9,6 +9,7 @@ use App\Models\Semestre;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\SolicitacaoRequest;
+use Illuminate\Support\Facades\Log;
 
 class SolicitacaoController extends Controller
 {
@@ -17,6 +18,7 @@ class SolicitacaoController extends Controller
      */
     public function create(Orientador $orientador, Academico $academico)
     {
+        $this->middleware('permission:criar solicitacao');
         $tcc = $academico->academicosTCC->where('academico_id', $academico->id)->where('semestre_id', session('semestre_id'))->first();
         $estagio = $academico->academicosEstagio->where('academico_id', $academico->id)->where('semestre_id', session('semestre_id'))->first();
 
@@ -32,7 +34,9 @@ class SolicitacaoController extends Controller
      */
     public function store(SolicitacaoRequest $request)
     {
+        $this->middleware('permission:criar solicitacao');
         $solicitacao = Solicitacao::create($request->validated());
+        Log::channel('main')->info('Solicitacao cadastrado.', ['data' => [$solicitacao], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
         // dd($solicitacao);
         return redirect()->route('home')->with('success', 'Solicitação de orientação enviada com sucesso!');
     }
@@ -42,6 +46,7 @@ class SolicitacaoController extends Controller
      */
     public function show(Solicitacao $solicitacao)
     {
+        $this->middleware('permission:visualizar solicitacao');
         $layouts = 'layouts.app';
         // dd($solicitacao);
         return view('academico.solicitacao.show', ['solicitacao' => $solicitacao, 'layouts' => $layouts]);
@@ -61,7 +66,9 @@ class SolicitacaoController extends Controller
      */
     public function update(SolicitacaoRequest $request, Solicitacao $solicitacao)
     {
+        $this->middleware('permission:editar solicitacao');
         $solicitacao->update($request->validated());
+        Log::channel('main')->info('Solicitacao editada.', ['data' => [$solicitacao], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
         if($request->input('status') == 0){
             return redirect()->route('home');
         }
@@ -73,7 +80,9 @@ class SolicitacaoController extends Controller
      */
     public function destroy(Solicitacao $solicitacao)
     {
+        $this->middleware('permission:excluir solicitacao');
         $solicitacao->delete();
+        Log::channel('main')->info('Solicitacao excluida.', ['data' => [$solicitacao], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
         return redirect()->route('home');
     }
 

@@ -6,22 +6,24 @@
         <h3 class="card-title">Solicitação de vinculação de {{ $solicitacao->AcademicoTrashed->UserTrashed->nome }}</h3>
         @if($solicitacao->status == null)
         <div class="d-flex justify-content-between">
-            <div class="me-2">
-                <form method="POST" action="{{ route('orientador.solicitacao.rejeitar', ['solicitacao' => $solicitacao]) }}" >
-                    @csrf
-                    <button type="submit" class="btn btn-danger w-100">
-                        Rejeitar
-                    </button>
-                </form>
-            </div>
-            <div>
-                <form method="POST" action="{{ route('orientador.solicitacao.aceitar', ['solicitacao' => $solicitacao]) }}">
-                    @csrf
-                    <button type="submit" class="btn btn-success w-100">
-                        Aceitar
-                    </button>
-                </form>
-            </div>
+            @can('responder solicitacoes de orientacao')
+                <div class="me-2">
+                    <form method="POST" action="{{ route('orientador.solicitacao.rejeitar', ['solicitacao' => $solicitacao]) }}" >
+                        @csrf
+                        <button type="submit" class="btn btn-danger w-100">
+                            Rejeitar
+                        </button>
+                    </form>
+                </div>
+                <div>
+                    <form method="POST" action="{{ route('orientador.solicitacao.aceitar', ['solicitacao' => $solicitacao]) }}">
+                        @csrf
+                        <button type="submit" class="btn btn-success w-100">
+                            Aceitar
+                        </button>
+                    </form>
+                </div>
+            @endcan
         </div>
         @endif
     </div>

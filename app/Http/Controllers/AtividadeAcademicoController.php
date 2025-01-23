@@ -10,6 +10,8 @@ use App\Http\Requests\SubmissaoAtividadeRequest;
 use App\Models\SubmissaoAtividade;
 use App\Http\Controllers\ArquivoController;
 use App\Http\Requests\ArquivoSubmissaoRequest;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class AtividadeAcademicoController extends Controller
 {
@@ -31,15 +33,18 @@ class AtividadeAcademicoController extends Controller
      */
     public function storeSubmissao(SubmissaoAtividadeRequest $request)
     {
-        $submissao = SubmissaoAtividade::create($request->validated());
-        $submissao->Atividade->update([
-            'data_entrega' => $submissao->created_at
-        ]);
-        
-        if ($request->hasFile('arquivos_submissao')) {
-            $requestArquivos = new ArquivoSubmissaoRequest($request->only(['arquivos_submissao']));
-            $this->arquivoController->storeArquivoSubmissao($requestArquivos, $submissao);
-        }
+        DB::transaction(function() use($request, &$submissao){   
+            $submissao = SubmissaoAtividade::create($request->validated());
+            $submissao->Atividade->update([
+                'data_entrega' => $submissao->created_at
+            ]);
+            
+            if ($request->hasFile('arquivos_submissao')) {
+                $requestArquivos = new ArquivoSubmissaoRequest($request->only(['arquivos_submissao']));
+                $this->arquivoController->storeArquivoSubmissao($requestArquivos, $submissao);
+            }
+            Log::channel('main')->info('Atividade Submissão cadastrada.', ['data' => [$submissao], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
+        });
 
         return redirect()->route('academico.atividade.show', ['atividade' => $submissao->Atividade]);
     }
@@ -51,17 +56,20 @@ class AtividadeAcademicoController extends Controller
     {
         $this->middleware('permission:excluir submissao');
 
-        $atividade = $submissao->Atividade;
-        $atividade->update([
-            'data_entrega' => null
-        ]);
-        $atividade->save();
+        DB::transaction(function() use(&$submissao, &$atividade){   
+            $atividade = $submissao->Atividade;
+            $atividade->update([
+                'data_entrega' => null
+            ]);
+            $atividade->save();
 
-        foreach($atividade->arquivosSubmissao as $arquivo){
-            $this->arquivoController->destroyArquivoSubmissao($arquivo);
-        }
+            foreach($atividade->arquivosSubmissao as $arquivo){
+                $this->arquivoController->destroyArquivoSubmissao($arquivo);
+            }
 
-        $submissao->delete();
+            $submissao->delete();
+            Log::channel('main')->info('Atividade Submissão excluída.', ['data' => [$submissao], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
+        });
         return redirect()->route('academico.atividade.show', ['atividade' => $atividade])->with(['success' => 'Submissão excluída com sucesso.']);
     }
 }

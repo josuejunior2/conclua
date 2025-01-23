@@ -17,6 +17,7 @@ use App\Http\Requests\OrientadorRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\AvaliacaoFinalRequest;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class OrientadorController extends Controller
 {
@@ -45,6 +46,7 @@ class OrientadorController extends Controller
         $orientador->Admin->update([
             'password' => Hash::make($request->input('password')),
         ]);
+        Log::channel('main')->info('Orientador completou o cadastro, primeiro acesso.', ['data' => [$orientador], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
         return redirect()->route('admin.home');
     }
 
@@ -80,6 +82,7 @@ class OrientadorController extends Controller
         }
 
         $orientador->update($dados);
+        Log::channel('main')->info('Orientador editado, editou seus dados.', ['data' => [$orientador], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
 
         return redirect()->route('orientador.show', ['orientador' => $orientador->Admin]);
     }
@@ -106,6 +109,7 @@ class OrientadorController extends Controller
     public function avaliar(AvaliacaoFinalRequest $request, Orientacao $orientacao)
     {
         $orientacao->update($request->validated());
+        Log::channel('main')->info('Orientador fez avaliação final.', ['data' => [$orientacao], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
         return redirect()->back()->with(['success' => 'Avaliação final registrada com sucesso!']);
     }
 }

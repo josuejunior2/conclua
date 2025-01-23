@@ -9,6 +9,7 @@ use App\Http\Requests\StoreAdminRequest;
 use App\Http\Requests\UpdateAdminRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller
 {
@@ -39,6 +40,7 @@ class AdminController extends Controller
         DB::transaction(function() use($request){   
             $admin = Admin::create($request->validated());
             $admin->syncRoles($request->validated()['perfil']);
+            Log::channel('main')->info('Admin cadastrado.', ['data' => [$admin, $request->validated()['perfil']], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
         });
 
         return redirect()->route('admin.admin.index');
@@ -78,6 +80,7 @@ class AdminController extends Controller
                 ]
             );
             $admin->syncRoles($dados['perfil']);
+            Log::channel('main')->info('Admin editado.', ['data' => [$admin, $dados['perfil']], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
         });
 
         return redirect()->route('admin.admin.index');
@@ -91,8 +94,14 @@ class AdminController extends Controller
         $this->middleware('permission:excluir admin');
         $admin = Admin::withTrashed()->findOrFail($id);
         DB::transaction(function() use($admin){
-            if($admin->trashed()) $admin->restore();
-            else $admin->delete();
+            if($admin->trashed()) {
+                $admin->restore();
+                Log::channel('main')->info('Admin desbloqueado.', ['data' => [$admin], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
+            }
+            else {
+                $admin->delete();
+                Log::channel('main')->info('Admin bloqueado.', ['data' => [$admin], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
+            }
         });
 
         return redirect()->route('admin.admin.index');
