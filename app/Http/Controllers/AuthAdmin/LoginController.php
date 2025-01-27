@@ -7,11 +7,8 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\SemestreOrientador;
 use App\Models\Semestre;
 use Illuminate\Validation\ValidationException;
-use PhpOffice\PhpSpreadsheet\Calculation\Logical\Boolean;
-use Illuminate\Support\Facades\Log;
 
 class LoginController extends Controller
 {
@@ -76,7 +73,6 @@ class LoginController extends Controller
             
             $request->session()->put('semestreIsAtivo', $validacao);
         }
-        Log::channel('main')->info('Admin logado.', ['user' => $user->nome."[".$user->id."]"]);
 
     }
     protected function sendFailedLoginResponse(Request $request) {
