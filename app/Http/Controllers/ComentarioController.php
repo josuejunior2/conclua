@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Log;
 
 class ComentarioController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:criar comentario')->only(['store']);
+        $this->middleware('permission:editar comentario')->only(['update']);
+        $this->middleware('permission:excluir comentario')->only(['destroy']);
+    }
     /**
      * Store a newly created resource in storage.
      */

@@ -13,6 +13,13 @@ use Illuminate\Support\Facades\Log;
 
 class EmpresaAdminController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:visualizar empresa')->only(['index', 'show']);
+        $this->middleware('permission:criar empresa')->only(['create', 'store']);
+        $this->middleware('permission:editar empresa')->only(['edit', 'update']);
+        $this->middleware('permission:excluir empresa')->only(['destroy']);
+    }
     /**
      * Display a listing of the resource.
      */
@@ -26,7 +33,6 @@ class EmpresaAdminController extends Controller
      */
     public function create()
     {
-        $this->middleware('permission:criar empresa');
         return view('admin.empresa.create');
     }
 
@@ -35,7 +41,6 @@ class EmpresaAdminController extends Controller
      */
     public function store(EmpresaRequest $request)
     {
-        $this->middleware('permission:criar empresa');
         DB::transaction(function() use($request, &$empresa){    
             $empresa = Empresa::create($request->validated());
             Log::channel('main')->info('Empresa cadastrada.', ['data' => [$empresa], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
@@ -49,7 +54,6 @@ class EmpresaAdminController extends Controller
      */
     public function show(Empresa $empresa)
     {
-        $this->middleware('permission:visualizar empresa');
         return view('admin.empresa.show', ['empresa' => $empresa]);
     }
 
@@ -58,7 +62,6 @@ class EmpresaAdminController extends Controller
      */
     public function edit(Empresa $empresa)
     {
-        $this->middleware('permission:editar empresa');
         return view('admin.empresa.edit', ['empresa' => $empresa]);
     }
 
@@ -67,7 +70,6 @@ class EmpresaAdminController extends Controller
      */
     public function update(EmpresaRequest $request, Empresa $empresa)
     {
-        $this->middleware('permission:editar empresa');
         DB::transaction(function() use($request, &$empresa){    
             $empresa->update($request->validated());
             Log::channel('main')->info('Empresa editada.', ['data' => [$empresa], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
@@ -81,7 +83,6 @@ class EmpresaAdminController extends Controller
      */
     public function destroy(Empresa $empresa)
     {
-        $this->middleware('permission:excluir empresa');
         DB::transaction(function() use($empresa){    
             $empresa->delete();
             Log::channel('main')->info('Empresa excluída.', ['data' => [$empresa], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);

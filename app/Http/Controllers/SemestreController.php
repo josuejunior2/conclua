@@ -16,6 +16,13 @@ use Illuminate\Support\Facades\Log;
 
 class SemestreController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:visualizar semestre')->only(['index', 'show']);
+        $this->middleware('permission:criar semestre')->only(['create', 'store']); 
+        $this->middleware('permission:editar semestre')->only(['edit', 'update']); 
+        $this->middleware('permission:excluir semestre')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -77,7 +84,6 @@ class SemestreController extends Controller
      */
     public function update(SemestreRequest $request, Semestre $semestre)
     {
-        $this->middleware('permission:editar semestre');
         DB::transaction(function() use($request, $semestre){  
             $semestre->update($request->validated());
             Log::channel('main')->info('Semestre editado.', ['data' => [$semestre], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
@@ -91,7 +97,6 @@ class SemestreController extends Controller
      */
     public function destroy(Semestre $semestre)
     {
-        $this->middleware('permission:excluir semestre');
         DB::transaction(function() use($semestre){  
             foreach($semestre->academicosEstagio as $academicoEstagio){
                 $academicoEstagio->delete();

@@ -13,6 +13,13 @@ use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:visualizar admin')->only(['index', 'show']);
+        $this->middleware('permission:criar admin')->only(['create', 'store']); 
+        $this->middleware('permission:editar admin')->only(['edit', 'update']); 
+        $this->middleware('permission:excluir admin')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -68,8 +75,6 @@ class AdminController extends Controller
      */
     public function update(UpdateAdminRequest $request, Admin $admin)
     {
-        $this->middleware('permission:editar academico');
-
         DB::transaction(function() use($request, $admin){   
             $dados = $request->validated();
             $admin->update(
@@ -91,7 +96,6 @@ class AdminController extends Controller
      */
     public function destroy(string $id)
     {
-        $this->middleware('permission:excluir admin');
         $admin = Admin::withTrashed()->findOrFail($id);
         DB::transaction(function() use($admin){
             if($admin->trashed()) {

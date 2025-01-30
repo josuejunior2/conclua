@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\DB;
 
 class SolicitacaoOrientadorController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:visualizar solicitacoes de orientacao')->only(['show']);
+        $this->middleware('permission:responder solicitacoes de orientacao')->only(['aceitar_solicitacao', 'rejeitar_solicitacao']);
+    }
 
     /**
      * Mostra para o orientador ou admin.

@@ -44,37 +44,30 @@ class PerfisEPermissoesSeeder extends Seeder
             ['guard_name' => 'admin', 'name' => 'editar semestre',  'description' => 'Permite editar semestre.'],
             ['guard_name' => 'admin', 'name' => 'excluir semestre',  'description' => 'Permite excluir semestre.'],
             
-            ['guard_name' => 'admin', 'name' => 'visualizar atividades',  'description' => 'Permite a visualização de atividades.'],
+            ['guard_name' => 'admin', 'name' => 'visualizar atividade',  'description' => 'Permite a visualização de atividades.'],
+            ['guard_name' => 'admin', 'name' => 'excluir atividade',  'description' => 'Permite excluir atividade.'],
             
             ['guard_name' => 'admin', 'name' => 'visualizar empresa',  'description' => 'Permite visualizar empresa.'],
             ['guard_name' => 'admin', 'name' => 'criar empresa',  'description' => 'Permite criar empresa.'],
             ['guard_name' => 'admin', 'name' => 'editar empresa',  'description' => 'Permite editar empresa.'],
             ['guard_name' => 'admin', 'name' => 'excluir empresa',  'description' => 'Permite excluir empresa.'],
             
+            ['guard_name' => 'admin', 'name' => 'visualizar admin',  'description' => 'Permite visualizar admin.'],
             ['guard_name' => 'admin', 'name' => 'criar admin',  'description' => 'Permite criar admin.'],
             ['guard_name' => 'admin', 'name' => 'editar admin',  'description' => 'Permite editar admin.'],
             ['guard_name' => 'admin', 'name' => 'excluir admin',  'description' => 'Permite excluir admin.'],
             ['guard_name' => 'admin', 'name' => 'avaliar admin',  'description' => 'Permite avaliar admin.'],
-            ['guard_name' => 'admin', 'name' => 'assinala perfil admin',  'description' => 'Permite assinalar perfil a admin.'],
 
             ['guard_name' => 'admin', 'name' => 'ver logs',  'description' => 'Permite visualizar os logs.'],
-
-            ['guard_name' => 'admin', 'name' => 'criar area',  'description' => 'Permite criar area.'],
-            ['guard_name' => 'admin', 'name' => 'editar area',  'description' => 'Permite editar area.'],
-            ['guard_name' => 'admin', 'name' => 'excluir area',  'description' => 'Permite excluir area.'],
-
-            ['guard_name' => 'admin', 'name' => 'criar formacao',  'description' => 'Permite criar formacao.'],
-            ['guard_name' => 'admin', 'name' => 'editar formacao',  'description' => 'Permite editar formacao.'],
-            ['guard_name' => 'admin', 'name' => 'excluir formacao',  'description' => 'Permite excluir formacao.'],
         ]);
 
 
         //Orientador
         $permissionsOrientador = collect([
-            ['guard_name' => 'admin', 'name' => 'criar atividades',  'description' => 'Permite a criação de atividades.'],
-            ['guard_name' => 'admin', 'name' => 'visualizar atividades',  'description' => 'Permite a visualização de atividades.'],
             ['guard_name' => 'admin', 'name' => 'visualizar solicitacoes de orientacao',  'description' => 'Permite a visualização de solicitações de orientação.'],
             ['guard_name' => 'admin', 'name' => 'responder solicitacoes de orientacao',  'description' => 'Permite responder positiva ou negativamente as solicitações de orientação.'],
+
+            ['guard_name' => 'admin', 'name' => 'visualizar atividade',  'description' => 'Permite a visualização de atividades.'],
             ['guard_name' => 'admin', 'name' => 'criar atividade',  'description' => 'Permite criar atividade.'],
             ['guard_name' => 'admin', 'name' => 'editar atividade',  'description' => 'Permite editar atividade.'],
             ['guard_name' => 'admin', 'name' => 'excluir atividade',  'description' => 'Permite excluir atividade.'],
@@ -87,7 +80,6 @@ class PerfisEPermissoesSeeder extends Seeder
 
         $permissionsUser = collect([
             ['guard_name' => 'web', 'name' => 'pesquisar orientador',  'description' => 'Permite pesquisar e visualizar orientadores.'],
-            ['guard_name' => 'web', 'name' => 'solicitar orientacao',  'description' => 'Permite criar uma solicitação de orientação.'],
             ['guard_name' => 'web', 'name' => 'adicionar arquivo submissao',  'description' => 'Permite adicionar arquivo submissão já realizada.'],
             ['guard_name' => 'web', 'name' => 'excluir arquivo submissao',  'description' => 'Permite excluir arquivo da submissão.'],
             ['guard_name' => 'web', 'name' => 'excluir submissao',  'description' => 'Permite excluir submissao.'],

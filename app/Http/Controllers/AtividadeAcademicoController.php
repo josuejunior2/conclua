@@ -20,6 +20,7 @@ class AtividadeAcademicoController extends Controller
     public function __construct(ArquivoController $arquivoController)
     {
         $this->arquivoController = $arquivoController;
+        $this->middleware('permission:excluir submissao')->only('destroySubmissao');
     }
 
     public function show(Atividade $atividade)

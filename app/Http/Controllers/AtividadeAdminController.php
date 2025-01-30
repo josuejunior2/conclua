@@ -15,6 +15,11 @@ use Illuminate\Support\Facades\Log;
 
 class AtividadeAdminController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:visualizar atividade')->only(['index', 'show']);
+        $this->middleware('permission:excluir atividade')->only(['destroy']);
+    }
     /**
      * Display a listing of the resource.
      */

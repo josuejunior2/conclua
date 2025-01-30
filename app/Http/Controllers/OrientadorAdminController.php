@@ -22,7 +22,13 @@ use Illuminate\Support\Facades\Log;
 
 class OrientadorAdminController extends Controller
 {
-
+    public function __construct()
+    {
+        $this->middleware('permission:visualizar orientador')->only(['index', 'show']);
+        $this->middleware('permission:criar orientador')->only(['create', 'store', 'import_orientadores', 'downloadModeloPlanilha']); 
+        $this->middleware('permission:editar orientador')->only(['edit', 'update']); 
+        $this->middleware('permission:excluir orientador')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -37,13 +43,11 @@ class OrientadorAdminController extends Controller
 
     }
 
-   
     /**
      * Display the specified resource.
      */
     public function create()
     {
-        $this->middleware('permission:criar orientador');
         return view('admin.orientador.create');
     }
 
@@ -52,7 +56,6 @@ class OrientadorAdminController extends Controller
      */
     public function store(AdminStoreOrientadorRequest $request)
     {
-        $this->middleware('permission:criar orientador');
         $dados = $request->validated();
         
         DB::transaction(function() use($dados, &$orientador){       
@@ -80,7 +83,6 @@ class OrientadorAdminController extends Controller
      */
     public function edit(Orientador $orientador)
     {
-        $this->middleware('permission:editar orientador');
         return view('admin.orientador.edit', ['orientador' => $orientador, 'roles' => Role::where('guard_name', 'admin')->where('name', 'Orientador')->get()]);
     }
 
@@ -89,7 +91,6 @@ class OrientadorAdminController extends Controller
      */
     public function update(AdminUpdateOrientadorRequest $request, Orientador $orientador)
     {
-        $this->middleware('permission:editar orientador');
         $dados = $request->validated();
         
         DB::transaction(function() use($dados, &$orientador){       
@@ -116,7 +117,6 @@ class OrientadorAdminController extends Controller
      */
     public function show(Orientador $orientador)
     {
-        // dd($orientador);
         $orientacoes = $orientador->orientacoes->where('semestre_id', session('semestre_id'));
         return view('admin.orientador.show', ['orientador' => $orientador, 'orientacoes' => $orientacoes]);
     }

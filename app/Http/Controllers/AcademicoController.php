@@ -90,24 +90,4 @@ class AcademicoController extends Controller
         Log::channel('main')->info('Acadêmico editado, editou seus dados.', ['data' => [$academico], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
         return redirect()->route('academico.show', ['user' => $academico->User]);
     }
-
-    /**
-     * Remove the specified resource from storage. // NAO TA SENDO USADO ////////////////////////////////////
-     */
-    public function destroy(Academico $academico)
-    {
-        if(AcademicoTCC::where('academico_id', $academico->id)->exists()){
-
-            AcademicoTCC::where('academico_id', $academico->id)->delete();
-            $academico->delete();
-
-        } else if(AcademicoEstagio::where('academico_id', $academico->id)->exists()){
-
-            AcademicoEstagio::where('academico_id', $academico->id)->delete();
-            $academico->delete();
-        } else {
-            $academico->delete();
-        }
-        return redirect()->route('academico.index');
-    }
 }

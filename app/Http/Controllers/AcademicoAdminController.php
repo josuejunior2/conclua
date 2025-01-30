@@ -21,6 +21,14 @@ use Illuminate\Support\Facades\Log;
 
 class AcademicoAdminController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:visualizar academico')->only(['index', 'show']);
+        $this->middleware('permission:criar academico')->only(['create', 'store', 'import_academicos', 'downloadModeloPlanilha']); 
+        $this->middleware('permission:editar academico')->only(['edit', 'update']); 
+        $this->middleware('permission:excluir academico')->only('destroy');
+        $this->middleware('permission:desvincular academico')->only(['desvincular_academico_tcc', 'desvincular_academico_estagio']); 
+    }
     /**
      * Display a listing of the resource.
      */
