@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Semestre;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
@@ -55,6 +56,10 @@ class LoginController extends Controller
 
     protected function loggedOut(Request $request)
     {
+        Auth::logout();
+        Session::flush();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
         return redirect()->route('welcome');
     }
 

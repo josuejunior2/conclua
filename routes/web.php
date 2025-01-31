@@ -75,7 +75,7 @@ Route::middleware(['auth:web', 'primeiro_acesso' ])->group(function () { //
 
 });
 
-Route::middleware(['auth:web', 'primeiro_acesso' ])->group(function () {
+Route::middleware(['auth:web', 'role:Academico', 'primeiro_acesso' ])->group(function () {
     /**
      * Esta rota /home aqui vale apenas para academico, pq o /home para admin&orientador vai direto para /admin/home, e /admin/home na linha 93 nao tem o semestre_ativo
      */
