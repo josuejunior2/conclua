@@ -21,8 +21,7 @@
             <tr>
             <th>Nome</th>
             <th>Email</th>
-            <th>Formação</th>
-            <th>Área</th>
+            <th>Subáreas</th>
             <th></th>
             </tr>
         </thead>
@@ -31,8 +30,7 @@
             <tr>
                 <td>{{ $o->AdminTrashed->nome }}</td>
                 <td>{{ $o->AdminTrashed->email }}</td>
-                <td>{{ $o->Formacao ? $o->Formacao->nome : 'N/A' }}</td>
-                <td>{{ $o->Area ? $o->Area->nome : 'N/A' }}</td>
+                <td>@foreach($o->subAreas as $sub) {{ $sub->nome }}@if(!$loop->last),@endif @endforeach </td>
                 <td class="text-end">
                     @can('criar solicitacao')
                         <a class="btn btn-outline-success" href="{{ route('solicitacao.create', ['orientador' => $o, 'academico' => $academico]) }}">

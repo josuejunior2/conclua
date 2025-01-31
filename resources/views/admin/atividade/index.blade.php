@@ -47,7 +47,7 @@
                 <td>{{ $atividade->data_entrega ? \Carbon\Carbon::parse($atividade->data_entrega)->format('d/m/Y G:h') : '' }}</td>
                 <td>{{ $atividade->nota ?? '' }}</td>
                 <td class="d-flex align-items-center justify-content-center text-end">
-                    @can('visualizar atividades')
+                    @can('visualizar atividade')
                         <a class="btn justify-content-center"
                             href="{{ route('orientador.atividade.show', ['atividade' => $atividade]) }}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"

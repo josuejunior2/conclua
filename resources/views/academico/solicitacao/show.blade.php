@@ -51,90 +51,30 @@
     </div>
     <div class="card-body">
         <div class="datagrid">
-        <div class="datagrid-item">
-            <div class="datagrid-title">Nome</div>
-            <div class="datagrid-content">{{ $solicitacao->Orientador->Admin->nome }}</div>
-        </div>
-        <div class="datagrid-item">
-            <div class="datagrid-title">MASP</div>
-            <div class="datagrid-content">{{ $solicitacao->Orientador->masp }}</div>
-        </div>
-        <div class="datagrid-item">
-            <div class="datagrid-title">Email</div>
-            <div class="datagrid-content">{{ $solicitacao->Orientador->Admin->email }}</div>
-        </div>
-        <div class="datagrid-item">
-            <div class="datagrid-title">Formação</div>
-            <div class="datagrid-content">{{ $solicitacao->Orientador->Formacao->nome ?? 'N/A'  }}</div>
-        </div>
-        <div class="datagrid-item">
-            <div class="datagrid-title">Área de atuação</div>
-            <div class="datagrid-content">{{ $solicitacao->Orientador->Area->nome ?? 'N/A'  }}</div>
-        </div>
-        @if ($solicitacao->Orientador)
-        <div class="datagrid-item">
-            <div class="datagrid-title">Currículo Lattes</div>
-            <div class="datagrid-content">{{$solicitacao->Orientador->enderecoLattes}}</div>
-        </div>
-        <div class="datagrid-item">
-            <div class="datagrid-title">Currículo Orcid</div>
-            <div class="datagrid-content">{{$solicitacao->Orientador->enderecoOrcid}}</div>
-        </div>
-        @if ($solicitacao->Orientador->subArea1)
             <div class="datagrid-item">
-                <div class="datagrid-title">Sub-área 1</div>
-                <div class="datagrid-content">{{ $solicitacao->Orientador->subArea1 }}</div>
+                <div class="datagrid-title">Nome</div>
+                <div class="datagrid-content">{{ $solicitacao->Orientador->Admin->nome }}</div>
             </div>
-            @endif
-            @if ($solicitacao->Orientador->subArea2)
             <div class="datagrid-item">
-                <div class="datagrid-title">Sub-área 2</div>
-                <div class="datagrid-content">{{ $solicitacao->Orientador->subArea2 }}</div>
+                <div class="datagrid-title">MASP</div>
+                <div class="datagrid-content">{{ $solicitacao->Orientador->masp }}</div>
             </div>
-            @endif
-            @if ($solicitacao->Orientador->subArea3)
             <div class="datagrid-item">
-                <div class="datagrid-title">Sub-área 3</div>
-                <div class="datagrid-content">{{ $solicitacao->Orientador->subArea3 }}</div>
+                <div class="datagrid-title">Email</div>
+                <div class="datagrid-content">{{ $solicitacao->Orientador->Admin->email }}</div>
             </div>
-            @endif
-            @if ($solicitacao->Orientador->areaPesquisa1)
             <div class="datagrid-item">
-                <div class="datagrid-title">Área de Pesquisa 1</div>
-                <div class="datagrid-content">{{ $solicitacao->Orientador->areaPesquisa1 }}</div>
+                <div class="datagrid-title">Currículo Lattes</div>
+                <div class="datagrid-content">{{$solicitacao->Orientador->enderecoLattes}}</div>
             </div>
-            @endif
-            @if ($solicitacao->Orientador->areaPesquisa2)
             <div class="datagrid-item">
-                <div class="datagrid-title">Área de Pesquisa 2</div>
-                <div class="datagrid-content">{{ $solicitacao->Orientador->areaPesquisa2 }}</div>
+                <div class="datagrid-title">Currículo Orcid</div>
+                <div class="datagrid-content">{{$solicitacao->Orientador->enderecoOrcid}}</div>
             </div>
-            @endif
-            @if ($solicitacao->Orientador->areaPesquisa3)
             <div class="datagrid-item">
-                <div class="datagrid-title">Área de Pesquisa 3</div>
-                <div class="datagrid-content">{{ $solicitacao->Orientador->areaPesquisa3 }}</div>
+                <div class="datagrid-title">Subáreas</div>
+                <div class="datagrid-content">@foreach($solicitacao->Orientador->subAreas as $sub) {{ $sub->nome }}@if(!$loop->last),@endif @endforeach </div>
             </div>
-            @endif
-            @if ($solicitacao->Orientador->areaPesquisa4)
-            <div class="datagrid-item">
-                <div class="datagrid-title">Área de Pesquisa 4</div>
-                <div class="datagrid-content">{{ $solicitacao->Orientador->areaPesquisa4 }}</div>
-            </div>
-            @endif
-            @if ($solicitacao->Orientador->areaPesquisa5)
-            <div class="datagrid-item">
-                <div class="datagrid-title">Área de Pesquisa 5</div>
-                <div class="datagrid-content">{{ $solicitacao->Orientador->areaPesquisa5 }}</div>
-            </div>
-            @endif
-        @else
-        <div class="datagrid-item">
-            <div class="datagrid-title"></div>
-            <div class="datagrid-content">Dados específicos indisponíveis.</div>
-        </div>
-        @endif
-
         </div>
     </div>
 </div>

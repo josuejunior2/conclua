@@ -5,9 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Admin;
-use App\Models\Area;
 use App\Models\User;
-use App\Models\Formacao;
 use App\Models\Academico;
 use App\Models\Orientador;
 use Illuminate\Support\Str;
@@ -23,14 +21,6 @@ class DatabaseSeeder extends Seeder
         //     'nome' => 'admin',
         //     'email' => 'josuejuniorww@gmail.com',
         //     'password' => 'admin123',
-        // ]);
-        
-        // $formacao = Formacao::create([
-        //     'nome' => 'Administração'
-        // ]);
-        
-        // $area = Area::create([
-        //     'nome' => 'Marketing'
         // ]);
 
         

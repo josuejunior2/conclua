@@ -33,46 +33,28 @@ class OrientadorRequest extends FormRequest
             case 'POST':
                 return [
                     'password' => ['required', 'string', Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised()],
-                    'formacao_id' => 'required',
-                    'area_id' => 'required',
                     'enderecoLattes' => 'nullable',
                     'enderecoOrcid' => 'nullable',
                     'disponibilidade' => 'required',
-                    'areaPesquisa1' => 'nullable',
-                    'areaPesquisa2' => 'nullable',
-                    'areaPesquisa3' => 'nullable',
-                    'areaPesquisa4' => 'nullable',
-                    'areaPesquisa5' => 'nullable',
-                    'subArea1' => 'nullable',
-                    'subArea2' => 'nullable',
-                    'subArea3' => 'nullable',
+                    'sub_areas.*' => 'required|exists:sub_areas,id',
                 ];
                 break;
-                case 'PUT':
-                    return [
-                        // 'nome' => 'required|min:10|max:60',
-                        // 'email' => 'required|min:16|max:40|email',
-                        // 'masp' => 'required|digits:7',
-                        'password' => ['nullable', 'string', Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised()],
-                        'formacao_id' => 'required',
-                        'area_id' => 'required',
-                        'enderecoLattes' => [
-                            'nullable',
-                        ],
-                        'enderecoOrcid' => [
-                            'nullable',
-                        ],
-                        'disponibilidade' => 'required',
-                        'areaPesquisa1' => 'nullable',
-                        'areaPesquisa2' => 'nullable',
-                        'areaPesquisa3' => 'nullable',
-                        'areaPesquisa4' => 'nullable',
-                        'areaPesquisa5' => 'nullable',
-                        'subArea1' => 'nullable',
-                        'subArea2' => 'nullable',
-                        'subArea3' => 'nullable',
-                    ];
-                break;
+            case 'PUT':
+                return [
+                    // 'nome' => 'required|min:10|max:60',
+                    // 'email' => 'required|min:16|max:40|email',
+                    // 'masp' => 'required|digits:7',
+                    'password' => ['nullable', 'string', Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised()],
+                    'enderecoLattes' => [
+                        'nullable',
+                    ],
+                    'enderecoOrcid' => [
+                        'nullable',
+                    ],
+                    'disponibilidade' => 'required',
+                    'sub_areas.*' => 'required|exists:sub_areas,id',
+                ];
+            break;
         }
     }
     /**

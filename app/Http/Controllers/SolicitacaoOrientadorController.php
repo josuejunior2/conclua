@@ -42,7 +42,7 @@ class SolicitacaoOrientadorController extends Controller
     { //acho que tem que colocar aqui a verificação se já tá orientado
         $this->middleware('permission:responder solicitacoes de orientacao');
         
-        if(!empty($solicitacao->Academico->OrientacaoAtual)) return redirect()->back()->withErrors(['error' => 'Acadêmico já está vinculado a um orientador!']);
+        if(!empty($solicitacao->Academico->OrientacaoAtual())) return redirect()->back()->withErrors(['error' => 'Acadêmico já está vinculado a um orientador!']);
 
         DB::transaction(function() use($solicitacao){
             if($solicitacao->AcademicoTCC){

@@ -5,10 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Orientador;
 use App\Models\Academico;
 use App\Models\Solicitacao;
-use App\Models\SemestreOrientador;
-use App\Models\User;
-use App\Models\Area;
-use App\Models\Formacao;
+use App\Models\SubArea;
+use App\Models\OrientadorSubArea;
 use App\Models\Admin;
 use App\Models\Orientacao;
 use App\Http\Controllers\Controller;
@@ -18,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\AvaliacaoFinalRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class OrientadorController extends Controller
 {
@@ -30,10 +29,8 @@ class OrientadorController extends Controller
         // dd(auth()->user()->getAllPermissions());
         $orientador = Orientador::where('admin_id', auth()->guard('admin')->user()->id)->first();
         $password = Hash::make($orientador->password);
-        $formacoes = Formacao::all();
-        $areas = Area::all();
         // dd($orientador);
-        return view('orientador.create', ['orientador' => $orientador, 'areas' => $areas, 'formacoes' => $formacoes, 'password' => $password ]);
+        return view('orientador.create', ['orientador' => $orientador, 'password' => $password, 'subAreas' => SubArea::all()]);
     }
 
     /**
@@ -41,12 +38,21 @@ class OrientadorController extends Controller
      */
     public function store(OrientadorRequest $request, Orientador $orientador)
     {
-        $orientador->update($request->validated());
+        $dados = $request->validated();
+        
+        DB::transaction(function() use($orientador, $dados){ 
+            $orientador->update($dados);
 
-        $orientador->Admin->update([
-            'password' => Hash::make($request->input('password')),
-        ]);
-        Log::channel('main')->info('Orientador completou o cadastro, primeiro acesso.', ['data' => [$orientador], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
+            $orientador->Admin->update([
+                'password' => Hash::make($dados['password']),
+            ]);
+
+            foreach($dados['sub_areas'] as $subArea){
+                OrientadorSubArea::create(['orientador_id' => $orientador->id, 'sub_area_id' => $subArea]);
+            }
+
+            Log::channel('main')->info('Orientador completou o cadastro, primeiro acesso.', ['data' => [$orientador], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
+        });
         return redirect()->route('admin.home');
     }
 
@@ -64,9 +70,7 @@ class OrientadorController extends Controller
     public function edit(Orientador $orientador)
     {
         $orientacoes = $orientador->orientacoes->where('semestre_id', session('semestre_id'));
-        $formacoes = Formacao::all();
-        $areas = Area::all();
-        return view('orientador.edit', ['areas' => $areas, 'formacoes' => $formacoes, 'orientador' => $orientador, 'orientacoes' => $orientacoes]);
+        return view('orientador.edit', ['orientador' => $orientador, 'orientacoes' => $orientacoes, 'subAreas' => SubArea::all()]);
     }
 
     /**
@@ -75,14 +79,21 @@ class OrientadorController extends Controller
     public function update(OrientadorRequest $request, Orientador $orientador)
     {
         $dados = $request->validated();
-        if(is_null($dados['password'])){
-            $dados['password'] = $orientador->Admin->password;
-        } else{
-            $orientador->Admin->update(['password' => Hash::make($dados['password'])]);
-        }
+        DB::transaction(function() use($orientador, $dados){ 
+            if(is_null($dados['password'])){
+                $dados['password'] = $orientador->Admin->password;
+            } else{
+                $orientador->Admin->update(['password' => Hash::make($dados['password'])]);
+            }
 
-        $orientador->update($dados);
-        Log::channel('main')->info('Orientador editado, editou seus dados.', ['data' => [$orientador], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
+            OrientadorSubArea::where('orientador_id', $orientador->id)->delete();
+            foreach($dados['sub_areas'] as $subArea){
+                OrientadorSubArea::create(['orientador_id' => $orientador->id, 'sub_area_id' => $subArea]);
+            }
+    
+            $orientador->update($dados);
+            Log::channel('main')->info('Orientador editado, editou seus dados.', ['data' => [$orientador], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
+        });
 
         return redirect()->route('orientador.show', ['orientador' => $orientador->Admin]);
     }

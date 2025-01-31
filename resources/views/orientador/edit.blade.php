@@ -12,7 +12,7 @@
                     @csrf
                     @method('PUT')
                     <div class="row g-3 mb-2">
-                        <div class="mb-3">
+                        <div class="col-md">
                             <label class="form-label">Atualize sua senha</label>
                             <div>
                                 <input name="password" type="password" class="form-control" placeholder="Senha"
@@ -25,39 +25,17 @@
                                 </span>
                             </div>
                         </div>
-                    </div>
-                    <div class="row g-3 mb-2">
                         <div class="col-md">
-                            <div class="form-label required">Selecione sua formação</div>
-                            <select class="form-select" name="formacao_id" id="formacao_id">
-                                <option value=""> -- Selecione a formação -- </option>
-                                @foreach ($formacoes as $f)
-                                    <option value="{{ $f->id }}"
-                                        {{ (isset($orientador) && $orientador->formacao_id == $f->id) || old('formacao_id') == $f->id ? 'selected' : '' }}>
-                                        {{ $f->nome }}
-                                    </option>
+                            <label class="form-label required" for="sub_areas">Sub Áreas</label>
+                            <select class="form-select" type="text" name="sub_areas[]" id="sub_areas" multiple>
+                                @foreach ($subAreas as $subarea)
+                                    <option value="{{ $subarea->id }}" {{ in_array($subarea->id, old('sub_area_id', $orientador->subAreas->pluck('id')->toArray())) ? 'selected' : '' }}>{{ $subarea->nome }}</option>
                                 @endforeach
                             </select>
-                            <span class="{{ $errors->has('formacao_id') ? 'text-danger' : '' }}">
-                                {{ $errors->has('formacao_id') ? $errors->first('formacao_id') : '' }}
+                            <span class="{{ $errors->has('sub_area_id') ? 'text-danger' : '' }}">
+                                {{ $errors->has('sub_area_id') ? $errors->first('sub_area_id') : '' }}
                             </span>
-                        </div>
-                        <div class="col-md">
-                            <div class="form-label required">Selecione sua área de atuação</div>
-                            <select class="form-select" name="area_id" id="area_id">
-                                <option value=""> -- Selecione a área de atuação -- </option>
-                                @foreach ($areas as $a)
-                                    <option value="{{ $a->id }}"
-                                        {{ (isset($orientador) && $orientador->area_id == $a->id) || old('area_id') == $a->id ? 'selected' : '' }}>
-                                        {{ $a->nome }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            <span class="{{ $errors->has('area_id') ? 'text-danger' : '' }}">
-                                {{ $errors->has('area_id') ? $errors->first('area_id') : '' }}
-                            </span>
-                            {{-- {{ $errors->has('area_id') ? $errors->first('area_id') : '' }} --}}
-                        </div>
+                        </div>    
                     </div>
                     <div class="row g-3 mb-2">
                         <div class="col-md">
@@ -70,36 +48,6 @@
                             <span class="{{ $errors->has('enderecoLattes') ? 'text-danger' : '' }}">
                                 {{ $errors->has('enderecoLattes') ? $errors->first('enderecoLattes') : '' }}
                             </span>
-                            <div class="form-label">Área de Pesquisa 1</div>
-                            <input id="areaPesquisa1" name="areaPesquisa1" type="text" class="form-control mb-3"
-                                value="{{ isset($orientador) && $orientador->areaPesquisa1 ? $orientador->areaPesquisa1 : old('areaPesquisa1', '') }}">
-                            <span class="{{ $errors->has('areaPesquisa1') ? 'text-danger' : '' }}">
-                                {{ $errors->has('areaPesquisa1') ? $errors->first('areaPesquisa1') : '' }}
-                            </span>
-                            <div class="form-label">Área de Pesquisa 2</div>
-                            <input id="areaPesquisa2" name="areaPesquisa2" type="text" class="form-control mb-3"
-                                value="{{ isset($orientador) && $orientador->areaPesquisa2 ? $orientador->areaPesquisa2 : old('areaPesquisa2', '') }}">
-                            <span class="{{ $errors->has('areaPesquisa2') ? 'text-danger' : '' }}">
-                                {{ $errors->has('areaPesquisa2') ? $errors->first('areaPesquisa2') : '' }}
-                            </span>
-                            <div class="form-label">Área de Pesquisa 3</div>
-                            <input id="areaPesquisa3" name="areaPesquisa3" type="text" class="form-control mb-3"
-                                value="{{ isset($orientador) && $orientador->areaPesquisa3 ? $orientador->areaPesquisa3 : old('areaPesquisa3', '') }}">
-                            <span class="{{ $errors->has('areaPesquisa3') ? 'text-danger' : '' }}">
-                                {{ $errors->has('areaPesquisa3') ? $errors->first('areaPesquisa3') : '' }}
-                            </span>
-                            <div class="form-label">Área de Pesquisa 4</div>
-                            <input id="areaPesquisa4" name="areaPesquisa4" type="text" class="form-control mb-3"
-                                value="{{ isset($orientador) && $orientador->areaPesquisa4 ? $orientador->areaPesquisa4 : old('areaPesquisa4', '') }}">
-                            <span class="{{ $errors->has('areaPesquisa4') ? 'text-danger' : '' }}">
-                                {{ $errors->has('areaPesquisa4') ? $errors->first('areaPesquisa4') : '' }}
-                            </span>
-                            <div class="form-label">Área de Pesquisa 5</div>
-                            <input id="areaPesquisa5" name="areaPesquisa5" type="text" class="form-control mb-3"
-                                value="{{ isset($orientador) && $orientador->areaPesquisa5 ? $orientador->areaPesquisa5 : old('areaPesquisa5', '') }}">
-                            <span class="{{ $errors->has('areaPesquisa5') ? 'text-danger' : '' }}">
-                                {{ $errors->has('areaPesquisa5') ? $errors->first('areaPesquisa5') : '' }}
-                            </span>
                         </div>
                         <div class="col-md">
                             <div class="form-label">Link do Currículo Orcid</div>
@@ -110,24 +58,6 @@
                             </small>
                             <span class="{{ $errors->has('enderecoOrcid') ? 'text-danger' : '' }}">
                                 {{ $errors->has('enderecoOrcid') ? $errors->first('enderecoOrcid') : '' }}
-                            </span>
-                            <div class="form-label">Sub-área 1</div>
-                            <input id="subArea1" name="subArea1" type="text" class="form-control mb-3"
-                                value="{{ isset($orientador) && $orientador->subArea1 ? $orientador->subArea1 : old('subArea1', '') }}">
-                            <span class="{{ $errors->has('subArea1') ? 'text-danger' : '' }}">
-                                {{ $errors->has('subArea1') ? $errors->first('subArea1') : '' }}
-                            </span>
-                            <div class="form-label">Sub-área 2</div>
-                            <input id="subArea2" name="subArea2" type="text" class="form-control mb-3"
-                                value="{{ isset($orientador) && $orientador->subArea2 ? $orientador->subArea2 : old('subArea2', '') }}">
-                            <span class="{{ $errors->has('subArea2') ? 'text-danger' : '' }}">
-                                {{ $errors->has('subArea2') ? $errors->first('subArea2') : '' }}
-                            </span>
-                            <div class="form-label">Sub-área 3</div>
-                            <input id="subArea3" name="subArea3" type="text" class="form-control mb-3"
-                                value="{{ isset($orientador) && $orientador->subArea3 ? $orientador->subArea3 : old('subArea3', '') }}">
-                            <span class="{{ $errors->has('subArea3') ? 'text-danger' : '' }}">
-                                {{ $errors->has('subArea3') ? $errors->first('subArea3') : '' }}
                             </span>
                             <div class="col-3 mb-3">
                                 <div class="form-label required">Disponibilidade</div>
@@ -167,4 +97,19 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('js')
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var el;
+        window.TomSelect && (new TomSelect(el = document.getElementById('sub_areas'), {
+            options: [
+                @foreach($subAreas as $s)
+                    {value: '{{ $s->id }}', text: '{{ $s->nome }}'},
+                @endforeach
+            ],
+        }));
+    });
+</script>
 @endsection

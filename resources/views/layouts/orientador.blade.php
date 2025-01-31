@@ -131,6 +131,7 @@
     <script src="https://cdn.jsdelivr.net/npm/jsvectormap@2.0.5/dist/maps/world-merc.js?1684106062" defer></script> --}}
 
     <!-- Tabler Core -->
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@latest/dist/js/tom-select.base.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/@tabler/core/dist/js/tabler.min.js?1684106062" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/@tabler/core/dist/js/demo.min.js?1684106062" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js" defer></script>

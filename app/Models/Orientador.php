@@ -18,26 +18,16 @@ class Orientador extends Authenticatable
 
     protected $table = 'orientadores';
 
-    protected $fillable = ['masp', 'admin_id', 'formacao_id', 'area_id', 'disponibilidade',  'subArea1', 'subArea2', 'subArea3', 'areaPesquisa1', 'areaPesquisa2', 'areaPesquisa3', 'areaPesquisa4', 'areaPesquisa5', 'enderecoLattes', 'enderecoOrcid'];
+    protected $fillable = ['masp', 'admin_id', 'disponibilidade', 'area', 'enderecoLattes', 'enderecoOrcid'];
 
     public function Admin()
     {
-        return $this->belongsTo(Admin::class, 'admin_id'); // orientador tem 1 Formacao, ele olha a FK
+        return $this->belongsTo(Admin::class, 'admin_id');
     }
 
     public function AdminTrashed()
     {
-        return $this->belongsTo(Admin::class, 'admin_id')->withTrashed(); // orientador tem 1 Formacao, ele olha a FK
-    }
-
-    public function Formacao()
-    {
-        return $this->belongsTo(Formacao::class); // orientador tem 1 Formacao, ele olha a FK
-    }
-
-    public function Area()
-    {
-        return $this->belongsTo(Area::class); // orientador tem 1 Area, ele olha a FK
+        return $this->belongsTo(Admin::class, 'admin_id')->withTrashed();
     }
 
     public function solicitacoes()
@@ -74,6 +64,11 @@ class Orientador extends Authenticatable
     public function orientacoesEmAndamento()
     {
         return $this->orientacoes()->where('semestre_id', session('semestre_id'))->whereNull('avaliacao_final')->orWhere('avaliacao_final', 'APTO COM RESTRICOES')->get();
+    }
+
+    public function subAreas()
+    {
+        return $this->belongsToMany(SubArea::class, 'orientador_sub_area', 'orientador_id', 'sub_area_id');
     }
 
 }
