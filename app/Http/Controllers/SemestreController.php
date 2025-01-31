@@ -28,7 +28,6 @@ class SemestreController extends Controller
      */
     public function index()
     {
-        $this->middleware('permission:visualizar semestre');
         $semestres = Semestre::all();
         return view('admin.semestre.index', ['semestres' => $semestres]);
     }
@@ -38,7 +37,6 @@ class SemestreController extends Controller
      */
     public function create()
     {
-        $this->middleware('permission:criar semestre');
         return view('admin.semestre.create');
     }
 
@@ -47,7 +45,6 @@ class SemestreController extends Controller
      */
     public function store(SemestreRequest $request)
     {
-        $this->middleware('permission:criar semestre');
         DB::transaction(function() use($request){  
             $semestre = Semestre::create($request->validated());
             Log::channel('main')->info('Semestre cadastrado.', ['data' => [$semestre], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);

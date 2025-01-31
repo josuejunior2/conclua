@@ -22,7 +22,6 @@ class SolicitacaoOrientadorController extends Controller
      */
     public function show(Solicitacao $solicitacao)
     {
-        $this->middleware('permission:visualizar solicitacoes de orientacao');
         $tcc = $estagio = null;
         if($solicitacao->AcademicoTCC) { $tcc = $solicitacao->AcademicoTCC; }
         if($solicitacao->AcademicoEstagio) { $estagio = $solicitacao->AcademicoEstagio; }
@@ -39,9 +38,7 @@ class SolicitacaoOrientadorController extends Controller
      *      relacões entre obj's
      */
     public function aceitar_solicitacao(Solicitacao $solicitacao)
-    { //acho que tem que colocar aqui a verificação se já tá orientado
-        $this->middleware('permission:responder solicitacoes de orientacao');
-        
+    { //acho que tem que colocar aqui a verificação se já tá orientado        
         if(!empty($solicitacao->Academico->OrientacaoAtual())) return redirect()->back()->withErrors(['error' => 'Acadêmico já está vinculado a um orientador!']);
 
         DB::transaction(function() use($solicitacao){
@@ -95,7 +92,6 @@ class SolicitacaoOrientadorController extends Controller
      */
     public function rejeitar_solicitacao(Solicitacao $solicitacao)
     {
-        $this->middleware('permission:responder solicitacoes de orientacao');
         $solicitacao->status = 0;
         $solicitacao->save();
         Log::channel('main')->info('Solicitacao rejeitada pelo orientador.', ['data' => [$solicitacao], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);

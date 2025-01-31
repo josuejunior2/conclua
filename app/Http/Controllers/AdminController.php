@@ -33,7 +33,6 @@ class AdminController extends Controller
      */
     public function create()
     {
-        $this->middleware('permission:criar admin');
         return view('admin.admin.create', ['roles' => Role::where('guard_name', 'admin')->whereNot('name', 'Orientador')->get()]);
     }
 
@@ -42,8 +41,6 @@ class AdminController extends Controller
      */
     public function store(StoreAdminRequest $request)
     {
-        $this->middleware('permission:criar admin');
-
         DB::transaction(function() use($request){   
             $admin = Admin::create($request->validated());
             $admin->syncRoles($request->validated()['perfil']);
@@ -66,7 +63,6 @@ class AdminController extends Controller
      */
     public function edit(Admin $admin)
     {
-        $this->middleware('permission:editar academico');
         return view('admin.admin.edit', ['admin' => $admin, 'roles' => Role::where('guard_name', 'admin')->whereNot('name', 'Orientador')->get()]);
     }
 

@@ -125,9 +125,7 @@ class OrientadorAdminController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
-    {
-        $this->middleware('permission:excluir orientador');
-        
+    {        
         DB::transaction(function() use($id){
             $orientador = Orientador::withTrashed()->findOrFail($id);
             if($orientador->trashed()){

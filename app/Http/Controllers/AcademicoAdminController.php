@@ -49,7 +49,6 @@ class AcademicoAdminController extends Controller
      */
     public function create()
     {
-        $this->middleware('permission:criar academico');
         return view('admin.academico.create');
     }
 
@@ -58,7 +57,6 @@ class AcademicoAdminController extends Controller
      */
     public function store(AdminStoreAcademicoRequest $request)
     {
-        $this->middleware('permission:criar academico');
         $dados = $request->validated();
         
         DB::transaction(function() use($dados, &$academico){       
@@ -86,7 +84,6 @@ class AcademicoAdminController extends Controller
      */
     public function edit(Academico $academico)
     {
-        $this->middleware('permission:editar academico');
         return view('admin.academico.edit', ['academico' => $academico]);
     }
 
@@ -95,7 +92,6 @@ class AcademicoAdminController extends Controller
      */
     public function update(AdminUpdateAcademicoRequest $request, Academico $academico)
     {
-        $this->middleware('permission:editar academico');
         $dados = $request->validated();
         
         DB::transaction(function() use($dados, &$academico){       
@@ -121,7 +117,6 @@ class AcademicoAdminController extends Controller
      */
     public function show(Academico $academico)
     {
-        $this->middleware('permission:visualizar academico');
         return view('admin.academico.show', [
             'academico' => $academico, 
             'estagio' => $academico->getEstagioAtual(), 
@@ -135,8 +130,6 @@ class AcademicoAdminController extends Controller
      */
     public function destroy(string $id)
     {
-        $this->middleware('permission:excluir academico');
-
         DB::transaction(function() use($id){
             $academico = Academico::withTrashed()->findOrFail($id);
             if($academico->trashed()){
