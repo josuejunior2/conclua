@@ -45,11 +45,11 @@
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Currículo Lattes</div>
-            <div class="datagrid-content">{{$orientador->enderecoLattes}}</div>
+            <div class="datagrid-content"><a href="{{ $orientador->enderecoLattes }}" target="_blank">{{$orientador->enderecoLattes}}</a></div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Currículo Orcid</div>
-            <div class="datagrid-content">{{$orientador->enderecoOrcid}}</div>
+            <div class="datagrid-content"><a href="{{ $orientador->enderecoOrcid }}" target="_blank">{{$orientador->enderecoOrcid}}</a></div>
         </div>
         <div class="datagrid-item">
             <div class="datagrid-title">Subáreas</div>
