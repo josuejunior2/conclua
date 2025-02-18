@@ -28,6 +28,7 @@
       	font-feature-settings: "cv03", "cv04", "cv11";
       }
     </style>
+    <link rel="icon" type="image/x-icon" href="/logo2_bola.png">
   </head>
   <body  class=" d-flex flex-column">
     <script src="./dist/js/demo-theme.min.js?1684106062"></script>

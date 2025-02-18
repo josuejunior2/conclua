@@ -14,7 +14,7 @@ class Orientacao extends Model
 
     protected $table = 'orientacoes';
 
-    protected $fillable = ['academico_id', 'academico_tcc_id', 'academico_estagio_id', 'orientador_id', 'semestre_id', 'solicitacao_id', 'avaliacao_final'];
+    protected $fillable = ['academico_id', 'academico_tcc_id', 'academico_estagio_id', 'orientador_id', 'semestre_id', 'solicitacao_id', 'avaliacao_final', 'status_documentacao'];
 
     public function Orientador(){
         return $this->belongsTo(Orientador::class, 'orientador_id');
@@ -83,6 +83,26 @@ class Orientacao extends Model
             return 'Avaliação final: APTO COM RESTRIÇÕES. Procure seu orientador e faça os ajustes necessários. Fique firme e encerre esta etapa.';
         } else if($this->avaliacao_final == 'INAPTO'){
             return 'Avaliação final: INAPTO. Converse com seu orientador. Retome suas atividades e refaça esta etapa, ela é muito importante em sua formação.';
+        }
+    }
+
+    public function getStatusDocumentacao()
+    {
+        if($this->status_documentacao === null) {
+            return [
+                'status' => "Em análise",
+                'badge' => "yellow"
+            ];
+        } elseif($this->status_documentacao === 0) {
+            return [
+                'status' => "Reprovada",
+                'badge' => "red"
+            ];
+        } elseif($this->status_documentacao === 1) {
+            return [
+                'status' => "Aprovada",
+                'badge' => "green"
+            ];
         }
     }
 }

@@ -10,11 +10,17 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Http\UploadedFile;
 use App\Models\Atividade;
 use App\Http\Requests\ArquivoSubmissaoRequest;
+use App\Http\Requests\ArquivoModeloRequest;
+use App\Http\Requests\ArquivoDocumentacaoRequest;
+use App\Http\Requests\ArquivoStatusDocumentacaoRequest;
 use App\Models\SubmissaoAtividade;
 use App\Http\Requests\ArquivoAuxRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Models\Semestre;
+use App\Models\ModeloDocumento;
+use App\Models\Orientacao;
 
 class ArquivoController extends Controller
 { 
@@ -89,6 +95,32 @@ class ArquivoController extends Controller
         
         return redirect()->back()->with(['success' => 'Arquivo auxiliar adicionado com sucesso.']);
     }
+    
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function storeArquivoModelo(ArquivoModeloRequest $request, ModeloDocumento $modelo)
+    {
+        $semestre = Semestre::find(session('semestre_id'));
+        $caminho = 'uploads/modelo_documento/'.$semestre->periodoAno();
+
+        DB::transaction(function() use($request, $caminho, $modelo){
+            // dd($request->all());
+            foreach ($request->input('arquivos') as $arquivo) {
+                $nome =  $this->setNomeArquivo($arquivo, $caminho);
+
+                Arquivo::create([
+                    'nome' => $nome,
+                    'modelo_documento_id' => $modelo->id,
+                    'caminho' => $caminho,
+                ]);
+                Storage::disk('public')->putFileAs($caminho, $arquivo, $nome);
+                Log::channel('main')->info('Arquivo modelo armazenado.', ['data' => [$caminho, $arquivo, $nome], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
+            }        
+        });
+        
+        return redirect()->back()->with(['success' => 'Arquivo modelo adicionado com sucesso.']);
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -114,5 +146,72 @@ class ArquivoController extends Controller
             Log::channel('main')->info('Arquivo auxiliar excluído.', ['data' => [$arquivo->caminho, $arquivo], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]); 
         });
         return redirect()->back()->with(['success' => 'Arquivo auxiliar excluído com sucesso.']);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroyArquivoModelo(Arquivo $arquivo)
+    {
+        DB::transaction(function() use($arquivo){ 
+            Storage::disk('public')->delete($arquivo->caminho . '/' . $arquivo->nome);
+            $arquivo->forceDelete();  
+            Log::channel('main')->info('Arquivo de modelo excluído.', ['data' => [$arquivo->caminho, $arquivo], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]); 
+        });
+        return redirect()->back()->with(['success' => 'Arquivo de modelo excluído com sucesso.']);
+    }
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function storeArquivoDocumentacao(ArquivoDocumentacaoRequest $request, Orientacao $orientacao)
+    {
+        $semestre = Semestre::find(session('semestre_id'));
+        $caminho = 'uploads/'.$orientacao->Semestre->periodoAno() . '/' . $orientacao->Orientador->diretorio() . '/' . $orientacao->Academico->diretorio() . '/documentacao';
+
+        DB::transaction(function() use($request, $caminho, $orientacao){
+            $dados = $request->validated();
+            // dd($dados);
+            foreach ($dados['arquivos_documentacao'] as $arquivo) {
+                $nome =  $this->setNomeArquivo($arquivo, $caminho);
+
+                Arquivo::create([
+                    'nome' => $nome,
+                    'modelo_documento_id' => $request->modelo_documento_id,
+                    'orientacao_id' => $orientacao->id,
+                    'caminho' => $caminho,
+                ]);
+                Storage::disk('public')->putFileAs($caminho, $arquivo, $nome);
+                Log::channel('main')->info('Arquivo de documentação armazenado.', ['data' => [$caminho, $arquivo, $nome, $orientacao], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
+            }        
+        });
+        
+        return redirect()->back()->with(['success' => 'Arquivo documentação adicionado com sucesso.']);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroyArquivoDocumentacao(Arquivo $arquivo)
+    {
+        DB::transaction(function() use($arquivo){ 
+            Storage::disk('public')->delete($arquivo->caminho . '/' . $arquivo->nome);
+            $arquivo->forceDelete();  
+            Log::channel('main')->info('Arquivo de documentação excluído.', ['data' => [$arquivo->caminho, $arquivo], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]); 
+        });
+        return redirect()->back()->with(['success' => 'Arquivo de documentação excluído com sucesso.']);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function statusDocumentacao(ArquivoStatusDocumentacaoRequest $request, Arquivo $arquivo)
+    {
+        $dados = $request->validated();
+        DB::transaction(function() use($arquivo, $dados){
+            $arquivo->update($dados);
+            // dd($arquivo);
+            Log::channel('main')->info('Arquivo de documentação avaliado.', ['data' => [$arquivo->caminho, $arquivo], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]); 
+        });
+        return redirect()->back()->with(['success' => 'Documentação avaliada com sucesso.']);
     }
 }

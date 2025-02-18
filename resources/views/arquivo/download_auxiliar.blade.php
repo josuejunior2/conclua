@@ -22,7 +22,7 @@
                                 <path d="M7 11l5 5l5 -5" />
                                 <path d="M12 4l0 12" />
                             </svg>
-                            Download do arquivo
+                            Baixar
                         </button>
                     </form>
                 </div>

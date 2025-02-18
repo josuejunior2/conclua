@@ -59,6 +59,11 @@ class PerfisEPermissoesSeeder extends Seeder
             ['guard_name' => 'admin', 'name' => 'avaliar admin',  'description' => 'Permite avaliar admin.'],
 
             ['guard_name' => 'admin', 'name' => 'ver logs',  'description' => 'Permite visualizar os logs.'],
+            
+            ['guard_name' => 'admin', 'name' => 'criar modelo de documento',  'description' => 'Permite criar modelo de documento.'],
+            ['guard_name' => 'admin', 'name' => 'editar modelo de documento',  'description' => 'Permite editar modelo de documento.'],
+            ['guard_name' => 'admin', 'name' => 'excluir modelo de documento',  'description' => 'Permite excluir modelo de documento.'],
+            ['guard_name' => 'admin', 'name' => 'avaliar documentacao',  'description' => 'Permite avaliar documentacao.'],
         ]);
 
 
@@ -76,6 +81,7 @@ class PerfisEPermissoesSeeder extends Seeder
             ['guard_name' => 'admin', 'name' => 'criar comentario',  'description' => 'Permite comentar na atividade.'],
             ['guard_name' => 'admin', 'name' => 'excluir comentario',  'description' => 'Permite excluir comentário da atividade.'],
             ['guard_name' => 'admin', 'name' => 'editar comentario',  'description' => 'Permite editar comentário da atividade.'],
+            ['guard_name' => 'admin', 'name' => 'avaliar documentacao',  'description' => 'Permite avaliar documentacao.'],
         ]);// aqui as do orientador (incluindo algumas que o admin tbm terá)
 
         $permissionsUser = collect([
@@ -92,6 +98,9 @@ class PerfisEPermissoesSeeder extends Seeder
             ['guard_name' => 'web', 'name' => 'criar solicitacao',  'description' => 'Permite editar solicitacao.'],
             ['guard_name' => 'web', 'name' => 'excluir solicitacao',  'description' => 'Permite excluir solicitacao.'],
             ['guard_name' => 'web', 'name' => 'editar solicitacao',  'description' => 'Permite avaliar solicitacao.'],
+
+            ['guard_name' => 'web', 'name' => 'submeter documentacao',  'description' => 'Permite submeter documentação.'],
+            ['guard_name' => 'web', 'name' => 'excluir documentacao',  'description' => 'Permite excluir documentação.'],
         ]);
 
         $permissionsAdmin->each(function ($item) use ($admin) {

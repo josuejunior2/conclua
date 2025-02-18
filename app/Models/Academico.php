@@ -50,10 +50,6 @@ class Academico extends Authenticatable
     public function orientacoes(){
         return $this->hasMany(Orientacao::class, 'academico_id');
     }
-
-    public function cadastrosAtivos(){// era bom eu mudar esse nome do metodo...
-        return $this->belongsToMany(Semestre::class, 'semestre_academico', 'academico_id', 'semestre_id');
-    }
         
     public function diretorio(){
         $nome = trim($this->UserTrashed->nome);

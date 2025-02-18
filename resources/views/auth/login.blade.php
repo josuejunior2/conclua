@@ -8,11 +8,7 @@
     </div>
     <div class="card card-md">
         <div class="card-body">
-        @if (session('success'))
-            <div class="alert alert-success" role="alert">
-                {{ session('success') }}
-            </div>
-        @endif
+        
         <h2 class="h2 text-center mb-4">Entre na sua conta - Acadêmico</h2>
         <form method="POST" action="{{ route('login.post') }}">            {{-- é... depois o login tem que ser por masp/matricula--}}
             @csrf

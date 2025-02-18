@@ -108,8 +108,6 @@ class AtividadeOrientadorController extends Controller
      */
     public function destroy(Atividade $atividade)
     {
-        $this->middleware('permission:excluir atividade');
-
         DB::transaction(function() use($atividade){   
             $arquivos = $atividade->arquivosAuxiliares->merge($atividade->arquivosSubmissao);
 

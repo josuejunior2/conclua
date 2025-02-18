@@ -6,22 +6,13 @@
     <div class="card m-3">
         <div class="card-header justify-content-between">
             <h3 class="card-title">Lista de semestres</h3>
-            @if (session('error'))
-            <div class="alert alert-danger m-3">
-                {{ session('error') }}
-            </div>
-            @endif
             <div>
                 @can('criar semestre')
                     <a href="{{ route('admin.semestre.create') }}" class="btn btn-success w-100">
                         Iniciar novo semestre
                     </a>
                 @endcan
-                @if (session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
-                @endif
+                
             </div>
         </div>
       <div class="table-responsive m-4">

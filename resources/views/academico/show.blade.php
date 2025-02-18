@@ -28,7 +28,7 @@
                     <div class="datagrid-content">{{ $academico->User->nome }}</div>
                 </div>
                 <div class="datagrid-item">
-                    <div class="datagrid-title">MASP</div>
+                    <div class="datagrid-title">Matrícula</div>
                     <div class="datagrid-content">{{ $academico->matricula }}</div>
                 </div>
                 <div class="datagrid-item">
@@ -64,7 +64,7 @@
                     <div class="datagrid">
                         <div class="datagrid-item">
                             <div class="datagrid-title">Orientador</div>
-                            <div class="datagrid-content">{{ $tcc->Orientacao->OrientadorTrashed->AdminTrashed->nome }}</div>
+                            <div class="datagrid-content">{{ $tcc->Orientacao->OrientadorTrashed->AdminTrashed->nome }} <a href="mailto:{{ $tcc->Orientacao->OrientadorTrashed->AdminTrashed->email }}">{{ $tcc->Orientacao->OrientadorTrashed->AdminTrashed->email }}</a></div>
                         </div>
                         <div class="datagrid-item">
                             <div class="datagrid-title">Data de vinculação</div>
@@ -133,11 +133,11 @@
             @endif
             </div>
             <div class="card-body">
-                @if (isset($estagio->Orientacao))
                 <div class="datagrid">
+                @if (isset($estagio->Orientacao))
                     <div class="datagrid-item">
                         <div class="datagrid-title">Orientador</div>
-                        <div class="datagrid-content">{{ $estagio->Orientacao->OrientadorTrashed->AdminTrashed->nome }}</div>
+                        <div class="datagrid-content">{{ $estagio->Orientacao->OrientadorTrashed->AdminTrashed->nome }} <a href="mailto:{{ $estagio->Orientacao->OrientadorTrashed->AdminTrashed->email }}">{{ $estagio->Orientacao->OrientadorTrashed->AdminTrashed->email }}</a></div>
                     </div>
                     <div class="datagrid-item">
                         <div class="datagrid-title">Data de vinculação</div>
@@ -145,34 +145,34 @@
                             {{ \Carbon\Carbon::parse($estagio->Orientacao->created_at)->format('d/m/Y') }}</div>
                     </div>
                 @endif
-            <div class="datagrid-item">
-                <div class="datagrid-title">Tema</div>
-                <div class="datagrid-content">{{ $estagio->tema }}</div>
+                <div class="datagrid-item">
+                    <div class="datagrid-title">Tema</div>
+                    <div class="datagrid-content">{{ $estagio->tema }}</div>
+                </div>
+                <div class="datagrid-item">
+                    <div class="datagrid-title">Setor de atuação</div>
+                    <div class="datagrid-content">{{ $estagio->setor_atuacao }}</div>
+                </div>
+                <div class="datagrid-item">
+                    <div class="datagrid-title">Nome da Empresa</div>
+                    <div class="datagrid-content">{{ $estagio->Empresa->nome }}</div>
+                </div>
+                <div class="datagrid-item">
+                    <div class="datagrid-title">CNPJ da Empresa</div>
+                    <div class="datagrid-content">{{ $estagio->Empresa->cnpj }}</div>
+                </div>
+                <div class="datagrid-item">
+                    <div class="datagrid-title">Email da empresa</div>
+                    <div class="datagrid-content">{{ $estagio->Empresa->email }}</div>
+                </div>
+                <div class="datagrid-item">
+                    <div class="datagrid-title">Supervisor</div>
+                    <div class="datagrid-content">{{ $estagio->supervisor }}</div>
+                </div>
+                <div class="datagrid-item">
+                    <div class="datagrid-title">Email do supervisor</div>
+                    <div class="datagrid-content">{{ $estagio->email_supervisor }}</div>
+                </div>
             </div>
-            <div class="datagrid-item">
-                <div class="datagrid-title">Setor de atuação</div>
-                <div class="datagrid-content">{{ $estagio->setor_atuacao }}</div>
-            </div>
-            <div class="datagrid-item">
-                <div class="datagrid-title">Nome da Empresa</div>
-                <div class="datagrid-content">{{ $estagio->Empresa->nome }}</div>
-            </div>
-            <div class="datagrid-item">
-                <div class="datagrid-title">CNPJ da Empresa</div>
-                <div class="datagrid-content">{{ $estagio->Empresa->cnpj }}</div>
-            </div>
-            <div class="datagrid-item">
-                <div class="datagrid-title">Email da empresa</div>
-                <div class="datagrid-content">{{ $estagio->Empresa->email }}</div>
-            </div>
-            <div class="datagrid-item">
-                <div class="datagrid-title">Supervisor</div>
-                <div class="datagrid-content">{{ $estagio->supervisor }}</div>
-            </div>
-            <div class="datagrid-item">
-                <div class="datagrid-title">Email do supervisor</div>
-                <div class="datagrid-content">{{ $estagio->email_supervisor }}</div>
-            </div>
-        </div>
     @endif
 @endsection

@@ -5,11 +5,7 @@
     <div class="card m-3">
         <div class="card-header justify-content-between">
             <h3 class="card-title">Lista de perfis</h3>
-            @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
+            
             <div>
                 <a href="{{ route('admin.role.create') }}" class="btn btn-success w-100 mb-1">
                     Adicionar novo perfil

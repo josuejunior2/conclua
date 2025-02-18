@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Orientacao;
+use App\Http\Requests\OrientacaoStatusDocumentacaoRequest;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use PDF;
 
 class OrientacaoAdminController extends Controller
@@ -30,5 +33,18 @@ class OrientacaoAdminController extends Controller
 
         $pdf = PDF::loadView('admin.orientacao.export_pdf', $dados);
         return $pdf->download('document.pdf');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function statusDocumentacao(OrientacaoStatusDocumentacaoRequest $request, Orientacao $orientacao)
+    {
+        $dados = $request->validated();
+        DB::transaction(function() use($orientacao, $dados){
+            $orientacao->update($dados);
+            Log::channel('main')->info('Documentação da Orientação avaliada.', ['data' => [$orientacao], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]); 
+        });
+        return redirect()->back()->with(['success' => 'Documentação da orientação avaliada com sucesso.']);
     }
 }

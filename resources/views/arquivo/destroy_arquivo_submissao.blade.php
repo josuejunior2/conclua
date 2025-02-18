@@ -3,10 +3,7 @@
       <div class="modal-content">
         <div class="modal-body flex-start">
           <div class="modal-title">Você tem certeza?</div>
-          <div>Se proceder, você irá excluir o arquivo da submissão {{ $arquivo->nome }}. 
-            <br>
-            Assim o orientador {{ $atividade->Orientacao->OrientadorTrashed->AdminTrashed->nome }} não terá acesso.
-          </div>
+          <div>Se proceder, você irá excluir o arquivo de submissão {{ $arquivo->nome }}.
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancelar</button>

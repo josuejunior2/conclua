@@ -9,6 +9,7 @@ use App\Models\SubArea;
 use App\Models\OrientadorSubArea;
 use App\Models\Admin;
 use App\Models\Orientacao;
+use App\Models\ModeloDocumento;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\OrientadorRequest;
@@ -104,13 +105,19 @@ class OrientadorController extends Controller
      */
     public function showAcademico(Academico $academico)
     {
-        $orientacao = Orientacao::where('semestre_id', session('semestre_id'))
-            ->where('orientador_id', auth()->guard('admin')->user()->Orientador->id)
-            ->where('academico_id', $academico->id)->first();
-            // dd($orientacao);
-
+        $orientacao = !empty($academico->OrientacaoAtual()) ? $academico->OrientacaoAtual() : null;
+        if($orientacao){
+            if(!empty($orientacao->academico_estagio_id)){
+                $modelos = ModeloDocumento::whereNot('modalidade', "tcc")->orWhereNull('modalidade')->get();
+            } elseif(!empty($orientacao->academico_tcc_id)){
+                $modelos = ModeloDocumento::whereNot('modalidade', "estagio")->orWhereNull('modalidade')->get();
+            }
+        } else{
+            $modelos = null;
+        }
+                
         $solicitacoes = $academico->solicitacoes->where('semestre_id', session('semestre_id'))->where('orientador_id', auth()->guard('admin')->user()->Orientador->id);
-        return view('orientador.academico.show', ['academico' => $academico, 'orientacao' => $orientacao, 'solicitacoes' => $solicitacoes]);
+        return view('orientador.academico.show', ['academico' => $academico, 'orientacao' => $orientacao, 'solicitacoes' => $solicitacoes, 'modelos' => $modelos]);
     }
     
 

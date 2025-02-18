@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Orientacao;
+use App\Models\ModeloDocumento;
 use App\Models\Academico;
 use App\Models\User;
 use App\Models\AcademicoTCC;
@@ -117,11 +118,24 @@ class AcademicoAdminController extends Controller
      */
     public function show(Academico $academico)
     {
+        $orientacao = !empty($academico->OrientacaoAtual()) ? $academico->OrientacaoAtual() : null;
+        if($orientacao){
+            if(!empty($orientacao->academico_estagio_id)){
+                $modelos = ModeloDocumento::whereNot('modalidade', "tcc")->orWhereNull('modalidade')->get();
+            } elseif(!empty($orientacao->academico_tcc_id)){
+                $modelos = ModeloDocumento::whereNot('modalidade', "estagio")->orWhereNull('modalidade')->get();
+            }
+        } else{
+            $modelos = null;
+        }
+
         return view('admin.academico.show', [
             'academico' => $academico, 
             'estagio' => $academico->getEstagioAtual(), 
             'tcc' => $academico->getTccAtual(), 
-            'solicitacoes' => $academico->getSolicitacoesAtual()
+            'solicitacoes' => $academico->getSolicitacoesAtual(),
+            'modelos' => $modelos,
+            'orientacao' => $orientacao
         ]);
     }
 

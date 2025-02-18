@@ -51,9 +51,7 @@ class SolicitacaoController extends Controller
      */
     public function show(Solicitacao $solicitacao)
     {
-        $layouts = 'layouts.app';
-        // dd($solicitacao);
-        return view('academico.solicitacao.show', ['solicitacao' => $solicitacao, 'layouts' => $layouts]);
+        return view('academico.solicitacao.show', ['solicitacao' => $solicitacao]);
     }
 
 

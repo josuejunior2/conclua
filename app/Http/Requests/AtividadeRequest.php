@@ -46,7 +46,7 @@ class AtividadeRequest extends FormRequest
             // 'data_entrega' => 'nullable|before:'.$data_fim_semestre,
             'orientacao_id' => 'required|exists:orientacoes,id',
             'hora' => ['nullable', 'regex:/^(?:[01]\d|2[0-3]):[0-5]\d$/'],
-            'arquivos_aux.*' => 'nullable|mimes:pdf,doc,docx,jpg,jpeg,png,bmp,gif,svg,xlsx,csv|max:2048',
+            'arquivos_aux.*' => 'nullable|mimes:pdf,doc,docx,jpg,jpeg,png,bmp,gif,svg,xlsx,csv',
         ];
     }
     
@@ -60,8 +60,9 @@ class AtividadeRequest extends FormRequest
                 'required' => 'O campo :attribute deve ser preenchido.',
                 'max' => 'O campo deve ser preenchido por no máximo 256 caracteres.',
                 'orientacao_id.exists' => 'O acadêmico e o orientador devem estar em orientação no semestre.',
-                'data_entrega.before' => 'A data de entrega deve ser anterior à data de finalização do semestre.',
-                'hora.regex' => 'Coloque uma hora válida.'
+                'data_limite.before' => 'A data de limite deve ser anterior à data de finalização do semestre.',
+                'hora.regex' => 'Coloque uma hora válida.',
+                'arquivos_aux.mimes' => 'Os arquivos podem estar nas extensões pdf,doc,docx,jpg,jpeg,png,bmp,gif,svg,xlsx,csv.',
             ];
     }
 }

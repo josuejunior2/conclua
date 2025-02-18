@@ -5,11 +5,7 @@
     <div class="card m-3">
         <div class="card-header justify-content-between">
             <h3 class="card-title">Lista de permissões</h3>
-            @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
+            
         </div>
       <div class="table-responsive m-4">
         <table class="display w-100" id="tabela-permissions"> {{-- table card-table table-vcenter text-nowrap datatable --}}

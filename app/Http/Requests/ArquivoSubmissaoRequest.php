@@ -26,7 +26,7 @@ class ArquivoSubmissaoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'arquivos_submissao.*' => 'required|mimes:pdf,odf,jpg,jpeg,png,bmp,gif,svg|max:2048',
+            'arquivos_submissao.*' => 'required|mimes:pdf,odf,jpg,jpeg,png,bmp,gif,svg',
         ];
     }
 }

@@ -3,13 +3,6 @@
 @section('content')
 {{-- HOME DO ACAD QUE NAO TEM ORIENTADOR AINDA --}}
 
-@if (session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-@endif
-
-
 <div class="col-12">
     <div class="card m-3">
         <div class="card-header justify-content-between">

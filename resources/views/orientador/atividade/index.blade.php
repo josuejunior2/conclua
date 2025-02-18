@@ -5,11 +5,7 @@
     <div class="card m-3">
         <div class="card-header justify-content-between">
             <h3 class="card-title">Lista de atividades</h3>
-            @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
+            
             @if (session('semestreIsAtivo'))
                 @can('criar atividade')
                     <div>

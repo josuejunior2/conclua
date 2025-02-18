@@ -26,7 +26,7 @@ class ArquivoAuxRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'arquivos_aux.*' => 'required|mimes:pdf,doc,docx,jpg,jpeg,png,bmp,gif,svg,xlsx,csv|max:2048',
+            'arquivos_aux.*' => 'required|mimes:pdf,doc,docx,jpg,jpeg,png,bmp,gif,svg,xlsx,csv',
         ];
     }
 }

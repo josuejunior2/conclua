@@ -50,8 +50,8 @@
                                    <span class="form-check-label">Estágio</span>
                                  </label>
                                  <label class="form-check form-check-inline">
-                                   <input class="form-check-input" type="radio" name="modalidade" value="1" {{ old('modalidade') == "1" ? 'checked' : ''}}>
-                                   <span class="form-check-label">Trabalho de Conclusão de Curso</span>
+                                   <input class="form-check-input" type="radio" name="modalidade" value="1" {{ old('modalidade') == "1" ? 'checked' : ''}} disabled>
+                                   <span class="form-check-label">Trabalho de Conclusão de Curso (em breve)</span>
                                  </label>
                                </div>
                                <span class="{{ $errors->has('modalidade') ? 'text-danger' : '' }}">

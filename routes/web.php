@@ -73,6 +73,7 @@ Route::middleware(['auth:web', 'primeiro_acesso' ])->group(function () { //
     Route::resource('academicoTCC', App\Http\Controllers\AcademicoTCCController::class)->except(['create', 'store', 'destroy']);
     Route::get('solicitacao/{orientador}/{academico}', 'App\Http\Controllers\SolicitacaoController@create')->name('solicitacao.create');
 
+    Route::get('modelo_documento', [App\Http\Controllers\ModeloDocumentoAcademicoController::class, 'index'])->name('academico.modelo_documento.index');
 });
 
 Route::middleware(['auth:web', 'role:Academico', 'primeiro_acesso' ])->group(function () {
@@ -95,13 +96,15 @@ Route::middleware(['auth:web', 'role:Academico', 'primeiro_acesso' ])->group(fun
     Route::resource('solicitacao', App\Http\Controllers\SolicitacaoController::class)->names(['show' => 'solicitacao.show.web'])->except(['create', 'index']);
     Route::resource('academicoTCC', App\Http\Controllers\AcademicoTCCController::class)->except(['create', 'store', 'destroy']);
     Route::get('solicitacao/{orientador}/{academico}', 'App\Http\Controllers\SolicitacaoController@create')->name('solicitacao.create');
+    
+    Route::post('arquivo-documentacao/{orientacao}', [App\Http\Controllers\ArquivoController::class, 'storeArquivoDocumentacao'])->name('arquivo.store.arquivo.documentacao');
+    Route::delete('destroy/arquivo-documentacao/{arquivo}', [App\Http\Controllers\ArquivoController::class, 'destroyArquivoDocumentacao'])->name('arquivo.destroy.arquivo.documentacao');
 });
 
 Route::post('download/arquivo/auxiliar/', 'App\Http\Controllers\ArquivoController@downloadArquivo')->name('download.arquivo');
 Route::post('mudar/semestre', [App\Http\Controllers\SemestreController::class, 'mudar_semestre'])->name('semestre.mudar-semestre');
 Route::post('verifica-cnpj', [App\Http\Controllers\EmpresaController::class, 'verificaCnpj'])->name('ajax.verifica.cnpj');
 Route::resource('comentario', App\Http\Controllers\ComentarioController::class)->only(['store', 'update', 'destroy']);
-
 
 
 // =========================================================================== ADMIN & ORIENTADOR ==========================================
@@ -148,6 +151,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('admin', App\Http\Controllers\AdminController::class);
 
         Route::get('log', [App\Http\Controllers\LogController::class, 'index'])->name('log.index');
+        
+        Route::resource('modelo_documento', App\Http\Controllers\ModeloDocumentoAdminController::class)->except(['show'])->parameters([
+            'modelo_documento' => 'modelo'
+        ]);
+        Route::delete('destroy/arquivo-modelo/{arquivo}', 'App\Http\Controllers\ArquivoController@destroyArquivoModelo')->name('destroy.arquivo.modelo');
+        Route::post('orientacao/documentacao/status/{orientacao}', 'App\Http\Controllers\OrientacaoAdminController@statusDocumentacao')->name('orientacao.documentacao.status');
     });
 });
 
@@ -161,6 +170,7 @@ Route::middleware(['auth:admin' , 'primeiro_acesso'])->group(function () {      
     Route::resource('orientador/atividade', App\Http\Controllers\AtividadeOrientadorController::class, ['as' => 'orientador']);
     
     Route::delete('destroy/arquivo-aux/{arquivo}', 'App\Http\Controllers\ArquivoController@destroyArquivoAux')->name('arquivo.destroy.arquivo.aux');
+    Route::post('arquivo/documentacao/status/{arquivo}', 'App\Http\Controllers\ArquivoController@statusDocumentacao')->name('arquivo.documentacao.status');
     
     Route::prefix('orientador')->name('orientador.')->group(function () {
         Route::put('avaliacao/final/{orientacao}', [App\Http\Controllers\OrientadorController::class, 'avaliar'])->name('avaliacao.store');

@@ -5,11 +5,7 @@
     <div class="card m-3">
         <div class="card-header justify-content-between">
             <h3 class="card-title">Lista de atividades</h3>
-            @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
+            
             @can('criar atividade')
                 <div>
                     <a href="{{ route('orientador.atividade.create') }}" class="btn btn-success w-100 mb-1">

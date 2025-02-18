@@ -5,12 +5,7 @@
         <div class="card m-3">
             <div class="card-header justify-content-between">
                 <h3 class="card-title">Lista de atividades</h3>
-                <h3 class="card-title">{{$academico->OrientacaoAtual()->OrientadorTrashed->AdminTrashed->nome}} ({{$academico->OrientacaoAtual()->OrientadorTrashed->AdminTrashed->email}})</h3>
-                @if (session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
-                @endif
+                <h3 class="card-title">Orientador: {{$academico->OrientacaoAtual()->OrientadorTrashed->AdminTrashed->nome}} (<a href="mailto:{{$academico->OrientacaoAtual()->OrientadorTrashed->AdminTrashed->email}}">{{$academico->OrientacaoAtual()->OrientadorTrashed->AdminTrashed->email}}</a>)</h3>
             </div>
             <div class="table-responsive m-4">
                 <table class="display w-100" id="tabela-atividades"> {{-- table card-table table-vcenter text-nowrap datatable --}}
