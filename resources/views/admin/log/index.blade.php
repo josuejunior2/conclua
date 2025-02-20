@@ -49,7 +49,7 @@
                                                     @if (is_array($value))
                                                         <strong>{{ $key }}</strong> {
                                                         @foreach ($value as $key => $attr)
-                                                            <strong>{{ $key }}:</strong> {{ is_array($attr) ? implode($attr) : $attr }}
+                                                            <strong>{{ $key }}:</strong>@if(!is_array($attr)) {{ $attr }} @endif
                                                         @endforeach
                                                         }
                                                     @else
