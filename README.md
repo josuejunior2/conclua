@@ -32,6 +32,9 @@
 
     #Gere a key
     php artisan key:generate 
+    
+    # Criar o link simbólico para uploads
+    php artisan storage:link  
 
     #Execute as migrations
     php artisan migrate --seed
