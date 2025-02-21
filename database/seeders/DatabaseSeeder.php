@@ -5,10 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Admin;
-use App\Models\User;
-use App\Models\Academico;
-use App\Models\Orientador;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,18 +14,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // $admin = Admin::create( [
-        //     'nome' => 'admin',
-        //     'email' => 'josuejuniorww@gmail.com',
-        //     'password' => 'admin123',
-        // ]);
-
-        
-        // $admin2 = Admin::create( [
-        //     'nome' => 'june admin',
-        //     'email' => 'juneAdm@email.com',
-        //     'password' => 'admin123',
-        // ]);
+        Admin::firstOrCreate(
+            ['email' => 'josuejuniorww@gmail.com'],
+            [
+            'nome' => 'admin',
+            'password' => Hash::make('admin123'),
+        ]);
         
         $this->call(
             PerfisEPermissoesSeeder::class,
