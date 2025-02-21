@@ -19,6 +19,8 @@ use App\Http\Requests\AdminUpdateAcademicoRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Models\Semestre;
+use Illuminate\Support\Facades\Storage;
 
 class AcademicoAdminController extends Controller
 {
@@ -213,7 +215,10 @@ class AcademicoAdminController extends Controller
 
             $nomeOriginal = $arquivo->getClientOriginalName();
 
-            $arquivo->move('uploads', $nomeOriginal);// ta dando errado, ver depois
+            $periodoAnoSemestre = Semestre::find(session('semestre_id'))->periodoAno() ?? "semestre_indefinido";
+            $caminho = 'uploads/planilhas_importacao/'.$periodoAnoSemestre."/academicos";
+            Storage::disk('public')->putFileAs($caminho, $arquivo, $nomeOriginal);
+            
             Log::channel('main')->info('Importação de acadêmicos feita.', ['data' => [$arquivo], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
         });
 

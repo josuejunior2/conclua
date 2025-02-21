@@ -19,6 +19,7 @@ use App\Http\Requests\AdminUpdateOrientadorRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class OrientadorAdminController extends Controller
 {
@@ -178,8 +179,10 @@ class OrientadorAdminController extends Controller
             }
 
             $nomeOriginal = $arquivo->getClientOriginalName();
-
-            $arquivo->move('uploads', $nomeOriginal);//ta dando errado
+            $periodoAnoSemestre = Semestre::find(session('semestre_id'))->periodoAno() ?? "semestre_indefinido";
+            $caminho = 'uploads/planilhas_importacao/'.$periodoAnoSemestre."/orientadores";
+            Storage::disk('public')->putFileAs($caminho, $arquivo, $nomeOriginal);
+            
             Log::channel('main')->info('Importação de orientadores feita.', ['data' => [$arquivo], 'user' => auth()->user()->nome."[".auth()->user()->id."]"]);
         });
 
