@@ -63,21 +63,21 @@ class Academico extends Authenticatable
 
     public function getTccAtual()
     {
-        return session('semestre_id') ? $this->academicosTCC->where('semestre_id', session('semestre_id'))->first() : null;
+        return session('semestre_id') ? $this->academicosTCC()->where('semestre_id', session('semestre_id'))->first() : null;
     }
     
     public function getEstagioAtual()
     {
-        return session('semestre_id') ? $this->academicosEstagio->where('semestre_id', session('semestre_id'))->first() : null;
+        return session('semestre_id') ? $this->academicosEstagio()->where('semestre_id', session('semestre_id'))->first() : null;
     }
 
     public function getSolicitacoesAtual()
     {
-        return session('semestre_id') ? $this->solicitacoes->where('semestre_id', session('semestre_id')) : null;
+        return session('semestre_id') ? $this->solicitacoes()->where('semestre_id', session('semestre_id'))->get() : null;
     }
 
     public function OrientacaoAtual()
     {
-        return session('semestre_id') ? $this->orientacoes->where('semestre_id', session('semestre_id'))->first() : null;
+        return session('semestre_id') ? $this->orientacoes()->where('semestre_id', session('semestre_id'))->first() : null;
     }
 }

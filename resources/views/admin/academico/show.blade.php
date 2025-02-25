@@ -337,7 +337,7 @@
     </div>
 @endif
 
-@if (count($solicitacoes) > 0)
+@if ($solicitacoes->isNotEmpty())
 <div class="card m-3">
     <div class="card-header justify-content-between">
         <h3 class="card-title">Solicitações</h3>
