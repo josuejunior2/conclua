@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes; 
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Builder;
 
 class Solicitacao extends Model
 {
@@ -46,5 +47,14 @@ class Solicitacao extends Model
 
     public function AcademicoEstagio(){
         return $this->belongsTo(AcademicoEstagio::class, 'academico_estagio_id');
+    }
+
+    public static function getSolicitacoesAtuaisView()
+    {
+        return Solicitacao::where('semestre_id', session('semestre_id'))->whereHas('Academico', function (Builder $q) {
+            $q->whereNull('deleted_at');
+        })->whereHas('Orientador', function (Builder $q2) {
+            $q2->whereNull('deleted_at');
+        })->get();
     }
 }

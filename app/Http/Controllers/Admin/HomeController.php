@@ -30,14 +30,14 @@ class HomeController extends Controller
         // dd(session('semestre_id'));
         $admin = auth()->guard('admin')->user();
         if($admin->hasRole('Orientador')){
-            $orientador = Orientador::where('admin_id', auth()->guard('admin')->user()->id)->first();
+            $orientador = $admin->Orientador;
             $solicitacoes = Solicitacao::where('orientador_id', $orientador->id)->where('status', null)->get();
             $orientacoes = $orientador->orientacoes->where('semestre_id', session('semestre_id'));
 
             return view('orientador.home', ['orientador' => $orientador, 'solicitacoes' => $solicitacoes, 'orientacoes' => $orientacoes]);
         } elseif($admin->roles->where('guard_name', 'admin')){
             $semestres = Semestre::all();
-            return view('admin.home', ['semestres' => $semestres, 'solicitacoes' => Solicitacao::where('semestre_id', session('semestre_id'))->get(), 'orientadores' => Orientador::all(), 'orientacoes' => Orientacao::where('semestre_id', session('semestre_id'))->get()]);
+            return view('admin.home', ['semestres' => $semestres, 'solicitacoes' => Solicitacao::getSolicitacoesAtuaisView(), 'orientadores' => Orientador::withoutTrashed()->get(), 'orientacoes' => Orientacao::getSolicitacoesAtuaisView()]);
         } else{
             return abort(403, 'Você não está autenticado ao sistema.');
         }

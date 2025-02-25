@@ -171,7 +171,7 @@
                                         value="{{ auth()->guard('admin')->user()->Orientador->id }}">
                                 @elseif(auth()->guard('web')->check())
                                     <input id="academico_id" name="academico_id" type="hidden" class="form-control"
-                                        value="{{ auth()->guard('web')->user()->Academico->id }}">
+                                        value="{{ auth()->guard('web')->user()->AcademicoTrashed->id }}">
                                 @endif
                                 <input id="atividade_id" name="atividade_id" type="hidden" class="form-control"
                                     value="{{ $atividade->id }}">

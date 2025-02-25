@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes; 
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Builder;
 
 class Orientacao extends Model
 {
@@ -104,5 +105,14 @@ class Orientacao extends Model
                 'badge' => "green"
             ];
         }
+    }
+
+    public static function getSolicitacoesAtuaisView()
+    {
+        return Orientacao::where('semestre_id', session('semestre_id'))->whereHas('Academico', function (Builder $q) {
+            $q->whereNull('deleted_at');
+        })->whereHas('Orientador', function (Builder $q2) {
+            $q2->whereNull('deleted_at');
+        })->get();
     }
 }

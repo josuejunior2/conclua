@@ -53,6 +53,10 @@ class User extends Authenticatable
     public function Academico(){
         return $this->hasOne(Academico::class, 'user_id');
     }
+
+    public function AcademicoTrashed(){
+        return $this->hasOne(Academico::class, 'user_id')->withTrashed();
+    }
     
     public function arquivos()
     {

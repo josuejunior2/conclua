@@ -60,7 +60,7 @@
                         </td> --}}
                                         <td class="text-end">
                                             <a class="btn justify-content-center"
-                                                href="{{ route('orientador.academico.show', ['academico' => $orientacao->academico, 'orientacao' => $orientacao]) }}">
+                                                href="{{ route('orientador.academico.show', ['academico' => $orientacao->AcademicoTrashed, 'orientacao' => $orientacao]) }}">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"

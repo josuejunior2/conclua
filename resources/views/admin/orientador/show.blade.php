@@ -107,7 +107,7 @@
                             <div class="datagrid">
                                 <div class="datagrid-item">
                                     <div class="datagrid-title">Nome</div>
-                                    <div class="datagrid-content"><a href="{{ route('admin.academico.show', ['academico' => $orientacao->Academico]) }}">{{ $orientacao->AcademicoTrashed->UserTrashed->nome }}</a></div>
+                                    <div class="datagrid-content"><a href="{{ route('admin.academico.show', ['academico' => $orientacao->AcademicoTrashed]) }}">{{ $orientacao->AcademicoTrashed->UserTrashed->nome }}</a></div>
                                 </div>
                                 <div class="datagrid-item">
                                     <div class="datagrid-title">Data de vinculação</div>

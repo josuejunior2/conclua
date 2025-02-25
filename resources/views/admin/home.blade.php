@@ -156,7 +156,7 @@
                                         @foreach ($solicitacoes as $solicitacao)
                                             <div>
                                                 <div class="row">
-                                                    <a href="{{ route('admin.academico.show', ['academico' => $solicitacao->Academico]) }}"
+                                                    <a href="{{ route('admin.academico.show', ['academico' => $solicitacao->AcademicoTrashed]) }}"
                                                         class="card card-link card-link-pop">
                                                         <div class="card-body">
                                                             {{ $solicitacao->AcademicoTrashed->UserTrashed->nome }} solicitou vinculação a {{ $solicitacao->OrientadorTrashed->AdminTrashed->nome }}.
@@ -186,7 +186,7 @@
                                         @foreach ($orientacoes as $orientacao)
                                             <div>
                                                 <div class="row">
-                                                    <a href="{{ route('admin.academico.show', ['academico' => $orientacao->Academico]) }}"
+                                                    <a href="{{ route('admin.academico.show', ['academico' => $orientacao->AcademicoTrashed]) }}"
                                                         class="card card-link card-link-pop">
                                                         <div class="card-body">
                                                             {{ $orientacao->OrientadorTrashed->AdminTrashed->nome }} está orientando {{ $orientacao->AcademicoTrashed->UserTrashed->nome }}.
