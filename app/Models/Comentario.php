@@ -65,9 +65,9 @@ class Comentario extends Model
     public function comentarioDoUsuario()
     {
         if(auth()->guard('web')->check()){
-            if(auth()->guard('web')->user()->id == $this->academico_id) return true;
+            if(!empty($this->Academico->user_id) && auth()->guard('web')->user()->id == $this->Academico->user_id) return true;
         } else if (auth()->guard('admin')->check()) {
-            if(auth()->guard('admin')->user()->id == $this->orientador_id) return true;
+            if(!empty($this->Orientador->admin_id) && auth()->guard('admin')->user()->id == $this->Orientador->admin_id) return true;
         }
         return false;
     }

@@ -30,6 +30,7 @@
         font-feature-settings: "cv03", "cv04", "cv11";
     }
     </style>
+    <link rel="icon" type="image/x-icon" href="/logo2_bola.png">
 </head>
 
 <body>

@@ -79,7 +79,7 @@
                                                 @if(session('semestreIsAtivo'))
                                                     @include('atividade.modal.destroy-comentario')
                                                     <form id="form_destroy_comentario_{{ $comentario->id }}" method="post"
-                                                        action="{{ route('comentario.destroy', ['comentario' => $comentario]) }}"
+                                                        action="{{ auth()->guard('admin')->check() ? route('orientador.comentario.destroy', ['comentario' => $comentario]) : route('comentario.destroy', ['comentario' => $comentario]) }}"
                                                         style="display: contents">
                                                         @method('DELETE')
                                                         @csrf
@@ -109,7 +109,7 @@
                                 @can('editar comentario')
                                     @if(session('semestreIsAtivo'))
                                         <form method="POST" id="form_editar_comentario_{{ $comentario->id }}"
-                                            action="{{ route('comentario.update', ['comentario' => $comentario]) }}"
+                                            action="{{ auth()->guard('admin')->check() ? route('orientador.comentario.update', ['comentario' => $comentario]) : route('comentario.update', ['comentario' => $comentario]) }}"
                                             autocomplete="off" novalidate style="display: none" class="form_editar mt-1">
                                             @csrf
                                             @method('PUT')
@@ -146,7 +146,7 @@
         <div class="mb-3">
             @can('criar comentario')
                 @if(session('semestreIsAtivo'))
-                    <form method="POST" action="{{ route('comentario.store') }}" autocomplete="off" novalidate>
+                    <form method="POST" action="{{ auth()->guard('admin')->check() ? route('orientador.comentario.store') : route('comentario.store') }}" autocomplete="off" novalidate>
                         @csrf
                         <div class="row resposta w-100" style="display: none;">
                             <div class="col-auto">

@@ -180,6 +180,7 @@ Route::middleware(['auth:admin' , 'primeiro_acesso'])->group(function () {      
         
         Route::post('atividade/arquivo-aux/{atividade}', 'App\Http\Controllers\ArquivoController@storeArquivoAux')->name('atividade.store.arquivo.aux');
         Route::post('atividade/avaliar/{atividade}', 'App\Http\Controllers\AtividadeOrientadorController@avaliar')->name('atividade.avaliar');
+        Route::resource('comentario', App\Http\Controllers\ComentarioController::class)->only(['store', 'update', 'destroy']);
     }); 
 });
 
