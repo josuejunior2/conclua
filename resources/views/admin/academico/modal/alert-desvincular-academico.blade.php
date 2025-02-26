@@ -3,7 +3,7 @@
       <div class="modal-content">
         <div class="modal-body">
           <div class="modal-title">Você tem certeza?</div>
-          <div>Se proceder, você irá desvincular {{ $modalidade->AcademicoTrashed->UserTrashed->nome }} de {{ $modalidade->Orientacao->OrientadorTrashed->AdminTrashed->nome }} e perder os dados da orientação e atividades.</div>
+          <div>Se proceder, você irá desvincular {{ $orientacao->AcademicoTrashed->UserTrashed->nome }} de {{ $orientacao->OrientadorTrashed->AdminTrashed->nome }} e perder os dados da orientação e atividades.</div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancelar</button>

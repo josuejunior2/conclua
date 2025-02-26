@@ -118,7 +118,7 @@ class OrientadorAdminController extends Controller
      */
     public function show(Orientador $orientador)
     {
-        $orientacoes = $orientador->orientacoes->where('semestre_id', session('semestre_id'));
+        $orientacoes = $orientador->orientacoes()->where('semestre_id', session('semestre_id'))->get();
         return view('admin.orientador.show', ['orientador' => $orientador, 'orientacoes' => $orientacoes]);
     }
 
