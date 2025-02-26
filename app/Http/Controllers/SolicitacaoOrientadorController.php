@@ -42,9 +42,9 @@ class SolicitacaoOrientadorController extends Controller
         if(!empty($solicitacao->Academico->OrientacaoAtual())) return redirect()->back()->withErrors(['error' => 'Acadêmico já está vinculado a um orientador!']);
 
         DB::transaction(function() use($solicitacao){
-            if($solicitacao->AcademicoTCC){
-                if($solicitacao->AcademicoTCC->where('semestre_id', session('semestre_id'))->first()){
-                    $tcc = $solicitacao->AcademicoTCC->where('semestre_id', session('semestre_id'))->first();
+            if(!empty($solicitacao->academico_tcc_id)){
+                if($solicitacao->AcademicoTCC()->where('semestre_id', session('semestre_id'))->first()){
+                    $tcc = $solicitacao->AcademicoTCC()->where('semestre_id', session('semestre_id'))->first();
 
                     $orientacao = Orientacao::create([
                         'academico_id' => $solicitacao->Academico->id,
@@ -56,9 +56,9 @@ class SolicitacaoOrientadorController extends Controller
                     $tcc->update(['orientacao_id' => $orientacao->id]);
                 }
             }
-            if($solicitacao->AcademicoEstagio){
-                if($solicitacao->AcademicoEstagio->where('semestre_id', session('semestre_id'))->first()){
-                    $estagio = $solicitacao->AcademicoEstagio->where('semestre_id', session('semestre_id'))->first();
+            if(!empty($solicitacao->academico_estagio_id)){
+                if($solicitacao->AcademicoEstagio()->where('semestre_id', session('semestre_id'))->first()){
+                    $estagio = $solicitacao->AcademicoEstagio()->where('semestre_id', session('semestre_id'))->first();
 
                     $orientacao = Orientacao::create([
                         'academico_id' => $solicitacao->Academico->id,
@@ -73,7 +73,9 @@ class SolicitacaoOrientadorController extends Controller
             $solicitacao->status = 1; // status de aprovada
             $solicitacao->save();
 
-            if($solicitacao->Orientador->disponibilidade > 0) $solicitacao->Orientador->disponibilidade -= 1;
+            if($solicitacao->Orientador->disponibilidade > 0) {
+                $solicitacao->Orientador->disponibilidade -= 1;
+            }
             $solicitacao->Orientador->save();
 
             $outras = Solicitacao::where('academico_id', $solicitacao->Academico->id)->whereNot('id', $solicitacao->id);

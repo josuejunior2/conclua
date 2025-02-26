@@ -70,9 +70,9 @@ class Orientacao extends Model
     }
     
     public function tema(){
-        if(!empty($this->AcademicoTCC)){
+        if(!empty($this->academico_tcc_id)){
             return $this->AcademicoTCC->tema;
-        } elseif (!empty($this->AcademicoEstagio)){
+        } elseif (!empty($this->academico_estagio_id)){
             return $this->AcademicoEstagio->tema;
         }
     }

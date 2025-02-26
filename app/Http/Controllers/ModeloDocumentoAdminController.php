@@ -39,7 +39,6 @@ class ModeloDocumentoAdminController extends Controller
         DB::transaction(function() use($request){   
             $dados = $request->validated();
             $modelo = ModeloDocumento::create($dados);
-            // dd($modelo);
 
             if ($request->hasFile('arquivos')) {
                 $requestArquivos = new ArquivoModeloRequest($request->only(['arquivos']));
