@@ -33,7 +33,7 @@
                                 </div>
                             @endif
                             <div class="col-auto">
-                                <span class="avatar">A</span>
+                                <span class="avatar">{{ $comentario->avatar() }}</span>
                             </div>
                             <div class="col">
                                 <div class="text-truncate">

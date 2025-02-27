@@ -45,20 +45,19 @@
         <p>{{ $atividade->descricao }}</p>
     </div>
     @endif
-
-    @include('arquivo.add_arquivo_aux')
-    <div class="card-footer mt-3">
-        <div class="d-flex justify-content-between col-auto mb-3">
-            <h3>Arquivos auxiliares</h3>
-            @if(session('semestreIsAtivo'))
-                @can('criar atividade')
-                    <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-add-arquivo-aux">
-                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-file-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M12 11l0 6" /><path d="M9 14l6 0" /></svg>
-                        Adicionar arquivo auxiliar
-                    </a>
-                @endcan
-            @endif
-        </div>
-        @include('arquivo.download_auxiliar')
-    </div>   
 </div>
+@include('arquivo.add_arquivo_aux')
+<div class="card-footer mt-3">
+    <div class="d-flex justify-content-between col-auto">
+        <h3>Arquivos auxiliares</h3>
+        @if(session('semestreIsAtivo'))
+            @can('criar atividade')
+                <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-add-arquivo-aux">
+                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-file-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M12 11l0 6" /><path d="M9 14l6 0" /></svg>
+                    Adicionar arquivo auxiliar
+                </a>
+            @endcan
+        @endif
+    </div>
+    @include('arquivo.download_auxiliar')
+</div>   

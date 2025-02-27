@@ -71,4 +71,14 @@ class Comentario extends Model
         }
         return false;
     }
+
+    public function avatar()
+    {
+        if($this->OrientadorTrashed){
+            return substr(explode(" ", $this->OrientadorTrashed->AdminTrashed->nome)[0], 0, 1) . substr(explode(" ", $this->OrientadorTrashed->AdminTrashed->nome)[1], 0, 1);
+        }
+        if($this->AcademicoTrashed){
+            return substr(explode(" ", $this->AcademicoTrashed->UserTrashed->nome)[0], 0, 1) . substr(explode(" ", $this->AcademicoTrashed->UserTrashed->nome)[1], 0, 1);
+        }
+    }
 }
