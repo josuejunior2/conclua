@@ -78,7 +78,7 @@
             "searching": true,
             "pageLength": 10,
             "language": {
-                url: '//cdn.datatables.net/plug-ins/2.0.3/i18n/pt-BR.json',
+                url: '/pt-br-datatables.json',
             },
         });
     });
