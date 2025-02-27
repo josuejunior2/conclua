@@ -76,7 +76,7 @@
                                         <div class="col-auto">
                                             <div class="card card-sm">
                                                 <div class="card-header">
-                                                    <h3 class="card-title">{{ $arquivo->nome }}</h3>
+                                                    <h3 class="card-title">{{ $arquivo->nome }} <small class="form-hint">{{ \Carbon\Carbon::parse($arquivo->created_at)->format('d/m/Y H:i') }}</small></h3>
                                                     <span class="badge bg-{{ $arquivo->getStatusDocumentacao()["badge"] }} text-white ms-2">{{ $arquivo->getStatusDocumentacao()["status"] }}</span>
                                                 </div>
                                                 <div class="card-body">
