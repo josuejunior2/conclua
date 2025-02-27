@@ -31,6 +31,11 @@
     body {
         font-feature-settings: "cv03", "cv04", "cv11";
     }
+    @media (max-width: 991px) {
+        .position-custom {
+            position: static !important;
+        }
+    }
     </style>
     <link rel="icon" type="image/x-icon" href="/logo2_bola.png">
     @yield('css')
@@ -41,6 +46,14 @@
       <!-- Sidebar -->
       <aside class="navbar navbar-vertical navbar-expand-lg" data-bs-theme="dark">
         <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar-menu" aria-controls="sidebar-menu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <h1 class="navbar-brand navbar-brand-autodark">
+                <a href="{{ route('home') }}">
+                    <img src="/logo.png" width="110" height="32" alt="CONCLUA" class="navbar-brand-image">
+                </a>
+            </h1>
           <div class="collapse navbar-collapse" id="sidebar-menu">
             <ul class="navbar-nav pt-lg-3">
                 @if (isset($semestres))
@@ -176,7 +189,7 @@
                         </span>
                     </a>
                 </li>
-                <div class="position-absolute bottom-0 right-0">
+                <div class="position-absolute bottom-0 right-0 position-custom">
                     @can('ver logs')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('admin.log.index') }}">
