@@ -67,7 +67,7 @@
                         <div class="accordion-body pt-1">
                             <p>{{$modelo->descricao}}</p>
                             <div class="row">
-                                @foreach ($modelo->arquivos as $arquivo)
+                                @foreach ($modelo->arquivosModelo() as $arquivo)
                                     <div class="col-auto mb-3">
                                         <div class="card card-sm">
                                             <div class="card-header">
