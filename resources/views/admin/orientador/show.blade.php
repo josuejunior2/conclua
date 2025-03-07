@@ -67,7 +67,7 @@
             @foreach ($orientacoes->sortByDesc('created_at') as $key => $orientacao) {{-- ->sortBy('nome')--}}
                 <div class="accordion-item m-3">
                     <div class="d-flex justify-content-between" id="heading-1">
-                        <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#accordion-collapse-{{ $orientacao->id }}" aria-expanded="true">
+                        <button class="accordion-header " type="button" data-bs-toggle="collapse" data-bs-target="#accordion-collapse-{{ $orientacao->id }}" aria-expanded="true">
                             ({{ $orientacao->Semestre->periodo }}/{{ $orientacao->Semestre->ano }}) @if(isset($orientacao->AcademicoTCC)) TCC - @elseif(isset($orientacao->AcademicoEstagio)) Estágio - @endif {{ $orientacao->AcademicoTrashed->UserTrashed->nome }}
                         </button>
                         <div class="d-flex justify-content-between col-auto">

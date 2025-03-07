@@ -18,7 +18,7 @@
             <div class="accordion" id="accordion-{{ $modelo->id }}">
                 <div class="accordion-item m-3 @if(!empty($orientacao) && $modelo->isAtrasado($orientacao->id)) border-danger shadow-lg bg-white rounded @endif">
                     <div class="d-flex justify-content-between" id="heading-1">
-                        <button class="accordion-button p-2" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-collapse-{{ $modelo->id }}" aria-expanded="true">
+                        <button class="accordion-header p-2" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-collapse-{{ $modelo->id }}" aria-expanded="true">
                             {{$modelo->nome}} <small class="ms-3">{{$modelo->getNomeModalidade()}}</small>
                             @if(!empty($modelo->data_limite)) 
                                 <div class="btn p-1 pe-none user-select-all ms-2">Data-limite:  {{ \Carbon\Carbon::parse($modelo->data_limite)->format('d/m/Y H:i') }}</div>

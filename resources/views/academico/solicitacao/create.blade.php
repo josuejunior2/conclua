@@ -75,7 +75,7 @@
                 <div class="accordion" id="accordion">
                     <div class="accordion-item m-3">
                         <div class="d-flex justify-content-between" id="heading-1">
-                            <button class="accordion-button " type="button" data-bs-toggle="collapse"
+                            <button class="accordion-header " type="button" data-bs-toggle="collapse"
                                 data-bs-target="#accordion-collapse-{{ $tcc->id }}" aria-expanded="true">
                                 {{ $tcc->tema }}
                             </button>
