@@ -16,10 +16,20 @@ class Arquivo extends Model
     {
         return $this->belongsTo(Atividade::class);
     }
+
+    public function AtividadeTrashed()
+    {
+        return $this->belongsTo(Atividade::class)->withTrashed();
+    }
     
     public function SubmissaoAtividade()
     {
         return $this->belongsTo(SubmissaoAtividade::class);
+    }
+
+    public function SubmissaoAtividadeTrashed()
+    {
+        return $this->belongsTo(SubmissaoAtividade::class)->withTrashed();
     }
     
     public function ModeloDocumento()
@@ -50,5 +60,30 @@ class Arquivo extends Model
                 'badge' => "green"
             ];
         }
+    }
+    
+    public function Academico()
+    {
+        return $this->belongsTo(Academico::class);
+    }
+
+    public function AcademicoTrashed()
+    {
+        return $this->belongsTo(Academico::class)->withTrashed();
+    }
+    
+    public function Orientador()
+    {
+        return $this->belongsTo(Orientador::class);
+    }
+
+    public function OrientadorTrashed()
+    {
+        return $this->belongsTo(Orientador::class);
+    }
+
+    public function caminhoEnome()
+    {
+        return $this->caminho . "/" . $this->nome;
     }
 }

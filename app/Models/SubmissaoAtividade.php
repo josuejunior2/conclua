@@ -18,6 +18,11 @@ class SubmissaoAtividade extends Model
     {
         return $this->belongsTo(Atividade::class, 'atividade_id');
     }
+
+    public function AtividadeTrashed()
+    {
+        return $this->belongsTo(Atividade::class, 'atividade_id')->withTrashed();
+    }
     
     public function arquivos()
     {

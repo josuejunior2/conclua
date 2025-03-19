@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles; 
+use Illuminate\Support\Str;
 
 class Academico extends Authenticatable
 {
@@ -51,14 +52,9 @@ class Academico extends Authenticatable
         return $this->hasMany(Orientacao::class, 'academico_id');
     }
         
-    public function diretorio(){
-        $nome = trim($this->UserTrashed->nome);
-        $partes = explode(' ', $nome);
-        $primeiro = $partes[0];
-        $ultimo = $partes[count($partes) - 1];
-        $diretorio = strtolower($primeiro . '.' . $ultimo);
-
-        return $diretorio;
+    public function diretorio()
+    {
+        return "orientador_".$this->id;
     }
 
     public function getTccAtual()

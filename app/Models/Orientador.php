@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Spatie\Permission\Traits\HasRoles; 
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Str;
 
 class Orientador extends Authenticatable
 {
@@ -52,13 +53,7 @@ class Orientador extends Authenticatable
     
     public function diretorio()
     {
-        $nome = trim($this->AdminTrashed->nome);
-        $partes = explode(' ', $nome);
-        $primeiro = $partes[0];
-        $ultimo = $partes[count($partes) - 1];
-        $diretorio = strtolower($primeiro . '.' . $ultimo);
-
-        return $diretorio;
+        return "orientador_".$this->id;
     }
 
     public function orientacoesEmAndamento()

@@ -56,6 +56,10 @@ class Orientacao extends Model
     public function Semestre(){
         return $this->belongsTo(Semestre::class, 'semestre_id');
     }
+
+    public function SemestreTrashed(){
+        return $this->belongsTo(Semestre::class, 'semestre_id')->withTrashed();
+    }
     
     public function atividades(){
         return $this->hasMany(Atividade::class, 'orientacao_id');

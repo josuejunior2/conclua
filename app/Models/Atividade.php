@@ -17,6 +17,11 @@ class Atividade extends Model
         return $this->belongsTo(Orientacao::class);
     }
 
+    public function OrientacaoTrashed()
+    {
+        return $this->belongsTo(Orientacao::class)->withTrashed();
+    }
+
     public function SubmissaoAtividade()
     {
         return $this->hasOne(SubmissaoAtividade::class, 'atividade_id');
@@ -42,4 +47,8 @@ class Atividade extends Model
         return $this->hasMany(Comentario::class, 'atividade_id');
     }
 
+    public function diretorio()
+    {
+        return "atividade_" . $this->id;
+    }
 }

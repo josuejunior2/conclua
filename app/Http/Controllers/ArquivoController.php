@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\Semestre;
 use App\Models\ModeloDocumento;
 use App\Models\Orientacao;
+use Illuminate\Support\Str;
 
 class ArquivoController extends Controller
 { 
@@ -32,18 +33,14 @@ class ArquivoController extends Controller
         return Storage::disk('public')->download($request->validated()['caminho']);
     }
     
-    public function setNomeArquivo(UploadedFile $arquivo, string $caminho)
+    public function setNomeArquivo(UploadedFile $arquivo)
     {
-        $nome =  basename($arquivo->getClientOriginalName(), '.'.$arquivo->getClientOriginalExtension());
-        $extensao = basename($arquivo->getClientOriginalExtension());
-        $nomeCompleto = $nome . "." . $extensao;
+        $extensao = $arquivo->getClientOriginalExtension();
+        $nomeSemExtensao = pathinfo($arquivo->getClientOriginalName(), PATHINFO_FILENAME);
         
-        if(Arquivo::where('caminho', $caminho)->where('nome', $nomeCompleto)->exists()){
-            for($i = 1; Arquivo::where('nome', $nomeCompleto)->exists(); $i++){
-                $nomeCompleto = basename($arquivo->getClientOriginalName(), '.'.$arquivo->getClientOriginalExtension()) . "(" . $i . ")" . "." . $extensao;
-            }
-        }
-        return $nomeCompleto;
+        $nome = Str::slug($nomeSemExtensao) . "-" . now()->format('YmdHis') . "." . $extensao;
+
+        return $nome;
     }
     
     /**
@@ -51,11 +48,11 @@ class ArquivoController extends Controller
      */
     public function storeArquivoSubmissao(ArquivoSubmissaoRequest $request, SubmissaoAtividade $submissao)
     {
-        $caminho = 'uploads/'.$submissao->Atividade->Orientacao->Semestre->periodoAno() . '/' . $submissao->Atividade->Orientacao->Orientador->diretorio() . '/' . $submissao->Atividade->Orientacao->Academico->diretorio() . '/recebido';
+        $caminho = 'uploads/'.$submissao->Atividade->Orientacao->Semestre->periodoAno() . '/' . $submissao->Atividade->Orientacao->Orientador->diretorio() . '/' . $submissao->Atividade->Orientacao->Academico->diretorio() . '/submissao';
         
         DB::transaction(function() use($caminho, $request, $submissao){   
             foreach ($request['arquivos_submissao'] as $key => $arquivo) {
-                $nome = $this->setNomeArquivo($arquivo, $caminho);
+                $nome = $this->setNomeArquivo($arquivo);
                 
                 Arquivo::create([
                     'nome' => $nome,
@@ -76,11 +73,11 @@ class ArquivoController extends Controller
      */
     public function storeArquivoAux(ArquivoAuxRequest $request, Atividade $atividade)
     {
-        $caminho = 'uploads/'.$atividade->Orientacao->Semestre->periodoAno() . '/' . $atividade->Orientacao->Orientador->diretorio() . '/' . $atividade->Orientacao->Academico->diretorio() . '/enviado';
+        $caminho = 'uploads/'.$atividade->Orientacao->Semestre->periodoAno() . '/' . $atividade->Orientacao->Orientador->diretorio() . '/' . $atividade->Orientacao->Academico->diretorio() . '/auxiliar';
            
         DB::transaction(function() use($request, $caminho, $atividade){   
             foreach ($request['arquivos_aux'] as $key => $arquivo) {
-                $nome =  $this->setNomeArquivo($arquivo, $caminho);
+                $nome =  $this->setNomeArquivo($arquivo);
 
                 Arquivo::create([
                     'nome' => $nome,
@@ -107,7 +104,7 @@ class ArquivoController extends Controller
         DB::transaction(function() use($request, $caminho, $modelo){
             // dd($request->all());
             foreach ($request->input('arquivos') as $arquivo) {
-                $nome =  $this->setNomeArquivo($arquivo, $caminho);
+                $nome =  $this->setNomeArquivo($arquivo);
 
                 Arquivo::create([
                     'nome' => $nome,
@@ -172,7 +169,7 @@ class ArquivoController extends Controller
             $dados = $request->validated();
             // dd($dados);
             foreach ($dados['arquivos_documentacao'] as $arquivo) {
-                $nome =  $this->setNomeArquivo($arquivo, $caminho);
+                $nome =  $this->setNomeArquivo($arquivo);
 
                 Arquivo::create([
                     'nome' => $nome,

@@ -69,7 +69,7 @@
                     <div class="col-md">
                         <div class="row d-flex justify-content-start">
                             <div class="col flex-column">
-                                <label class="form-label" for="data_limite">Data limite para entrega</label>
+                                <label class="form-label required" for="data_limite">Data limite para entrega</label>
                                 <div>
                                     <input type="hidden" id="data_limite" name="data_limite" value="{{ old('data_limite', '') }}" autocomplete="off" />
                                 </div>
