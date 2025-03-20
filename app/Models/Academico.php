@@ -54,7 +54,7 @@ class Academico extends Authenticatable
         
     public function diretorio()
     {
-        return "orientador_".$this->id;
+        return "academico_".$this->id;
     }
 
     public function getTccAtual()
