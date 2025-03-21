@@ -253,8 +253,10 @@ class AcademicoAdminController extends Controller
     {
         DB::transaction(function() use($estagio){
             $orientacao = $estagio->Orientacao;
-            $orientacao->Solicitacao->status = 0;
-            $orientacao->Solicitacao->save();
+            if(!empty($orientacao->Solicitacao)) {
+                $orientacao->Solicitacao->status = 0;
+                $orientacao->Solicitacao->save();
+            }
             $estagio->orientacao_id = null;
             $estagio->save();
 
