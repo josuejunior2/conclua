@@ -144,7 +144,7 @@
                                                                 <div class="text-truncate">
                                                                     <b>{{ $new['nome_academico'] }}</b>{{ $new['msg'] }} <b>{{ $new['titulo'] }}</b>
                                                                 </div>
-                                                                <div class="text-muted">{{ $new['created_at'] }}</div>
+                                                                <div class="text-muted">{{ \Carbon\Carbon::parse($new['created_at'])->format('d/m/Y H:i') }}</div>
                                                             </div>
                                                             <div class="col-auto align-self-center">
                                                                 <a href="{{ route($new['rota'], [$new['key_dado_rota'] => $new['dado_rota']]) }}"

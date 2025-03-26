@@ -51,7 +51,7 @@ class HomeController extends Controller
                             'nome_academico' => Str::words($item->Atividade->Orientacao->Academico->User->nome, 3, ""),
                             'msg' => " submeteu à atividade ",
                             'titulo' => $item->Atividade->titulo,
-                            'created_at' => \Carbon\Carbon::parse($item->created_at)->format('d/m/Y H:i'),
+                            'created_at' => $item->created_at,
                         ];
                     })->collapse()->toArray();
                     $comentarios[] = $atividade->comentariosAcademico()->with('Academico.User')->get()->map(function ($item) {
@@ -65,7 +65,7 @@ class HomeController extends Controller
                             'nome_academico' => Str::words($item->Academico->User->nome, 3, ""),
                             'msg' => " comentou em ",
                             'titulo' => $item->Atividade->titulo,
-                            'created_at' => \Carbon\Carbon::parse($item->created_at)->format('d/m/Y H:i'),
+                            'created_at' => $item->created_at,
                         ];
                     })->collapse()->toArray();
                 }
@@ -80,7 +80,7 @@ class HomeController extends Controller
                         'nome_academico' => Str::words($item->Orientacao->Academico->User->nome, 3, ""),
                         'msg' => " entregou a documentação ",
                         'titulo' => $item->ModeloDocumento->nome,
-                        'created_at' => \Carbon\Carbon::parse($item->created_at)->format('d/m/Y H:i'),
+                        'created_at' => $item->created_at,
                     ];
                 })->collapse()->toArray();
             }
