@@ -119,4 +119,9 @@ class Orientacao extends Model
             $q2->whereNull('deleted_at');
         })->get();
     }
+
+    public function getArquivosDocumentacao()
+    {
+        return Arquivo::where('orientacao_id', $this->id);
+    }
 }

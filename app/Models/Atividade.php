@@ -51,4 +51,9 @@ class Atividade extends Model
     {
         return "atividade_" . $this->id;
     }
+    
+    public function comentariosAcademico()
+    {
+        return $this->comentarios()->whereNotNull('academico_id');
+    }
 }

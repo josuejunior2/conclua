@@ -76,4 +76,9 @@ class Academico extends Authenticatable
     {
         return session('semestre_id') ? $this->orientacoes()->where('semestre_id', session('semestre_id'))->first() : null;
     }
+
+    public function avatar()
+    {
+        return substr(explode(" ", $this->UserTrashed->nome)[0], 0, 1) . substr(explode(" ", $this->UserTrashed->nome)[1], 0, 1);
+    }
 }

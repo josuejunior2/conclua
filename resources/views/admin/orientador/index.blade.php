@@ -49,7 +49,6 @@
                         <tr>
                             <th>Nome</th>
                             <th>Email</th>
-                            <th>Disponibilidade</th>
                             <th>Orientandos</th>
                             <th></th>
                         </tr>
@@ -60,18 +59,7 @@
                             <tr>
                                 <td>{{ $orientador->AdminTrashed->nome }}</td>
                                 <td>{{ $orientador->AdminTrashed->email }}</td>
-                                <td>{{-- @if ($o->disponibilidade == 0)N/A @elseif(isset(session('semestre_id'))) {{ $o->disponibilidade - $o->orientacoes->where('semestre_id', session('semestre_id')->id)->count() }} de {{ $o->disponibilidade }} @endif --}}</td>
-                                <td>
-                                    @if (isset($orientacoesSemestre) && $orientacoesSemestre->where('orientador_id', $orientador->id)->exists())
-                                        @foreach ($orientacoesSemestre->where('orientador_id', $orientador->id) as $orientacao)
-                                            {{ $orientacao->AcademicoTrashed->UserTrashed->nome }} - @if ($orientacao->AcademicoTrashed->academicosTCC->where('semestre_id', session('semestre_id'))->first())
-                                                TCC
-                                            @elseif ($orientacao->AcademicoTrashed->academicosEstagio->where('semestre_id', session('semestre_id'))->first())
-                                                Estagio
-                                            @endif
-                                        @endforeach
-                                    @endif
-                                </td>
+                                <td class="text-center">{{ $orientador->orientacoesNoSemestre()->count() }}</td>
                                 <td class="text-end">
                                     @if(!$orientador->trashed())
                                         @can('visualizar orientador')
