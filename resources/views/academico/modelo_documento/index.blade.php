@@ -10,7 +10,7 @@
                 @endif
             </h3>
         </div>
-        <div class="card-body">
+        <div class="card-body">            
             @foreach ($modelos as $modelo)
             @if (session('semestreIsAtivo') && !empty($orientacao))
                 @include('academico.modelo_documento.modal.add_arquivo_documentacao')
@@ -42,7 +42,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="accordion-collapse-{{ $modelo->id }}" class="accordion-collapse collapse show" data-bs-parent="#accordion-{{ $modelo->id }}">
+                    <div id="accordion-collapse-{{ $modelo->id }}" class="accordion-collapse collapse" data-bs-parent="#accordion-{{ $modelo->id }}">
                         <div class="accordion-body pt-1">
                             <div class="row">
                                 @foreach ($modelo->arquivosModelo() as $arquivo)
