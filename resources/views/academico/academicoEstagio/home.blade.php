@@ -54,6 +54,10 @@
                 </table>
             </div>
         </div>
+        
+        <div class="row row-deck row-cards">
+            @include('academico.partials.news')
+        </div>
     </div>
     
 

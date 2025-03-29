@@ -66,4 +66,9 @@ class Orientador extends Authenticatable
         return $this->belongsToMany(SubArea::class, 'orientador_sub_area', 'orientador_id', 'sub_area_id');
     }
 
+    public function avatar()
+    {
+        return substr(explode(" ", $this->AdminTrashed->nome)[0], 0, 1) . substr(explode(" ", $this->AdminTrashed->nome)[1], 0, 1);
+    }
+
 }

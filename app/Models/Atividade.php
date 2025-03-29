@@ -56,4 +56,9 @@ class Atividade extends Model
     {
         return $this->comentarios()->whereNotNull('academico_id');
     }
+    
+    public function comentariosOrientador()
+    {
+        return $this->comentarios()->whereNotNull('orientador_id');
+    }
 }
